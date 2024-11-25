@@ -1,0 +1,15 @@
+# Ignore build artifacts
+bin/
+obj/
+*.exe
+*.dll
+*.dat
+*.db
+*.pdb
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+
+# Ignore WebView2 files
+Jamper.exe.WebView2/

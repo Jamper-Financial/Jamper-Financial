@@ -1,0 +1,141 @@
+@page "/create-account"
+@using Jamper.Data
+
+<div class="registration-container">
+    <div class="registration-left">
+        <h1>Welcome! Let's get started</h1>
+        <div class="registration-form">
+            <h2>Please enter your details below</h2>
+            <form>
+                <label for="first-name">First name <span class="required">*</span></label>
+                <input id="first-name" type="text" placeholder="Enter your first name" @bind="FirstName" />
+
+                <label for="last-name">Last name <span class="required">*</span></label>
+                <input id="last-name" type="text" placeholder="Enter your last name" @bind="LastName" />
+
+                <label for="username">Username <span class="required">*</span></label>
+                <input id="username" type="text" placeholder="Enter your username" @bind="Username" />
+
+                <label for="birthdate">Birth date (yyyy-mm-dd) <span class="required">*</span></label>
+                <input id="birthdate" type="date" placeholder="YYYY-MM-DD" @bind="BirthDate" />
+
+                <label for="email">Email <span class="required">*</span></label>
+                <input id="email" type="email" placeholder="Enter your email" @bind="Email" />
+
+                <label for="password">Password <span class="required">*</span></label>
+                <input id="password" type="password" placeholder="Create your password" @bind="Password" />
+
+                <label for="confirm-password">Confirm Password <span class="required">*</span></label>
+                <input id="confirm-password" type="password" placeholder="Confirm your password"
+                    @bind="ConfirmPassword" />
+
+                <div class="bottom-buttons">
+                    <button type="button" class="back-button" @onclick="NavigateToLoginPage">Back</button>
+                    <button type="button" class="submit-button" @onclick="CreateUserAccount">Submit</button>
+                </div>
+
+                <p class="terms">
+                    By pressing submit you agree with the
+                    <a href="#">Terms of Use</a> and <a href="#">Privacy Policy</a>.
+                </p>
+            </form>
+        </div>
+    </div>
+    <div class="registration-right">
+        <img src="images/logo.png" alt="Jamper Logo" />
+    </div>
+</div>
+
+
+@* alert error message *@
+@if (!string.IsNullOrWhiteSpace(ErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @ErrorMessage
+    </div>
+}
+
+@* if account is successfully created this alert will pop up *@
+@if (AccountCreated)
+{
+    <div class="alert alert-success" role="alert">
+        Account created successfully! Redirecting to login...
+    </div>
+}
+
+@code {
+
+    private string FirstName { get; set; } = string.Empty;
+    private string LastName { get; set; } = string.Empty;
+    private string Username { get; set; } = string.Empty;
+    private DateTime BirthDate { get; set; } = DateTime.Now;
+    private string Email { get; set; } = string.Empty;
+    private string Password { get; set; } = string.Empty;
+    private string ConfirmPassword { get; set; } = string.Empty;
+    private string ErrorMessage { get; set; } = string.Empty;
+    private bool AccountCreated { get; set; } = false;
+
+    // Inject NavigationManager
+    [Inject]
+    private NavigationManager Navigation { get; set; }
+
+    // Navigate to login page
+    private void NavigateToLoginPage()
+    {
+        Navigation.NavigateTo("/login");
+    }
+
+    @* This handles users input during account creation *@
+    private bool ValidateForm()
+    {
+        if (string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName) ||
+        string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Email) ||
+        string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(ConfirmPassword))
+        {
+            ErrorMessage = "Please fill in all fields.";
+            return false;
+        }
+
+        if (Password != ConfirmPassword)
+        {
+            ErrorMessage = "Passwords do not match.";
+            return false;
+        }
+
+        if (DatabaseHelper.IsUsernameTaken(Username))
+        {
+            ErrorMessage = "Username is already taken. Please choose another.";
+            return false;
+        }
+
+        if (DatabaseHelper.IsEmailTaken(Email))
+        {
+            ErrorMessage = "You already have an account with this email. Please log in.";
+            return false;
+        }
+
+        ErrorMessage = string.Empty;
+        return true;
+    }
+
+    // Create user account
+    private void CreateUserAccount()
+    {
+        if (!ValidateForm())
+        {
+            Console.WriteLine($"Validation failed: {ErrorMessage}");
+            return;
+        }
+
+        // Insert the user into the database
+        DatabaseHelper.InsertUser(FirstName, LastName, Username, BirthDate.ToString("yyyy-MM-dd"), Email, Password);
+        //For Debugging
+        Console.WriteLine("Account created successfully!");
+
+        // Show success message
+        AccountCreated = true;
+
+        // Redirect to login page after a short delay
+        Task.Delay(2000).ContinueWith(_ => NavigateToLoginPage());
+    }
+}
