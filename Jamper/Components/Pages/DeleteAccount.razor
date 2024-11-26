@@ -1,0 +1,91 @@
+@page "/delete-account"
+@using Jamper.Data
+
+<div class="delete-account-container">
+    <div class="delete-account-left">
+        <h1>Delete Account</h1>
+        <div class="delete-form">
+            <h2>Please enter the account details below</h2>
+            <form>
+                <label for="username">Username <span class="required">*</span></label>
+                <input id="username" type="text" placeholder="Enter the username" @bind="Username" />
+
+                <label for="email">Email <span class="required">*</span></label>
+                <input id="email" type="email" placeholder="Enter the email" @bind="Email" />
+
+                <div class="bottom-buttons">
+                    <button type="button" class="back-button" @onclick="NavigateToSettings">Back</button>
+                    <button type="button" class="submit-button" @onclick="DeleteUserAccount">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(ErrorMessage))
+{
+                        <div class="alert alert-danger" role="alert">
+        @ErrorMessage
+                        </div>
+}
+
+@if (AccountDeleted)
+{
+                        <div class="alert alert-success" role="alert">
+                            Account deleted successfully!
+                        </div>
+}
+
+@code {
+    private string Username { get; set; } = string.Empty;
+    private string Email { get; set; } = string.Empty;
+    private string ErrorMessage { get; set; } = string.Empty;
+    private bool AccountDeleted { get; set; } = false;
+
+    [Inject]
+    private NavigationManager Navigation { get; set; }
+
+    private void NavigateToSettings()
+    {
+        Navigation.NavigateTo("settings");
+    }
+
+    private bool ValidateForm()
+    {
+        if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Email))
+        {
+            ErrorMessage = "Please fill in all required fields.";
+            return false;
+        }
+
+        if (!DatabaseHelper.IsUserExists(Username, Email))
+        {
+            ErrorMessage = "Account not found. Please check the details and try again.";
+            return false;
+        }
+
+        ErrorMessage = string.Empty;
+        return true;
+    }
+
+    private void DeleteUserAccount()
+    {
+        if (!ValidateForm())
+        {
+            return;
+        }
+
+        bool result = DatabaseHelper.DeleteUser(Username, Email);
+        if (result)
+        {
+            AccountDeleted = true;
+            ErrorMessage = string.Empty;
+            // This guy will automatically navigate to the settings page after you delete the account you jsut deleted 
+            Task.Delay(2000).ContinueWith(_ => Navigation.NavigateTo("/"));
+        }
+        else
+        {
+            ErrorMessage = "An error occurred while deleting the account. Please try again.";
+        }
+    }
+}
