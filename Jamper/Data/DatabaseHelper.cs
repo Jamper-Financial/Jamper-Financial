@@ -127,5 +127,49 @@ namespace Jamper.Data
         {
             return new SqliteConnection($"Data Source={DbPath}");
         }
+
+        // This method checks if a user exists in the database
+        public static bool IsUserExists(string username, string email)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                string query = @"
+            SELECT COUNT(1) 
+            FROM Users 
+            WHERE (Username = @Username OR Email = @Email);
+        ";
+
+                using (var command = new SqliteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Username", username);
+                    command.Parameters.AddWithValue("@Email", email);
+                    var result = command.ExecuteScalar();
+                    return Convert.ToInt32(result) > 0;
+                }
+            }
+        }
+
+
+        // This method deletes a user from the database
+        public static bool DeleteUser(string username, string email)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+
+                string deleteQuery = "DELETE FROM Users WHERE Username = @Username OR Email = @Email;";
+
+                using (var command = new SqliteCommand(deleteQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@Username", username);
+                    command.Parameters.AddWithValue("@Email", email);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    return rowsAffected > 0;
+                }
+            }
+        }
+
     }
 }

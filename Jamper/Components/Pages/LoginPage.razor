@@ -23,9 +23,9 @@
                 @* display error message if any *@
                 @if (!string.IsNullOrWhiteSpace(ErrorMessage))
                 {
-                    <div class="alert alert-danger" role="alert">
+                                <div class="alert alert-danger" role="alert">
                         @ErrorMessage
-                    </div>
+                                </div>
                 }
 
                 <a href="#" class="forgot-password">Forgot your password or username?</a>
@@ -87,7 +87,8 @@
             Console.WriteLine("Login successful");
 
             //Commented for now until we have emil's calendar page but it should work I tested it with my dummy page :)
-            @* Navigation.NavigateTo("/calendar"); *@
+            //I created a settings page and delete account so this redirects to the settings page because we dont have the home page/dashboard yet, You can also test out the delete function - romer :))
+            Navigation.NavigateTo("/settings");
         }
         else
         {
