@@ -24,16 +24,16 @@
 
 @if (!string.IsNullOrWhiteSpace(ErrorMessage))
 {
-                        <div class="alert alert-danger" role="alert">
+                            <div class="alert alert-danger" role="alert">
         @ErrorMessage
-                        </div>
+                            </div>
 }
 
 @if (AccountDeleted)
 {
-                        <div class="alert alert-success" role="alert">
-                            Account deleted successfully!
-                        </div>
+                            <div class="alert alert-success" role="alert">
+                                Account deleted successfully!
+                            </div>
 }
 
 @code {
@@ -80,7 +80,7 @@
         {
             AccountDeleted = true;
             ErrorMessage = string.Empty;
-            // This guy will automatically navigate to the settings page after you delete the account you jsut deleted 
+            // This guy will automatically navigate to the home page after you delete the account you jsut deleted 
             Task.Delay(2000).ContinueWith(_ => Navigation.NavigateTo("/"));
         }
         else
