@@ -1,0 +1,36 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35514.174 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jamper-Financial", "Jamper-Financial\Jamper-Financial.csproj", "{3C034CE5-45BE-4FFD-A019-06C7812B1796}"
+	ProjectSection(ProjectDependencies) = postProject
+		{EF1E2792-1BF1-4904-A399-832774D61057} = {EF1E2792-1BF1-4904-A399-832774D61057}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jamper-Financial.Shared", "Jamper-Financial.Shared\Jamper-Financial.Shared.csproj", "{12CD219B-0B0F-434F-B75C-1B813A38DB00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jamper-Financial.Web", "Jamper-Financial.Web\Jamper-Financial.Web.csproj", "{EF1E2792-1BF1-4904-A399-832774D61057}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C034CE5-45BE-4FFD-A019-06C7812B1796}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C034CE5-45BE-4FFD-A019-06C7812B1796}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C034CE5-45BE-4FFD-A019-06C7812B1796}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C034CE5-45BE-4FFD-A019-06C7812B1796}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12CD219B-0B0F-434F-B75C-1B813A38DB00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12CD219B-0B0F-434F-B75C-1B813A38DB00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12CD219B-0B0F-434F-B75C-1B813A38DB00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12CD219B-0B0F-434F-B75C-1B813A38DB00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF1E2792-1BF1-4904-A399-832774D61057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF1E2792-1BF1-4904-A399-832774D61057}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF1E2792-1BF1-4904-A399-832774D61057}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF1E2792-1BF1-4904-A399-832774D61057}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

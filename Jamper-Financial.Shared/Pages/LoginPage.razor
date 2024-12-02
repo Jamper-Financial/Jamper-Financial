@@ -1,0 +1,288 @@
+@page "/login"
+@using Jamper_Financial.Shared.Data
+
+<div class="login-container">
+    <div class="login-left">
+        <h1>Stay in charge of your finances!</h1>
+        <div class="login-form">
+            <h2>JAMPER Finance</h2>
+            <form @onsubmit="HandleLoginAsync">
+                <label for="email">User name or email</label>
+                <input id="email" type="text" placeholder="Enter your email or username" @bind="Identifier" />
+
+                <label for="password">Password</label>
+                <input id="password" type="password" placeholder="********" @bind="Password" />
+
+                <div class="remember-me">
+                    <input type="checkbox" id="remember" />
+                    <label for="remember">Remember me</label>
+                </div>
+
+                <button type="submit" class="login-button">🔒 Log in</button>
+
+                @* display error message if any *@
+                @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+                {
+                                <div class="alert alert-danger" role="alert">
+                        @ErrorMessage
+                                </div>
+                }
+
+                <a href="#" class="forgot-password">Forgot your password or username?</a>
+                <div class="social-login">
+                    <button type="button" class="social-button google">Continue using Google</button>
+                    <button type="button" class="social-button facebook">Continue using Facebook</button>
+                </div>
+
+                <div class="bottom-buttons">
+                    <button type="button" class="back-button" @onclick="NavigateToBannerPage">Back</button>
+                    <button type="button" class="create-account-button" @onclick="NavigateToCreateAccount">Create an
+                        Account</button>
+                </div>
+                <p class="terms">Terms & Conditions privacy policy</p>
+            </form>
+        </div>
+    </div>
+    <div class="login-right">
+        <img src="Jamper_Financial.Shared/wwwroot/images/logo.png" alt="Jamper Logo" />
+    </div>
+</div>
+
+@code {
+    // Inject NavigationManager
+    [Inject]
+    private NavigationManager Navigation { get; set; }
+
+    // Properties
+    private string Identifier { get; set; } = string.Empty;
+    private string Password { get; set; } = string.Empty;
+    private string ErrorMessage { get; set; } = string.Empty;
+
+    // Navigate to create account page
+    private void NavigateToCreateAccount()
+    {
+        Navigation.NavigateTo("/create-account");
+    }
+    // Navigate to banner page
+    private void NavigateToBannerPage()
+    {
+        Navigation.NavigateTo("/");
+    }
+
+    // Handle login process
+    private async Task HandleLoginAsync()
+    {
+        // Simulate login process
+        if (string.IsNullOrWhiteSpace(Identifier) || string.IsNullOrWhiteSpace(Password))
+        {
+            ErrorMessage = "Please enter your email/username and password.";
+            return;
+        }
+
+        var isValid = await Task.Run(() => DatabaseHelper.ValidateUserCredentials(Identifier, Password));
+
+        if (isValid)
+        {
+            ErrorMessage = string.Empty;
+            Console.WriteLine("Login successful");
+
+            //Commented for now until we have emil's calendar page but it should work I tested it with my dummy page :)
+            //I created a settings page and delete account so this redirects to the settings page because we dont have the home page/dashboard yet, You can also test out the delete function - romer :))
+            Navigation.NavigateTo("/calendar-page");
+        }
+        else
+        {
+            ErrorMessage = "Invalid email/username or password.";
+        }
+    }
+}
+<Style>
+    body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+    }
+
+    .login-container {
+        display: flex;
+        height: 100vh;
+    }
+
+    .login-left {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 40px;
+        background-color: white;
+    }
+
+    h1 {
+        color: black; 
+        font-size: 26px; 
+        margin-bottom: 20px;
+        text-align: center;
+        width: 100%; /* Ensure it spans the header width */
+    }
+
+    .login-form {
+        background-color: #D0E8C5;
+        border: 1px solid #d4e8b6;
+        border-radius: 20px; 
+        padding: 30px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        min-height: 500px; /* Matches the height of the logo */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    h2 {
+        color: #62ad41;
+        font-size: 18px;
+        margin-bottom: 15px;
+        text-align: center;
+    }
+
+    label {
+        color: #444;
+        font-size: 14px;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    input[type="email"],
+    input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 10px; 
+        font-size: 14px;
+    }
+
+    input[type="email"]::placeholder {
+        color: #aaa;
+        font-style: italic;
+    }
+
+    .remember-me {
+        display: flex;
+        align-items: center;
+        gap: 5px; 
+        margin-bottom: 15px;
+        font-size: 14px;
+    }
+
+    .remember-me input[type="checkbox"] {
+        margin: 0;
+        width: auto; 
+    }
+
+    .remember-me label {
+        color: #444;
+        cursor: pointer;
+    }
+
+
+    .login-button {
+        background-color: #62ad41;
+        color: white;
+        border: none;
+        border-radius: 10px; 
+        padding: 10px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-bottom: 15px;
+        width: 100%;
+    }
+
+        .login-button:hover {
+            background-color: #519a37;
+        }
+
+    .forgot-password {
+        color: #444;
+        font-size: 12px;
+        margin-top: 10px;
+        text-decoration: underline;
+        cursor: pointer;
+        text-align: center;
+        margin-bottom: 15px;
+    }
+
+    .social-login {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .social-button {
+        border: none;
+        padding: 10px;
+        border-radius: 10px; 
+        font-size: 14px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+        .social-button.google {
+            background-color: #db4437;
+            color: white;
+        }
+
+        .social-button.facebook {
+            background-color: #4267b2;
+            color: white;
+        }
+
+
+    button {
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    
+        .create-account-button {
+            background-color: #62ad41;
+            color: white;
+            border: none;
+        }
+    
+        .create-account-button:hover {
+            background-color: #519a37;
+        }
+    
+    .terms {
+        color: #888;
+        font-size: 12px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .login-right {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+    }
+
+        .login-right img {
+            height: 100%; 
+            width: auto;
+            max-width: 100%; 
+        }
+
+
+    .sidebar {
+        display: none; /* This hides the sidebar */
+    }
+
+    .header-bar {
+        display: none; /* Hide the header bar */
+    }
+</Style>
