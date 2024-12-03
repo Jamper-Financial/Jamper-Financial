@@ -24,17 +24,17 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-YuN2et0lJ4QN6Mkm72QmV\u002B5mV\u002B2NE/0qz2hIn3s2ulY="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"798"},{"Name":"Content-Type","Value":"text/html"},{"Name":"ETag","Value":"\u0022YuN2et0lJ4QN6Mkm72QmV\u002B5mV\u002B2NE/0qz2hIn3s2ulY=\u0022"},{"Name":"Last-Modified","Value":"Sun, 01 Dec 2024 06:11:19 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="Jamper-Financial.skca0f8r2d.styles.css">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Jamper-Financial.styles.css'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"skca0f8r2d"},{"Name":"integrity","Value":"sha256-1MWZ2bmk3ieZ\u002BI4qKESjH7IHJUYDXXsCX3\u002BK5VV5mLY="},{"Name":"label","Value":"Jamper-Financial.styles.css"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"97"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00221MWZ2bmk3ieZ\u002BI4qKESjH7IHJUYDXXsCX3\u002BK5VV5mLY=\u0022"},{"Name":"Last-Modified","Value":"Sun, 01 Dec 2024 06:41:55 GMT"},{"Name":"Link","Value":"\u003C_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css\u003E; rel=\u0022preload\u0022; as=\u0022style\u0022"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="Jamper-Financial.styles.css">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Jamper-Financial.styles.css'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-1MWZ2bmk3ieZ\u002BI4qKESjH7IHJUYDXXsCX3\u002BK5VV5mLY="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"97"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00221MWZ2bmk3ieZ\u002BI4qKESjH7IHJUYDXXsCX3\u002BK5VV5mLY=\u0022"},{"Name":"Last-Modified","Value":"Sun, 01 Dec 2024 06:41:55 GMT"},{"Name":"Link","Value":"\u003C_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css\u003E; rel=\u0022preload\u0022; as=\u0022style\u0022"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-1aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"97"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00221aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4=\u0022"},{"Name":"Last-Modified","Value":"Tue, 03 Dec 2024 01:35:17 GMT"},{"Name":"Link","Value":"\u003C_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css\u003E; rel=\u0022preload\u0022; as=\u0022style\u0022"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="Jamper-Financial.v75zdz8xs1.styles.css">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Jamper-Financial.styles.css'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"v75zdz8xs1"},{"Name":"integrity","Value":"sha256-1aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4="},{"Name":"label","Value":"Jamper-Financial.styles.css"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"97"},{"Name":"Content-Type","Value":"text/css"},{"Name":"ETag","Value":"\u00221aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4=\u0022"},{"Name":"Last-Modified","Value":"Tue, 03 Dec 2024 01:35:17 GMT"},{"Name":"Link","Value":"\u003C_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css\u003E; rel=\u0022preload\u0022; as=\u0022style\u0022"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
   </ItemGroup>
 </Project>

@@ -48,8 +48,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName>ScopedCss</AssetTraitName>
       <AssetTraitValue>ApplicationBundle</AssetTraitValue>
-      <Fingerprint>skca0f8r2d</Fingerprint>
-      <Integrity>1MWZ2bmk3ieZ+I4qKESjH7IHJUYDXXsCX3+K5VV5mLY=</Integrity>
+      <Fingerprint>v75zdz8xs1</Fingerprint>
+      <Integrity>1aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Jamper-Financial.styles.css'))</OriginalItemSpec>

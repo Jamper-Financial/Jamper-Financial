@@ -18,7 +18,6 @@ C:\MyFiles\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\Jamper-Financi
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\Jamper-Financial.Web.csproj.CoreCompileInputs.cache
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\Jamper-Financial.Web.MvcApplicationPartsAssemblyInfo.cache
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\scopedcss\bundle\Jamper-Financial.Web.styles.css
-C:\MyFiles\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\compressed\mjqb8mmh8f-skca0f8r2d.gz
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\staticwebassets.build.json
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\staticwebassets.development.json
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\staticwebassets.build.endpoints.json
@@ -125,3 +124,5 @@ C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Web\obj\Debug
 C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\Jamper-Financial.Web.pdb
 C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\Jamper-Financial.Web.genruntimeconfig.cache
 C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\ref\Jamper-Financial.Web.dll
+C:\MyFiles\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\Jamper-Financial.Web.sourcelink.json
+C:\MyFiles\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\compressed\mjqb8mmh8f-qq4gnp5z4k.gz

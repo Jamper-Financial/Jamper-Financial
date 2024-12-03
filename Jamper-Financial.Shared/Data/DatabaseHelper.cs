@@ -13,36 +13,46 @@ namespace Jamper_Financial.Shared.Data
     {
         private static readonly string DbPath = Path.Combine("C:\\MyFiles\\Jamper-Financial", "AppDatabase.db");
 
-        ////This method is used to initialize the database
-        //public static void InitializeDatabase()
-        //{
+        //This method is used to initialize the database
+        public static void InitializeDatabase()
+        {
+            // Create the database file if it doesn't exist
+            if (!File.Exists(DbPath))
+            {
+                using (var connection = new SqliteConnection($"Data Source={DbPath}"))
+                {
+                    connection.Open();
 
-        //    // Create the database file if it doesn't exist
-        //    if (!File.Exists(DbPath))
-        //    {
-        //        using (var connection = new SQLiteConnection($"Data Source={DbPath}"))
-        //        {
-        //            connection.Open();
+                    string createTableQuery = @"
+                            CREATE TABLE IF NOT EXISTS Users (
+                                UserId INTEGER PRIMARY KEY AUTOINCREMENT,
+                                FirstName TEXT NOT NULL,
+                                LastName TEXT NOT NULL,
+                                Username TEXT NOT NULL UNIQUE,
+                                Birthday TEXT NOT NULL,
+                                Email TEXT NOT NULL UNIQUE,
+                                Password TEXT NOT NULL
+                            );
+                            CREATE TABLE IF NOT EXISTS Transactions (
+                                TransactionID INTEGER PRIMARY KEY AUTOINCREMENT,
+                                Date TEXT NOT NULL,
+                                Description TEXT NOT NULL,
+                                Debit REAL NOT NULL,
+                                Credit REAL NOT NULL,
+                                Category TEXT NOT NULL,
+                                Color TEXT NOT NULL,
+                                Frequency TEXT,
+                                EndDate TEXT
+                            );
+                        ";
 
-        //            string createTableQuery = @"
-        //                    CREATE TABLE IF NOT EXISTS Users (
-        //                        UserId INTEGER PRIMARY KEY AUTOINCREMENT,
-        //                        FirstName TEXT NOT NULL,
-        //                        LastName TEXT NOT NULL,
-        //                        Username TEXT NOT NULL UNIQUE,
-        //                        Birthday TEXT NOT NULL,
-        //                        Email TEXT NOT NULL UNIQUE,
-        //                        Password TEXT NOT NULL
-        //                    );
-        //                ";
-
-        //            using (var command = new SqliteCommand(createTableQuery, connection))
-        //            {
-        //                command.ExecuteNonQuery();
-        //            }
-        //        }
-        //    }
-        //}
+                    using (var command = new SqliteCommand(createTableQuery, connection))
+                    {
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+        }
 
         //This method is used to insert a new user into the database
         public static void InsertUser(string firstName, string lastName, string username, string birthday, string email, string password)
@@ -103,6 +113,7 @@ namespace Jamper_Financial.Shared.Data
                 }
             }
         }
+
         //This method is used to validate the user credentials with the database
         //It returns true if the user credentials are valid, otherwise false
         public static bool ValidateUserCredentials(string identifier, string password)
@@ -156,7 +167,6 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
-
         // This method deletes a user from the database
         public static bool DeleteUser(string username, string email)
         {
@@ -176,6 +186,5 @@ namespace Jamper_Financial.Shared.Data
                 }
             }
         }
-
     }
 }

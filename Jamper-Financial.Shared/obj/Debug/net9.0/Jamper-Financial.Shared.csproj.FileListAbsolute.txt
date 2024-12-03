@@ -15,8 +15,6 @@ C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\scopedcss\p
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\aqet3isv10-da95v2qkru.gz
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\4tpc2xqu2k-6gzpyzhau4.gz
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\col4sr76l5-8inm30yfxf.gz
-C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\eq1ix6lcgi-nhvyf59vmr.gz
-C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\4yfxhic0vi-nhvyf59vmr.gz
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.development.json
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.endpoints.json
@@ -65,3 +63,7 @@ C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Shared\obj\De
 C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\refint\Jamper-Financial.Shared.dll
 C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.pdb
 C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\ref\Jamper-Financial.Shared.dll
+C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.sourcelink.json
+C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\scopedcss\Pages\CalendarPage.razor.rz.scp.css
+C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\eq1ix6lcgi-otl17ib3tk.gz
+C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\4yfxhic0vi-otl17ib3tk.gz

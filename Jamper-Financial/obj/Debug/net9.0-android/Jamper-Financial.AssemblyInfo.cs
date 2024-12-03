@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Jamper-Financial")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+ac723f6517f953ecf6e71ed7117e4a13981eb78a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Jamper-Financial")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Jamper-Financial")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

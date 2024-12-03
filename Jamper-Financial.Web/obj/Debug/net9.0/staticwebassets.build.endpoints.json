@@ -3,7 +3,7 @@
   "ManifestType": "Build",
   "Endpoints": [
     {
-      "Route": "Jamper-Financial.Web.skca0f8r2d.styles.css",
+      "Route": "Jamper-Financial.Web.qq4gnp5z4k.styles.css",
       "AssetFile": "Jamper-Financial.Web.styles.css.gz",
       "Selectors": [
         {
@@ -35,19 +35,19 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"LjMBNSoS6aNPAQm8eRCh3XnkDTX8f5fZIbP26gpVcPY=\""
+          "Value": "\"kfikUlelHscFMZAgGLSPoSRpxzycBBkfq48shGPFRLs=\""
         },
         {
           "Name": "ETag",
-          "Value": "W/\"1MWZ2bmk3ieZ+I4qKESjH7IHJUYDXXsCX3+K5VV5mLY=\""
+          "Value": "W/\"/vj6Ht2CrEzi/k4WRK7QHAi0DMPPer/8NKHyjMUufMs=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 03 Dec 2024 04:52:37 GMT"
         },
         {
           "Name": "Link",
-          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css>; rel=\"preload\"; as=\"style\""
+          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css>; rel=\"preload\"; as=\"style\""
         },
         {
           "Name": "Vary",
@@ -57,11 +57,11 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "skca0f8r2d"
+          "Value": "qq4gnp5z4k"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-1MWZ2bmk3ieZ+I4qKESjH7IHJUYDXXsCX3+K5VV5mLY="
+          "Value": "sha256-/vj6Ht2CrEzi/k4WRK7QHAi0DMPPer/8NKHyjMUufMs="
         },
         {
           "Name": "label",
@@ -70,7 +70,7 @@
       ]
     },
     {
-      "Route": "Jamper-Financial.Web.skca0f8r2d.styles.css",
+      "Route": "Jamper-Financial.Web.qq4gnp5z4k.styles.css",
       "AssetFile": "Jamper-Financial.Web.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -92,25 +92,25 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"1MWZ2bmk3ieZ+I4qKESjH7IHJUYDXXsCX3+K5VV5mLY=\""
+          "Value": "\"/vj6Ht2CrEzi/k4WRK7QHAi0DMPPer/8NKHyjMUufMs=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 03 Dec 2024 04:52:37 GMT"
         },
         {
           "Name": "Link",
-          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css>; rel=\"preload\"; as=\"style\""
+          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css>; rel=\"preload\"; as=\"style\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "skca0f8r2d"
+          "Value": "qq4gnp5z4k"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-1MWZ2bmk3ieZ+I4qKESjH7IHJUYDXXsCX3+K5VV5mLY="
+          "Value": "sha256-/vj6Ht2CrEzi/k4WRK7QHAi0DMPPer/8NKHyjMUufMs="
         },
         {
           "Name": "label",
@@ -119,7 +119,7 @@
       ]
     },
     {
-      "Route": "Jamper-Financial.Web.skca0f8r2d.styles.css.gz",
+      "Route": "Jamper-Financial.Web.qq4gnp5z4k.styles.css.gz",
       "AssetFile": "Jamper-Financial.Web.styles.css.gz",
       "Selectors": [],
       "ResponseHeaders": [
@@ -145,11 +145,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"LjMBNSoS6aNPAQm8eRCh3XnkDTX8f5fZIbP26gpVcPY=\""
+          "Value": "\"kfikUlelHscFMZAgGLSPoSRpxzycBBkfq48shGPFRLs=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 03 Dec 2024 04:52:37 GMT"
         },
         {
           "Name": "Vary",
@@ -159,11 +159,11 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "skca0f8r2d"
+          "Value": "qq4gnp5z4k"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-LjMBNSoS6aNPAQm8eRCh3XnkDTX8f5fZIbP26gpVcPY="
+          "Value": "sha256-kfikUlelHscFMZAgGLSPoSRpxzycBBkfq48shGPFRLs="
         },
         {
           "Name": "label",
@@ -204,19 +204,19 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"LjMBNSoS6aNPAQm8eRCh3XnkDTX8f5fZIbP26gpVcPY=\""
+          "Value": "\"kfikUlelHscFMZAgGLSPoSRpxzycBBkfq48shGPFRLs=\""
         },
         {
           "Name": "ETag",
-          "Value": "W/\"1MWZ2bmk3ieZ+I4qKESjH7IHJUYDXXsCX3+K5VV5mLY=\""
+          "Value": "W/\"/vj6Ht2CrEzi/k4WRK7QHAi0DMPPer/8NKHyjMUufMs=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 03 Dec 2024 04:52:37 GMT"
         },
         {
           "Name": "Link",
-          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css>; rel=\"preload\"; as=\"style\""
+          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css>; rel=\"preload\"; as=\"style\""
         },
         {
           "Name": "Vary",
@@ -226,7 +226,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-1MWZ2bmk3ieZ+I4qKESjH7IHJUYDXXsCX3+K5VV5mLY="
+          "Value": "sha256-/vj6Ht2CrEzi/k4WRK7QHAi0DMPPer/8NKHyjMUufMs="
         }
       ]
     },
@@ -253,21 +253,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"1MWZ2bmk3ieZ+I4qKESjH7IHJUYDXXsCX3+K5VV5mLY=\""
+          "Value": "\"/vj6Ht2CrEzi/k4WRK7QHAi0DMPPer/8NKHyjMUufMs=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 03 Dec 2024 04:52:37 GMT"
         },
         {
           "Name": "Link",
-          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css>; rel=\"preload\"; as=\"style\""
+          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css>; rel=\"preload\"; as=\"style\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-1MWZ2bmk3ieZ+I4qKESjH7IHJUYDXXsCX3+K5VV5mLY="
+          "Value": "sha256-/vj6Ht2CrEzi/k4WRK7QHAi0DMPPer/8NKHyjMUufMs="
         }
       ]
     },
@@ -298,11 +298,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"LjMBNSoS6aNPAQm8eRCh3XnkDTX8f5fZIbP26gpVcPY=\""
+          "Value": "\"kfikUlelHscFMZAgGLSPoSRpxzycBBkfq48shGPFRLs=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 03 Dec 2024 04:52:37 GMT"
         },
         {
           "Name": "Vary",
@@ -312,18 +312,18 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-LjMBNSoS6aNPAQm8eRCh3XnkDTX8f5fZIbP26gpVcPY="
+          "Value": "sha256-kfikUlelHscFMZAgGLSPoSRpxzycBBkfq48shGPFRLs="
         }
       ]
     },
     {
       "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.bundle.scp.css",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css.gz",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000571755289"
+          "Quality": "0.000399680256"
         }
       ],
       "ResponseHeaders": [
@@ -341,7 +341,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1748"
+          "Value": "2501"
         },
         {
           "Name": "Content-Type",
@@ -349,15 +349,15 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"6Adof3PRlz+i72/UlYdySZqQxRf1u6dgG09hhcpGrIo=\""
+          "Value": "\"Lotpz6wf46y5nO0YnjfDg78otG49NwGNFR8SwLndy+4=\""
         },
         {
           "Name": "ETag",
-          "Value": "W/\"FTk+JqO9Keb71sniiC6GUPVRPS5stmHO4JU/TJTpIoA=\""
+          "Value": "W/\"RHwefUvbCjPB3xnkYvuDqv3eGg8pE7pVkyLlV8nA79o=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 03 Dec 2024 04:52:36 GMT"
         },
         {
           "Name": "Vary",
@@ -367,13 +367,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-FTk+JqO9Keb71sniiC6GUPVRPS5stmHO4JU/TJTpIoA="
+          "Value": "sha256-RHwefUvbCjPB3xnkYvuDqv3eGg8pE7pVkyLlV8nA79o="
         }
       ]
     },
     {
       "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.bundle.scp.css",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -386,7 +386,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5936"
+          "Value": "9742"
         },
         {
           "Name": "Content-Type",
@@ -394,23 +394,23 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"FTk+JqO9Keb71sniiC6GUPVRPS5stmHO4JU/TJTpIoA=\""
+          "Value": "\"RHwefUvbCjPB3xnkYvuDqv3eGg8pE7pVkyLlV8nA79o=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 03 Dec 2024 04:52:36 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-FTk+JqO9Keb71sniiC6GUPVRPS5stmHO4JU/TJTpIoA="
+          "Value": "sha256-RHwefUvbCjPB3xnkYvuDqv3eGg8pE7pVkyLlV8nA79o="
         }
       ]
     },
     {
       "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.bundle.scp.css.gz",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css.gz",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -427,7 +427,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1748"
+          "Value": "2501"
         },
         {
           "Name": "Content-Type",
@@ -435,11 +435,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"6Adof3PRlz+i72/UlYdySZqQxRf1u6dgG09hhcpGrIo=\""
+          "Value": "\"Lotpz6wf46y5nO0YnjfDg78otG49NwGNFR8SwLndy+4=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 03 Dec 2024 04:52:36 GMT"
         },
         {
           "Name": "Vary",
@@ -449,18 +449,18 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-6Adof3PRlz+i72/UlYdySZqQxRf1u6dgG09hhcpGrIo="
+          "Value": "sha256-Lotpz6wf46y5nO0YnjfDg78otG49NwGNFR8SwLndy+4="
         }
       ]
     },
     {
-      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css.gz",
+      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000571755289"
+          "Quality": "0.000399680256"
         }
       ],
       "ResponseHeaders": [
@@ -478,7 +478,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1748"
+          "Value": "2501"
         },
         {
           "Name": "Content-Type",
@@ -486,15 +486,15 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"6Adof3PRlz+i72/UlYdySZqQxRf1u6dgG09hhcpGrIo=\""
+          "Value": "\"Lotpz6wf46y5nO0YnjfDg78otG49NwGNFR8SwLndy+4=\""
         },
         {
           "Name": "ETag",
-          "Value": "W/\"FTk+JqO9Keb71sniiC6GUPVRPS5stmHO4JU/TJTpIoA=\""
+          "Value": "W/\"RHwefUvbCjPB3xnkYvuDqv3eGg8pE7pVkyLlV8nA79o=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 03 Dec 2024 04:52:36 GMT"
         },
         {
           "Name": "Vary",
@@ -504,11 +504,11 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "nhvyf59vmr"
+          "Value": "otl17ib3tk"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-FTk+JqO9Keb71sniiC6GUPVRPS5stmHO4JU/TJTpIoA="
+          "Value": "sha256-RHwefUvbCjPB3xnkYvuDqv3eGg8pE7pVkyLlV8nA79o="
         },
         {
           "Name": "label",
@@ -517,8 +517,8 @@
       ]
     },
     {
-      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css",
+      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -531,7 +531,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5936"
+          "Value": "9742"
         },
         {
           "Name": "Content-Type",
@@ -539,21 +539,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"FTk+JqO9Keb71sniiC6GUPVRPS5stmHO4JU/TJTpIoA=\""
+          "Value": "\"RHwefUvbCjPB3xnkYvuDqv3eGg8pE7pVkyLlV8nA79o=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 03 Dec 2024 04:52:36 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "nhvyf59vmr"
+          "Value": "otl17ib3tk"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-FTk+JqO9Keb71sniiC6GUPVRPS5stmHO4JU/TJTpIoA="
+          "Value": "sha256-RHwefUvbCjPB3xnkYvuDqv3eGg8pE7pVkyLlV8nA79o="
         },
         {
           "Name": "label",
@@ -562,8 +562,8 @@
       ]
     },
     {
-      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css.gz",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css.gz",
+      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css.gz",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -580,7 +580,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1748"
+          "Value": "2501"
         },
         {
           "Name": "Content-Type",
@@ -588,11 +588,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"6Adof3PRlz+i72/UlYdySZqQxRf1u6dgG09hhcpGrIo=\""
+          "Value": "\"Lotpz6wf46y5nO0YnjfDg78otG49NwGNFR8SwLndy+4=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 03 Dec 2024 04:52:36 GMT"
         },
         {
           "Name": "Vary",
@@ -602,11 +602,11 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "nhvyf59vmr"
+          "Value": "otl17ib3tk"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-6Adof3PRlz+i72/UlYdySZqQxRf1u6dgG09hhcpGrIo="
+          "Value": "sha256-Lotpz6wf46y5nO0YnjfDg78otG49NwGNFR8SwLndy+4="
         },
         {
           "Name": "label",
@@ -655,7 +655,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
         },
         {
           "Name": "Vary",
@@ -696,7 +696,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
         }
       ],
       "EndpointProperties": [
@@ -737,7 +737,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
         },
         {
           "Name": "Vary",
@@ -792,7 +792,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
         },
         {
           "Name": "Vary",
@@ -841,7 +841,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
         }
       ],
       "EndpointProperties": [
@@ -890,7 +890,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
         },
         {
           "Name": "Vary",
@@ -953,7 +953,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
         },
         {
           "Name": "Vary",
@@ -1002,7 +1002,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1051,7 +1051,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
         },
         {
           "Name": "Vary",
@@ -1114,7 +1114,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
         },
         {
           "Name": "Vary",
@@ -1155,7 +1155,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1206,7 +1206,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
         },
         {
           "Name": "Vary",
@@ -1255,7 +1255,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1304,7 +1304,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
         },
         {
           "Name": "Vary",
@@ -1357,7 +1357,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
         },
         {
           "Name": "Vary",
@@ -1412,7 +1412,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
         },
         {
           "Name": "Vary",
@@ -1453,7 +1453,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1494,7 +1494,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
         },
         {
           "Name": "Vary",
@@ -1535,7 +1535,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1580,7 +1580,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1617,7 +1617,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1662,7 +1662,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1673,7 +1673,7 @@
       ]
     },
     {
-      "Route": "_content/Jamper-Financial.Shared/images/logo.9cfdpoxzd2.png",
+      "Route": "_content/Jamper-Financial.Shared/images/logo.3y1l96xecb.png",
       "AssetFile": "_content/Jamper-Financial.Shared/images/logo.png",
       "Selectors": [],
       "ResponseHeaders": [
@@ -1687,7 +1687,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "28990"
+          "Value": "106390"
         },
         {
           "Name": "Content-Type",
@@ -1695,21 +1695,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA=\""
+          "Value": "\"Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 03 Dec 2024 01:54:38 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "9cfdpoxzd2"
+          "Value": "3y1l96xecb"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA="
+          "Value": "sha256-Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0="
         },
         {
           "Name": "label",
@@ -1732,7 +1732,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "28990"
+          "Value": "106390"
         },
         {
           "Name": "Content-Type",
@@ -1740,17 +1740,17 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA=\""
+          "Value": "\"Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
+          "Value": "Tue, 03 Dec 2024 01:54:38 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA="
+          "Value": "sha256-Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0="
         }
       ]
     }
