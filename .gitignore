@@ -1,7 +1,3 @@
-.vs/
-/Jamper-Financial.Shared/obj/Debug/
-/Jamper-Financial.Shared/bin/Debug/
-/Jamper-Financial.Web/obj/Debug/
-/Jamper-Financial.Web/bin/Debug/
-/Jamper-Financial/bin/Debug/
-/Jamper-Financial/obj/Debug/
+.vs/*
+Debug/
+Release/
