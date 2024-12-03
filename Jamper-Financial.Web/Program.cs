@@ -1,6 +1,7 @@
 using Jamper_Financial.Shared.Services;
 using Jamper_Financial.Web.Components;
 using Jamper_Financial.Web.Services;
+using Microsoft.Extensions.FileProviders;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,12 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), @"../Jamper-Financial.Shared/wwwroot")),
+    RequestPath = new PathString("")
+});
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()

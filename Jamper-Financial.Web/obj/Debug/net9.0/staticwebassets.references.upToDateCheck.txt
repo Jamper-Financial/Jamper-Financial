@@ -9,3 +9,9 @@ C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebas
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json

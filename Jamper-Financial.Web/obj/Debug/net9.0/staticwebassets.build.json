@@ -1,13 +1,13 @@
 {
   "Version": 1,
-  "Hash": "tPA2dyqH9KO0xQ+yad3TEwviTvGixy1evLAds4MfFQU=",
+  "Hash": "lLwK6FcJRVrwJvC5L9YMIjobpbZqQyLpEUoNWyAZyX0=",
   "Source": "Jamper-Financial.Web",
   "BasePath": "_content/Jamper-Financial.Web",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+      "Identity": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
       "Version": 2,
       "Source": "Jamper-Financial.Shared",
       "GetPublishAssetsTargets": "ComputeReferencedStaticWebAssetsPublishManifest;GetCurrentProjectPublishStaticWebAssetItems",
@@ -22,17 +22,17 @@
     {
       "Name": "Jamper-Financial.Shared\\wwwroot",
       "Source": "Jamper-Financial.Shared",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
+      "Identity": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Project",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
+      "ContentRoot": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "bootstrap/bootstrap.min#[.{fingerprint=6gzpyzhau4}]?.css.gz",
       "AssetKind": "All",
@@ -40,20 +40,20 @@
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "RelatedAsset": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
       "Fingerprint": "joqzyw7ssu",
       "Integrity": "LTxu1aeZz5yJTTAB+DiLnn5XOMdK1oiypNP/4JaeK9c=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz"
+      "OriginalItemSpec": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-nhvyf59vmr.gz",
+      "Identity": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-nhvyf59vmr.gz",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Project",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
+      "ContentRoot": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "Jamper-Financial.Shared#[.{fingerprint=nhvyf59vmr}]!.bundle.scp.css.gz",
       "AssetKind": "All",
@@ -61,20 +61,20 @@
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
+      "RelatedAsset": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
       "Fingerprint": "gmrxyvf7xa",
       "Integrity": "6Adof3PRlz+i72/UlYdySZqQxRf1u6dgG09hhcpGrIo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-nhvyf59vmr.gz"
+      "OriginalItemSpec": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-nhvyf59vmr.gz"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
+      "Identity": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Project",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
+      "ContentRoot": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "app#[.{fingerprint=da95v2qkru}]?.css.gz",
       "AssetKind": "All",
@@ -82,20 +82,20 @@
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
+      "RelatedAsset": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
       "Fingerprint": "7xjk2sttc7",
       "Integrity": "JRyqIbPYDuOeC5nJOM3956s9Uhd3UVgWOSEBUePgnxc=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz"
+      "OriginalItemSpec": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
+      "Identity": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Project",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
+      "ContentRoot": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "bootstrap/bootstrap.min.css#[.{fingerprint=8inm30yfxf}]?.map.gz",
       "AssetKind": "All",
@@ -103,20 +103,20 @@
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "RelatedAsset": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
       "Fingerprint": "fbl5ivwo6k",
       "Integrity": "Kym5HpgDYV8Caci50HDUPG6WCQ6nTP+8hy429w+zHVU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz"
+      "OriginalItemSpec": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
+      "Identity": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Project",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "Jamper-Financial.Shared#[.{fingerprint}]!.bundle.scp.css",
       "AssetKind": "All",
@@ -131,13 +131,13 @@
       "Integrity": "FTk+JqO9Keb71sniiC6GUPVRPS5stmHO4JU/TJTpIoA=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
+      "Identity": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Project",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "app#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -152,13 +152,13 @@
       "Integrity": "u9qEka1auR7E3rd3/8/j8hkQdSOYj9bRJ4nYiFDR1sE=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css"
+      "OriginalItemSpec": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Project",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "bootstrap/bootstrap.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -173,13 +173,13 @@
       "Integrity": "SiIVMGgRhdXjKSTIddX7mh9IbOXVcwQWc7/p4nS6D/0=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css"
+      "OriginalItemSpec": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Project",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "bootstrap/bootstrap.min.css#[.{fingerprint}]?.map",
       "AssetKind": "All",
@@ -194,13 +194,13 @@
       "Integrity": "gBwg2tmA0Ci2u54gMF1jNCVku6vznarkLS6D76htNNQ=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map"
+      "OriginalItemSpec": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png",
+      "Identity": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Project",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "favicon#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -215,13 +215,13 @@
       "Integrity": "4mWsDy3aHl36ZbGt8zByK7Pvd4kRUoNgTYzRnwmPHwg=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png"
+      "OriginalItemSpec": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png",
+      "Identity": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Project",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "images/Jamper#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -236,13 +236,13 @@
       "Integrity": "FszN3zA4UfG6TlRPVo6fwpHLmBvglWgo6X7NFd5tNCA=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png"
+      "OriginalItemSpec": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png",
+      "Identity": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Project",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "images/logo#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -257,13 +257,13 @@
       "Integrity": "F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png"
+      "OriginalItemSpec": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\compressed\\mjqb8mmh8f-skca0f8r2d.gz",
+      "Identity": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\compressed\\mjqb8mmh8f-skca0f8r2d.gz",
       "SourceId": "Jamper-Financial.Web",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\compressed\\",
+      "ContentRoot": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/Jamper-Financial.Web",
       "RelativePath": "Jamper-Financial.Web#[.{fingerprint=skca0f8r2d}]?.styles.css.gz",
       "AssetKind": "All",
@@ -271,20 +271,20 @@
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Web.styles.css",
+      "RelatedAsset": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Web.styles.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
       "Fingerprint": "q1jbyjjd08",
       "Integrity": "LjMBNSoS6aNPAQm8eRCh3XnkDTX8f5fZIbP26gpVcPY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Web.styles.css"
+      "OriginalItemSpec": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Web.styles.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Web.styles.css",
+      "Identity": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Web.styles.css",
       "SourceId": "Jamper-Financial.Web",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\scopedcss\\bundle\\",
       "BasePath": "_content/Jamper-Financial.Web",
       "RelativePath": "Jamper-Financial.Web#[.{fingerprint}]?.styles.css",
       "AssetKind": "All",
@@ -299,13 +299,13 @@
       "Integrity": "1MWZ2bmk3ieZ+I4qKESjH7IHJUYDXXsCX3+K5VV5mLY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Web.styles.css"
+      "OriginalItemSpec": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Web.styles.css"
     }
   ],
   "Endpoints": [
     {
       "Route": "_content/Jamper-Financial.Shared/app.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -336,7 +336,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -360,7 +360,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/app.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -385,7 +385,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -397,7 +397,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/app.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -426,7 +426,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -442,7 +442,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/app.da95v2qkru.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -473,7 +473,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -505,7 +505,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/app.da95v2qkru.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -530,7 +530,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -550,7 +550,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/app.da95v2qkru.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -579,7 +579,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -603,7 +603,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/bootstrap/bootstrap.min.6gzpyzhau4.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -634,7 +634,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -666,7 +666,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/bootstrap/bootstrap.min.6gzpyzhau4.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -691,7 +691,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -711,7 +711,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/bootstrap/bootstrap.min.6gzpyzhau4.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -740,7 +740,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -764,7 +764,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/bootstrap/bootstrap.min.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -795,7 +795,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -819,7 +819,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/bootstrap/bootstrap.min.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -844,7 +844,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -856,7 +856,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/bootstrap/bootstrap.min.css.8inm30yfxf.map",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -887,7 +887,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -919,7 +919,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/bootstrap/bootstrap.min.css.8inm30yfxf.map",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -944,7 +944,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -964,7 +964,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/bootstrap/bootstrap.min.css.8inm30yfxf.map.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -993,7 +993,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1017,7 +1017,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/bootstrap/bootstrap.min.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1046,7 +1046,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1062,7 +1062,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/bootstrap/bootstrap.min.css.map",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -1093,7 +1093,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1117,7 +1117,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/bootstrap/bootstrap.min.css.map",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1142,7 +1142,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1154,7 +1154,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/bootstrap/bootstrap.min.css.map.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1183,7 +1183,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1199,7 +1199,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/favicon.ifv42okdf2.png",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1224,7 +1224,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1244,7 +1244,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/favicon.png",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1269,7 +1269,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1281,7 +1281,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/images/Jamper.awil1k7oh9.png",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1306,7 +1306,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1326,7 +1326,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/images/Jamper.png",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1351,7 +1351,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1363,7 +1363,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/images/logo.9cfdpoxzd2.png",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1388,7 +1388,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1408,7 +1408,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/images/logo.png",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1433,7 +1433,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1445,7 +1445,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.bundle.scp.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-nhvyf59vmr.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-nhvyf59vmr.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -1476,7 +1476,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:12:49 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1500,7 +1500,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.bundle.scp.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1525,7 +1525,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:12:49 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1537,7 +1537,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.bundle.scp.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-nhvyf59vmr.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-nhvyf59vmr.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1566,7 +1566,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:12:49 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1582,7 +1582,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-nhvyf59vmr.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-nhvyf59vmr.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -1613,7 +1613,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:12:49 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1645,7 +1645,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1670,7 +1670,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:12:49 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1690,7 +1690,7 @@
     },
     {
       "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.nhvyf59vmr.bundle.scp.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-nhvyf59vmr.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-nhvyf59vmr.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1719,7 +1719,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:12:49 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1743,7 +1743,7 @@
     },
     {
       "Route": "Jamper-Financial.Web.skca0f8r2d.styles.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\compressed\\mjqb8mmh8f-skca0f8r2d.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\compressed\\mjqb8mmh8f-skca0f8r2d.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -1766,7 +1766,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:12:50 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1810,7 +1810,7 @@
     },
     {
       "Route": "Jamper-Financial.Web.skca0f8r2d.styles.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Web.styles.css",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Web.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1835,7 +1835,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:12:50 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Link",
@@ -1859,7 +1859,7 @@
     },
     {
       "Route": "Jamper-Financial.Web.skca0f8r2d.styles.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\compressed\\mjqb8mmh8f-skca0f8r2d.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\compressed\\mjqb8mmh8f-skca0f8r2d.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1880,7 +1880,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:12:50 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1912,7 +1912,7 @@
     },
     {
       "Route": "Jamper-Financial.Web.styles.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\compressed\\mjqb8mmh8f-skca0f8r2d.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\compressed\\mjqb8mmh8f-skca0f8r2d.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -1935,7 +1935,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:12:50 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1971,7 +1971,7 @@
     },
     {
       "Route": "Jamper-Financial.Web.styles.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Web.styles.css",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Web.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1996,7 +1996,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:12:50 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Link",
@@ -2012,7 +2012,7 @@
     },
     {
       "Route": "Jamper-Financial.Web.styles.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\compressed\\mjqb8mmh8f-skca0f8r2d.gz",
+      "AssetFile": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Web\\obj\\Debug\\net9.0\\compressed\\mjqb8mmh8f-skca0f8r2d.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2033,7 +2033,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:12:50 GMT"
+          "Value": "Mon, 02 Dec 2024 23:27:52 GMT"
         },
         {
           "Name": "Cache-Control",

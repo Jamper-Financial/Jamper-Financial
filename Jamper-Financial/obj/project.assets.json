@@ -16963,7 +16963,7 @@
         }
       }
     },
-    "net9.0-ios18.0": {
+    "net9.0-ios18.1": {
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -17780,7 +17780,7 @@
         }
       }
     },
-    "net9.0-ios18.0/android-arm64": {
+    "net9.0-ios18.1/android-arm64": {
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -18597,7 +18597,7 @@
         }
       }
     },
-    "net9.0-ios18.0/android-x64": {
+    "net9.0-ios18.1/android-x64": {
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -19414,7 +19414,7 @@
         }
       }
     },
-    "net9.0-ios18.0/iossimulator-x64": {
+    "net9.0-ios18.1/iossimulator-x64": {
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -20231,7 +20231,7 @@
         }
       }
     },
-    "net9.0-ios18.0/maccatalyst-x64": {
+    "net9.0-ios18.1/maccatalyst-x64": {
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -21048,7 +21048,7 @@
         }
       }
     },
-    "net9.0-ios18.0/win10-x64": {
+    "net9.0-ios18.1/win10-x64": {
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -21865,7 +21865,7 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0": {
+    "net9.0-maccatalyst18.1": {
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -22776,7 +22776,7 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0/android-arm64": {
+    "net9.0-maccatalyst18.1/android-arm64": {
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -23600,7 +23600,7 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0/android-x64": {
+    "net9.0-maccatalyst18.1/android-x64": {
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -24424,7 +24424,7 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0/iossimulator-x64": {
+    "net9.0-maccatalyst18.1/iossimulator-x64": {
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -25245,7 +25245,7 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0/maccatalyst-x64": {
+    "net9.0-maccatalyst18.1/maccatalyst-x64": {
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -26069,7 +26069,7 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0/win10-x64": {
+    "net9.0-maccatalyst18.1/win10-x64": {
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -37463,14 +37463,14 @@
       "Microsoft.Maui.Controls >= 9.0.0",
       "Microsoft.NET.ILLink.Tasks >= 9.0.0"
     ],
-    "net9.0-ios18.0": [
+    "net9.0-ios18.1": [
       "Jamper-Financial.Shared >= 1.0.0",
       "Microsoft.AspNetCore.Components.WebView.Maui >= 9.0.0",
       "Microsoft.Extensions.Logging.Debug >= 9.0.0",
       "Microsoft.Maui.Controls >= 9.0.0",
       "Microsoft.NET.ILLink.Tasks >= 9.0.0"
     ],
-    "net9.0-maccatalyst18.0": [
+    "net9.0-maccatalyst18.1": [
       "Jamper-Financial.Shared >= 1.0.0",
       "Microsoft.AspNetCore.Components.WebView.Maui >= 9.0.0",
       "Microsoft.Extensions.Logging.Debug >= 9.0.0",
@@ -37485,24 +37485,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\emild\\.nuget\\packages\\": {},
+    "C:\\Users\\paolo\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
+      "projectUniqueName": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
       "projectName": "Jamper-Financial",
-      "projectPath": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
-      "packagesPath": "C:\\Users\\emild\\.nuget\\packages\\",
-      "outputPath": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial\\obj\\",
+      "projectPath": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
+      "packagesPath": "C:\\Users\\paolo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\emild\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\paolo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -37521,32 +37521,32 @@
         "net9.0-android35.0": {
           "targetAlias": "net9.0-android",
           "projectReferences": {
-            "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         },
-        "net9.0-ios18.0": {
+        "net9.0-ios18.1": {
           "targetAlias": "net9.0-ios",
           "projectReferences": {
-            "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         },
-        "net9.0-maccatalyst18.0": {
+        "net9.0-maccatalyst18.1": {
           "targetAlias": "net9.0-maccatalyst",
           "projectReferences": {
-            "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         },
         "net9.0-windows10.0.19041": {
           "targetAlias": "net9.0-windows10.0.19041.0",
           "projectReferences": {
-            "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\Users\\paolo\\Desktop\\FInal Sad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         }
@@ -37607,7 +37607,7 @@
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
       },
-      "net9.0-ios18.0": {
+      "net9.0-ios18.1": {
         "targetAlias": "net9.0-ios",
         "dependencies": {
           "Microsoft.AspNetCore.Components.WebView.Maui": {
@@ -37650,7 +37650,7 @@
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
       },
-      "net9.0-maccatalyst18.0": {
+      "net9.0-maccatalyst18.1": {
         "targetAlias": "net9.0-maccatalyst",
         "dependencies": {
           "Microsoft.AspNetCore.Components.WebView.Maui": {
@@ -37721,12 +37721,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.Windows.SDK.NET.Ref",
-            "version": "[10.0.19041.54, 10.0.19041.54]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
