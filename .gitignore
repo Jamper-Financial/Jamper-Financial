@@ -1,3 +1,9 @@
 .vs/*
 Debug/
 Release/
+*.editorconfig
+/Jamper-Financial.Shared/obj
+/Jamper-Financial.Shared/obj/Debug
+/Jamper-Financial.Shared/obj/Debug/net9.0
+/Jamper-Financial.Shared/obj
+/.vs/Jamper-Financial/CopilotIndices

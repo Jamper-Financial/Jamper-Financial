@@ -1,9 +1,0 @@
-C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\wwwroot\bootstrap\bootstrap.min.css
-C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\wwwroot\app.css
-C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\wwwroot\bootstrap\bootstrap.min.css.map
-wwwroot\app.css
-wwwroot\bootstrap\bootstrap.min.css
-wwwroot\bootstrap\bootstrap.min.css.map
-wwwroot\favicon.png
-wwwroot\images\Jamper.png
-wwwroot\images\logo.png
