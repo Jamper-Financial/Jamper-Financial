@@ -67,3 +67,40 @@ C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Fina
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\scopedcss\Pages\CalendarPage.razor.rz.scp.css
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\eq1ix6lcgi-sa7ftat05u.gz
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\4yfxhic0vi-sa7ftat05u.gz
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.csproj.AssemblyReference.cache
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.AssemblyInfoInputs.cache
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.AssemblyInfo.cs
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.csproj.CoreCompileInputs.cache
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.sourcelink.json
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.dll
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\refint\Jamper-Financial.Shared.dll
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.pdb
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\bin\Debug\net9.0\Jamper-Financial.Shared.staticwebassets.runtime.json
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\bin\Debug\net9.0\Jamper-Financial.Shared.staticwebassets.endpoints.json
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\bin\Debug\net9.0\Jamper-Financial.Shared.deps.json
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\bin\Debug\net9.0\Jamper-Financial.Shared.dll
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\bin\Debug\net9.0\Jamper-Financial.Shared.pdb
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\scopedcss\Layout\MainLayout.razor.rz.scp.css
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\scopedcss\Layout\NavMenu.razor.rz.scp.css
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\scopedcss\Pages\CalendarPage.razor.rz.scp.css
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\scopedcss\bundle\Jamper-Financial.Shared.styles.css
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\scopedcss\projectbundle\Jamper-Financial.Shared.bundle.scp.css
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\aqet3isv10-da95v2qkru.gz
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\4tpc2xqu2k-6gzpyzhau4.gz
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\col4sr76l5-8inm30yfxf.gz
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\7eaoeuyg9i-8ek1hxkeri.gz
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\iebbrayiro-w5nb6euikb.gz
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\eq1ix6lcgi-sa7ftat05u.gz
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\4yfxhic0vi-sa7ftat05u.gz
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.development.json
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets\msbuild.Jamper-Financial.Shared.Microsoft.AspNetCore.StaticWebAssets.props
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets\msbuild.Jamper-Financial.Shared.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets\msbuild.build.Jamper-Financial.Shared.props
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.Jamper-Financial.Shared.props
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.Jamper-Financial.Shared.props
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.pack.json
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\ref\Jamper-Financial.Shared.dll

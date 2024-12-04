@@ -74,3 +74,7 @@ C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebas
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json

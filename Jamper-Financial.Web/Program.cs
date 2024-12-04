@@ -2,8 +2,12 @@ using Jamper_Financial.Shared.Services;
 using Jamper_Financial.Web.Components;
 using Jamper_Financial.Web.Services;
 using Microsoft.Extensions.FileProviders;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Builder.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -11,6 +15,16 @@ builder.Services.AddRazorComponents()
 
 // Add device-specific services used by the Jamper_Financial.Shared project
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
+builder.Services.AddSingleton<LoginStateService>();
+
+// Add Firebase Service
+builder.Services.AddSingleton<FirebaseService>();
+
+// Initialize Firebase
+FirebaseApp.Create(new AppOptions
+{
+    Credential = GoogleCredential.FromFile("../Jamper-Financial.Shared/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json")
+});
 
 var app = builder.Build();
 

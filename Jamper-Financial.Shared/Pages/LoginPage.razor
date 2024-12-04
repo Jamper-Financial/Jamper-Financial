@@ -1,5 +1,9 @@
+<script type="module" src="/js/firebase-auth.js"></script>
+
 @page "/login"
 @using Jamper_Financial.Shared.Data
+@using Jamper_Financial.Shared.Services
+@inject LoginStateService LoginState
 
 <div class="login-container">
     <div class="login-left">
@@ -23,14 +27,14 @@
                 @* display error message if any *@
                 @if (!string.IsNullOrWhiteSpace(ErrorMessage))
                 {
-                                <div class="alert alert-danger" role="alert">
+                    <div class="alert alert-danger" role="alert">
                         @ErrorMessage
-                                </div>
+                    </div>
                 }
 
                 <a href="#" class="forgot-password">Forgot your password or username?</a>
                 <div class="social-login">
-                    <button type="button" class="social-button google">Continue using Google</button>
+                    <button type="button" class="social-button google" @onclick="SignInWithGoogle">Continue using Google</button>
                     <button type="button" class="social-button facebook">Continue using Facebook</button>
                 </div>
 
@@ -52,6 +56,11 @@
     // Inject NavigationManager
     [Inject]
     private NavigationManager Navigation { get; set; }
+    [Inject]
+    private IJSRuntime JSRuntime { get; set; }
+
+    // To determine if it is a google login or not
+    private bool IsGoogleLogin { get; set; } = false;
 
     // Properties
     private string Identifier { get; set; } = string.Empty;
@@ -69,6 +78,20 @@
         Navigation.NavigateTo("/");
     }
 
+    // Google login
+    private async Task SignInWithGoogle()
+    {
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("signInWithGoogle");
+            LoginState.IsGoogleLogin = true; // Set flag for Google Login
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error during Google login: {ex.Message}";
+        }
+    }
+
     // Handle login process
     private async Task HandleLoginAsync()
     {
@@ -83,6 +106,7 @@
 
         if (isValid)
         {
+            LoginState.IsGoogleLogin = false; // Set flag for normal login
             ErrorMessage = string.Empty;
             Console.WriteLine("Login successful");
 
@@ -94,8 +118,11 @@
         {
             ErrorMessage = "Invalid email/username or password.";
         }
+
+
     }
 }
+
 <Style>
     body {
         font-family: 'Inter', sans-serif;

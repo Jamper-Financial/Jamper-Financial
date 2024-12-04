@@ -2,6 +2,109 @@
   "version": 3,
   "targets": {
     "net9.0-android35.0": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "GoogleGson/2.11.0.3": {
         "type": "package",
         "dependencies": {
@@ -153,6 +256,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -759,6 +875,19 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.9.172": {
         "type": "package",
         "dependencies": {
@@ -836,6 +965,63 @@
         },
         "runtime": {
           "lib/netcoreapp2.0/_._": {}
+        }
+      },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net7.0/System.Management.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
         }
       },
       "System.Memory/4.5.3": {
@@ -2816,6 +3002,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -2829,6 +3016,109 @@
       }
     },
     "net9.0-android35.0/android-arm64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "GoogleGson/2.11.0.3": {
         "type": "package",
         "dependencies": {
@@ -2980,6 +3270,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -3586,6 +3889,19 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.9.172": {
         "type": "package",
         "dependencies": {
@@ -3663,6 +3979,57 @@
         },
         "runtime": {
           "lib/netcoreapp2.0/_._": {}
+        }
+      },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
         }
       },
       "System.Memory/4.5.3": {
@@ -5643,6 +6010,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -5656,6 +6024,109 @@
       }
     },
     "net9.0-android35.0/android-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "GoogleGson/2.11.0.3": {
         "type": "package",
         "dependencies": {
@@ -5807,6 +6278,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -6413,6 +6897,19 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.9.172": {
         "type": "package",
         "dependencies": {
@@ -6490,6 +6987,57 @@
         },
         "runtime": {
           "lib/netcoreapp2.0/_._": {}
+        }
+      },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
         }
       },
       "System.Memory/4.5.3": {
@@ -8470,6 +9018,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -8483,6 +9032,109 @@
       }
     },
     "net9.0-android35.0/iossimulator-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "GoogleGson/2.11.0.3": {
         "type": "package",
         "dependencies": {
@@ -8634,6 +9286,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -9240,6 +9905,19 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.9.172": {
         "type": "package",
         "dependencies": {
@@ -9317,6 +9995,57 @@
         },
         "runtime": {
           "lib/netcoreapp2.0/_._": {}
+        }
+      },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
         }
       },
       "System.Memory/4.5.3": {
@@ -11297,6 +12026,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -11310,6 +12040,109 @@
       }
     },
     "net9.0-android35.0/maccatalyst-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "GoogleGson/2.11.0.3": {
         "type": "package",
         "dependencies": {
@@ -11461,6 +12294,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -12067,6 +12913,19 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.9.172": {
         "type": "package",
         "dependencies": {
@@ -12144,6 +13003,57 @@
         },
         "runtime": {
           "lib/netcoreapp2.0/_._": {}
+        }
+      },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
         }
       },
       "System.Memory/4.5.3": {
@@ -14124,6 +15034,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -14137,6 +15048,109 @@
       }
     },
     "net9.0-android35.0/win10-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "GoogleGson/2.11.0.3": {
         "type": "package",
         "dependencies": {
@@ -14288,6 +15302,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -14894,6 +15921,19 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.9.172": {
         "type": "package",
         "dependencies": {
@@ -14971,6 +16011,57 @@
         },
         "runtime": {
           "lib/netcoreapp2.0/_._": {}
+        }
+      },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
         }
       },
       "System.Memory/4.5.3": {
@@ -16951,6 +18042,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -16963,7 +18055,110 @@
         }
       }
     },
-    "net9.0-ios18.0": {
+    "net9.0-ios18.1": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -17099,6 +18294,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -17694,6 +18902,19 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.9.172": {
         "type": "package",
         "dependencies": {
@@ -17747,6 +18968,63 @@
           "lib/net6.0/SQLitePCLRaw.provider.sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net7.0/System.Management.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -17768,6 +19046,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -17780,7 +19059,110 @@
         }
       }
     },
-    "net9.0-ios18.0/android-arm64": {
+    "net9.0-ios18.1/android-arm64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -17916,6 +19298,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -18511,6 +19906,19 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.9.172": {
         "type": "package",
         "dependencies": {
@@ -18564,6 +19972,57 @@
           "lib/net6.0/SQLitePCLRaw.provider.sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -18585,6 +20044,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -18597,7 +20057,110 @@
         }
       }
     },
-    "net9.0-ios18.0/android-x64": {
+    "net9.0-ios18.1/android-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -18733,6 +20296,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -19328,6 +20904,19 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.9.172": {
         "type": "package",
         "dependencies": {
@@ -19381,6 +20970,57 @@
           "lib/net6.0/SQLitePCLRaw.provider.sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -19402,6 +21042,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -19414,7 +21055,110 @@
         }
       }
     },
-    "net9.0-ios18.0/iossimulator-x64": {
+    "net9.0-ios18.1/iossimulator-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -19550,6 +21294,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -20145,6 +21902,19 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.9.172": {
         "type": "package",
         "dependencies": {
@@ -20198,6 +21968,57 @@
           "lib/net6.0/SQLitePCLRaw.provider.sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -20219,6 +22040,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -20231,7 +22053,110 @@
         }
       }
     },
-    "net9.0-ios18.0/maccatalyst-x64": {
+    "net9.0-ios18.1/maccatalyst-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -20367,6 +22292,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -20962,6 +22900,19 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.9.172": {
         "type": "package",
         "dependencies": {
@@ -21015,6 +22966,57 @@
           "lib/net6.0/SQLitePCLRaw.provider.sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -21036,6 +23038,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -21048,7 +23051,110 @@
         }
       }
     },
-    "net9.0-ios18.0/win10-x64": {
+    "net9.0-ios18.1/win10-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -21184,6 +23290,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -21779,6 +23898,19 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.9.172": {
         "type": "package",
         "dependencies": {
@@ -21832,6 +23964,57 @@
           "lib/net6.0/SQLitePCLRaw.provider.sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -21853,6 +24036,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -21865,7 +24049,110 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0": {
+    "net9.0-maccatalyst18.1": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -22001,6 +24288,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -22594,6 +24894,19 @@
         "type": "package",
         "build": {
           "build/Microsoft.NET.ILLink.Tasks.props": {}
+        }
+      },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
       "sqlite-net-pcl/1.9.172": {
@@ -22751,6 +25064,63 @@
           "lib/net6.0/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net7.0/System.Management.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -22764,6 +25134,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -22776,7 +25147,110 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0/android-arm64": {
+    "net9.0-maccatalyst18.1/android-arm64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -22912,6 +25386,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -23505,6 +25992,19 @@
         "type": "package",
         "build": {
           "build/Microsoft.NET.ILLink.Tasks.props": {}
+        }
+      },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
       "sqlite-net-pcl/1.9.172": {
@@ -23575,6 +26075,57 @@
           "lib/net6.0/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -23588,6 +26139,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -23600,7 +26152,110 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0/android-x64": {
+    "net9.0-maccatalyst18.1/android-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -23736,6 +26391,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -24329,6 +26997,19 @@
         "type": "package",
         "build": {
           "build/Microsoft.NET.ILLink.Tasks.props": {}
+        }
+      },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
       "sqlite-net-pcl/1.9.172": {
@@ -24399,6 +27080,57 @@
           "lib/net6.0/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -24412,6 +27144,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -24424,7 +27157,110 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0/iossimulator-x64": {
+    "net9.0-maccatalyst18.1/iossimulator-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -24560,6 +27396,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -25153,6 +28002,19 @@
         "type": "package",
         "build": {
           "build/Microsoft.NET.ILLink.Tasks.props": {}
+        }
+      },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
       "sqlite-net-pcl/1.9.172": {
@@ -25220,6 +28082,57 @@
           "lib/net6.0/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -25233,6 +28146,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -25245,7 +28159,110 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0/maccatalyst-x64": {
+    "net9.0-maccatalyst18.1/maccatalyst-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -25381,6 +28398,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -25974,6 +29004,19 @@
         "type": "package",
         "build": {
           "build/Microsoft.NET.ILLink.Tasks.props": {}
+        }
+      },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
       "sqlite-net-pcl/1.9.172": {
@@ -26044,6 +29087,57 @@
           "lib/net6.0/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -26057,6 +29151,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -26069,7 +29164,110 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0/win10-x64": {
+    "net9.0-maccatalyst18.1/win10-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -26205,6 +29403,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -26800,6 +30011,19 @@
           "build/Microsoft.NET.ILLink.Tasks.props": {}
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.9.172": {
         "type": "package",
         "dependencies": {
@@ -26865,6 +30089,57 @@
           "lib/net6.0/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -26878,6 +30153,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -26891,6 +30167,109 @@
       }
     },
     "net9.0-windows10.0.19041": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -27026,6 +30405,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -27833,6 +31225,19 @@
           }
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.9.172": {
         "type": "package",
         "dependencies": {
@@ -27988,6 +31393,63 @@
           "lib/net6.0-windows7.0/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net7.0/System.Management.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -28001,6 +31463,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -28014,6 +31477,109 @@
       }
     },
     "net9.0-windows10.0.19041/android-arm64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -28149,6 +31715,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -28912,6 +32491,19 @@
         "build": {
           "buildTransitive/Microsoft.WindowsAppSDK.props": {},
           "buildTransitive/Microsoft.WindowsAppSDK.targets": {}
+        }
+      },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
       "sqlite-net-pcl/1.9.172": {
@@ -28982,6 +32574,57 @@
           "lib/net6.0-windows7.0/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -28995,6 +32638,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -29008,6 +32652,109 @@
       }
     },
     "net9.0-windows10.0.19041/android-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -29143,6 +32890,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -29906,6 +33666,19 @@
         "build": {
           "buildTransitive/Microsoft.WindowsAppSDK.props": {},
           "buildTransitive/Microsoft.WindowsAppSDK.targets": {}
+        }
+      },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
       "sqlite-net-pcl/1.9.172": {
@@ -29976,6 +33749,57 @@
           "lib/net6.0-windows7.0/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -29989,6 +33813,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -30002,6 +33827,109 @@
       }
     },
     "net9.0-windows10.0.19041/iossimulator-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -30137,6 +34065,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -30900,6 +34841,19 @@
         "build": {
           "buildTransitive/Microsoft.WindowsAppSDK.props": {},
           "buildTransitive/Microsoft.WindowsAppSDK.targets": {}
+        }
+      },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
       "sqlite-net-pcl/1.9.172": {
@@ -30967,6 +34921,57 @@
           "lib/net6.0-windows7.0/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -30980,6 +34985,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -30993,6 +34999,109 @@
       }
     },
     "net9.0-windows10.0.19041/maccatalyst-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -31128,6 +35237,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -31891,6 +36013,19 @@
         "build": {
           "buildTransitive/Microsoft.WindowsAppSDK.props": {},
           "buildTransitive/Microsoft.WindowsAppSDK.targets": {}
+        }
+      },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
         }
       },
       "sqlite-net-pcl/1.9.172": {
@@ -31961,6 +36096,57 @@
           "lib/net6.0-windows7.0/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -31974,6 +36160,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -31987,6 +36174,109 @@
       }
     },
     "net9.0-windows10.0.19041/win10-x64": {
+      "FirebaseAdmin/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax.Rest": "4.8.0",
+          "Google.Apis.Auth": "1.68.0",
+          "System.Collections.Immutable": "8.0.0"
+        },
+        "compile": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/FirebaseAdmin.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Google.Api.Gax/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Bcl.AsyncInterfaces": "6.0.0",
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Api.Gax.Rest/4.8.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Api.Gax": "4.8.0",
+          "Google.Apis.Auth": "[1.67.0, 2.0.0)",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "6.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.0/Google.Api.Gax.Rest.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis.Core": "1.68.0"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Auth/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Apis": "1.68.0",
+          "Google.Apis.Core": "1.68.0",
+          "System.Management": "7.0.2"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Auth.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Google.Apis.Core/1.68.0": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3"
+        },
+        "compile": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Google.Apis.Core.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Authorization/9.0.0": {
         "type": "package",
         "dependencies": {
@@ -32122,6 +36412,19 @@
         },
         "runtime": {
           "lib/net9.0/Microsoft.AspNetCore.Metadata.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll": {
             "related": ".xml"
           }
         }
@@ -32896,6 +37199,19 @@
           "buildTransitive/Microsoft.WindowsAppSDK.targets": {}
         }
       },
+      "Newtonsoft.Json/13.0.3": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "sqlite-net-pcl/1.9.172": {
         "type": "package",
         "dependencies": {
@@ -32964,6 +37280,57 @@
           "lib/net6.0-windows7.0/SQLitePCLRaw.provider.e_sqlite3.dll": {}
         }
       },
+      "System.CodeDom/7.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net7.0/System.CodeDom.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Collections.Immutable/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Collections.Immutable.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
+      "System.Management/7.0.2": {
+        "type": "package",
+        "dependencies": {
+          "System.CodeDom": "7.0.0"
+        },
+        "compile": {
+          "lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "runtimes/win/lib/net7.0/System.Management.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Memory/4.5.3": {
         "type": "package",
         "compile": {
@@ -32977,6 +37344,7 @@
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
         "dependencies": {
+          "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
           "sqlite-net-pcl": "1.9.172"
@@ -32991,6 +37359,128 @@
     }
   },
   "libraries": {
+    "FirebaseAdmin/3.1.0": {
+      "sha512": "QNafwBg5psTGKOIyo78sNYjJ9GI5z/TPqOgpyOOv+2nzeK8sVaIPT2eDpcgzpxcRcKbjISbel38cQH/pIHNeOA==",
+      "type": "package",
+      "path": "firebaseadmin/3.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "firebaseadmin.3.1.0.nupkg.sha512",
+        "firebaseadmin.nuspec",
+        "lib/net462/FirebaseAdmin.dll",
+        "lib/net462/FirebaseAdmin.xml",
+        "lib/net6.0/FirebaseAdmin.dll",
+        "lib/net6.0/FirebaseAdmin.xml",
+        "lib/netstandard2.0/FirebaseAdmin.dll",
+        "lib/netstandard2.0/FirebaseAdmin.xml"
+      ]
+    },
+    "Google.Api.Gax/4.8.0": {
+      "sha512": "xlV8Jq/G5CQAA3PwYAuKGjfzGOP7AvjhREnE6vgZlzxREGYchHudZWa2PWSqFJL+MBtz9YgitLpRogANN3CVvg==",
+      "type": "package",
+      "path": "google.api.gax/4.8.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.api.gax.4.8.0.nupkg.sha512",
+        "google.api.gax.nuspec",
+        "lib/net462/Google.Api.Gax.dll",
+        "lib/net462/Google.Api.Gax.pdb",
+        "lib/net462/Google.Api.Gax.xml",
+        "lib/netstandard2.0/Google.Api.Gax.dll",
+        "lib/netstandard2.0/Google.Api.Gax.pdb",
+        "lib/netstandard2.0/Google.Api.Gax.xml"
+      ]
+    },
+    "Google.Api.Gax.Rest/4.8.0": {
+      "sha512": "zaA5LZ2VvGj/wwIzRB68swr7khi2kWNgqWvsB0fYtScIAl3kGkGtqiBcx63H1YLeKr5xau1866bFjTeReH6FSQ==",
+      "type": "package",
+      "path": "google.api.gax.rest/4.8.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.api.gax.rest.4.8.0.nupkg.sha512",
+        "google.api.gax.rest.nuspec",
+        "lib/net462/Google.Api.Gax.Rest.dll",
+        "lib/net462/Google.Api.Gax.Rest.pdb",
+        "lib/net462/Google.Api.Gax.Rest.xml",
+        "lib/netstandard2.0/Google.Api.Gax.Rest.dll",
+        "lib/netstandard2.0/Google.Api.Gax.Rest.pdb",
+        "lib/netstandard2.0/Google.Api.Gax.Rest.xml"
+      ]
+    },
+    "Google.Apis/1.68.0": {
+      "sha512": "s2MymhdpH+ybZNBeZ2J5uFgFHApBp+QXf9FjZSdM1lk/vx5VqIknJwnaWiuAzXxPrLEkesX0Q+UsiWn39yZ9zw==",
+      "type": "package",
+      "path": "google.apis/1.68.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.apis.1.68.0.nupkg.sha512",
+        "google.apis.nuspec",
+        "lib/net462/Google.Apis.dll",
+        "lib/net462/Google.Apis.pdb",
+        "lib/net462/Google.Apis.xml",
+        "lib/net6.0/Google.Apis.dll",
+        "lib/net6.0/Google.Apis.pdb",
+        "lib/net6.0/Google.Apis.xml",
+        "lib/netstandard2.0/Google.Apis.dll",
+        "lib/netstandard2.0/Google.Apis.pdb",
+        "lib/netstandard2.0/Google.Apis.xml"
+      ]
+    },
+    "Google.Apis.Auth/1.68.0": {
+      "sha512": "hFx8Qz5bZ4w0hpnn4tSmZaaFpjAMsgVElZ+ZgVLUZ2r9i+AKcoVgwiNfv1pruNS5cCvpXqhKECbruBCfRezPHA==",
+      "type": "package",
+      "path": "google.apis.auth/1.68.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.apis.auth.1.68.0.nupkg.sha512",
+        "google.apis.auth.nuspec",
+        "lib/net462/Google.Apis.Auth.dll",
+        "lib/net462/Google.Apis.Auth.pdb",
+        "lib/net462/Google.Apis.Auth.xml",
+        "lib/net6.0/Google.Apis.Auth.dll",
+        "lib/net6.0/Google.Apis.Auth.pdb",
+        "lib/net6.0/Google.Apis.Auth.xml",
+        "lib/netstandard2.0/Google.Apis.Auth.dll",
+        "lib/netstandard2.0/Google.Apis.Auth.pdb",
+        "lib/netstandard2.0/Google.Apis.Auth.xml"
+      ]
+    },
+    "Google.Apis.Core/1.68.0": {
+      "sha512": "pAqwa6pfu53UXCR2b7A/PAPXeuVg6L1OFw38WckN27NU2+mf+KTjoEg2YGv/f0UyKxzz7DxF1urOTKg/6dTP9g==",
+      "type": "package",
+      "path": "google.apis.core/1.68.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "NuGetIcon.png",
+        "google.apis.core.1.68.0.nupkg.sha512",
+        "google.apis.core.nuspec",
+        "lib/net462/Google.Apis.Core.dll",
+        "lib/net462/Google.Apis.Core.pdb",
+        "lib/net462/Google.Apis.Core.xml",
+        "lib/net6.0/Google.Apis.Core.dll",
+        "lib/net6.0/Google.Apis.Core.pdb",
+        "lib/net6.0/Google.Apis.Core.xml",
+        "lib/netstandard2.0/Google.Apis.Core.dll",
+        "lib/netstandard2.0/Google.Apis.Core.pdb",
+        "lib/netstandard2.0/Google.Apis.Core.xml"
+      ]
+    },
     "GoogleGson/2.11.0.3": {
       "sha512": "nMb6feuXUifEQFQNsMHTB9iBY9nidJq2aVdzyV3Tgs7rLIXF+lXIr3aN+QB2GoSCS+tJJZcO72i3Y3pmmrjiYw==",
       "type": "package",
@@ -33163,6 +37653,27 @@
         "lib/netstandard2.0/Microsoft.AspNetCore.Metadata.xml",
         "microsoft.aspnetcore.metadata.9.0.0.nupkg.sha512",
         "microsoft.aspnetcore.metadata.nuspec"
+      ]
+    },
+    "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
+      "sha512": "UcSjPsst+DfAdJGVDsu346FX0ci0ah+lw3WRtn18NUwEqRt70HaOQ7lI72vy3+1LxtqI3T5GWwV39rQSrCzAeg==",
+      "type": "package",
+      "path": "microsoft.bcl.asyncinterfaces/6.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/Microsoft.Bcl.AsyncInterfaces.dll",
+        "lib/net461/Microsoft.Bcl.AsyncInterfaces.xml",
+        "lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.dll",
+        "lib/netstandard2.0/Microsoft.Bcl.AsyncInterfaces.xml",
+        "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.dll",
+        "lib/netstandard2.1/Microsoft.Bcl.AsyncInterfaces.xml",
+        "microsoft.bcl.asyncinterfaces.6.0.0.nupkg.sha512",
+        "microsoft.bcl.asyncinterfaces.nuspec",
+        "useSharedDesignerContext.txt"
       ]
     },
     "Microsoft.Data.Sqlite.Core/9.0.0": {
@@ -35334,6 +39845,36 @@
         "tools/x86/GenXbf.dll"
       ]
     },
+    "Newtonsoft.Json/13.0.3": {
+      "sha512": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ==",
+      "type": "package",
+      "path": "newtonsoft.json/13.0.3",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "README.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/net6.0/Newtonsoft.Json.dll",
+        "lib/net6.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "newtonsoft.json.13.0.3.nupkg.sha512",
+        "newtonsoft.json.nuspec",
+        "packageIcon.png"
+      ]
+    },
     "sqlite-net-pcl/1.9.172": {
       "sha512": "go533+huyvg5bOMmCpX+DyvLrcVRiEBIpqEiDHgXRijWIBBNkWnyMr/w+5ZzrUArKY+4ApucsbBnFtP3QITrJg==",
       "type": "package",
@@ -35490,6 +40031,91 @@
         "system.buffers.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
+      ]
+    },
+    "System.CodeDom/7.0.0": {
+      "sha512": "GLltyqEsE5/3IE+zYRP5sNa1l44qKl9v+bfdMcwg+M9qnQf47wK3H0SUR/T+3N4JEQXF3vV4CSuuo0rsg+nq2A==",
+      "type": "package",
+      "path": "system.codedom/7.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.CodeDom.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.CodeDom.targets",
+        "lib/net462/System.CodeDom.dll",
+        "lib/net462/System.CodeDom.xml",
+        "lib/net6.0/System.CodeDom.dll",
+        "lib/net6.0/System.CodeDom.xml",
+        "lib/net7.0/System.CodeDom.dll",
+        "lib/net7.0/System.CodeDom.xml",
+        "lib/netstandard2.0/System.CodeDom.dll",
+        "lib/netstandard2.0/System.CodeDom.xml",
+        "system.codedom.7.0.0.nupkg.sha512",
+        "system.codedom.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Collections.Immutable/8.0.0": {
+      "sha512": "AurL6Y5BA1WotzlEvVaIDpqzpIPvYnnldxru8oXJU2yFxFUy3+pNXjXd1ymO+RA0rq0+590Q8gaz2l3Sr7fmqg==",
+      "type": "package",
+      "path": "system.collections.immutable/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Collections.Immutable.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Collections.Immutable.targets",
+        "lib/net462/System.Collections.Immutable.dll",
+        "lib/net462/System.Collections.Immutable.xml",
+        "lib/net6.0/System.Collections.Immutable.dll",
+        "lib/net6.0/System.Collections.Immutable.xml",
+        "lib/net7.0/System.Collections.Immutable.dll",
+        "lib/net7.0/System.Collections.Immutable.xml",
+        "lib/net8.0/System.Collections.Immutable.dll",
+        "lib/net8.0/System.Collections.Immutable.xml",
+        "lib/netstandard2.0/System.Collections.Immutable.dll",
+        "lib/netstandard2.0/System.Collections.Immutable.xml",
+        "system.collections.immutable.8.0.0.nupkg.sha512",
+        "system.collections.immutable.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Management/7.0.2": {
+      "sha512": "/qEUN91mP/MUQmJnM5y5BdT7ZoPuVrtxnFlbJ8a3kBJGhe2wCzBfnPFtK2wTtEEcf3DMGR9J00GZZfg6HRI6yA==",
+      "type": "package",
+      "path": "system.management/7.0.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Management.targets",
+        "lib/net462/_._",
+        "lib/net6.0/System.Management.dll",
+        "lib/net6.0/System.Management.xml",
+        "lib/net7.0/System.Management.dll",
+        "lib/net7.0/System.Management.xml",
+        "lib/netstandard2.0/System.Management.dll",
+        "lib/netstandard2.0/System.Management.xml",
+        "runtimes/win/lib/net6.0/System.Management.dll",
+        "runtimes/win/lib/net6.0/System.Management.xml",
+        "runtimes/win/lib/net7.0/System.Management.dll",
+        "runtimes/win/lib/net7.0/System.Management.xml",
+        "system.management.7.0.2.nupkg.sha512",
+        "system.management.nuspec",
+        "useSharedDesignerContext.txt"
       ]
     },
     "System.Memory/4.5.3": {
@@ -37463,14 +42089,14 @@
       "Microsoft.Maui.Controls >= 9.0.0",
       "Microsoft.NET.ILLink.Tasks >= 9.0.0"
     ],
-    "net9.0-ios18.0": [
+    "net9.0-ios18.1": [
       "Jamper-Financial.Shared >= 1.0.0",
       "Microsoft.AspNetCore.Components.WebView.Maui >= 9.0.0",
       "Microsoft.Extensions.Logging.Debug >= 9.0.0",
       "Microsoft.Maui.Controls >= 9.0.0",
       "Microsoft.NET.ILLink.Tasks >= 9.0.0"
     ],
-    "net9.0-maccatalyst18.0": [
+    "net9.0-maccatalyst18.1": [
       "Jamper-Financial.Shared >= 1.0.0",
       "Microsoft.AspNetCore.Components.WebView.Maui >= 9.0.0",
       "Microsoft.Extensions.Logging.Debug >= 9.0.0",
@@ -37485,24 +42111,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\emild\\.nuget\\packages\\": {},
+    "C:\\Users\\Spoon\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
+      "projectUniqueName": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
       "projectName": "Jamper-Financial",
-      "projectPath": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
-      "packagesPath": "C:\\Users\\emild\\.nuget\\packages\\",
-      "outputPath": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial\\obj\\",
+      "projectPath": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
+      "packagesPath": "C:\\Users\\Spoon\\.nuget\\packages\\",
+      "outputPath": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\emild\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Spoon\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -37521,32 +42147,32 @@
         "net9.0-android35.0": {
           "targetAlias": "net9.0-android",
           "projectReferences": {
-            "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         },
-        "net9.0-ios18.0": {
+        "net9.0-ios18.1": {
           "targetAlias": "net9.0-ios",
           "projectReferences": {
-            "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         },
-        "net9.0-maccatalyst18.0": {
+        "net9.0-maccatalyst18.1": {
           "targetAlias": "net9.0-maccatalyst",
           "projectReferences": {
-            "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         },
         "net9.0-windows10.0.19041": {
           "targetAlias": "net9.0-windows10.0.19041.0",
           "projectReferences": {
-            "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         }
@@ -37607,7 +42233,7 @@
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
       },
-      "net9.0-ios18.0": {
+      "net9.0-ios18.1": {
         "targetAlias": "net9.0-ios",
         "dependencies": {
           "Microsoft.AspNetCore.Components.WebView.Maui": {
@@ -37650,7 +42276,7 @@
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
       },
-      "net9.0-maccatalyst18.0": {
+      "net9.0-maccatalyst18.1": {
         "targetAlias": "net9.0-maccatalyst",
         "dependencies": {
           "Microsoft.AspNetCore.Components.WebView.Maui": {

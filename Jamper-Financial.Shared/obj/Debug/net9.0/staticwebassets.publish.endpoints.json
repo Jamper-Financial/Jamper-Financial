@@ -3,13 +3,290 @@
   "ManifestType": "Publish",
   "Endpoints": [
     {
+      "Route": "Jamper-Financial.Shared.sa7ftat05u.styles.css",
+      "AssetFile": "Jamper-Financial.Shared.styles.css.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000262398321"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3810"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "sa7ftat05u"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
+        },
+        {
+          "Name": "label",
+          "Value": "Jamper-Financial.Shared.styles.css"
+        }
+      ]
+    },
+    {
+      "Route": "Jamper-Financial.Shared.sa7ftat05u.styles.css",
+      "AssetFile": "Jamper-Financial.Shared.styles.css.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000313774710"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3186"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "sa7ftat05u"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
+        },
+        {
+          "Name": "label",
+          "Value": "Jamper-Financial.Shared.styles.css"
+        }
+      ]
+    },
+    {
+      "Route": "Jamper-Financial.Shared.sa7ftat05u.styles.css",
+      "AssetFile": "Jamper-Financial.Shared.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "18439"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "sa7ftat05u"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
+        },
+        {
+          "Name": "label",
+          "Value": "Jamper-Financial.Shared.styles.css"
+        }
+      ]
+    },
+    {
+      "Route": "Jamper-Financial.Shared.sa7ftat05u.styles.css.br",
+      "AssetFile": "Jamper-Financial.Shared.styles.css.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3186"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "sa7ftat05u"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc="
+        },
+        {
+          "Name": "label",
+          "Value": "Jamper-Financial.Shared.styles.css.br"
+        }
+      ]
+    },
+    {
+      "Route": "Jamper-Financial.Shared.sa7ftat05u.styles.css.gz",
+      "AssetFile": "Jamper-Financial.Shared.styles.css.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3810"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "sa7ftat05u"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU="
+        },
+        {
+          "Name": "label",
+          "Value": "Jamper-Financial.Shared.styles.css.gz"
+        }
+      ]
+    },
+    {
       "Route": "Jamper-Financial.Shared.styles.css",
       "AssetFile": "Jamper-Financial.Shared.styles.css.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000416319734"
+          "Quality": "0.000262398321"
         }
       ],
       "ResponseHeaders": [
@@ -27,7 +304,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2401"
+          "Value": "3810"
         },
         {
           "Name": "Content-Type",
@@ -35,15 +312,15 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
         },
         {
           "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Vary",
@@ -53,7 +330,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         }
       ]
     },
@@ -64,7 +341,7 @@
         {
           "Name": "Content-Encoding",
           "Value": "br",
-          "Quality": "0.000493583416"
+          "Quality": "0.000313774710"
         }
       ],
       "ResponseHeaders": [
@@ -82,7 +359,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2025"
+          "Value": "3186"
         },
         {
           "Name": "Content-Type",
@@ -90,15 +367,15 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
         },
         {
           "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Vary",
@@ -108,7 +385,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         }
       ]
     },
@@ -127,7 +404,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "9268"
+          "Value": "18439"
         },
         {
           "Name": "Content-Type",
@@ -135,17 +412,17 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         }
       ]
     },
@@ -168,7 +445,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2025"
+          "Value": "3186"
         },
         {
           "Name": "Content-Type",
@@ -176,11 +453,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Vary",
@@ -190,7 +467,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I="
+          "Value": "sha256-SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc="
         }
       ]
     },
@@ -213,7 +490,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2401"
+          "Value": "3810"
         },
         {
           "Name": "Content-Type",
@@ -221,11 +498,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Vary",
@@ -235,284 +512,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY="
-        }
-      ]
-    },
-    {
-      "Route": "Jamper-Financial.Shared.th5v8tvdld.styles.css",
-      "AssetFile": "Jamper-Financial.Shared.styles.css.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.000416319734"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2401"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "th5v8tvdld"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
-        },
-        {
-          "Name": "label",
-          "Value": "Jamper-Financial.Shared.styles.css"
-        }
-      ]
-    },
-    {
-      "Route": "Jamper-Financial.Shared.th5v8tvdld.styles.css",
-      "AssetFile": "Jamper-Financial.Shared.styles.css.br",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "br",
-          "Quality": "0.000493583416"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "br"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2025"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "th5v8tvdld"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
-        },
-        {
-          "Name": "label",
-          "Value": "Jamper-Financial.Shared.styles.css"
-        }
-      ]
-    },
-    {
-      "Route": "Jamper-Financial.Shared.th5v8tvdld.styles.css",
-      "AssetFile": "Jamper-Financial.Shared.styles.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "9268"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "th5v8tvdld"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
-        },
-        {
-          "Name": "label",
-          "Value": "Jamper-Financial.Shared.styles.css"
-        }
-      ]
-    },
-    {
-      "Route": "Jamper-Financial.Shared.th5v8tvdld.styles.css.br",
-      "AssetFile": "Jamper-Financial.Shared.styles.css.br",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "br"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2025"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "th5v8tvdld"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I="
-        },
-        {
-          "Name": "label",
-          "Value": "Jamper-Financial.Shared.styles.css.br"
-        }
-      ]
-    },
-    {
-      "Route": "Jamper-Financial.Shared.th5v8tvdld.styles.css.gz",
-      "AssetFile": "Jamper-Financial.Shared.styles.css.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2401"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "th5v8tvdld"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY="
-        },
-        {
-          "Name": "label",
-          "Value": "Jamper-Financial.Shared.styles.css.gz"
+          "Value": "sha256-j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU="
         }
       ]
     },
@@ -557,7 +557,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -612,7 +612,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -653,7 +653,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -694,7 +694,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -739,7 +739,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -794,7 +794,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -857,7 +857,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -906,7 +906,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -955,7 +955,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1008,7 +1008,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1071,7 +1071,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1134,7 +1134,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1183,7 +1183,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1232,7 +1232,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1285,7 +1285,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1348,7 +1348,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1403,7 +1403,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1444,7 +1444,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1495,7 +1495,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1558,7 +1558,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1607,7 +1607,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1656,7 +1656,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1709,7 +1709,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1762,7 +1762,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1807,7 +1807,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1862,7 +1862,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1917,7 +1917,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1958,7 +1958,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1999,7 +1999,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -2044,7 +2044,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -2055,6 +2055,520 @@
         {
           "Name": "integrity",
           "Value": "sha256-Kym5HpgDYV8Caci50HDUPG6WCQ6nTP+8hy429w+zHVU="
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.8ek1hxkeri.json",
+      "AssetFile": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000595947557"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1677"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8ek1hxkeri"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        },
+        {
+          "Name": "label",
+          "Value": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json"
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.8ek1hxkeri.json",
+      "AssetFile": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000623830318"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1602"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8ek1hxkeri"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        },
+        {
+          "Name": "label",
+          "Value": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json"
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.8ek1hxkeri.json",
+      "AssetFile": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2382"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8ek1hxkeri"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        },
+        {
+          "Name": "label",
+          "Value": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json"
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.8ek1hxkeri.json.br",
+      "AssetFile": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1602"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8ek1hxkeri"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ="
+        },
+        {
+          "Name": "label",
+          "Value": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.br"
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.8ek1hxkeri.json.gz",
+      "AssetFile": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1677"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8ek1hxkeri"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc="
+        },
+        {
+          "Name": "label",
+          "Value": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.gz"
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "AssetFile": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000595947557"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1677"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "AssetFile": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000623830318"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1602"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "AssetFile": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2382"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.br",
+      "AssetFile": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1602"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ="
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.gz",
+      "AssetFile": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1677"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc="
         }
       ]
     },
@@ -2085,7 +2599,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -2130,7 +2644,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -2167,7 +2681,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -2212,7 +2726,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -2223,7 +2737,7 @@
       ]
     },
     {
-      "Route": "images/logo.9cfdpoxzd2.png",
+      "Route": "images/logo.3y1l96xecb.png",
       "AssetFile": "images/logo.png",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2237,7 +2751,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "28990"
+          "Value": "106390"
         },
         {
           "Name": "Content-Type",
@@ -2245,21 +2759,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA=\""
+          "Value": "\"Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "9cfdpoxzd2"
+          "Value": "3y1l96xecb"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA="
+          "Value": "sha256-Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0="
         },
         {
           "Name": "label",
@@ -2282,7 +2796,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "28990"
+          "Value": "106390"
         },
         {
           "Name": "Content-Type",
@@ -2290,17 +2804,531 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA=\""
+          "Value": "\"Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA="
+          "Value": "sha256-Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.js",
+      "AssetFile": "js/firebase-auth.js.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001322751323"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.js",
+      "AssetFile": "js/firebase-auth.js.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.001610305958"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "620"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.js",
+      "AssetFile": "js/firebase-auth.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1754"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.js.br",
+      "AssetFile": "js/firebase-auth.js.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "620"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.js.gz",
+      "AssetFile": "js/firebase-auth.js.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.w5nb6euikb.js",
+      "AssetFile": "js/firebase-auth.js.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001322751323"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w5nb6euikb"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        },
+        {
+          "Name": "label",
+          "Value": "js/firebase-auth.js"
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.w5nb6euikb.js",
+      "AssetFile": "js/firebase-auth.js.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.001610305958"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "620"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w5nb6euikb"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        },
+        {
+          "Name": "label",
+          "Value": "js/firebase-auth.js"
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.w5nb6euikb.js",
+      "AssetFile": "js/firebase-auth.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1754"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w5nb6euikb"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        },
+        {
+          "Name": "label",
+          "Value": "js/firebase-auth.js"
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.w5nb6euikb.js.br",
+      "AssetFile": "js/firebase-auth.js.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "620"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w5nb6euikb"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48="
+        },
+        {
+          "Name": "label",
+          "Value": "js/firebase-auth.js.br"
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.w5nb6euikb.js.gz",
+      "AssetFile": "js/firebase-auth.js.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w5nb6euikb"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I="
+        },
+        {
+          "Name": "label",
+          "Value": "js/firebase-auth.js.gz"
         }
       ]
     }

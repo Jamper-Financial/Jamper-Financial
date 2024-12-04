@@ -1,1 +1,30 @@
 .vs/
+# Firebase credentials
+wwwroot/credentials/*.json
+
+# Ignore build and output directories
+bin/
+obj/
+
+# Ignore temporary files and logs
+*.log
+*.tmp
+*.cache
+*.bak
+*.swp
+
+# Ignore user-specific files
+*.user
+*.suo
+.vscode/
+.idea/
+
+# Ignore environment configuration files
+.env
+*.env
+
+# Ignore specific IDE settings
+*.db
+*.sqlite
+*.db-shm
+*.db-wal

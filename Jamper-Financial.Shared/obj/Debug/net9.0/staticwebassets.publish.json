@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "we/a5r6kmwZHmiZp+K6I+RSFlS0vZf0elCy9pLpL/zQ=",
+  "Hash": "bTEsFUQEB8ND0vPjp0r/Bf/va/g7rzSqU0xLgA15fuU=",
   "Source": "Jamper-Financial.Shared",
   "BasePath": "_content/Jamper-Financial.Shared",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "Jamper-Financial.Shared\\wwwroot",
       "Source": "Jamper-Financial.Shared",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "bootstrap/bootstrap.min#[.{fingerprint=6gzpyzhau4}]?.css.gz",
       "AssetKind": "All",
@@ -28,41 +28,62 @@
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "RelatedAsset": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
       "Fingerprint": "joqzyw7ssu",
       "Integrity": "LTxu1aeZz5yJTTAB+DiLnn5XOMdK1oiypNP/4JaeK9c=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css"
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-th5v8tvdld.gz",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-sa7ftat05u.gz",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/Jamper-Financial.Shared",
-      "RelativePath": "Jamper-Financial.Shared#[.{fingerprint=th5v8tvdld}]!.bundle.scp.css.gz",
+      "RelativePath": "Jamper-Financial.Shared#[.{fingerprint=sa7ftat05u}]!.bundle.scp.css.gz",
       "AssetKind": "All",
       "AssetMode": "Reference",
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
+      "RelatedAsset": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "nhnro8g38f",
-      "Integrity": "q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=",
+      "Fingerprint": "t9dldeoeh9",
+      "Integrity": "j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css"
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\7eaoeuyg9i-8ek1hxkeri.gz",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/Jamper-Financial.Shared",
+      "RelativePath": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464#[.{fingerprint=8ek1hxkeri}]?.json.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\credentials\\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "yn22tniesz",
+      "Integrity": "Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\credentials\\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json"
+    },
+    {
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
+      "SourceId": "Jamper-Financial.Shared",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "app#[.{fingerprint=da95v2qkru}]?.css.gz",
       "AssetKind": "All",
@@ -70,20 +91,20 @@
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
+      "RelatedAsset": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
       "Fingerprint": "7xjk2sttc7",
       "Integrity": "JRyqIbPYDuOeC5nJOM3956s9Uhd3UVgWOSEBUePgnxc=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css"
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "bootstrap/bootstrap.min.css#[.{fingerprint=8inm30yfxf}]?.map.gz",
       "AssetKind": "All",
@@ -91,41 +112,62 @@
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "RelatedAsset": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
       "Fingerprint": "fbl5ivwo6k",
       "Integrity": "Kym5HpgDYV8Caci50HDUPG6WCQ6nTP+8hy429w+zHVU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map"
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\eq1ix6lcgi-th5v8tvdld.gz",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\eq1ix6lcgi-sa7ftat05u.gz",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/Jamper-Financial.Shared",
-      "RelativePath": "Jamper-Financial.Shared#[.{fingerprint=th5v8tvdld}]?.styles.css.gz",
+      "RelativePath": "Jamper-Financial.Shared#[.{fingerprint=sa7ftat05u}]?.styles.css.gz",
       "AssetKind": "All",
       "AssetMode": "CurrentProject",
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css",
+      "RelatedAsset": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "nhnro8g38f",
-      "Integrity": "q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=",
+      "Fingerprint": "t9dldeoeh9",
+      "Integrity": "j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css"
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4tpc2xqu2k-6gzpyzhau4.br",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\iebbrayiro-w5nb6euikb.gz",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\",
+      "BasePath": "_content/Jamper-Financial.Shared",
+      "RelativePath": "js/firebase-auth#[.{fingerprint=w5nb6euikb}]?.js.gz",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\js\\firebase-auth.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "gzip",
+      "Fingerprint": "lgsqi6llr5",
+      "Integrity": "lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\js\\firebase-auth.js"
+    },
+    {
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4tpc2xqu2k-6gzpyzhau4.br",
+      "SourceId": "Jamper-Financial.Shared",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "bootstrap/bootstrap.min#[.{fingerprint=6gzpyzhau4}]?.css.br",
       "AssetKind": "All",
@@ -133,41 +175,62 @@
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "RelatedAsset": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "br",
       "Fingerprint": "2o883p7o84",
       "Integrity": "4jR0OWxmfzUr920AK8Yzn3GjSgWqtt7AtQDXrJ9OWmA=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css"
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4yfxhic0vi-th5v8tvdld.br",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4yfxhic0vi-sa7ftat05u.br",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\",
       "BasePath": "_content/Jamper-Financial.Shared",
-      "RelativePath": "Jamper-Financial.Shared#[.{fingerprint=th5v8tvdld}]!.bundle.scp.css.br",
+      "RelativePath": "Jamper-Financial.Shared#[.{fingerprint=sa7ftat05u}]!.bundle.scp.css.br",
       "AssetKind": "All",
       "AssetMode": "Reference",
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
+      "RelatedAsset": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "br",
-      "Fingerprint": "1cjqo1hpih",
-      "Integrity": "YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=",
+      "Fingerprint": "ef6v55vj90",
+      "Integrity": "SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css"
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\aqet3isv10-da95v2qkru.br",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\7eaoeuyg9i-8ek1hxkeri.br",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\",
+      "BasePath": "_content/Jamper-Financial.Shared",
+      "RelativePath": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464#[.{fingerprint=8ek1hxkeri}]?.json.br",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\credentials\\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "br",
+      "Fingerprint": "66n6cwiid0",
+      "Integrity": "zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\credentials\\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json"
+    },
+    {
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\aqet3isv10-da95v2qkru.br",
+      "SourceId": "Jamper-Financial.Shared",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "app#[.{fingerprint=da95v2qkru}]?.css.br",
       "AssetKind": "All",
@@ -175,20 +238,20 @@
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
+      "RelatedAsset": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "br",
       "Fingerprint": "9mqv5xoish",
       "Integrity": "geF/MS0+gNluNrPIl/EEXn78BLEax6Px8CXeNIu/ehM=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css"
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\col4sr76l5-8inm30yfxf.br",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\col4sr76l5-8inm30yfxf.br",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "bootstrap/bootstrap.min.css#[.{fingerprint=8inm30yfxf}]?.map.br",
       "AssetKind": "All",
@@ -196,41 +259,62 @@
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "RelatedAsset": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "br",
       "Fingerprint": "b4a1wrn6r6",
       "Integrity": "e0W3cltN7F1+gW+ilWd1J4N1PyvYvfyn8Js6/fJEqb0=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map"
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\eq1ix6lcgi-th5v8tvdld.br",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\eq1ix6lcgi-sa7ftat05u.br",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\",
       "BasePath": "_content/Jamper-Financial.Shared",
-      "RelativePath": "Jamper-Financial.Shared#[.{fingerprint=th5v8tvdld}]?.styles.css.br",
+      "RelativePath": "Jamper-Financial.Shared#[.{fingerprint=sa7ftat05u}]?.styles.css.br",
       "AssetKind": "All",
       "AssetMode": "CurrentProject",
       "AssetRole": "Alternative",
       "AssetMergeBehavior": "",
       "AssetMergeSource": "",
-      "RelatedAsset": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css",
+      "RelatedAsset": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "br",
-      "Fingerprint": "1cjqo1hpih",
-      "Integrity": "YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=",
+      "Fingerprint": "ef6v55vj90",
+      "Integrity": "SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css"
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\iebbrayiro-w5nb6euikb.br",
+      "SourceId": "Jamper-Financial.Shared",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\",
+      "BasePath": "_content/Jamper-Financial.Shared",
+      "RelativePath": "js/firebase-auth#[.{fingerprint=w5nb6euikb}]?.js.br",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Alternative",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\js\\firebase-auth.js",
+      "AssetTraitName": "Content-Encoding",
+      "AssetTraitValue": "br",
+      "Fingerprint": "pvexi6wp6s",
+      "Integrity": "a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\js\\firebase-auth.js"
+    },
+    {
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "Jamper-Financial.Shared#[.{fingerprint}]?.styles.css",
       "AssetKind": "All",
@@ -241,17 +325,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ApplicationBundle",
-      "Fingerprint": "th5v8tvdld",
-      "Integrity": "bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=",
+      "Fingerprint": "sa7ftat05u",
+      "Integrity": "tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css"
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "Jamper-Financial.Shared#[.{fingerprint}]!.bundle.scp.css",
       "AssetKind": "All",
@@ -262,17 +346,17 @@
       "RelatedAsset": "",
       "AssetTraitName": "ScopedCss",
       "AssetTraitValue": "ProjectBundle",
-      "Fingerprint": "th5v8tvdld",
-      "Integrity": "bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=",
+      "Fingerprint": "sa7ftat05u",
+      "Integrity": "tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css"
+      "OriginalItemSpec": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "app#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -290,10 +374,10 @@
       "OriginalItemSpec": "wwwroot\\app.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "bootstrap/bootstrap.min#[.{fingerprint}]?.css",
       "AssetKind": "All",
@@ -311,10 +395,10 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "bootstrap/bootstrap.min.css#[.{fingerprint}]?.map",
       "AssetKind": "All",
@@ -332,10 +416,31 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\credentials\\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "BasePath": "_content/Jamper-Financial.Shared",
+      "RelativePath": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464#[.{fingerprint}]?.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "8ek1hxkeri",
+      "Integrity": "gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\credentials\\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json"
+    },
+    {
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png",
+      "SourceId": "Jamper-Financial.Shared",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "favicon#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -353,10 +458,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.png"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "images/Jamper#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -374,10 +479,10 @@
       "OriginalItemSpec": "wwwroot\\images\\Jamper.png"
     },
     {
-      "Identity": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png",
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png",
       "SourceId": "Jamper-Financial.Shared",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
       "BasePath": "_content/Jamper-Financial.Shared",
       "RelativePath": "images/logo#[.{fingerprint}]?.png",
       "AssetKind": "All",
@@ -388,17 +493,38 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "9cfdpoxzd2",
-      "Integrity": "F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA=",
+      "Fingerprint": "3y1l96xecb",
+      "Integrity": "Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\logo.png"
+    },
+    {
+      "Identity": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\js\\firebase-auth.js",
+      "SourceId": "Jamper-Financial.Shared",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\",
+      "BasePath": "_content/Jamper-Financial.Shared",
+      "RelativePath": "js/firebase-auth#[.{fingerprint}]?.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "w5nb6euikb",
+      "Integrity": "/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\firebase-auth.js"
     }
   ],
   "Endpoints": [
     {
       "Route": "app.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -421,7 +547,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -453,7 +579,7 @@
     },
     {
       "Route": "app.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\aqet3isv10-da95v2qkru.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\aqet3isv10-da95v2qkru.br",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -476,7 +602,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -508,7 +634,7 @@
     },
     {
       "Route": "app.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -529,7 +655,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -545,7 +671,7 @@
     },
     {
       "Route": "app.css.br",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\aqet3isv10-da95v2qkru.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\aqet3isv10-da95v2qkru.br",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -566,7 +692,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -590,7 +716,7 @@
     },
     {
       "Route": "app.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -611,7 +737,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -635,7 +761,7 @@
     },
     {
       "Route": "app.da95v2qkru.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -658,7 +784,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -698,7 +824,7 @@
     },
     {
       "Route": "app.da95v2qkru.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\aqet3isv10-da95v2qkru.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\aqet3isv10-da95v2qkru.br",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -721,7 +847,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -761,7 +887,7 @@
     },
     {
       "Route": "app.da95v2qkru.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -782,7 +908,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -806,7 +932,7 @@
     },
     {
       "Route": "app.da95v2qkru.css.br",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\aqet3isv10-da95v2qkru.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\aqet3isv10-da95v2qkru.br",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -827,7 +953,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -859,7 +985,7 @@
     },
     {
       "Route": "app.da95v2qkru.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\aqet3isv10-da95v2qkru.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -880,7 +1006,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -912,7 +1038,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.6gzpyzhau4.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -935,7 +1061,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -975,7 +1101,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.6gzpyzhau4.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4tpc2xqu2k-6gzpyzhau4.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4tpc2xqu2k-6gzpyzhau4.br",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -998,7 +1124,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1038,7 +1164,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.6gzpyzhau4.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1059,7 +1185,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1083,7 +1209,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.6gzpyzhau4.css.br",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4tpc2xqu2k-6gzpyzhau4.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4tpc2xqu2k-6gzpyzhau4.br",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1104,7 +1230,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1136,7 +1262,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.6gzpyzhau4.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1157,7 +1283,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1189,7 +1315,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -1212,7 +1338,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1244,7 +1370,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4tpc2xqu2k-6gzpyzhau4.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4tpc2xqu2k-6gzpyzhau4.br",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -1267,7 +1393,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1299,7 +1425,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1320,7 +1446,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1336,7 +1462,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.8inm30yfxf.map",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -1359,7 +1485,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1399,7 +1525,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.8inm30yfxf.map",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\col4sr76l5-8inm30yfxf.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\col4sr76l5-8inm30yfxf.br",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -1422,7 +1548,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1462,7 +1588,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.8inm30yfxf.map",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1483,7 +1609,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1507,7 +1633,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.8inm30yfxf.map.br",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\col4sr76l5-8inm30yfxf.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\col4sr76l5-8inm30yfxf.br",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1528,7 +1654,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1560,7 +1686,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.8inm30yfxf.map.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1581,7 +1707,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1613,7 +1739,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.br",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4tpc2xqu2k-6gzpyzhau4.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4tpc2xqu2k-6gzpyzhau4.br",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1634,7 +1760,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1658,7 +1784,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4tpc2xqu2k-6gzpyzhau4.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1679,7 +1805,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1703,7 +1829,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.map",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -1726,7 +1852,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1758,7 +1884,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.map",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\col4sr76l5-8inm30yfxf.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\col4sr76l5-8inm30yfxf.br",
       "Selectors": [
         {
           "Name": "Content-Encoding",
@@ -1781,7 +1907,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1813,7 +1939,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.map",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1834,7 +1960,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1850,7 +1976,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.map.br",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\col4sr76l5-8inm30yfxf.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\col4sr76l5-8inm30yfxf.br",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1871,7 +1997,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1895,7 +2021,7 @@
     },
     {
       "Route": "bootstrap/bootstrap.min.css.map.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\col4sr76l5-8inm30yfxf.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1916,7 +2042,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1939,8 +2065,522 @@
       ]
     },
     {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.8ek1hxkeri.json",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\7eaoeuyg9i-8ek1hxkeri.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000595947557"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1677"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8ek1hxkeri"
+        },
+        {
+          "Name": "label",
+          "Value": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.8ek1hxkeri.json",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\7eaoeuyg9i-8ek1hxkeri.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000623830318"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1602"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8ek1hxkeri"
+        },
+        {
+          "Name": "label",
+          "Value": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.8ek1hxkeri.json",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\credentials\\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2382"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8ek1hxkeri"
+        },
+        {
+          "Name": "label",
+          "Value": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.8ek1hxkeri.json.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\7eaoeuyg9i-8ek1hxkeri.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1602"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8ek1hxkeri"
+        },
+        {
+          "Name": "label",
+          "Value": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.br"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ="
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.8ek1hxkeri.json.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\7eaoeuyg9i-8ek1hxkeri.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1677"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8ek1hxkeri"
+        },
+        {
+          "Name": "label",
+          "Value": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc="
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\7eaoeuyg9i-8ek1hxkeri.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000595947557"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1677"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\7eaoeuyg9i-8ek1hxkeri.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000623830318"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1602"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\credentials\\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2382"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\7eaoeuyg9i-8ek1hxkeri.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1602"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ="
+        }
+      ]
+    },
+    {
+      "Route": "credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\7eaoeuyg9i-8ek1hxkeri.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1677"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc="
+        }
+      ]
+    },
+    {
       "Route": "favicon.ifv42okdf2.png",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1961,7 +2601,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1985,7 +2625,7 @@
     },
     {
       "Route": "favicon.png",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2006,7 +2646,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2022,7 +2662,7 @@
     },
     {
       "Route": "images/Jamper.awil1k7oh9.png",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2043,7 +2683,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2067,7 +2707,7 @@
     },
     {
       "Route": "images/Jamper.png",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2088,7 +2728,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2103,8 +2743,8 @@
       ]
     },
     {
-      "Route": "images/logo.9cfdpoxzd2.png",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png",
+      "Route": "images/logo.3y1l96xecb.png",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2113,7 +2753,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "28990"
+          "Value": "106390"
         },
         {
           "Name": "Content-Type",
@@ -2121,11 +2761,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA=\""
+          "Value": "\"Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2135,7 +2775,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "9cfdpoxzd2"
+          "Value": "3y1l96xecb"
         },
         {
           "Name": "label",
@@ -2143,13 +2783,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA="
+          "Value": "sha256-Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0="
         }
       ]
     },
     {
       "Route": "images/logo.png",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2158,7 +2798,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "28990"
+          "Value": "106390"
         },
         {
           "Name": "Content-Type",
@@ -2166,11 +2806,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA=\""
+          "Value": "\"Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2180,18 +2820,18 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA="
+          "Value": "sha256-Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0="
         }
       ]
     },
     {
       "Route": "Jamper-Financial.Shared.bundle.scp.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-th5v8tvdld.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-sa7ftat05u.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000416319734"
+          "Quality": "0.000262398321"
         }
       ],
       "ResponseHeaders": [
@@ -2201,15 +2841,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2401"
+          "Value": "3810"
         },
         {
           "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2229,24 +2869,24 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         }
       ]
     },
     {
       "Route": "Jamper-Financial.Shared.bundle.scp.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4yfxhic0vi-th5v8tvdld.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4yfxhic0vi-sa7ftat05u.br",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "br",
-          "Quality": "0.000493583416"
+          "Quality": "0.000313774710"
         }
       ],
       "ResponseHeaders": [
@@ -2256,15 +2896,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2025"
+          "Value": "3186"
         },
         {
           "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2284,19 +2924,19 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         }
       ]
     },
     {
       "Route": "Jamper-Financial.Shared.bundle.scp.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2305,7 +2945,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "9268"
+          "Value": "18439"
         },
         {
           "Name": "Content-Type",
@@ -2313,11 +2953,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2327,13 +2967,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         }
       ]
     },
     {
       "Route": "Jamper-Financial.Shared.bundle.scp.css.br",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4yfxhic0vi-th5v8tvdld.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4yfxhic0vi-sa7ftat05u.br",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2342,7 +2982,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2025"
+          "Value": "3186"
         },
         {
           "Name": "Content-Type",
@@ -2350,11 +2990,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2372,13 +3012,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I="
+          "Value": "sha256-SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc="
         }
       ]
     },
     {
       "Route": "Jamper-Financial.Shared.bundle.scp.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-th5v8tvdld.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-sa7ftat05u.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2387,7 +3027,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2401"
+          "Value": "3810"
         },
         {
           "Name": "Content-Type",
@@ -2395,11 +3035,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2417,18 +3057,18 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY="
+          "Value": "sha256-j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU="
         }
       ]
     },
     {
-      "Route": "Jamper-Financial.Shared.styles.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\eq1ix6lcgi-th5v8tvdld.gz",
+      "Route": "Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-sa7ftat05u.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000416319734"
+          "Quality": "0.000262398321"
         }
       ],
       "ResponseHeaders": [
@@ -2438,19 +3078,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2401"
+          "Value": "3810"
         },
         {
           "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "no-cache"
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Encoding",
@@ -2466,24 +3106,32 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         }
       ],
       "EndpointProperties": [
         {
+          "Name": "fingerprint",
+          "Value": "sa7ftat05u"
+        },
+        {
+          "Name": "label",
+          "Value": "Jamper-Financial.Shared.bundle.scp.css"
+        },
+        {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         }
       ]
     },
     {
-      "Route": "Jamper-Financial.Shared.styles.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\eq1ix6lcgi-th5v8tvdld.br",
+      "Route": "Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4yfxhic0vi-sa7ftat05u.br",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "br",
-          "Quality": "0.000493583416"
+          "Quality": "0.000313774710"
         }
       ],
       "ResponseHeaders": [
@@ -2493,197 +3141,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2025"
+          "Value": "3186"
         },
         {
           "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "br"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
-        }
-      ]
-    },
-    {
-      "Route": "Jamper-Financial.Shared.styles.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "9268"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
-        }
-      ]
-    },
-    {
-      "Route": "Jamper-Financial.Shared.styles.css.br",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\eq1ix6lcgi-th5v8tvdld.br",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2025"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "br"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I="
-        }
-      ]
-    },
-    {
-      "Route": "Jamper-Financial.Shared.styles.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\eq1ix6lcgi-th5v8tvdld.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2401"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY="
-        }
-      ]
-    },
-    {
-      "Route": "Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-th5v8tvdld.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.000416319734"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2401"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2691,7 +3157,7 @@
         },
         {
           "Name": "Content-Encoding",
-          "Value": "gzip"
+          "Value": "br"
         },
         {
           "Name": "Vary",
@@ -2703,13 +3169,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "th5v8tvdld"
+          "Value": "sa7ftat05u"
         },
         {
           "Name": "label",
@@ -2717,76 +3183,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         }
       ]
     },
     {
-      "Route": "Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4yfxhic0vi-th5v8tvdld.br",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "br",
-          "Quality": "0.000493583416"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2025"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "br"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "th5v8tvdld"
-        },
-        {
-          "Name": "label",
-          "Value": "Jamper-Financial.Shared.bundle.scp.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
-        }
-      ]
-    },
-    {
-      "Route": "Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
+      "Route": "Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2795,7 +3198,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "9268"
+          "Value": "18439"
         },
         {
           "Name": "Content-Type",
@@ -2803,11 +3206,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2817,7 +3220,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "th5v8tvdld"
+          "Value": "sa7ftat05u"
         },
         {
           "Name": "label",
@@ -2825,13 +3228,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         }
       ]
     },
     {
-      "Route": "Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css.br",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4yfxhic0vi-th5v8tvdld.br",
+      "Route": "Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\4yfxhic0vi-sa7ftat05u.br",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2840,7 +3243,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2025"
+          "Value": "3186"
         },
         {
           "Name": "Content-Type",
@@ -2848,11 +3251,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2870,7 +3273,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "th5v8tvdld"
+          "Value": "sa7ftat05u"
         },
         {
           "Name": "label",
@@ -2878,13 +3281,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I="
+          "Value": "sha256-SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc="
         }
       ]
     },
     {
-      "Route": "Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-th5v8tvdld.gz",
+      "Route": "Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\4yfxhic0vi-sa7ftat05u.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2893,7 +3296,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2401"
+          "Value": "3810"
         },
         {
           "Name": "Content-Type",
@@ -2901,11 +3304,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2923,7 +3326,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "th5v8tvdld"
+          "Value": "sa7ftat05u"
         },
         {
           "Name": "label",
@@ -2931,18 +3334,18 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY="
+          "Value": "sha256-j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU="
         }
       ]
     },
     {
-      "Route": "Jamper-Financial.Shared.th5v8tvdld.styles.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\eq1ix6lcgi-th5v8tvdld.gz",
+      "Route": "Jamper-Financial.Shared.sa7ftat05u.styles.css",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\eq1ix6lcgi-sa7ftat05u.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000416319734"
+          "Quality": "0.000262398321"
         }
       ],
       "ResponseHeaders": [
@@ -2952,15 +3355,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2401"
+          "Value": "3810"
         },
         {
           "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2980,13 +3383,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "th5v8tvdld"
+          "Value": "sa7ftat05u"
         },
         {
           "Name": "label",
@@ -2994,18 +3397,18 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         }
       ]
     },
     {
-      "Route": "Jamper-Financial.Shared.th5v8tvdld.styles.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\eq1ix6lcgi-th5v8tvdld.br",
+      "Route": "Jamper-Financial.Shared.sa7ftat05u.styles.css",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\eq1ix6lcgi-sa7ftat05u.br",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "br",
-          "Quality": "0.000493583416"
+          "Quality": "0.000313774710"
         }
       ],
       "ResponseHeaders": [
@@ -3015,15 +3418,15 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2025"
+          "Value": "3186"
         },
         {
           "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3043,13 +3446,13 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "th5v8tvdld"
+          "Value": "sa7ftat05u"
         },
         {
           "Name": "label",
@@ -3057,13 +3460,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         }
       ]
     },
     {
-      "Route": "Jamper-Financial.Shared.th5v8tvdld.styles.css",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css",
+      "Route": "Jamper-Financial.Shared.sa7ftat05u.styles.css",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -3072,7 +3475,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "9268"
+          "Value": "18439"
         },
         {
           "Name": "Content-Type",
@@ -3080,11 +3483,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3094,7 +3497,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "th5v8tvdld"
+          "Value": "sa7ftat05u"
         },
         {
           "Name": "label",
@@ -3102,13 +3505,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         }
       ]
     },
     {
-      "Route": "Jamper-Financial.Shared.th5v8tvdld.styles.css.br",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\eq1ix6lcgi-th5v8tvdld.br",
+      "Route": "Jamper-Financial.Shared.sa7ftat05u.styles.css.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\eq1ix6lcgi-sa7ftat05u.br",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -3117,7 +3520,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2025"
+          "Value": "3186"
         },
         {
           "Name": "Content-Type",
@@ -3125,11 +3528,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3147,7 +3550,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "th5v8tvdld"
+          "Value": "sa7ftat05u"
         },
         {
           "Name": "label",
@@ -3155,13 +3558,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I="
+          "Value": "sha256-SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc="
         }
       ]
     },
     {
-      "Route": "Jamper-Financial.Shared.th5v8tvdld.styles.css.gz",
-      "AssetFile": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\eq1ix6lcgi-th5v8tvdld.gz",
+      "Route": "Jamper-Financial.Shared.sa7ftat05u.styles.css.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\eq1ix6lcgi-sa7ftat05u.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -3170,7 +3573,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2401"
+          "Value": "3810"
         },
         {
           "Name": "Content-Type",
@@ -3178,11 +3581,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3200,7 +3603,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "th5v8tvdld"
+          "Value": "sa7ftat05u"
         },
         {
           "Name": "label",
@@ -3208,7 +3611,758 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY="
+          "Value": "sha256-j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU="
+        }
+      ]
+    },
+    {
+      "Route": "Jamper-Financial.Shared.styles.css",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\eq1ix6lcgi-sa7ftat05u.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000262398321"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3810"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
+        }
+      ]
+    },
+    {
+      "Route": "Jamper-Financial.Shared.styles.css",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\eq1ix6lcgi-sa7ftat05u.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000313774710"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3186"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
+        }
+      ]
+    },
+    {
+      "Route": "Jamper-Financial.Shared.styles.css",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\bundle\\Jamper-Financial.Shared.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "18439"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
+        }
+      ]
+    },
+    {
+      "Route": "Jamper-Financial.Shared.styles.css.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\eq1ix6lcgi-sa7ftat05u.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3186"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc="
+        }
+      ]
+    },
+    {
+      "Route": "Jamper-Financial.Shared.styles.css.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\eq1ix6lcgi-sa7ftat05u.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "3810"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.js",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\iebbrayiro-w5nb6euikb.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001322751323"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.js",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\iebbrayiro-w5nb6euikb.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.001610305958"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "620"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.js",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\js\\firebase-auth.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1754"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.js.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\iebbrayiro-w5nb6euikb.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "620"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.js.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\iebbrayiro-w5nb6euikb.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.w5nb6euikb.js",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\iebbrayiro-w5nb6euikb.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001322751323"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w5nb6euikb"
+        },
+        {
+          "Name": "label",
+          "Value": "js/firebase-auth.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.w5nb6euikb.js",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\iebbrayiro-w5nb6euikb.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.001610305958"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "620"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w5nb6euikb"
+        },
+        {
+          "Name": "label",
+          "Value": "js/firebase-auth.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.w5nb6euikb.js",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\js\\firebase-auth.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1754"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w5nb6euikb"
+        },
+        {
+          "Name": "label",
+          "Value": "js/firebase-auth.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.w5nb6euikb.js.br",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\publish\\iebbrayiro-w5nb6euikb.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "620"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w5nb6euikb"
+        },
+        {
+          "Name": "label",
+          "Value": "js/firebase-auth.js.br"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48="
+        }
+      ]
+    },
+    {
+      "Route": "js/firebase-auth.w5nb6euikb.js.gz",
+      "AssetFile": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\compressed\\iebbrayiro-w5nb6euikb.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w5nb6euikb"
+        },
+        {
+          "Name": "label",
+          "Value": "js/firebase-auth.js.gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I="
         }
       ]
     }

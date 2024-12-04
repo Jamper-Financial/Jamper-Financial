@@ -54,6 +54,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\bootstrap\bootstrap.min.css.map'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\credentials\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Jamper-Financial.Shared</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Jamper-Financial.Shared</BasePath>
+      <RelativePath>credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>8ek1hxkeri</Fingerprint>
+      <Integrity>gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\credentials\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\favicon.png'))">
       <SourceType>Package</SourceType>
       <SourceId>Jamper-Financial.Shared</SourceId>
@@ -125,6 +143,24 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\firebase-auth.js'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Jamper-Financial.Shared</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Jamper-Financial.Shared</BasePath>
+      <RelativePath>js/firebase-auth.js</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>w5nb6euikb</Fingerprint>
+      <Integrity>/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\firebase-auth.js'))</OriginalItemSpec>
     </StaticWebAsset>
   </ItemGroup>
 </Project>

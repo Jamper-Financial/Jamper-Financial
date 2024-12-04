@@ -1,15 +1,15 @@
 {
   "Files": [
     {
-      "Id": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial\\obj\\Debug\\net9.0-android\\scopedcss\\bundle\\Jamper-Financial.styles.css",
+      "Id": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial\\obj\\Debug\\net9.0-android\\scopedcss\\bundle\\Jamper-Financial.styles.css",
       "PackagePath": "staticwebassets\\Jamper-Financial.styles.css"
     },
     {
-      "Id": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial\\wwwroot\\app.css",
+      "Id": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },
     {
-      "Id": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial\\wwwroot\\index.html",
+      "Id": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial\\wwwroot\\index.html",
       "PackagePath": "staticwebassets\\index.html"
     },
     {
