@@ -1,0 +1,92 @@
+﻿/* HeaderMenu.css */
+
+.header-container {
+    width: 100%;
+    height: 100px;
+    position: relative;
+}
+
+.header-background {
+    width: 100%;
+    height: 100px;
+    position: absolute;
+    background-color: white;
+}
+
+.header-content {
+    width: 1334px;
+    height: 60px;
+    position: absolute;
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 900;
+    color: #62ad41;
+    font-family: 'Inter', sans-serif;
+}
+
+.overview {
+    font-size: 28px;
+    font-weight: 600;
+    color: #62ad41;
+    font-family: 'Inter', sans-serif;
+}
+
+.search {
+    position: relative;
+    width: 255px;
+    height: 50px;
+}
+
+.search-background {
+    width: 100%;
+    height: 100%;
+    background-color: #f4f6f9;
+    border-radius: 40px;
+    position: absolute;
+}
+
+.search-text {
+    position: absolute;
+    left: 60px;
+    top: 16px;
+    color: #b1b1b1;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-left: 1rem;
+    position: relative;
+}
+
+.bg-gray {
+    background-color: #c4c4c4;
+}
+
+.bg-light-gray {
+    background-color: #f4f6f9;
+}
+
+.icon-image {
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}

@@ -5,7 +5,7 @@
 <div class="calendar-page">
     <!-- Header Section -->
     <div class="header">
-        <h2>Transaction Calendar</h2>
+        <h2>Calendar</h2>
         <div class="search-container">
             <input type="text" class="search-bar" placeholder="Search transactions..." @bind="SearchTerm" @oninput="UpdateSearchResults" />
             <button class="filter-button" @onclick="ToggleFilterDropdown">Filter</button>
@@ -73,8 +73,8 @@
                 @foreach (var date in GetCalendarDates())
                 {
                     <div class="day-box @(date.Month != SelectedMonth ? "greyed-out" : "") @(SelectedDate == date.Day && date.Month == SelectedMonth ? "selected" : "") @(IsDateHighlighted(date) ? "search-highlight" : "")"
-                    @onclick="() => SelectDate(date)">
-                        <span>@date.Day</span>
+                         @onclick="() => SelectDate(date)">
+                        <span class="day">@date.Day</span>
                         @if (HasTransactions(date))
                         {
                             <div class="transaction-dots">
@@ -96,10 +96,12 @@
         <div class="transaction-details">
             <div class="transaction-details-header">
                 <h3>
-                    Transactions in:
-                    <div class="transaction-date">
-                        <strong>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(SelectedMonth) @SelectedYear</strong>
-                    </div>
+                    Upcoming Payments:
+                    @* 
+                        //remove this for now to make the page not crowded
+                    <div class="transaction-date"> *@
+                    @*     <strong>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(SelectedMonth) @SelectedYear</strong> *@
+                    @* </div> *@
                 </h3>
                 <select @onchange="HandleSortChange">
                     <option value="DateAsc">Date Asc</option>
@@ -116,7 +118,7 @@
             {
                 @foreach (var transaction in FilteredTransactionsForSelectedMonth)
                 {
-                    <div class="transaction-item @(transaction.Date.Day == SelectedDate ? "selected-transaction" : "")">
+                    <div class="transaction-item @(transaction.Date.Day == SelectedDate ? "selected-transaction" : "")" @onclick="() => ShowEditTransactionModal(transaction)">
                         <h4 class="description" style="color: @transaction.Color;">@transaction.Description</h4>
                         <p>@transaction.Category</p>
                         <p class="@(transaction.Debit > 0 ? "negative-amount" : "positive-amount")">
@@ -128,7 +130,9 @@
                         {
                             <p>End Date: @transaction.EndDate.Value.ToString("d")</p>
                         }
-                        <button @onclick="() => ShowEditTransactionModal(transaction)">Edit</button>
+                        @* <button @onclick="() => ShowEditTransactionModal(transaction)">Edit</button> 
+                            //remove this for now to make the page not crowded
+                        *@
                     </div>
                 }
             }

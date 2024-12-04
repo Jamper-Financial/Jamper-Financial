@@ -1,19 +1,34 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager Navigation
+
+@code {
+    private bool ShouldShowHeader => !Navigation.Uri.Contains("/login") && !Navigation.Uri.EndsWith("/");
+}
+
+@* Include the custom CSS file *@
+<link href="css/MainLayout.css" rel="stylesheet" />
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
+    @* @if (ShouldShowHeader) *@
+    @* { *@
+    @*         <header class="header"> *@
+    @*             <HeaderMenu /> *@
+    @*         </header> *@
+    @* } *@
+
+    <div class="content-container">
+        <div class="layout">
+            <aside class="sidebar">
+                <NavMenu />
+            </aside>
+
+            <main class="main-content">
+                <article class="content">
+                    @Body
+                </article>
+            </main>
+        </div>
     </div>
-
-    <main>
-        @* <div class="top-row px-4"> *@
-        @*     <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a> *@
-        @* </div> *@
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
 </div>
 
 <div id="blazor-error-ui" data-nosnippet>

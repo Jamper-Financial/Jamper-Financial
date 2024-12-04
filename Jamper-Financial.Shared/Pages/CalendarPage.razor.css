@@ -174,7 +174,7 @@
 
 .day-box {
     width: calc(100% / 7 - 4px); /* Adjust width to fit within container */
-    height: 150px; /* Increased height for taller calendar */
+    /*height: 150px;*/ /* Increased height for taller calendar */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -186,6 +186,10 @@
     background-color: #fff;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+    .day-box .day {
+        font-weight: bold; /* Optional: make the date bold */
+    }   
 
     .day-box.selected {
         background-color: #FFD700; /* Gold color for selected date */
@@ -241,7 +245,9 @@
 
     .transaction-details-header h3 {
         font-size: 18px;
+        color: 417828;
         margin: 0;
+        font-weight: bold;
     }
 
     .transaction-details-header .transaction-date {
@@ -272,14 +278,21 @@
     position: relative; /* Add this to position the edit button */
 }
 
+    .transaction-item:hover {
+        background-color: rgba(98, 173, 65, 0.3); /* Darker background with 30% transparency */
+    }
+
+
     .transaction-item.selected-transaction {
         background-color: #FFD700; /* Highlight color for selected date transactions */
     }
 
-    .transaction-item h4 {
-        margin: 0;
-        color: #6C63FF;
-    }
+.transaction-item h4 {
+    margin: 0;
+    color: #6C63FF;
+    font-size: 16px;
+    font-weight: bold;
+}
 
     .transaction-item p {
         margin: 2px 0;
