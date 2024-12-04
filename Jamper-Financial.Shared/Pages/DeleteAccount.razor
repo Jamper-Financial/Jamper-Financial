@@ -2,6 +2,116 @@
 @using Jamper_Financial.Shared.Data
 @inject IJSRuntime JSRuntime
 
+<Style>
+    body {
+        font-family: 'Inter', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f5f5;
+    }
+
+    .delete-account-container {
+        display: flex;
+        height: 90vh;
+    }
+
+    .delete-account-left {
+        flex: 1;
+        background-color: #f5f5f5;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .delete-form {
+        background-color: #D0E8C5;
+        border: 1px solid #d4e8b6;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: black;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    h2 {
+        color: #62ad41;
+        font-size: 20px;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    label {
+        color: #444;
+        font-size: 14px;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        background-color: #fff !important;
+    }
+
+    .bottom-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+
+    .back-button {
+        background-color: #f5f5f5;
+        color: #62ad41;
+        border: 1px solid #62ad41;
+    }
+
+    .back-button:hover {
+        background-color: #62ad41;
+        color: white;
+    }
+
+    .submit-button {
+        background-color: #62ad41;
+        color: white;
+    }
+
+    .submit-button:hover {
+        background-color: #519a37;
+    }
+
+    .alert {
+        position: fixed;
+        top: 90px;
+        left: 28%;
+        transform: translateX(-50%);
+        z-index: 1000;
+        width: 80%;
+        max-width: 500px;
+        padding: 15px;
+        border-radius: 5px;
+        font-size: 1rem;
+        text-align: center;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .required {
+        color: red;
+        font-weight: bold;
+        margin-left: 5px;
+        font-size: 1rem;
+    }
+</Style>
+
 <div class="delete-account-container">
     <div class="delete-account-left">
         <h1>Delete Account</h1>
@@ -16,7 +126,7 @@
 
                 <div class="bottom-buttons">
                     <button type="button" class="back-button" @onclick="NavigateToSettings">Back</button>
-                    <button type="button" class="submit-button" @onclick="DeleteUserAccount">Delete</button>
+                    <button type="button" class="submit-button" @onclick="ConfirmAndDeleteUserAccount">Delete</button>
                 </div>
             </form>
         </div>
@@ -25,16 +135,16 @@
 
 @if (!string.IsNullOrWhiteSpace(ErrorMessage))
 {
-                            <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger" role="alert">
         @ErrorMessage
-                            </div>
+    </div>
 }
 
 @if (AccountDeleted)
 {
-                            <div class="alert alert-success" role="alert">
-                                Account deleted successfully!
-                            </div>
+    <div class="alert alert-success" role="alert">
+        Account deleted successfully!
+    </div>
 }
 
 @code {
@@ -69,6 +179,19 @@
         return true;
     }
 
+    private async Task ConfirmAndDeleteUserAccount()
+    {
+        // Show a confirmation dialog
+        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this account? This action cannot be undone.");
+
+        if (!confirmed)
+        {
+            return; // User canceled the action
+        }
+
+        DeleteUserAccount();
+    }
+
     private void DeleteUserAccount()
     {
         if (!ValidateForm())
@@ -81,7 +204,6 @@
         {
             AccountDeleted = true;
             ErrorMessage = string.Empty;
-            // This guy will automatically navigate to the home page after you delete the account you just deleted 
             Task.Delay(2000).ContinueWith(_ => Navigation.NavigateTo("/"));
         }
         else
