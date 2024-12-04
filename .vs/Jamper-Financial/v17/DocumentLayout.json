@@ -1,22 +1,42 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\MyFiles\\Jamper-Financial\\",
+  "WorkspaceRootPath": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|c:\\myfiles\\jamper-financial\\jamper-financial.shared\\pages\\calendarpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|solutionrelative:jamper-financial.shared\\pages\\calendarpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|c:\\sait fall 2024\\assignments\\jamper-financial\\jamper-financial.shared\\jamper-financial.shared.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|solutionrelative:jamper-financial.shared\\jamper-financial.shared.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|c:\\myfiles\\jamper-financial\\jamper-financial.shared\\pages\\calendarpage.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|solutionrelative:jamper-financial.shared\\pages\\calendarpage.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|c:\\sait fall 2024\\assignments\\jamper-financial\\jamper-financial.shared\\wwwroot\\js\\firebase-auth.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|solutionrelative:jamper-financial.shared\\wwwroot\\js\\firebase-auth.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|c:\\myfiles\\jamper-financial\\jamper-financial.shared\\data\\transactionhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|c:\\sait fall 2024\\assignments\\jamper-financial\\jamper-financial.shared\\pages\\settings.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|solutionrelative:jamper-financial.shared\\pages\\settings.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|c:\\sait fall 2024\\assignments\\jamper-financial\\jamper-financial.shared\\pages\\loginpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|solutionrelative:jamper-financial.shared\\pages\\loginpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|c:\\sait fall 2024\\assignments\\jamper-financial\\jamper-financial.shared\\pages\\deleteaccount.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|solutionrelative:jamper-financial.shared\\pages\\deleteaccount.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF1E2792-1BF1-4904-A399-832774D61057}|Jamper-Financial.Web\\Jamper-Financial.Web.csproj|c:\\sait fall 2024\\assignments\\jamper-financial\\jamper-financial.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{EF1E2792-1BF1-4904-A399-832774D61057}|Jamper-Financial.Web\\Jamper-Financial.Web.csproj|solutionrelative:jamper-financial.web\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{EF1E2792-1BF1-4904-A399-832774D61057}|Jamper-Financial.Web\\Jamper-Financial.Web.csproj|c:\\sait fall 2024\\assignments\\jamper-financial\\jamper-financial.web\\jamper-financial.web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{EF1E2792-1BF1-4904-A399-832774D61057}|Jamper-Financial.Web\\Jamper-Financial.Web.csproj|solutionrelative:jamper-financial.web\\jamper-financial.web.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|c:\\sait fall 2024\\assignments\\jamper-financial\\jamper-financial.shared\\data\\transactionhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|solutionrelative:jamper-financial.shared\\data\\transactionhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|c:\\myfiles\\jamper-financial\\jamper-financial.shared\\data\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|solutionrelative:jamper-financial.shared\\data\\databasehelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|c:\\sait fall 2024\\assignments\\jamper-financial\\jamper-financial.shared\\pages\\calendarpage.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{12CD219B-0B0F-434F-B75C-1B813A38DB00}|Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj|solutionrelative:jamper-financial.shared\\pages\\calendarpage.razor.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,79 +46,116 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{40ea2e6b-2121-4bb8-a43e-c83c04b51041}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:2:0:{fabf9319-47eb-497e-b8f6-d9f73fba5f55}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:1:0:{fabf9319-47eb-497e-b8f6-d9f73fba5f55}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:574948116:0:{bf84ea66-d821-4dba-b1b1-2777d8574775}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:3:0:{fabf9319-47eb-497e-b8f6-d9f73fba5f55}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "TransactionHelper.cs",
-              "DocumentMoniker": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Data\\TransactionHelper.cs",
-              "RelativeDocumentMoniker": "Jamper-Financial.Shared\\Data\\TransactionHelper.cs",
-              "ToolTip": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Data\\TransactionHelper.cs",
-              "RelativeToolTip": "Jamper-Financial.Shared\\Data\\TransactionHelper.cs",
-              "ViewState": "AgIAAFkAAAAAAAAAAAAwwIQAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-03T06:06:15.174Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DatabaseHelper.cs",
-              "DocumentMoniker": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Data\\DatabaseHelper.cs",
-              "RelativeDocumentMoniker": "Jamper-Financial.Shared\\Data\\DatabaseHelper.cs",
-              "ToolTip": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Data\\DatabaseHelper.cs",
-              "RelativeToolTip": "Jamper-Financial.Shared\\Data\\DatabaseHelper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAL0AAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-03T05:26:46.158Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CalendarPage.razor",
-              "DocumentMoniker": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Pages\\CalendarPage.razor",
-              "RelativeDocumentMoniker": "Jamper-Financial.Shared\\Pages\\CalendarPage.razor",
-              "ToolTip": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Pages\\CalendarPage.razor",
-              "RelativeToolTip": "Jamper-Financial.Shared\\Pages\\CalendarPage.razor",
-              "ViewState": "AgIAADEBAAAAAAAAAAAIwGsBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-03T02:08:52.031Z",
+              "Title": "Jamper-Financial.Shared.csproj",
+              "DocumentMoniker": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+              "RelativeDocumentMoniker": "Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+              "ToolTip": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+              "RelativeToolTip": "Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-12-04T10:45:33.656Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "firebase-auth.js",
+              "DocumentMoniker": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\js\\firebase-auth.js",
+              "RelativeDocumentMoniker": "Jamper-Financial.Shared\\wwwroot\\js\\firebase-auth.js",
+              "ToolTip": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\js\\firebase-auth.js",
+              "RelativeToolTip": "Jamper-Financial.Shared\\wwwroot\\js\\firebase-auth.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABsAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-12-04T10:45:08.144Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Settings.razor",
+              "DocumentMoniker": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Pages\\Settings.razor",
+              "RelativeDocumentMoniker": "Jamper-Financial.Shared\\Pages\\Settings.razor",
+              "ToolTip": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Pages\\Settings.razor",
+              "RelativeToolTip": "Jamper-Financial.Shared\\Pages\\Settings.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-04T10:44:55.587Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "LoginPage.razor",
+              "DocumentMoniker": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Pages\\LoginPage.razor",
+              "RelativeDocumentMoniker": "Jamper-Financial.Shared\\Pages\\LoginPage.razor",
+              "ToolTip": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Pages\\LoginPage.razor",
+              "RelativeToolTip": "Jamper-Financial.Shared\\Pages\\LoginPage.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-04T10:44:51.068Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DeleteAccount.razor",
+              "DocumentMoniker": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Pages\\DeleteAccount.razor",
+              "RelativeDocumentMoniker": "Jamper-Financial.Shared\\Pages\\DeleteAccount.razor",
+              "ToolTip": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Pages\\DeleteAccount.razor",
+              "RelativeToolTip": "Jamper-Financial.Shared\\Pages\\DeleteAccount.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-04T10:44:47.138Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Web\\Program.cs",
+              "RelativeDocumentMoniker": "Jamper-Financial.Web\\Program.cs",
+              "ToolTip": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Web\\Program.cs",
+              "RelativeToolTip": "Jamper-Financial.Web\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-04T10:44:16.95Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Jamper-Financial.Web.csproj",
+              "DocumentMoniker": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
+              "RelativeDocumentMoniker": "Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
+              "ToolTip": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
+              "RelativeToolTip": "Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-12-04T10:44:15.073Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TransactionHelper.cs",
+              "DocumentMoniker": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Data\\TransactionHelper.cs",
+              "RelativeDocumentMoniker": "Jamper-Financial.Shared\\Data\\TransactionHelper.cs",
+              "ToolTip": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Data\\TransactionHelper.cs",
+              "RelativeToolTip": "Jamper-Financial.Shared\\Data\\TransactionHelper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-03T06:06:15.174Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
               "Title": "CalendarPage.razor.css",
-              "DocumentMoniker": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Pages\\CalendarPage.razor.css",
+              "DocumentMoniker": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Pages\\CalendarPage.razor.css",
               "RelativeDocumentMoniker": "Jamper-Financial.Shared\\Pages\\CalendarPage.razor.css",
-              "ToolTip": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\Pages\\CalendarPage.razor.css",
+              "ToolTip": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Pages\\CalendarPage.razor.css",
               "RelativeToolTip": "Jamper-Financial.Shared\\Pages\\CalendarPage.razor.css",
-              "ViewState": "AgIAAIEAAAAAAAAAAAAQwKsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2024-12-03T03:48:35.188Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-03T03:48:35.188Z"
             }
           ]
         }

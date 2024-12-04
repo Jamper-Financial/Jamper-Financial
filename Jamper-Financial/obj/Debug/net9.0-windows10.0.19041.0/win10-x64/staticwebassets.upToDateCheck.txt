@@ -1,4 +1,4 @@
-C:\MyFiles\Jamper-Financial\Jamper-Financial\wwwroot\app.css
-C:\MyFiles\Jamper-Financial\Jamper-Financial\wwwroot\index.html
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial\wwwroot\app.css
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial\wwwroot\index.html
 wwwroot\app.css
 wwwroot\index.html

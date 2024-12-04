@@ -1,32 +1,40 @@
 {
   "Files": [
     {
-      "Id": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
-      "PackagePath": "staticwebassets\\Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css"
+      "Id": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\Jamper-Financial.Shared.bundle.scp.css",
+      "PackagePath": "staticwebassets\\Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css"
     },
     {
-      "Id": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
+      "Id": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\app.css",
       "PackagePath": "staticwebassets\\app.css"
     },
     {
-      "Id": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Id": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Id": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Id": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Id": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png",
+      "Id": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\credentials\\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "PackagePath": "staticwebassets\\credentials\\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json"
+    },
+    {
+      "Id": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
     },
     {
-      "Id": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png",
+      "Id": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\Jamper.png",
       "PackagePath": "staticwebassets\\images\\Jamper.png"
     },
     {
-      "Id": "C:\\MyFiles\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png",
+      "Id": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\images\\logo.png",
       "PackagePath": "staticwebassets\\images\\logo.png"
+    },
+    {
+      "Id": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\wwwroot\\js\\firebase-auth.js",
+      "PackagePath": "staticwebassets\\js\\firebase-auth.js"
     },
     {
       "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.Jamper-Financial.Shared.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",

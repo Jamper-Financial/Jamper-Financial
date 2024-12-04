@@ -54,6 +54,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\bootstrap\bootstrap.min.css.map'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\credentials\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Jamper-Financial.Shared</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Jamper-Financial.Shared</BasePath>
+      <RelativePath>credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>8ek1hxkeri</Fingerprint>
+      <Integrity>gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\credentials\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\favicon.png'))">
       <SourceType>Package</SourceType>
       <SourceId>Jamper-Financial.Shared</SourceId>
@@ -108,23 +126,41 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\images\logo.png'))</OriginalItemSpec>
     </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css'))">
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css'))">
       <SourceType>Package</SourceType>
       <SourceId>Jamper-Financial.Shared</SourceId>
       <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
       <BasePath>_content/Jamper-Financial.Shared</BasePath>
-      <RelativePath>Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css</RelativePath>
+      <RelativePath>Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css</RelativePath>
       <AssetKind>All</AssetKind>
       <AssetMode>Reference</AssetMode>
       <AssetRole>Primary</AssetRole>
       <RelatedAsset></RelatedAsset>
       <AssetTraitName>ScopedCss</AssetTraitName>
       <AssetTraitValue>ProjectBundle</AssetTraitValue>
-      <Fingerprint>otl17ib3tk</Fingerprint>
-      <Integrity>RHwefUvbCjPB3xnkYvuDqv3eGg8pE7pVkyLlV8nA79o=</Integrity>
+      <Fingerprint>sa7ftat05u</Fingerprint>
+      <Integrity>tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Jamper-Financial.Shared.otl17ib3tk.bundle.scp.css'))</OriginalItemSpec>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\firebase-auth.js'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Jamper-Financial.Shared</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Jamper-Financial.Shared</BasePath>
+      <RelativePath>js/firebase-auth.js</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>w5nb6euikb</Fingerprint>
+      <Integrity>/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\firebase-auth.js'))</OriginalItemSpec>
     </StaticWebAsset>
   </ItemGroup>
 </Project>

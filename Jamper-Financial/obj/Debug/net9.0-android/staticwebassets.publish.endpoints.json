@@ -3,6 +3,295 @@
   "ManifestType": "Publish",
   "Endpoints": [
     {
+      "Route": "Jamper-Financial.nbbp4bilyq.styles.css",
+      "AssetFile": "Jamper-Financial.styles.css.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.010416666667"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "95"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"R3ZomADkjZ/UQtkWHXcpiaiixXvkdkc24hGLpiQz8zI=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"k/Vxi/z1YFVIYtNDo7ag8qpsWCkTkZ66+p58Q/5NBQs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:40:41 GMT"
+        },
+        {
+          "Name": "Link",
+          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css>; rel=\"preload\"; as=\"style\""
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nbbp4bilyq"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-k/Vxi/z1YFVIYtNDo7ag8qpsWCkTkZ66+p58Q/5NBQs="
+        },
+        {
+          "Name": "label",
+          "Value": "Jamper-Financial.styles.css"
+        }
+      ]
+    },
+    {
+      "Route": "Jamper-Financial.nbbp4bilyq.styles.css",
+      "AssetFile": "Jamper-Financial.styles.css.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.014492753623"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "68"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"mpkAaBiU5XPUvAby4KTOIt0IKhEAxBjO1MSKKWPipoo=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"k/Vxi/z1YFVIYtNDo7ag8qpsWCkTkZ66+p58Q/5NBQs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:40:41 GMT"
+        },
+        {
+          "Name": "Link",
+          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css>; rel=\"preload\"; as=\"style\""
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nbbp4bilyq"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-k/Vxi/z1YFVIYtNDo7ag8qpsWCkTkZ66+p58Q/5NBQs="
+        },
+        {
+          "Name": "label",
+          "Value": "Jamper-Financial.styles.css"
+        }
+      ]
+    },
+    {
+      "Route": "Jamper-Financial.nbbp4bilyq.styles.css",
+      "AssetFile": "Jamper-Financial.styles.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "97"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"k/Vxi/z1YFVIYtNDo7ag8qpsWCkTkZ66+p58Q/5NBQs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:40:41 GMT"
+        },
+        {
+          "Name": "Link",
+          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css>; rel=\"preload\"; as=\"style\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nbbp4bilyq"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-k/Vxi/z1YFVIYtNDo7ag8qpsWCkTkZ66+p58Q/5NBQs="
+        },
+        {
+          "Name": "label",
+          "Value": "Jamper-Financial.styles.css"
+        }
+      ]
+    },
+    {
+      "Route": "Jamper-Financial.nbbp4bilyq.styles.css.br",
+      "AssetFile": "Jamper-Financial.styles.css.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "68"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"mpkAaBiU5XPUvAby4KTOIt0IKhEAxBjO1MSKKWPipoo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:40:41 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nbbp4bilyq"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-mpkAaBiU5XPUvAby4KTOIt0IKhEAxBjO1MSKKWPipoo="
+        },
+        {
+          "Name": "label",
+          "Value": "Jamper-Financial.styles.css.br"
+        }
+      ]
+    },
+    {
+      "Route": "Jamper-Financial.nbbp4bilyq.styles.css.gz",
+      "AssetFile": "Jamper-Financial.styles.css.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "95"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"R3ZomADkjZ/UQtkWHXcpiaiixXvkdkc24hGLpiQz8zI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:40:41 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "nbbp4bilyq"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-R3ZomADkjZ/UQtkWHXcpiaiixXvkdkc24hGLpiQz8zI="
+        },
+        {
+          "Name": "label",
+          "Value": "Jamper-Financial.styles.css.gz"
+        }
+      ]
+    },
+    {
       "Route": "Jamper-Financial.styles.css",
       "AssetFile": "Jamper-Financial.styles.css.gz",
       "Selectors": [
@@ -35,19 +324,19 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"cYJ4MRKWQeaXOnoLxjAuCdffb/SLHfZsMstFXDpL+KQ=\""
+          "Value": "\"R3ZomADkjZ/UQtkWHXcpiaiixXvkdkc24hGLpiQz8zI=\""
         },
         {
           "Name": "ETag",
-          "Value": "W/\"1aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4=\""
+          "Value": "W/\"k/Vxi/z1YFVIYtNDo7ag8qpsWCkTkZ66+p58Q/5NBQs=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 01:35:17 GMT"
+          "Value": "Wed, 04 Dec 2024 10:40:41 GMT"
         },
         {
           "Name": "Link",
-          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css>; rel=\"preload\"; as=\"style\""
+          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css>; rel=\"preload\"; as=\"style\""
         },
         {
           "Name": "Vary",
@@ -57,7 +346,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-1aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4="
+          "Value": "sha256-k/Vxi/z1YFVIYtNDo7ag8qpsWCkTkZ66+p58Q/5NBQs="
         }
       ]
     },
@@ -68,7 +357,7 @@
         {
           "Name": "Content-Encoding",
           "Value": "br",
-          "Quality": "0.014084507042"
+          "Quality": "0.014492753623"
         }
       ],
       "ResponseHeaders": [
@@ -86,7 +375,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "70"
+          "Value": "68"
         },
         {
           "Name": "Content-Type",
@@ -94,19 +383,19 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"YyGJnzuGv5b0aSvdDQNfzDxIosyIOU8aSeWzXVBTkVk=\""
+          "Value": "\"mpkAaBiU5XPUvAby4KTOIt0IKhEAxBjO1MSKKWPipoo=\""
         },
         {
           "Name": "ETag",
-          "Value": "W/\"1aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4=\""
+          "Value": "W/\"k/Vxi/z1YFVIYtNDo7ag8qpsWCkTkZ66+p58Q/5NBQs=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 01:35:17 GMT"
+          "Value": "Wed, 04 Dec 2024 10:40:41 GMT"
         },
         {
           "Name": "Link",
-          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css>; rel=\"preload\"; as=\"style\""
+          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css>; rel=\"preload\"; as=\"style\""
         },
         {
           "Name": "Vary",
@@ -116,7 +405,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-1aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4="
+          "Value": "sha256-k/Vxi/z1YFVIYtNDo7ag8qpsWCkTkZ66+p58Q/5NBQs="
         }
       ]
     },
@@ -143,21 +432,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"1aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4=\""
+          "Value": "\"k/Vxi/z1YFVIYtNDo7ag8qpsWCkTkZ66+p58Q/5NBQs=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 01:35:17 GMT"
+          "Value": "Wed, 04 Dec 2024 10:40:41 GMT"
         },
         {
           "Name": "Link",
-          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css>; rel=\"preload\"; as=\"style\""
+          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css>; rel=\"preload\"; as=\"style\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-1aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4="
+          "Value": "sha256-k/Vxi/z1YFVIYtNDo7ag8qpsWCkTkZ66+p58Q/5NBQs="
         }
       ]
     },
@@ -180,7 +469,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "70"
+          "Value": "68"
         },
         {
           "Name": "Content-Type",
@@ -188,11 +477,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"YyGJnzuGv5b0aSvdDQNfzDxIosyIOU8aSeWzXVBTkVk=\""
+          "Value": "\"mpkAaBiU5XPUvAby4KTOIt0IKhEAxBjO1MSKKWPipoo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 01:35:17 GMT"
+          "Value": "Wed, 04 Dec 2024 10:40:41 GMT"
         },
         {
           "Name": "Vary",
@@ -202,7 +491,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-YyGJnzuGv5b0aSvdDQNfzDxIosyIOU8aSeWzXVBTkVk="
+          "Value": "sha256-mpkAaBiU5XPUvAby4KTOIt0IKhEAxBjO1MSKKWPipoo="
         }
       ]
     },
@@ -233,11 +522,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"cYJ4MRKWQeaXOnoLxjAuCdffb/SLHfZsMstFXDpL+KQ=\""
+          "Value": "\"R3ZomADkjZ/UQtkWHXcpiaiixXvkdkc24hGLpiQz8zI=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 01:35:17 GMT"
+          "Value": "Wed, 04 Dec 2024 10:40:41 GMT"
         },
         {
           "Name": "Vary",
@@ -247,18 +536,18 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-cYJ4MRKWQeaXOnoLxjAuCdffb/SLHfZsMstFXDpL+KQ="
+          "Value": "sha256-R3ZomADkjZ/UQtkWHXcpiaiixXvkdkc24hGLpiQz8zI="
         }
       ]
     },
     {
-      "Route": "Jamper-Financial.v75zdz8xs1.styles.css",
-      "AssetFile": "Jamper-Financial.styles.css.gz",
+      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.bundle.scp.css",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.010416666667"
+          "Quality": "0.000262398321"
         }
       ],
       "ResponseHeaders": [
@@ -268,7 +557,7 @@
         },
         {
           "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
+          "Value": "no-cache"
         },
         {
           "Name": "Content-Encoding",
@@ -276,7 +565,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "95"
+          "Value": "3810"
         },
         {
           "Name": "Content-Type",
@@ -284,19 +573,15 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"cYJ4MRKWQeaXOnoLxjAuCdffb/SLHfZsMstFXDpL+KQ=\""
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
         },
         {
           "Name": "ETag",
-          "Value": "W/\"1aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4=\""
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 01:35:17 GMT"
-        },
-        {
-          "Name": "Link",
-          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css>; rel=\"preload\"; as=\"style\""
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Vary",
@@ -305,304 +590,19 @@
       ],
       "EndpointProperties": [
         {
-          "Name": "fingerprint",
-          "Value": "v75zdz8xs1"
-        },
-        {
           "Name": "integrity",
-          "Value": "sha256-1aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4="
-        },
-        {
-          "Name": "label",
-          "Value": "Jamper-Financial.styles.css"
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         }
       ]
     },
     {
-      "Route": "Jamper-Financial.v75zdz8xs1.styles.css",
-      "AssetFile": "Jamper-Financial.styles.css.br",
+      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.bundle.scp.css",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css.br",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "br",
-          "Quality": "0.014084507042"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "br"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "70"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"YyGJnzuGv5b0aSvdDQNfzDxIosyIOU8aSeWzXVBTkVk=\""
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"1aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 01:35:17 GMT"
-        },
-        {
-          "Name": "Link",
-          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css>; rel=\"preload\"; as=\"style\""
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "v75zdz8xs1"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-1aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4="
-        },
-        {
-          "Name": "label",
-          "Value": "Jamper-Financial.styles.css"
-        }
-      ]
-    },
-    {
-      "Route": "Jamper-Financial.v75zdz8xs1.styles.css",
-      "AssetFile": "Jamper-Financial.styles.css",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "97"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"1aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 01:35:17 GMT"
-        },
-        {
-          "Name": "Link",
-          "Value": "<_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css>; rel=\"preload\"; as=\"style\""
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "v75zdz8xs1"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-1aGmBoZ3kvaiQeldZssDHEqwaGlmS1fnxuZflFS/MO4="
-        },
-        {
-          "Name": "label",
-          "Value": "Jamper-Financial.styles.css"
-        }
-      ]
-    },
-    {
-      "Route": "Jamper-Financial.v75zdz8xs1.styles.css.br",
-      "AssetFile": "Jamper-Financial.styles.css.br",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "br"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "70"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"YyGJnzuGv5b0aSvdDQNfzDxIosyIOU8aSeWzXVBTkVk=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 01:35:17 GMT"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "v75zdz8xs1"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-YyGJnzuGv5b0aSvdDQNfzDxIosyIOU8aSeWzXVBTkVk="
-        },
-        {
-          "Name": "label",
-          "Value": "Jamper-Financial.styles.css.br"
-        }
-      ]
-    },
-    {
-      "Route": "Jamper-Financial.v75zdz8xs1.styles.css.gz",
-      "AssetFile": "Jamper-Financial.styles.css.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "95"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"cYJ4MRKWQeaXOnoLxjAuCdffb/SLHfZsMstFXDpL+KQ=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 01:35:17 GMT"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "v75zdz8xs1"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-cYJ4MRKWQeaXOnoLxjAuCdffb/SLHfZsMstFXDpL+KQ="
-        },
-        {
-          "Name": "label",
-          "Value": "Jamper-Financial.styles.css.gz"
-        }
-      ]
-    },
-    {
-      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.bundle.scp.css",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.000416319734"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2401"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
-        }
-      ]
-    },
-    {
-      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.bundle.scp.css",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css.br",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "br",
-          "Quality": "0.000493583416"
+          "Quality": "0.000313774710"
         }
       ],
       "ResponseHeaders": [
@@ -620,7 +620,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2025"
+          "Value": "3186"
         },
         {
           "Name": "Content-Type",
@@ -628,15 +628,15 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
         },
         {
           "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Vary",
@@ -646,13 +646,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         }
       ]
     },
     {
       "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.bundle.scp.css",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -665,7 +665,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "9268"
+          "Value": "18439"
         },
         {
           "Name": "Content-Type",
@@ -673,23 +673,23 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         }
       ]
     },
     {
       "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.bundle.scp.css.br",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css.br",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css.br",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -706,7 +706,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2025"
+          "Value": "3186"
         },
         {
           "Name": "Content-Type",
@@ -714,11 +714,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Vary",
@@ -728,13 +728,13 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I="
+          "Value": "sha256-SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc="
         }
       ]
     },
     {
       "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.bundle.scp.css.gz",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css.gz",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -751,7 +751,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2401"
+          "Value": "3810"
         },
         {
           "Name": "Content-Type",
@@ -759,11 +759,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Vary",
@@ -773,18 +773,18 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY="
+          "Value": "sha256-j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU="
         }
       ]
     },
     {
-      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css.gz",
+      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000416319734"
+          "Quality": "0.000262398321"
         }
       ],
       "ResponseHeaders": [
@@ -802,7 +802,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2401"
+          "Value": "3810"
         },
         {
           "Name": "Content-Type",
@@ -810,15 +810,15 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
         },
         {
           "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Vary",
@@ -828,11 +828,11 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "th5v8tvdld"
+          "Value": "sa7ftat05u"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         },
         {
           "Name": "label",
@@ -841,13 +841,13 @@
       ]
     },
     {
-      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css.br",
+      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css.br",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "br",
-          "Quality": "0.000493583416"
+          "Quality": "0.000313774710"
         }
       ],
       "ResponseHeaders": [
@@ -865,7 +865,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2025"
+          "Value": "3186"
         },
         {
           "Name": "Content-Type",
@@ -873,15 +873,15 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
         },
         {
           "Name": "ETag",
-          "Value": "W/\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "W/\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Vary",
@@ -891,11 +891,11 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "th5v8tvdld"
+          "Value": "sa7ftat05u"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         },
         {
           "Name": "label",
@@ -904,8 +904,8 @@
       ]
     },
     {
-      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css",
+      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -918,7 +918,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "9268"
+          "Value": "18439"
         },
         {
           "Name": "Content-Type",
@@ -926,21 +926,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw=\""
+          "Value": "\"tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "th5v8tvdld"
+          "Value": "sa7ftat05u"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-bwZjegQ7PRyF1eh/cpvZzHbHBn9D1U9I2Su8QUb0vJw="
+          "Value": "sha256-tEcepB4WCVhPsXxKQdzGh4WhoNTv/iW1opTXIxTucfo="
         },
         {
           "Name": "label",
@@ -949,8 +949,8 @@
       ]
     },
     {
-      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css.br",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css.br",
+      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css.br",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css.br",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -967,7 +967,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2025"
+          "Value": "3186"
         },
         {
           "Name": "Content-Type",
@@ -975,11 +975,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I=\""
+          "Value": "\"SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Vary",
@@ -989,11 +989,11 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "th5v8tvdld"
+          "Value": "sa7ftat05u"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-YfB+CS8V/zlbdq3QV9PvE7MYz8MwfN8dZp+Ejel7q8I="
+          "Value": "sha256-SjsWCdP1+vEuQwtpa4wAzxEBg9/+DMg0BwhspTvAcFc="
         },
         {
           "Name": "label",
@@ -1002,8 +1002,8 @@
       ]
     },
     {
-      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css.gz",
-      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.th5v8tvdld.bundle.scp.css.gz",
+      "Route": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css.gz",
+      "AssetFile": "_content/Jamper-Financial.Shared/Jamper-Financial.Shared.sa7ftat05u.bundle.scp.css.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1020,7 +1020,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "2401"
+          "Value": "3810"
         },
         {
           "Name": "Content-Type",
@@ -1028,11 +1028,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY=\""
+          "Value": "\"j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 03 Dec 2024 00:51:11 GMT"
+          "Value": "Wed, 04 Dec 2024 10:39:00 GMT"
         },
         {
           "Name": "Vary",
@@ -1042,11 +1042,11 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "th5v8tvdld"
+          "Value": "sa7ftat05u"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-q6cvzzALDIlyGLYZkOVyNHG5140mn/+/J0Bz0+Jb0rY="
+          "Value": "sha256-j6R4AfY4r4KS7FoWYNmfUivFNzvhyRQUz7GUk4CaBtU="
         },
         {
           "Name": "label",
@@ -1095,7 +1095,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1150,7 +1150,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1191,7 +1191,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1232,7 +1232,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1277,7 +1277,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1332,7 +1332,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1395,7 +1395,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1444,7 +1444,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1493,7 +1493,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1546,7 +1546,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1609,7 +1609,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1672,7 +1672,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1721,7 +1721,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1770,7 +1770,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1823,7 +1823,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1886,7 +1886,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1941,7 +1941,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -1982,7 +1982,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -2033,7 +2033,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -2096,7 +2096,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -2145,7 +2145,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -2194,7 +2194,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -2247,7 +2247,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -2300,7 +2300,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -2345,7 +2345,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -2400,7 +2400,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -2455,7 +2455,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -2496,7 +2496,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -2537,7 +2537,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -2582,7 +2582,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:20 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         },
         {
           "Name": "Vary",
@@ -2593,6 +2593,520 @@
         {
           "Name": "integrity",
           "Value": "sha256-Kym5HpgDYV8Caci50HDUPG6WCQ6nTP+8hy429w+zHVU="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.8ek1hxkeri.json",
+      "AssetFile": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000595947557"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1677"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8ek1hxkeri"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.8ek1hxkeri.json",
+      "AssetFile": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000623830318"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1602"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8ek1hxkeri"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.8ek1hxkeri.json",
+      "AssetFile": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2382"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8ek1hxkeri"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.8ek1hxkeri.json.br",
+      "AssetFile": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1602"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8ek1hxkeri"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.br"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.8ek1hxkeri.json.gz",
+      "AssetFile": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1677"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8ek1hxkeri"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.gz"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "AssetFile": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000595947557"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1677"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "AssetFile": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.000623830318"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1602"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "AssetFile": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2382"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.br",
+      "AssetFile": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1602"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-zmaJQS5oPXNhWiqtxZWO/d5DzZGkCcGPBwg5HLMi8tQ="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.gz",
+      "AssetFile": "_content/Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1677"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 08:26:36 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Au2jZa0qW0jc8AJMVsVxXoegevUF8PJizC9FPGZL4bc="
         }
       ]
     },
@@ -2623,7 +3137,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -2668,7 +3182,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -2705,7 +3219,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -2750,7 +3264,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
@@ -2761,7 +3275,7 @@
       ]
     },
     {
-      "Route": "_content/Jamper-Financial.Shared/images/logo.9cfdpoxzd2.png",
+      "Route": "_content/Jamper-Financial.Shared/images/logo.3y1l96xecb.png",
       "AssetFile": "_content/Jamper-Financial.Shared/images/logo.png",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2775,7 +3289,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "28990"
+          "Value": "106390"
         },
         {
           "Name": "Content-Type",
@@ -2783,21 +3297,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA=\""
+          "Value": "\"Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "9cfdpoxzd2"
+          "Value": "3y1l96xecb"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA="
+          "Value": "sha256-Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0="
         },
         {
           "Name": "label",
@@ -2820,7 +3334,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "28990"
+          "Value": "106390"
         },
         {
           "Name": "Content-Type",
@@ -2828,17 +3342,531 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA=\""
+          "Value": "\"Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 26 Nov 2024 23:16:16 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:52 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-F4jNqJ+2q77k+py3xasjUsngt6Cl9cKvaMWZsrTUaCA="
+          "Value": "sha256-Gw6Gg3Y5HA17qJjuvpOP3fYq+MHBGa0GdLYn7qo+qT0="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/js/firebase-auth.js",
+      "AssetFile": "_content/Jamper-Financial.Shared/js/firebase-auth.js.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001322751323"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/js/firebase-auth.js",
+      "AssetFile": "_content/Jamper-Financial.Shared/js/firebase-auth.js.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.001610305958"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "620"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/js/firebase-auth.js",
+      "AssetFile": "_content/Jamper-Financial.Shared/js/firebase-auth.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1754"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/js/firebase-auth.js.br",
+      "AssetFile": "_content/Jamper-Financial.Shared/js/firebase-auth.js.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "620"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/js/firebase-auth.js.gz",
+      "AssetFile": "_content/Jamper-Financial.Shared/js/firebase-auth.js.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I="
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/js/firebase-auth.w5nb6euikb.js",
+      "AssetFile": "_content/Jamper-Financial.Shared/js/firebase-auth.js.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.001322751323"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w5nb6euikb"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Jamper-Financial.Shared/js/firebase-auth.js"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/js/firebase-auth.w5nb6euikb.js",
+      "AssetFile": "_content/Jamper-Financial.Shared/js/firebase-auth.js.br",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "br",
+          "Quality": "0.001610305958"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "620"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48=\""
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w5nb6euikb"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Jamper-Financial.Shared/js/firebase-auth.js"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/js/firebase-auth.w5nb6euikb.js",
+      "AssetFile": "_content/Jamper-Financial.Shared/js/firebase-auth.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1754"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w5nb6euikb"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-/JfkRTelc7zJJbovlC4ks3Cl8Yjdzjla2qzabhxVUVw="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Jamper-Financial.Shared/js/firebase-auth.js"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/js/firebase-auth.w5nb6euikb.js.br",
+      "AssetFile": "_content/Jamper-Financial.Shared/js/firebase-auth.js.br",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "br"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "620"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w5nb6euikb"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-a8zOxFy+zOaqCLUe8h1VM2oAoJY2nyCsqFTq0INSg48="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Jamper-Financial.Shared/js/firebase-auth.js.br"
+        }
+      ]
+    },
+    {
+      "Route": "_content/Jamper-Financial.Shared/js/firebase-auth.w5nb6euikb.js.gz",
+      "AssetFile": "_content/Jamper-Financial.Shared/js/firebase-auth.js.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "755"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 04 Dec 2024 10:16:34 GMT"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w5nb6euikb"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-lcxWuvDsMVY8cliIqbGVvZrPy49nlDRKnxLVr4g9V4I="
+        },
+        {
+          "Name": "label",
+          "Value": "_content/Jamper-Financial.Shared/js/firebase-auth.js.gz"
         }
       ]
     },
@@ -2883,7 +3911,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
@@ -2938,7 +3966,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
@@ -2979,7 +4007,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -3020,7 +4048,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
@@ -3065,7 +4093,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
@@ -3120,7 +4148,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
@@ -3183,7 +4211,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
@@ -3232,7 +4260,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -3281,7 +4309,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
@@ -3334,7 +4362,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
@@ -3397,7 +4425,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
@@ -3460,7 +4488,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
@@ -3509,7 +4537,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -3558,7 +4586,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
@@ -3611,7 +4639,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
@@ -3674,7 +4702,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
@@ -3729,7 +4757,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
@@ -3770,7 +4798,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         }
       ],
       "EndpointProperties": [
@@ -3811,7 +4839,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
@@ -3856,7 +4884,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sun, 01 Dec 2024 06:11:19 GMT"
+          "Value": "Wed, 04 Dec 2024 10:38:54 GMT"
         },
         {
           "Name": "Vary",
