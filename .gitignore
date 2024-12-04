@@ -28,3 +28,8 @@ obj/
 *.sqlite
 *.db-shm
 *.db-wal
+
+=======
+.vs/*
+Debug/
+Release/
