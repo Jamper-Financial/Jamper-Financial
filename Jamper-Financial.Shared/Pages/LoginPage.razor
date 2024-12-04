@@ -18,7 +18,7 @@
                 <input id="password" type="password" placeholder="********" @bind="Password" />
 
                 <div class="remember-me">
-                    <input type="checkbox" id="remember" />
+                    <input type="checkbox" id="remember" @bind="RememberMe" />
                     <label for="remember">Remember me</label>
                 </div>
 
@@ -34,7 +34,8 @@
 
                 <a href="#" class="forgot-password">Forgot your password or username?</a>
                 <div class="social-login">
-                    <button type="button" class="social-button google" @onclick="SignInWithGoogle">Continue using Google</button>
+                    <button type="button" class="social-button google" @onclick="SignInWithGoogle">Continue using
+                        Google</button>
                     <button type="button" class="social-button facebook">Continue using Facebook</button>
                 </div>
 
@@ -66,6 +67,24 @@
     private string Identifier { get; set; } = string.Empty;
     private string Password { get; set; } = string.Empty;
     private string ErrorMessage { get; set; } = string.Empty;
+    private bool RememberMe { get; set; } = false;
+
+    private string FilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+    "credentials.txt");
+
+    protected override void OnInitialized()
+    {
+        if (File.Exists(FilePath))
+        {
+            var lines = File.ReadAllLines(FilePath);
+            if (lines.Length == 2)
+            {
+                Identifier = lines[0];
+                Password = lines[1];
+                RememberMe = true;
+            }
+        }
+    }
 
     // Navigate to create account page
     private void NavigateToCreateAccount()
@@ -110,8 +129,20 @@
             ErrorMessage = string.Empty;
             Console.WriteLine("Login successful");
 
-            //Commented for now until we have emil's calendar page but it should work I tested it with my dummy page :)
-            //I created a settings page and delete account so this redirects to the settings page because we dont have the home page/dashboard yet, You can also test out the delete function - romer :))
+            if (RememberMe)
+            {
+                // Save the credentials if "Remember Me" is checked
+                File.WriteAllLines(FilePath, new[] { Identifier, Password });
+            }
+            else
+            {
+                // Delete the credentials file if "Remember Me" is unchecked
+                if (File.Exists(FilePath))
+                {
+                    File.Delete(FilePath);
+                }
+            }
+
             Navigation.NavigateTo("/calendar-page");
         }
         else
@@ -146,20 +177,22 @@
     }
 
     h1 {
-        color: black; 
-        font-size: 26px; 
+        color: black;
+        font-size: 26px;
         margin-bottom: 20px;
         text-align: center;
-        width: 100%; /* Ensure it spans the header width */
+        width: 100%;
+        /* Ensure it spans the header width */
     }
 
     .login-form {
         background-color: #D0E8C5;
         border: 1px solid #d4e8b6;
-        border-radius: 20px; 
+        border-radius: 20px;
         padding: 30px;
         box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        min-height: 500px; /* Matches the height of the logo */
+        min-height: 500px;
+        /* Matches the height of the logo */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -186,7 +219,7 @@
         padding: 10px;
         margin-bottom: 15px;
         border: 1px solid #ddd;
-        border-radius: 10px; 
+        border-radius: 10px;
         font-size: 14px;
     }
 
@@ -198,14 +231,14 @@
     .remember-me {
         display: flex;
         align-items: center;
-        gap: 5px; 
+        gap: 5px;
         margin-bottom: 15px;
         font-size: 14px;
     }
 
     .remember-me input[type="checkbox"] {
         margin: 0;
-        width: auto; 
+        width: auto;
     }
 
     .remember-me label {
@@ -218,7 +251,7 @@
         background-color: #62ad41;
         color: white;
         border: none;
-        border-radius: 10px; 
+        border-radius: 10px;
         padding: 10px;
         font-size: 16px;
         cursor: pointer;
@@ -226,9 +259,9 @@
         width: 100%;
     }
 
-        .login-button:hover {
-            background-color: #519a37;
-        }
+    .login-button:hover {
+        background-color: #519a37;
+    }
 
     .forgot-password {
         color: #444;
@@ -249,21 +282,21 @@
     .social-button {
         border: none;
         padding: 10px;
-        border-radius: 10px; 
+        border-radius: 10px;
         font-size: 14px;
         cursor: pointer;
         width: 100%;
     }
 
-        .social-button.google {
-            background-color: #db4437;
-            color: white;
-        }
+    .social-button.google {
+        background-color: #db4437;
+        color: white;
+    }
 
-        .social-button.facebook {
-            background-color: #4267b2;
-            color: white;
-        }
+    .social-button.facebook {
+        background-color: #4267b2;
+        color: white;
+    }
 
 
     button {
@@ -273,17 +306,17 @@
         font-size: 16px;
         cursor: pointer;
     }
-    
-        .create-account-button {
-            background-color: #62ad41;
-            color: white;
-            border: none;
-        }
-    
-        .create-account-button:hover {
-            background-color: #519a37;
-        }
-    
+
+    .create-account-button {
+        background-color: #62ad41;
+        color: white;
+        border: none;
+    }
+
+    .create-account-button:hover {
+        background-color: #519a37;
+    }
+
     .terms {
         color: #888;
         font-size: 12px;
@@ -298,11 +331,11 @@
         align-items: center;
     }
 
-        .login-right img {
-            height: 50%; 
-            width: auto;
-            max-width: 100%; 
-        }
+    .login-right img {
+        height: 50%;
+        width: auto;
+        max-width: 100%;
+    }
 
     .bottom-buttons {
         display: flex;
@@ -312,10 +345,12 @@
     }
 
     .sidebar {
-        display: none; /* This hides the sidebar */
+        display: none;
+        /* This hides the sidebar */
     }
 
     .header-bar {
-        display: none; /* Hide the header bar */
+        display: none;
+        /* Hide the header bar */
     }
 </Style>
