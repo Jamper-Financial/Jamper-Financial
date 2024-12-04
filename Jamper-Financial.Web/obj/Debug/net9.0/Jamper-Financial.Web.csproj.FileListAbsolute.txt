@@ -125,4 +125,4 @@ C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Web\obj\Debug
 C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\Jamper-Financial.Web.genruntimeconfig.cache
 C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\ref\Jamper-Financial.Web.dll
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\Jamper-Financial.Web.sourcelink.json
-C:\MyFiles\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\compressed\mjqb8mmh8f-qq4gnp5z4k.gz
+C:\MyFiles\Jamper-Financial\Jamper-Financial.Web\obj\Debug\net9.0\compressed\mjqb8mmh8f-nbbp4bilyq.gz

@@ -65,5 +65,5 @@ C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Shared\obj\De
 C:\Users\paolo\Desktop\FInal Sad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\ref\Jamper-Financial.Shared.dll
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.sourcelink.json
 C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\scopedcss\Pages\CalendarPage.razor.rz.scp.css
-C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\eq1ix6lcgi-otl17ib3tk.gz
-C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\4yfxhic0vi-otl17ib3tk.gz
+C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\eq1ix6lcgi-sa7ftat05u.gz
+C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\4yfxhic0vi-sa7ftat05u.gz
