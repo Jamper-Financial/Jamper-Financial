@@ -5,6 +5,7 @@
     private bool ShouldShowHeader => !Navigation.Uri.Contains("/login") && !Navigation.Uri.EndsWith("/");
 }
 
+
 @* Include the custom CSS file *@
 <link href="css/MainLayout.css" rel="stylesheet" />
 
@@ -17,9 +18,13 @@
             </aside>
 
             <main class="main-content">
-                <header class="header">
-                    <HeaderMenu />
-                </header>
+                @if (ShouldShowHeader)
+                {
+                    <header class="header">
+                        <HeaderMenu />
+                    </header>
+                }
+
                 <article class="content">
                     @Body
                 </article>
