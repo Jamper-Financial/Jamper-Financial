@@ -260,6 +260,21 @@
           }
         }
       },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
         "compile": {
@@ -1048,6 +1063,18 @@
           "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
         }
       },
       "Xamarin.Android.Glide/4.16.0.6": {
@@ -3005,6 +3032,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -3274,6 +3302,21 @@
           }
         }
       },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
         "compile": {
@@ -4056,6 +4099,18 @@
           "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
         }
       },
       "Xamarin.Android.Glide/4.16.0.6": {
@@ -6013,6 +6068,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -6282,6 +6338,21 @@
           }
         }
       },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
         "compile": {
@@ -7064,6 +7135,18 @@
           "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
         }
       },
       "Xamarin.Android.Glide/4.16.0.6": {
@@ -9021,6 +9104,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -9290,6 +9374,21 @@
           }
         }
       },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
         "compile": {
@@ -10072,6 +10171,18 @@
           "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
         }
       },
       "Xamarin.Android.Glide/4.16.0.6": {
@@ -12029,6 +12140,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -12298,6 +12410,21 @@
           }
         }
       },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
         "compile": {
@@ -13080,6 +13207,18 @@
           "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
         }
       },
       "Xamarin.Android.Glide/4.16.0.6": {
@@ -15037,6 +15176,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -15306,6 +15446,21 @@
           }
         }
       },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
         "compile": {
@@ -16088,6 +16243,18 @@
           "lib/netcoreapp2.0/System.Runtime.CompilerServices.Unsafe.dll": {
             "related": ".xml"
           }
+        }
+      },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
         }
       },
       "Xamarin.Android.Glide/4.16.0.6": {
@@ -18045,6 +18212,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -18297,6 +18465,21 @@
             "related": ".xml"
           }
         }
+      },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
@@ -19042,6 +19225,18 @@
           }
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -19049,6 +19244,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -19302,6 +19498,21 @@
           }
         }
       },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
         "compile": {
@@ -20040,6 +20251,18 @@
           }
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -20047,6 +20270,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -20300,6 +20524,21 @@
           }
         }
       },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
         "compile": {
@@ -21038,6 +21277,18 @@
           }
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -21045,6 +21296,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -21298,6 +21550,21 @@
           }
         }
       },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
         "compile": {
@@ -22036,6 +22303,18 @@
           }
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -22043,6 +22322,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -22296,6 +22576,21 @@
           }
         }
       },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
         "compile": {
@@ -23034,6 +23329,18 @@
           }
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -23041,6 +23348,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -23294,6 +23602,21 @@
           }
         }
       },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
         "compile": {
@@ -24032,6 +24355,18 @@
           }
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -24039,6 +24374,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -24291,6 +24627,21 @@
             "related": ".xml"
           }
         }
+      },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
@@ -25130,6 +25481,18 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -25137,6 +25500,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -25389,6 +25753,21 @@
             "related": ".xml"
           }
         }
+      },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
@@ -26135,6 +26514,18 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -26142,6 +26533,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -26394,6 +26786,21 @@
             "related": ".xml"
           }
         }
+      },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
@@ -27140,6 +27547,18 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -27147,6 +27566,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -27399,6 +27819,21 @@
             "related": ".xml"
           }
         }
+      },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
@@ -28142,6 +28577,18 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -28149,6 +28596,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -28401,6 +28849,21 @@
             "related": ".xml"
           }
         }
+      },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
@@ -29147,6 +29610,18 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -29154,6 +29629,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -29406,6 +29882,21 @@
             "related": ".xml"
           }
         }
+      },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
@@ -30149,6 +30640,18 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -30156,6 +30659,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -30408,6 +30912,21 @@
             "related": ".xml"
           }
         }
+      },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
@@ -31459,6 +31978,18 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -31466,6 +31997,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -31718,6 +32250,21 @@
             "related": ".xml"
           }
         }
+      },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
@@ -32634,6 +33181,18 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -32641,6 +33200,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -32893,6 +33453,21 @@
             "related": ".xml"
           }
         }
+      },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
@@ -33809,6 +34384,18 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -33816,6 +34403,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -34068,6 +34656,21 @@
             "related": ".xml"
           }
         }
+      },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
@@ -34981,6 +35584,18 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -34988,6 +35603,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -35240,6 +35856,21 @@
             "related": ".xml"
           }
         }
+      },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
@@ -36156,6 +36787,18 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -36163,6 +36806,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -36415,6 +37059,21 @@
             "related": ".xml"
           }
         }
+      },
+      "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0"
+        },
+        "compile": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
       },
       "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
         "type": "package",
@@ -37340,6 +37999,18 @@
           "lib/netcoreapp2.1/_._": {}
         }
       },
+      "Tailwind.Extensions.AspNetCore/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNetCore.SpaServices.Extensions": "6.0.1"
+        },
+        "compile": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/Tailwind.Extensions.AspNetCore.dll": {}
+        }
+      },
       "Jamper-Financial.Shared/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v9.0",
@@ -37347,6 +38018,7 @@
           "FirebaseAdmin": "3.1.0",
           "Microsoft.AspNetCore.Components.Web": "9.0.0",
           "Microsoft.Data.Sqlite.Core": "9.0.0",
+          "Tailwind.Extensions.AspNetCore": "1.0.0",
           "sqlite-net-pcl": "1.9.172"
         },
         "compile": {
@@ -37653,6 +38325,20 @@
         "lib/netstandard2.0/Microsoft.AspNetCore.Metadata.xml",
         "microsoft.aspnetcore.metadata.9.0.0.nupkg.sha512",
         "microsoft.aspnetcore.metadata.nuspec"
+      ]
+    },
+    "Microsoft.AspNetCore.SpaServices.Extensions/6.0.1": {
+      "sha512": "YtFjLoTsjrVbgA1VQvkZ5gRlVmODJ+npVNcIoW3NWudB0EtImT8exnhB9Yru5xWefS2T7L2hG7VI2tkPVUpNbQ==",
+      "type": "package",
+      "path": "microsoft.aspnetcore.spaservices.extensions/6.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net6.0/Microsoft.AspNetCore.SpaServices.Extensions.dll",
+        "microsoft.aspnetcore.spaservices.extensions.6.0.1.nupkg.sha512",
+        "microsoft.aspnetcore.spaservices.extensions.nuspec"
       ]
     },
     "Microsoft.Bcl.AsyncInterfaces/6.0.0": {
@@ -40181,6 +40867,18 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "Tailwind.Extensions.AspNetCore/1.0.0": {
+      "sha512": "D1DSdyy6qBt17nwz382bLhJTJfb2r4W7bWf6klPnKFARHVHw3XhFmAPCOGe1Wu/fHyNJt6Z7Nu2gAajPK2GWvA==",
+      "type": "package",
+      "path": "tailwind.extensions.aspnetcore/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net6.0/Tailwind.Extensions.AspNetCore.dll",
+        "tailwind.extensions.aspnetcore.1.0.0.nupkg.sha512",
+        "tailwind.extensions.aspnetcore.nuspec"
+      ]
+    },
     "Xamarin.Android.Glide/4.16.0.6": {
       "sha512": "UlVmpTxb1dc7pmbmnDFzTZ7Pyu2EPpORP1JI+tjx/t9DHvzbdo2dLESMiPwYH5THJ/aHV7O0gY0pmaQjjcotXQ==",
       "type": "package",
@@ -42087,7 +42785,8 @@
       "Microsoft.AspNetCore.Components.WebView.Maui >= 9.0.0",
       "Microsoft.Extensions.Logging.Debug >= 9.0.0",
       "Microsoft.Maui.Controls >= 9.0.0",
-      "Microsoft.NET.ILLink.Tasks >= 9.0.0"
+      "Microsoft.NET.ILLink.Tasks >= 9.0.0",
+      "Tailwind.Extensions.AspNetCore >= 1.0.0"
     ],
     "net9.0-ios18.1": [
       "Jamper-Financial.Shared >= 1.0.0",
@@ -42107,28 +42806,29 @@
       "Jamper-Financial.Shared >= 1.0.0",
       "Microsoft.AspNetCore.Components.WebView.Maui >= 9.0.0",
       "Microsoft.Extensions.Logging.Debug >= 9.0.0",
-      "Microsoft.Maui.Controls >= 9.0.0"
+      "Microsoft.Maui.Controls >= 9.0.0",
+      "Tailwind.Extensions.AspNetCore >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Spoon\\.nuget\\packages\\": {},
+    "C:\\Users\\Marian Estrada\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
+      "projectUniqueName": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
       "projectName": "Jamper-Financial",
-      "projectPath": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
-      "packagesPath": "C:\\Users\\Spoon\\.nuget\\packages\\",
-      "outputPath": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial\\obj\\",
+      "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
+      "packagesPath": "C:\\Users\\Marian Estrada\\.nuget\\packages\\",
+      "outputPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Spoon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Marian Estrada\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -42147,32 +42847,32 @@
         "net9.0-android35.0": {
           "targetAlias": "net9.0-android",
           "projectReferences": {
-            "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         },
         "net9.0-ios18.1": {
           "targetAlias": "net9.0-ios",
           "projectReferences": {
-            "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         },
         "net9.0-maccatalyst18.1": {
           "targetAlias": "net9.0-maccatalyst",
           "projectReferences": {
-            "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         },
         "net9.0-windows10.0.19041": {
           "targetAlias": "net9.0-windows10.0.19041.0",
           "projectReferences": {
-            "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         }
@@ -42210,6 +42910,10 @@
             "target": "Package",
             "version": "[9.0.0, )",
             "autoReferenced": true
+          },
+          "Tailwind.Extensions.AspNetCore": {
+            "target": "Package",
+            "version": "[1.0.0, )"
           }
         },
         "imports": [
@@ -42334,6 +43038,10 @@
           "Microsoft.Maui.Controls": {
             "target": "Package",
             "version": "[9.0.0, )"
+          },
+          "Tailwind.Extensions.AspNetCore": {
+            "target": "Package",
+            "version": "[1.0.0, )"
           }
         },
         "imports": [

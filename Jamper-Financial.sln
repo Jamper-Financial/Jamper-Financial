@@ -1,6 +1,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35514.174 d17.12
+VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jamper-Financial", "Jamper-Financial\Jamper-Financial.csproj", "{3C034CE5-45BE-4FFD-A019-06C7812B1796}"
 	ProjectSection(ProjectDependencies) = postProject
