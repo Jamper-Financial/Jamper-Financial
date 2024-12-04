@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {}
+    "C:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {}
   },
   "projects": {
-    "c:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+    "C:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+        "projectUniqueName": "C:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
         "projectName": "Jamper-Financial.Shared",
-        "projectPath": "c:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+        "projectPath": "C:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
         "packagesPath": "C:\\Users\\paolo\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
+        "outputPath": "C:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -88,14 +88,14 @@
         }
       }
     },
-    "c:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {
+    "C:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
+        "projectUniqueName": "C:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
         "projectName": "Jamper-Financial.Web",
-        "projectPath": "c:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
+        "projectPath": "C:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
         "packagesPath": "C:\\Users\\paolo\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Web\\obj\\",
+        "outputPath": "C:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Web\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -117,8 +117,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "c:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-                "projectPath": "c:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+              "C:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+                "projectPath": "C:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
               }
             }
           }

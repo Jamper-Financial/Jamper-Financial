@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Jamper-Financial.Shared")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+03e7408dd24ad2afd61cd8e355f5bb899e5c8862")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a8a1a6fcb41c3bc09c965660edaa2093edff2f17")]
 [assembly: System.Reflection.AssemblyProductAttribute("Jamper-Financial.Shared")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Jamper-Financial.Shared")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,3 +1,5 @@
-C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\wwwroot\bootstrap\bootstrap.min.css
-C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\wwwroot\app.css
-C:\MyFiles\Jamper-Financial\Jamper-Financial.Shared\wwwroot\bootstrap\bootstrap.min.css.map
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\wwwroot\bootstrap\bootstrap.min.css
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\wwwroot\credentials\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\wwwroot\app.css
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\wwwroot\bootstrap\bootstrap.min.css.map
+C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\wwwroot\js\firebase-auth.js

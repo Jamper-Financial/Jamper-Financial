@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "PiGseJQ+YLQ=",
+  "dgSpecHash": "Xj/8DCAy1VI=",
   "success": true,
-  "projectFilePath": "c:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
+  "projectFilePath": "C:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\paolo\\.nuget\\packages\\firebaseadmin\\3.1.0\\firebaseadmin.3.1.0.nupkg.sha512",
     "C:\\Users\\paolo\\.nuget\\packages\\google.api.gax\\4.8.0\\google.api.gax.4.8.0.nupkg.sha512",
