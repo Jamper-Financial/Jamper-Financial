@@ -66,8 +66,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>8ek1hxkeri</Fingerprint>
-      <Integrity>gLLbkWCDvNI5ASIdKfklwGWioHrbnz0nHC9mn8aH0TI=</Integrity>
+      <Fingerprint>tdajncr4da</Fingerprint>
+      <Integrity>UZLfGeGpQARtOQMH4fQjWWRIBWejb/AhRxaNokSAqHQ=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\credentials\jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json'))</OriginalItemSpec>

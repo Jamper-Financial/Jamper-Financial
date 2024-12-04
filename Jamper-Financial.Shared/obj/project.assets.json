@@ -1294,23 +1294,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Spoon\\.nuget\\packages\\": {},
+    "C:\\Users\\paolo\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+      "projectUniqueName": "C:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
       "projectName": "Jamper-Financial.Shared",
-      "projectPath": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
-      "packagesPath": "C:\\Users\\Spoon\\.nuget\\packages\\",
-      "outputPath": "C:\\SAIT FALL 2024\\Assignments\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
+      "projectPath": "C:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+      "packagesPath": "C:\\Users\\paolo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\paolo\\Desktop\\FInalSad\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Spoon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\paolo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

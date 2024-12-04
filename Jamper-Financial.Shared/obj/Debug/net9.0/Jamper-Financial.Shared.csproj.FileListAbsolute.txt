@@ -104,3 +104,39 @@ C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug
 C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.pack.json
 C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\SAIT FALL 2024\Assignments\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\ref\Jamper-Financial.Shared.dll
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\bin\Debug\net9.0\Jamper-Financial.Shared.staticwebassets.runtime.json
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\bin\Debug\net9.0\Jamper-Financial.Shared.staticwebassets.endpoints.json
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\bin\Debug\net9.0\Jamper-Financial.Shared.deps.json
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\bin\Debug\net9.0\Jamper-Financial.Shared.dll
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\bin\Debug\net9.0\Jamper-Financial.Shared.pdb
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.csproj.AssemblyReference.cache
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.AssemblyInfoInputs.cache
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.AssemblyInfo.cs
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.csproj.CoreCompileInputs.cache
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.sourcelink.json
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\scopedcss\Layout\MainLayout.razor.rz.scp.css
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\scopedcss\Layout\NavMenu.razor.rz.scp.css
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\scopedcss\Pages\CalendarPage.razor.rz.scp.css
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\scopedcss\bundle\Jamper-Financial.Shared.styles.css
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\scopedcss\projectbundle\Jamper-Financial.Shared.bundle.scp.css
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\aqet3isv10-da95v2qkru.gz
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\4tpc2xqu2k-6gzpyzhau4.gz
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\col4sr76l5-8inm30yfxf.gz
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\7eaoeuyg9i-tdajncr4da.gz
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\iebbrayiro-w5nb6euikb.gz
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\eq1ix6lcgi-sa7ftat05u.gz
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\compressed\4yfxhic0vi-sa7ftat05u.gz
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.json
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.development.json
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets\msbuild.Jamper-Financial.Shared.Microsoft.AspNetCore.StaticWebAssets.props
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets\msbuild.Jamper-Financial.Shared.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets\msbuild.build.Jamper-Financial.Shared.props
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets\msbuild.buildMultiTargeting.Jamper-Financial.Shared.props
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets\msbuild.buildTransitive.Jamper-Financial.Shared.props
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\staticwebassets.pack.json
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.dll
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\refint\Jamper-Financial.Shared.dll
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\Jamper-Financial.Shared.pdb
+c:\Users\paolo\Desktop\FInalSad\Jamper-Financial\Jamper-Financial.Shared\obj\Debug\net9.0\ref\Jamper-Financial.Shared.dll
