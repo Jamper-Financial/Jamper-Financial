@@ -7,36 +7,46 @@
     box-sizing: border-box;
 }
 
-.calendar-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    height: 100vh; /* Full height of the viewport */
-    background-color: #f5f5f5;
+.main-content h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #417828;
     font-family: 'Inter', sans-serif;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
 }
 
-/* Header Section */
+.option {
+    color: gray;
+}
+
 .header {
     width: 100%;
     display: flex;
-    justify-content: center; /* Center the content horizontally */
+    gap: 1rem;
+    justify-content: space-between; /* Distribute space equally */
     align-items: center;
     padding: 20px;
     background-color: #D0E8C5;
     border-bottom: 1px solid #d4e8b6;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    position: relative; /* Add relative positioning */
 }
 
-    .header h2 {
-        color: #62ad41;
-        font-size: 26px;
-        margin: 0;
-        position: absolute; /* Position the title absolutely */
-        left: 20px; /* Align it to the left */
+, .search-container {
+    flex: 2; /* Make each child take equal space */
+    gap: 1rem;
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+}
+
+.sort-container, .new-transaction {
+    flex: 1; /* Make each child take equal space */
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+}
+
+    .sort-container select, .search-container input, .new-transaction {
+        max-width: 100%; /* Ensure elements don't overflow */
     }
 
 .search-container {
@@ -67,33 +77,6 @@
         background-color: #519a37;
     }
 
-.filter-dropdown {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    position: absolute;
-    top: 65px; /* Adjust based on your header height */
-    left: 1124px;
-    z-index: 1000;
-    width: 315px; /* Adjust width as needed */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.amount-filter {
-    display: flex;
-    justify-content: space-between;
-}
-
-    .amount-filter > div {
-        flex: 1;
-        margin-right: 10px;
-    }
-
-        .amount-filter > div:last-child {
-            margin-right: 0;
-        }
-
 .new-transaction {
     background-color: #62ad41;
     color: white;
@@ -102,13 +85,22 @@
     border-radius: 10px;
     cursor: pointer;
     font-size: 14px;
-    position: absolute; /* Position the button absolutely */
-    right: 20px; /* Align it to the right */
 }
 
     .new-transaction:hover {
         background-color: #519a37;
     }
+
+.calendar-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100vh; /* Full height of the viewport */
+    background-color: #f5f5f5;
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
 
 /* Main Content Section */
 .main-content {
@@ -174,10 +166,10 @@
 
 .day-box {
     width: calc(100% / 7 - 4px); /* Adjust width to fit within container */
-    /*height: 150px;*/ /* Increased height for taller calendar */
+    padding-top: calc(100% / 7 - 4px); /* Maintain aspect ratio to make it square */
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start; /* Align items to the top */
     align-items: center;
     border: 1px solid #ccc;
     cursor: pointer;
@@ -185,11 +177,16 @@
     margin: 2px;
     background-color: #fff;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative; /* Required for the aspect ratio trick */
 }
 
     .day-box .day {
+        position: absolute;
+        top: 10px; /* Position the date at the top */
+        left: 50%;
+        transform: translateX(-50%);
         font-weight: bold; /* Optional: make the date bold */
-    }   
+    }
 
     .day-box.selected {
         background-color: #FFD700; /* Gold color for selected date */
@@ -282,17 +279,16 @@
         background-color: rgba(98, 173, 65, 0.3); /* Darker background with 30% transparency */
     }
 
-
     .transaction-item.selected-transaction {
         background-color: #FFD700; /* Highlight color for selected date transactions */
     }
 
-.transaction-item h4 {
-    margin: 0;
-    color: #6C63FF;
-    font-size: 16px;
-    font-weight: bold;
-}
+    .transaction-item h4 {
+        margin: 0;
+        color: #6C63FF;
+        font-size: 16px;
+        font-weight: bold;
+    }
 
     .transaction-item p {
         margin: 2px 0;

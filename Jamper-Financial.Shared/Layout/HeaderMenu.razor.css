@@ -1,45 +1,37 @@
 ﻿/* HeaderMenu.css */
 
 .header-container {
+    display: flex;
     width: 100%;
-    height: 100px;
     position: relative;
 }
 
 .header-background {
     width: 100%;
-    height: 100px;
     position: absolute;
     background-color: white;
 }
 
 .header-content {
-    width: 1334px;
+    padding-left: 15rem;
     height: 60px;
-    position: absolute;
-    left: 50%;
-    top: 20px;
-    transform: translateX(-50%);
+    transform: translateX(-20%);
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.logo {
-    font-size: 25px;
-    font-weight: 900;
-    color: #62ad41;
-    font-family: 'Inter', sans-serif;
-}
 
 .overview {
-    font-size: 28px;
+    flex: 1;
+    font-size: 20px;
     font-weight: 600;
     color: #62ad41;
     font-family: 'Inter', sans-serif;
 }
 
 .search {
+    flex: 3;
     position: relative;
     width: 255px;
     height: 50px;
@@ -63,9 +55,11 @@
 }
 
 .icons {
+    flex: 1;
     display: flex;
     align-items: center;
 }
+
 
 .icon {
     width: 50px;
@@ -84,8 +78,8 @@
 }
 
 .icon-image {
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     position: absolute;
     left: 0;
     top: 0;

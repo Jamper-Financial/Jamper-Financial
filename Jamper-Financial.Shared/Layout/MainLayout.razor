@@ -9,12 +9,6 @@
 <link href="css/MainLayout.css" rel="stylesheet" />
 
 <div class="page">
-    @* @if (ShouldShowHeader) *@
-    @* { *@
-    @*         <header class="header"> *@
-    @*             <HeaderMenu /> *@
-    @*         </header> *@
-    @* } *@
 
     <div class="content-container">
         <div class="layout">
@@ -23,6 +17,9 @@
             </aside>
 
             <main class="main-content">
+                <header class="header">
+                    <HeaderMenu />
+                </header>
                 <article class="content">
                     @Body
                 </article>
