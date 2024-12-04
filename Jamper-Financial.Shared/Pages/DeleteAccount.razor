@@ -1,5 +1,6 @@
 @page "/delete-account"
 @using Jamper_Financial.Shared.Data
+@inject IJSRuntime JSRuntime
 
 <div class="delete-account-container">
     <div class="delete-account-left">
@@ -80,7 +81,7 @@
         {
             AccountDeleted = true;
             ErrorMessage = string.Empty;
-            // This guy will automatically navigate to the home page after you delete the account you jsut deleted 
+            // This guy will automatically navigate to the home page after you delete the account you just deleted 
             Task.Delay(2000).ContinueWith(_ => Navigation.NavigateTo("/"));
         }
         else

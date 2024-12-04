@@ -11,7 +11,7 @@ namespace Jamper_Financial.Shared.Data
 {
     public static class DatabaseHelper
     {
-        private static readonly string DbPath = Path.Combine("C:\\MyFiles\\Jamper-Financial", "AppDatabase.db");
+        private static readonly string DbPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "AppDatabase.db");
 
         //This method is used to initialize the database
         public static void InitializeDatabase()

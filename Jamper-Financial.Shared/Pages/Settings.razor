@@ -1,5 +1,9 @@
 @page "/settings"
 @using Jamper_Financial.Shared.Data
+@using Jamper_Financial.Shared.Services
+@inject NavigationManager Navigation
+@inject LoginStateService LoginState
+
 
 <div class="settings-container">
     <h1>Settings</h1>
@@ -8,10 +12,10 @@
         <div class="option">
             <h2>Account Management</h2>
 
-            <!-- Link to the delete account page -->
-            <NavLink class="btn btn-danger" href="/delete-account">
+            <!-- Button to navigate to the correct delete account page -->
+            <button class="btn btn-danger" @onclick="NavigateToDeleteAccount">
                 Delete Account
-            </NavLink>
+            </button>
         </div>
 
         <!-- This will be our settings page so when when Add more options, so just put them here -->
@@ -21,5 +25,15 @@
 </div>
 
 @code {
-
+    private void NavigateToDeleteAccount()
+    {
+        if (LoginState.IsGoogleLogin)
+        {
+            Navigation.NavigateTo("/delete-account-google");
+        }
+        else
+        {
+            Navigation.NavigateTo("/delete-account");
+        }
+    }
 }

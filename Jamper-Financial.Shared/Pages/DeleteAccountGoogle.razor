@@ -1,0 +1,47 @@
+﻿<script type="module" src="/js/firebase-auth.js"></script>
+
+@page "/delete-account-google"
+@inject IJSRuntime JSRuntime
+
+<div class="delete-account-container">
+    <h1>Delete Google Account</h1>
+    <p>Are you sure you want to delete your Google account? This action cannot be undone.</p>
+
+    <button class="delete-button" @onclick="DeleteGoogleAccount">Delete My Google Account</button>
+
+    @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+    {
+        <div class="alert alert-danger">@ErrorMessage</div>
+    }
+
+    @if (AccountDeleted)
+    {
+        <div class="alert alert-success">Google account deleted successfully!</div>
+    }
+</div>
+
+@code {
+    [Inject]
+    private NavigationManager Navigation { get; set; }
+
+    private string ErrorMessage { get; set; } = string.Empty;
+    private bool AccountDeleted { get; set; } = false;
+
+    private async Task DeleteGoogleAccount()
+    {
+        try
+        {
+            // Call JavaScript function to delete the currently logged-in Google account
+            await JSRuntime.InvokeVoidAsync("deleteCurrentUser");
+            AccountDeleted = true;
+            await Task.Delay(2000);
+            Navigation.NavigateTo("/"); // Redirect to the home page after deletion
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = $"Error deleting account: {ex.Message}";
+        }
+    }
+
+
+}
