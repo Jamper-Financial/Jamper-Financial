@@ -5,13 +5,28 @@
 <div class="calendar-page">
     <!-- Header Section -->
     <div class="header">
-        <h2>Calendar</h2>
+        <div class="sort-container">
+            <div class="px-4 border-0">
+                <select @onchange="HandleSortChange" class="border-0">
+                    <option value="" selected>Sort By</option>
+                    <option value="DateAsc">Date Asc</option>
+                    <option value="DateDesc">Date Desc</option>
+                    <option value="CategoryAsc">Category ↑</option>
+                    <option value="CategoryDesc">Category ↓</option>
+                    <option value="AmountAsc">Amount ↑</option>
+                    <option value="AmountDesc">Amount ↓</option>
+                    <option value="DescriptionAsc">Description ↑</option>
+                    <option value="DescriptionDesc">Description ↓</option>
+                </select>
+            </div>
+        </div>
         <div class="search-container">
             <input type="text" class="search-bar" placeholder="Search transactions..." @bind="SearchTerm" @oninput="UpdateSearchResults" />
             <button class="filter-button" @onclick="ToggleFilterDropdown">Filter</button>
         </div>
         <button class="new-transaction" @onclick="OpenAddTransactionModal">+ Add Transaction</button>
     </div>
+
 
     <!-- Filter Dropdown -->
     @if (ShowFilterDropdown)
@@ -49,7 +64,9 @@
     <!-- Main Content Section -->
     <div class="main-content">
         <!-- Calendar Section -->
+
         <div class="calendar-container">
+            <h3>Calendar</h3>
             <div class="calendar-header">
                 <button class="month-nav" @onclick="PreviousMonth">←</button>
                 <div>
@@ -94,26 +111,14 @@
 
         <!-- Transaction Details Section -->
         <div class="transaction-details">
-            <div class="transaction-details-header">
-                <h3>
-                    Upcoming Payments:
-                    @* 
+            <h3 class="transaction-details-header">
+                Upcoming Payments
+                @* 
                         //remove this for now to make the page not crowded
                     <div class="transaction-date"> *@
-                    @*     <strong>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(SelectedMonth) @SelectedYear</strong> *@
-                    @* </div> *@
-                </h3>
-                <select @onchange="HandleSortChange">
-                    <option value="DateAsc">Date Asc</option>
-                    <option value="DateDesc">Date Desc</option>
-                    <option value="CategoryAsc">Category ↑</option>
-                    <option value="CategoryDesc">Category ↓</option>
-                    <option value="AmountAsc">Amount ↑</option>
-                    <option value="AmountDesc">Amount ↓</option>
-                    <option value="DescriptionAsc">Description ↑</option>
-                    <option value="DescriptionDesc">Description ↓</option>
-                </select>
-            </div>
+                @*     <strong>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(SelectedMonth) @SelectedYear</strong> *@
+                @* </div> *@
+            </h3>
             @if (FilteredTransactionsForSelectedMonth.Any())
             {
                 @foreach (var transaction in FilteredTransactionsForSelectedMonth)
