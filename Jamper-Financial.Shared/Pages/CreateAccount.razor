@@ -28,7 +28,7 @@
                 <label for="confirm-password">Confirm Password <span class="required">*</span></label>
                 <input id="confirm-password" type="password" placeholder="Confirm your password"
                     @bind="ConfirmPassword" />
-
+                <small class="password-hint">Password must be at least 8 characters long, contain uppercase, lowercase, digit, and special character.</small>
                 <div class="bottom-buttons">
                     <button type="button" class="back-button" @onclick="NavigateToLoginPage">Back</button>
                     <button type="button" class="submit-button" @onclick="CreateUserAccount">Submit</button>
@@ -303,7 +303,7 @@
         margin-left: 5px;
         font-size: 1rem;
     }
-    
+
     .sidebar {
         display: none; /* This hides the sidebar */
     }
@@ -311,4 +311,45 @@
     .header-bar {
         display: none; /* Hide the header bar */
     }
+.password-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.password-label {
+    font-weight: bold;
+    color: #333;
+    font-size: 1rem;
+}
+
+.required {
+    color: #ff4d4f;
+    margin-left: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.password-input {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    color: #333;
+    transition: border-color 0.3s ease;
+}
+
+.password-input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+.password-hint {
+    font-size: 0.75rem;
+    color: #6c757d;
+    margin-top: 0.25rem;
+    line-height: 1.2;
+}
+
 </Style>
