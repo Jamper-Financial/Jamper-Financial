@@ -2,7 +2,8 @@
 @inject NavigationManager Navigation
 
 @code {
-    private bool ShouldShowHeader => !Navigation.Uri.Contains("/login") && !Navigation.Uri.EndsWith("/");
+    private bool ShouldShowHeader => !Navigation.Uri.Contains("/login") && !Navigation.Uri.EndsWith("/") &&
+    !Navigation.Uri.Contains("/create-account");
 }
 
 

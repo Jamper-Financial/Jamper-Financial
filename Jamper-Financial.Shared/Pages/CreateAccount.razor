@@ -32,6 +32,7 @@
                 <div class="bottom-buttons">
                     <button type="button" class="back-button" @onclick="NavigateToLoginPage">Back</button>
                     <button type="button" class="submit-button" @onclick="CreateUserAccount">Submit</button>
+                    
                 </div>
 
                 <p class="terms">
@@ -102,6 +103,12 @@
             return false;
         }
 
+        // Validate password strength
+        if (!IsPasswordStrong(Password))
+        {
+            ErrorMessage = "Password must be at least 8 characters long, include uppercase and lowercase letters, a digit, and a special character.";
+            return false;
+        }
         if (DatabaseHelper.IsUsernameTaken(Username))
         {
             ErrorMessage = "Username is already taken. Please choose another.";
@@ -116,6 +123,16 @@
 
         ErrorMessage = string.Empty;
         return true;
+    }
+
+    private bool IsPasswordStrong(string password)
+    {
+        // Password must be at least 8 characters long, contain uppercase, lowercase, digit, and special character
+        return password.Length >= 8 &&
+            password.Any(char.IsUpper) &&
+            password.Any(char.IsLower) &&
+            password.Any(char.IsDigit) &&
+            password.Any(ch => "!@#$%^&*()_+-=[]{}|;:',.<>?/".Contains(ch));
     }
 
     // Create user account
@@ -268,7 +285,7 @@
     .alert {
         position: fixed;
         top: 90px;
-        left: 28%;
+        left: 33%;
         transform: translateX(-50%);
         z-index: 1000;
         width: 80%;
@@ -286,7 +303,7 @@
         margin-left: 5px;
         font-size: 1rem;
     }
-
+    
     .sidebar {
         display: none; /* This hides the sidebar */
     }
