@@ -6,7 +6,7 @@
     <!-- Header Section -->
     <div class="header">
         <div class="sort-container">
-            <div class="px-4 border-0">
+            <div class="sort-button">
                 <select @onchange="HandleSortChange" class="border-0">
                     <option value="" selected>Sort By</option>
                     <option value="DateAsc">Date Asc</option>
@@ -23,43 +23,41 @@
         <div class="search-container">
             <input type="text" class="search-bar" placeholder="Search transactions..." @bind="SearchTerm" @oninput="UpdateSearchResults" />
             <button class="filter-button" @onclick="ToggleFilterDropdown">Filter</button>
+            <!-- Filter Dropdown -->
+            @if (ShowFilterDropdown)
+            {
+                <div class="filter-dropdown">
+                    <h3>Filter Transactions</h3>
+                    <div class="form-group">
+                        <label for="filterCategory">Category:</label>
+                        <select id="filterCategory" @bind="TempFilterCategory">
+                            <option value="">All</option>
+                            <option value="Expenses">Expenses</option>
+                            <option value="Income">Income</option>
+                            <option value="Debts & Loans">Debts & Loans</option>
+                            <option value="Savings & Investments">Savings & Investments</option>
+                            <option value="Subscriptions & Memberships">Subscriptions & Memberships</option>
+                        </select>
+                    </div>
+                    <div class="form-group amount-filter">
+                        <div>
+                            <label for="minAmount">Min Amount:</label>
+                            <input id="minAmount" type="number" @bind="TempMinAmount" />
+                        </div>
+                        <div>
+                            <label for="maxAmount">Max Amount:</label>
+                            <input id="maxAmount" type="number" @bind="TempMaxAmount" />
+                        </div>
+                    </div>
+                    <div class="form-group button-group">
+                        <button type="button" class="cancel" @onclick="CloseFilterDropdown">Cancel</button>
+                        <button type="button" class="apply" @onclick="ApplyFilters">Apply</button>
+                    </div>
+                </div>
+            }
         </div>
         <button class="new-transaction" @onclick="OpenAddTransactionModal">+ Add Transaction</button>
     </div>
-
-
-    <!-- Filter Dropdown -->
-    @if (ShowFilterDropdown)
-    {
-        <div class="filter-dropdown">
-            <h3>Filter Transactions</h3>
-            <div class="form-group">
-                <label for="filterCategory">Category:</label>
-                <select id="filterCategory" @bind="TempFilterCategory">
-                    <option value="">All</option>
-                    <option value="Expenses">Expenses</option>
-                    <option value="Income">Income</option>
-                    <option value="Debts & Loans">Debts & Loans</option>
-                    <option value="Savings & Investments">Savings & Investments</option>
-                    <option value="Subscriptions & Memberships">Subscriptions & Memberships</option>
-                </select>
-            </div>
-            <div class="form-group amount-filter">
-                <div>
-                    <label for="minAmount">Min Amount:</label>
-                    <input id="minAmount" type="number" @bind="TempMinAmount" />
-                </div>
-                <div>
-                    <label for="maxAmount">Max Amount:</label>
-                    <input id="maxAmount" type="number" @bind="TempMaxAmount" />
-                </div>
-            </div>
-            <div class="form-group button-group">
-                <button type="button" class="cancel" @onclick="CloseFilterDropdown">Cancel</button>
-                <button type="button" class="apply" @onclick="ApplyFilters">Apply</button>
-            </div>
-        </div>
-    }
 
     <!-- Main Content Section -->
     <div class="main-content">
@@ -99,7 +97,7 @@
                                 {
                                     <div class="transaction-dot-container">
                                         <span class="transaction-dot" style="background-color: @transaction.Color;"></span>
-                                        <span class="transaction-description">@transaction.Description</span>
+                                        @* <span class="transaction-description">@transaction.Description</span> *@
                                     </div>
                                 }
                             </div>
@@ -157,9 +155,9 @@
                 {
                     <h3>Confirm Deletion</h3>
                     <p>Are you sure you want to delete this transaction?</p>
-                    <div class="form-group">
-                        <button type="button" @onclick="ConfirmDeleteTransaction">Confirm</button>
-                        <button type="button" @onclick="CancelDeleteTransaction">Cancel</button>
+                    <div class="form-group button-group">
+                        <button type="button" class="save" @onclick="ConfirmDeleteTransaction">Confirm</button>
+                        <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
                     </div>
                 }
                 else

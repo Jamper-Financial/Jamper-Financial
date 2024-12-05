@@ -4,23 +4,25 @@
     display: flex;
     width: 100%;
     position: relative;
+    align-items: center;
+    justify-content: space-between; /* Distribute space between items */
+    padding: 0 1rem; /* Add some padding to the sides */
 }
 
 .header-background {
     width: 100%;
     position: absolute;
     background-color: white;
+    height: 60px; /* Ensure the background covers the header height */
 }
 
 .header-content {
-    padding-left: 15rem;
-    height: 60px;
-    transform: translateX(-20%);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
+    z-index: 1; /* Ensure content is above the background */
 }
-
 
 .overview {
     flex: 1;
@@ -28,13 +30,17 @@
     font-weight: 600;
     color: #62ad41;
     font-family: 'Inter', sans-serif;
+    text-align: left; /* Align text to the left */
 }
 
 .search {
-    flex: 3;
+    flex: 2;
     position: relative;
-    width: 255px;
+    width: 100%;
+    max-width: 255px; /* Ensure the search bar doesn't grow too large */
     height: 50px;
+    display: flex;
+    justify-content: center; /* Center the search bar */
 }
 
 .search-background {
@@ -58,8 +64,8 @@
     flex: 1;
     display: flex;
     align-items: center;
+    justify-content: flex-end; /* Align icons to the right */
 }
-
 
 .icon {
     width: 50px;
