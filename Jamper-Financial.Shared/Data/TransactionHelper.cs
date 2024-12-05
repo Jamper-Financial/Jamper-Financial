@@ -33,8 +33,8 @@ namespace Jamper_Financial.Shared.Data
                                 TransactionID = reader.GetInt32(0),
                                 Date = DateTime.Parse(reader.GetString(1)),
                                 Description = reader.GetString(2),
-                                Debit = reader.GetDouble(3),
-                                Credit = reader.GetDouble(4),
+                                Debit = reader.GetDecimal(3),
+                                Credit = reader.GetDecimal(4),
                                 Category = reader.GetString(5),
                                 Color = reader.GetString(6),
                                 Frequency = reader.IsDBNull(7) ? null : reader.GetString(7),
@@ -125,9 +125,9 @@ namespace Jamper_Financial.Shared.Data
         public int TransactionID { get; set; }
         public DateTime Date { get; set; }
         public string Description { get; set; }
-        public double Amount { get; set; }
-        public double Debit { get; set; }
-        public double Credit { get; set; }
+        public decimal Amount { get; set; }
+        public decimal Debit { get; set; }
+        public decimal Credit { get; set; }
         public string Category { get; set; }
         public string Color { get; set; }
         public string Frequency { get; set; }

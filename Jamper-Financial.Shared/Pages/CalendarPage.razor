@@ -88,7 +88,7 @@
                 @foreach (var date in GetCalendarDates())
                 {
                     <div class="day-box @(date.Month != SelectedMonth ? "greyed-out" : "") @(SelectedDate == date.Day && date.Month == SelectedMonth ? "selected" : "") @(IsDateHighlighted(date) ? "search-highlight" : "")"
-                         @onclick="() => SelectDate(date)">
+                    @onclick="() => SelectDate(date)">
                         <span class="day">@date.Day</span>
                         @if (HasTransactions(date))
                         {
@@ -180,7 +180,7 @@
                         </div>
                         <div class="form-group">
                             <label for="amount">Amount:</label>
-                            <input id="amount" type="number" @bind="Amount" required />
+                            <input id="amount" type="number" step="0.01" @bind="Amount" required />
                         </div>
                         <div class="form-group">
                             <label for="transactionDate">Transaction Date:</label>
@@ -249,7 +249,7 @@
     public bool ShowDeleteConfirmation { get; set; } = false;
     public bool ShowFilterDropdown { get; set; } = false;
     public Transaction NewTransaction { get; set; } = new Transaction();
-    public double Amount { get; set; } = 0;
+    public decimal Amount { get; set; } = 0;
 
     // Load Transactions Data
     protected override async Task OnInitializedAsync()
@@ -287,9 +287,9 @@
         FilteredTransactionsForSelectedMonth = TransactionsForSelectedMonth
             .Where(t => (string.IsNullOrEmpty(FilterCategory) || t.Category.Equals(FilterCategory, StringComparison.OrdinalIgnoreCase)) &&
                         (!MinAmount.HasValue ||
-                            (MinAmount.Value >= 0 ? (t.Debit >= MinAmount || t.Credit >= MinAmount) : (t.Debit >= MinAmount || t.Credit >= MinAmount))) &&
+                            (MinAmount.Value >= 0 ? (t.Debit >= (decimal)MinAmount || t.Credit >= (decimal)MinAmount) : (t.Debit >= (decimal)MinAmount || t.Credit >= (decimal)MinAmount))) &&
                         (!MaxAmount.HasValue ||
-                            (MaxAmount.Value >= 0 ? (t.Debit <= MaxAmount || t.Credit <= MaxAmount) : (t.Debit <= MaxAmount || t.Credit <= MaxAmount))) &&
+                            (MaxAmount.Value >= 0 ? (t.Debit <= (decimal)MaxAmount || t.Credit <= (decimal)MaxAmount) : (t.Debit <= (decimal)MaxAmount || t.Credit <= (decimal)MaxAmount))) &&
                         (string.IsNullOrEmpty(SearchTerm) || t.Description.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)))
             .ToList();
         ReapplySort();
@@ -370,9 +370,9 @@
         Transactions.Where(t => t.Date.Date == date.Date &&
                                 (string.IsNullOrEmpty(FilterCategory) || t.Category.Equals(FilterCategory, StringComparison.OrdinalIgnoreCase)) &&
                                 (!MinAmount.HasValue ||
-                                 (MinAmount.Value >= 0 ? (t.Debit >= MinAmount || t.Credit >= MinAmount) : (t.Debit >= MinAmount || t.Credit >= MinAmount))) &&
+                                 (MinAmount.Value >= 0 ? (t.Debit >= (decimal)MinAmount || t.Credit >= (decimal)MinAmount) : (t.Debit >= (decimal)MinAmount || t.Credit >= (decimal)MinAmount))) &&
                                 (!MaxAmount.HasValue ||
-                                 (MaxAmount.Value >= 0 ? (t.Debit <= MaxAmount || t.Credit <= MaxAmount) : (t.Debit <= MaxAmount || t.Credit <= MaxAmount))) &&
+                                 (MaxAmount.Value >= 0 ? (t.Debit <= (decimal)MaxAmount || t.Credit <= (decimal)MaxAmount) : (t.Debit <= (decimal)MaxAmount || t.Credit <= (decimal)MaxAmount))) &&
                                 (string.IsNullOrEmpty(SearchTerm) || t.Description.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)))
                     .ToList();
 
@@ -491,7 +491,7 @@
                 Credit = 0,
                 Color = GetColorForCategory("Expenses"),
                 Frequency = "None",
-                EndDate = DateTime.Now.AddMonths(1)
+                EndDate = SelectedDate != 0 ? new DateTime(SelectedYear, SelectedMonth, SelectedDate) : DateTime.Now
             };
         Amount = 0;
         IsEditMode = false;
@@ -526,13 +526,11 @@
             NewTransaction.Credit = Amount;
         }
 
-        if (NewTransaction.Category == "Subscriptions & Memberships")
+        // Ensure frequency and end date are null if frequency is "None"
+        if (NewTransaction.Frequency == "None")
         {
-            NewTransaction.Color = GetRandomColor();
-        }
-        else
-        {
-            NewTransaction.Color = GetColorForCategory(NewTransaction.Category);
+            NewTransaction.Frequency = null;
+            NewTransaction.EndDate = null;
         }
 
         if (IsEditMode)
@@ -540,7 +538,7 @@
             await TransactionHelper.UpdateTransactionAsync(NewTransaction);
 
             // Remove existing recurring transactions if frequency is changed to "None"
-            if (NewTransaction.Frequency == "None")
+            if (NewTransaction.Frequency == null)
             {
                 RemoveRecurringTransactions(NewTransaction);
             }
@@ -551,9 +549,9 @@
             }
 
             // Add recurring transactions based on frequency and end date
-            if (NewTransaction.Frequency != "None" && NewTransaction.EndDate.HasValue)
+            if (NewTransaction.Frequency != null && NewTransaction.EndDate.HasValue)
             {
-                AddRecurringTransactions(NewTransaction);
+                AddRecurringTransactions(NewTransaction, true); // Pass true to indicate editing mode
             }
         }
         else
@@ -562,9 +560,9 @@
             Transactions.Add(NewTransaction);
 
             // Add recurring transactions based on frequency and end date
-            if (NewTransaction.Frequency != "None" && NewTransaction.EndDate.HasValue)
-            {
-                AddRecurringTransactions(NewTransaction);
+            if (NewTransaction.Frequency != null && NewTransaction.EndDate.HasValue)
+        {
+                AddRecurringTransactions(NewTransaction, false); // Pass false to indicate adding mode
             }
         }
 
@@ -572,6 +570,7 @@
         UpdateTransactionsForSelectedMonth();
         ReapplySort();
     }
+
 
     private void EditRecurringTransactions(Transaction transaction)
     {
@@ -615,7 +614,7 @@
         }
     }
 
-    private void AddRecurringTransactions(Transaction transaction)
+    private void AddRecurringTransactions(Transaction transaction, bool isEditing)
     {
         DateTime nextDate = transaction.Date;
         while (true)
@@ -632,21 +631,41 @@
                 break;
             }
 
-            var newTransaction = new Transaction
-                {
-                    Date = nextDate,
-                    Description = transaction.Description,
-                    Amount = transaction.Amount,
-                    Debit = transaction.Debit,
-                    Credit = transaction.Credit,
-                    Category = transaction.Category,
-                    Color = transaction.Color,
-                    Frequency = transaction.Frequency,
-                    EndDate = transaction.EndDate
-                };
+            var existingTransaction = Transactions.FirstOrDefault(t => t.Date == nextDate && t.Description == transaction.Description && t.Category == transaction.Category);
 
-            Transactions.Add(newTransaction);
-            TransactionHelper.AddTransactionAsync(newTransaction).Wait();
+            if (existingTransaction == null)
+            {
+                var newTransaction = new Transaction
+                    {
+                        Date = nextDate,
+                        Description = transaction.Description,
+                        Amount = transaction.Amount,
+                        Debit = transaction.Debit,
+                        Credit = transaction.Credit,
+                        Category = transaction.Category,
+                        Color = transaction.Color,
+                        Frequency = transaction.Frequency,
+                        EndDate = transaction.EndDate
+                    };
+
+                Transactions.Add(newTransaction);
+                TransactionHelper.AddTransactionAsync(newTransaction).Wait();
+            }
+            else if (isEditing)
+            {
+                // Update the existing transaction if in editing mode
+                existingTransaction.Description = transaction.Description;
+                existingTransaction.Amount = transaction.Amount;
+                existingTransaction.Debit = transaction.Debit;
+                existingTransaction.Credit = transaction.Credit;
+                existingTransaction.Category = transaction.Category;
+                existingTransaction.Color = transaction.Color;
+                existingTransaction.Frequency = transaction.Frequency;
+                existingTransaction.EndDate = transaction.EndDate;
+
+                TransactionHelper.UpdateTransactionAsync(existingTransaction).Wait();
+            }
+            
         }
     }
 
@@ -694,8 +713,12 @@
         var selectedCategory = e.Value.ToString();
         NewTransaction.Category = selectedCategory;
         if (selectedCategory == "Subscriptions & Memberships")
-        {
-            NewTransaction.Color = GetRandomColor();
+        {   
+            // Do not change the color if it is already set (i.e., user selected a custom color)
+            if (string.IsNullOrEmpty(NewTransaction.Color))
+            {
+                NewTransaction.Color = GetRandomColor();
+            }
         }
         else
         {
@@ -709,6 +732,7 @@
         NewTransaction.Frequency = selectedFrequency;
         if (selectedFrequency == "None")
         {
+            NewTransaction.Frequency = null;
             NewTransaction.EndDate = null;
         }
         else if (selectedFrequency == "Monthly")
