@@ -8,3 +8,6 @@ Release/
 /.vs/Jamper-Financial/CopilotIndices
 /Jamper-Financial./obj
 /Jamper-Financial.Web/obj
+Jamper-Financial/obj/project.assets.json
+Jamper-Financial.Shared/obj/project.assets.json
+Jamper-Financial.Web/obj/project.assets.json
