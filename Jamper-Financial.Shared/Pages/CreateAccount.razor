@@ -1,5 +1,7 @@
 @page "/create-account"
 @using Jamper_Financial.Shared.Data
+@using Jamper_Financial.Shared.Services
+@inject NavigationManager Navigation
 
 <div class="registration-container">
     <div class="registration-left">
@@ -26,13 +28,11 @@
                 <input id="password" type="password" placeholder="Create your password" @bind="Password" />
 
                 <label for="confirm-password">Confirm Password <span class="required">*</span></label>
-                <input id="confirm-password" type="password" placeholder="Confirm your password"
-                    @bind="ConfirmPassword" />
+                <input id="confirm-password" type="password" placeholder="Confirm your password" @bind="ConfirmPassword" />
                 <small class="password-hint">Password must be at least 8 characters long, contain uppercase, lowercase, digit, and special character.</small>
                 <div class="bottom-buttons">
                     <button type="button" class="back-button" @onclick="NavigateToLoginPage">Back</button>
                     <button type="button" class="submit-button" @onclick="CreateUserAccount">Submit</button>
-                    
                 </div>
 
                 <p class="terms">
@@ -47,8 +47,6 @@
     </div>
 </div>
 
-
-@* alert error message *@
 @if (!string.IsNullOrWhiteSpace(ErrorMessage))
 {
     <div class="alert alert-danger" role="alert">
@@ -56,7 +54,6 @@
     </div>
 }
 
-@* if account is successfully created this alert will pop up *@
 @if (AccountCreated)
 {
     <div class="alert alert-success" role="alert">
@@ -65,7 +62,6 @@
 }
 
 @code {
-
     private string FirstName { get; set; } = string.Empty;
     private string LastName { get; set; } = string.Empty;
     private string Username { get; set; } = string.Empty;
@@ -76,22 +72,16 @@
     private string ErrorMessage { get; set; } = string.Empty;
     private bool AccountCreated { get; set; } = false;
 
-    // Inject NavigationManager
-    [Inject]
-    private NavigationManager Navigation { get; set; }
-
-    // Navigate to login page
     private void NavigateToLoginPage()
     {
         Navigation.NavigateTo("/login");
     }
 
-    @* This handles users input during account creation *@
     private bool ValidateForm()
     {
         if (string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName) ||
-        string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Email) ||
-        string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(ConfirmPassword))
+            string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Email) ||
+            string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(ConfirmPassword))
         {
             ErrorMessage = "Please fill in all fields.";
             return false;
@@ -103,12 +93,12 @@
             return false;
         }
 
-        // Validate password strength
         if (!IsPasswordStrong(Password))
         {
             ErrorMessage = "Password must be at least 8 characters long, include uppercase and lowercase letters, a digit, and a special character.";
             return false;
         }
+
         if (DatabaseHelper.IsUsernameTaken(Username))
         {
             ErrorMessage = "Username is already taken. Please choose another.";
@@ -127,7 +117,6 @@
 
     private bool IsPasswordStrong(string password)
     {
-        // Password must be at least 8 characters long, contain uppercase, lowercase, digit, and special character
         return password.Length >= 8 &&
             password.Any(char.IsUpper) &&
             password.Any(char.IsLower) &&
@@ -135,7 +124,6 @@
             password.Any(ch => "!@#$%^&*()_+-=[]{}|;:',.<>?/".Contains(ch));
     }
 
-    // Create user account
     private void CreateUserAccount()
     {
         if (!ValidateForm())
@@ -144,10 +132,7 @@
             return;
         }
 
-        // Insert the user into the database
-        DatabaseHelper.InsertUser(FirstName, LastName, Username, BirthDate.ToString("yyyy-MM-dd"), Email, Password);
-        //For Debugging
-        Console.WriteLine("Account created successfully!");
+        AuthenticationService.CreateUserAccount(FirstName, LastName, Username, BirthDate, Email, Password);
 
         // Show success message
         AccountCreated = true;
@@ -156,6 +141,7 @@
         Task.Delay(2000).ContinueWith(_ => NavigateToLoginPage());
     }
 }
+
 
 <Style>
     body {

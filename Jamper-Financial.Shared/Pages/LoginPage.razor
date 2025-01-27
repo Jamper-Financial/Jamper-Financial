@@ -34,15 +34,13 @@
 
                 <a href="#" class="forgot-password">Forgot your password or username?</a>
                 <div class="social-login">
-                    <button type="button" class="social-button google" @onclick="SignInWithGoogle">Continue using
-                        Google</button>
+                    <button type="button" class="social-button google" @onclick="SignInWithGoogle">Continue using Google</button>
                     <button type="button" class="social-button facebook">Continue using Facebook</button>
                 </div>
 
                 <div class="bottom-buttons">
                     <button type="button" class="back-button" @onclick="NavigateToBannerPage">Back</button>
-                    <button type="button" class="create-account-button" @onclick="NavigateToCreateAccount">Create an
-                        Account</button>
+                    <button type="button" class="create-account-button" @onclick="NavigateToCreateAccount">Create an Account</button>
                 </div>
                 <p class="terms">Terms & Conditions privacy policy</p>
             </form>
@@ -69,8 +67,7 @@
     private string ErrorMessage { get; set; } = string.Empty;
     private bool RememberMe { get; set; } = false;
 
-    private string FilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-    "credentials.txt");
+    private string FilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "credentials.txt");
 
     protected override void OnInitialized()
     {
@@ -91,6 +88,7 @@
     {
         Navigation.NavigateTo("/create-account");
     }
+
     // Navigate to banner page
     private void NavigateToBannerPage()
     {
@@ -121,7 +119,7 @@
             return;
         }
 
-        var isValid = await Task.Run(() => DatabaseHelper.ValidateUserCredentials(Identifier, Password));
+        var isValid = await Task.Run(() => AuthenticationService.ValidateUserCredentials(Identifier, Password));
 
         if (isValid)
         {
@@ -149,8 +147,6 @@
         {
             ErrorMessage = "Invalid email/username or password.";
         }
-
-
     }
 }
 
@@ -246,7 +242,6 @@
         cursor: pointer;
     }
 
-
     .login-button {
         background-color: #62ad41;
         color: white;
@@ -297,7 +292,6 @@
         background-color: #4267b2;
         color: white;
     }
-
 
     button {
         border: none;

@@ -5,6 +5,7 @@ using Microsoft.Extensions.FileProviders;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Builder.Extensions;
+using Jamper_Financial.Shared.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +20,9 @@ builder.Services.AddSingleton<LoginStateService>();
 
 // Add Firebase Service
 builder.Services.AddSingleton<FirebaseService>();
+
+// Initialize the database
+DatabaseHelper.InitializeDatabase();
 
 // Initialize Firebase
 FirebaseApp.Create(new AppOptions
