@@ -5,5 +5,9 @@ Release/
 /Jamper-Financial.Shared/obj
 /Jamper-Financial.Shared/obj/Debug
 /Jamper-Financial.Shared/obj/Debug/net9.0
-/Jamper-Financial.Shared/obj
 /.vs/Jamper-Financial/CopilotIndices
+/Jamper-Financial./obj
+/Jamper-Financial.Web/obj
+Jamper-Financial/obj/project.assets.json
+Jamper-Financial.Shared/obj/project.assets.json
+Jamper-Financial.Web/obj/project.assets.json
