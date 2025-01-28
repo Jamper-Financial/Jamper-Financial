@@ -13,48 +13,99 @@ namespace Jamper_Financial.Shared.Data
     {
         private static readonly string DbPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "AppDatabase.db");
 
-        //This method is used to initialize the database
+        // This method is used to initialize the database
         public static void InitializeDatabase()
         {
-            // Create the database file if it doesn't exist
-            if (!File.Exists(DbPath))
+            using (var connection = new SqliteConnection($"Data Source={DbPath}"))
             {
-                using (var connection = new SqliteConnection($"Data Source={DbPath}"))
+                connection.Open();
+
+                // Check and create tables if they do not exist
+                CreateTableIfNotExists(connection, "Users", @"
+                    CREATE TABLE IF NOT EXISTS Users (
+                        UserId INTEGER PRIMARY KEY AUTOINCREMENT,
+                        FirstName TEXT NOT NULL,
+                        LastName TEXT NOT NULL,
+                        Username TEXT NOT NULL UNIQUE,
+                        Birthday TEXT NOT NULL,
+                        Email TEXT NOT NULL UNIQUE,
+                        Password TEXT NOT NULL
+                    );
+                ");
+
+                CreateTableIfNotExists(connection, "Roles", @"
+                    CREATE TABLE IF NOT EXISTS Roles (
+                        RoleId INTEGER PRIMARY KEY AUTOINCREMENT,
+                        RoleName TEXT NOT NULL UNIQUE
+                    );
+                ");
+
+                CreateTableIfNotExists(connection, "UserRoles", @"
+                    CREATE TABLE IF NOT EXISTS UserRoles (
+                        UserRoleId INTEGER PRIMARY KEY AUTOINCREMENT,
+                        UserId INTEGER NOT NULL,
+                        RoleId INTEGER NOT NULL,
+                        FOREIGN KEY (UserId) REFERENCES Users(UserId),
+                        FOREIGN KEY (RoleId) REFERENCES Roles(RoleId)
+                    );
+                ");
+
+                CreateTableIfNotExists(connection, "Transactions", @"
+                    CREATE TABLE IF NOT EXISTS Transactions (
+                        TransactionID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        Date TEXT NOT NULL,
+                        Description TEXT NOT NULL,
+                        Debit REAL NOT NULL,
+                        Credit REAL NOT NULL,
+                        Category TEXT NOT NULL,
+                        Color TEXT NOT NULL,
+                        Frequency TEXT,
+                        EndDate TEXT
+                    );
+                ");
+
+                // Insert initial roles
+                InsertInitialRoles(connection);
+            }
+        }
+
+        private static void CreateTableIfNotExists(SqliteConnection connection, string tableName, string createTableQuery)
+        {
+            string checkTableQuery = $"SELECT name FROM sqlite_master WHERE type='table' AND name='{tableName}';";
+            using (var command = new SqliteCommand(checkTableQuery, connection))
+            {
+                var result = command.ExecuteScalar();
+                if (result == null)
                 {
-                    connection.Open();
-
-                    string createTableQuery = @"
-                            CREATE TABLE IF NOT EXISTS Users (
-                                UserId INTEGER PRIMARY KEY AUTOINCREMENT,
-                                FirstName TEXT NOT NULL,
-                                LastName TEXT NOT NULL,
-                                Username TEXT NOT NULL UNIQUE,
-                                Birthday TEXT NOT NULL,
-                                Email TEXT NOT NULL UNIQUE,
-                                Password TEXT NOT NULL
-                            );
-                            CREATE TABLE IF NOT EXISTS Transactions (
-                                TransactionID INTEGER PRIMARY KEY AUTOINCREMENT,
-                                Date TEXT NOT NULL,
-                                Description TEXT NOT NULL,
-                                Debit REAL NOT NULL,
-                                Credit REAL NOT NULL,
-                                Category TEXT NOT NULL,
-                                Color TEXT NOT NULL,
-                                Frequency TEXT,
-                                EndDate TEXT
-                            );
-                        ";
-
-                    using (var command = new SqliteCommand(createTableQuery, connection))
+                    using (var createCommand = new SqliteCommand(createTableQuery, connection))
                     {
-                        command.ExecuteNonQuery();
+                        createCommand.ExecuteNonQuery();
                     }
                 }
             }
         }
 
-        //This method is used to insert a new user into the database
+                private static void InsertInitialRoles(SqliteConnection connection)
+        {
+            string[] roles = { "Admin", "User" };
+
+            foreach (var role in roles)
+            {
+                string insertRoleQuery = @"
+                    INSERT INTO Roles (RoleName)
+                    SELECT @RoleName
+                    WHERE NOT EXISTS (SELECT 1 FROM Roles WHERE RoleName = @RoleName);
+                ";
+
+                using (var command = new SqliteCommand(insertRoleQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@RoleName", role);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // This method is used to insert a new user into the database
         public static void InsertUser(string firstName, string lastName, string username, string birthday, string email, string password)
         {
             using (var connection = GetConnection())
@@ -80,7 +131,48 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
-        //This method is used to check if a username is already taken
+        // This method is used to insert a new role into the database
+        public static void InsertRole(string roleName)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+
+                string insertQuery = @"
+                    INSERT INTO Roles (RoleName)
+                    VALUES (@RoleName);
+                ";
+
+                using (var command = new SqliteCommand(insertQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@RoleName", roleName);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // This method is used to assign a role to a user
+        public static void AssignRoleToUser(int userId, int roleId)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+
+                string insertQuery = @"
+                    INSERT INTO UserRoles (UserId, RoleId)
+                    VALUES (@UserId, @RoleId);
+                ";
+
+                using (var command = new SqliteCommand(insertQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@UserId", userId);
+                    command.Parameters.AddWithValue("@RoleId", roleId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // This method is used to check if a username is already taken
         public static bool IsUsernameTaken(string username)
         {
             using (var connection = GetConnection())
@@ -97,7 +189,7 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
-        //This method is used to check if an email is already taken
+        // This method is used to check if an email is already taken
         public static bool IsEmailTaken(string email)
         {
             using (var connection = GetConnection())
@@ -114,8 +206,8 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
-        //This method is used to validate the user credentials with the database
-        //It returns true if the user credentials are valid, otherwise false
+        // This method is used to validate the user credentials with the database
+        // It returns true if the user credentials are valid, otherwise false
         public static bool ValidateUserCredentials(string identifier, string password)
         {
             using (var connection = GetConnection())
@@ -139,7 +231,7 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
-        //This method is used to get the connection to the database
+        // This method is used to get the connection to the database
         public static SqliteConnection GetConnection()
         {
             return new SqliteConnection($"Data Source={DbPath}");
@@ -186,5 +278,40 @@ namespace Jamper_Financial.Shared.Data
                 }
             }
         }
+
+        // This method gets the user ID by username
+        public static int GetUserIdByUsername(string username)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+
+                string query = "SELECT UserId FROM Users WHERE Username = @Username;";
+                using (var command = new SqliteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Username", username);
+                    var result = command.ExecuteScalar();
+                    return Convert.ToInt32(result);
+                }
+            }
+        }
+
+        // This method gets the role ID by role name
+        public static int GetRoleIdByName(string roleName)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+
+                string query = "SELECT RoleId FROM Roles WHERE RoleName = @RoleName;";
+                using (var command = new SqliteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@RoleName", roleName);
+                    var result = command.ExecuteScalar();
+                    return Convert.ToInt32(result);
+                }
+            }
+        }
     }
 }
+
