@@ -144,14 +144,6 @@ button {
     font-size: 1rem;
 }
 
-.sidebar {
-    display: none; /* This hides the sidebar */
-}
-
-.header-bar {
-    display: none; /* Hide the header bar */
-}
-
 .password-group {
     margin-bottom: 1.5rem;
     display: flex;

@@ -2,8 +2,8 @@
 @inject NavigationManager Navigation
 
 @code {
-    private bool ShouldShowHeader => !Navigation.Uri.Contains("/login") && !Navigation.Uri.EndsWith("/") &&
-    !Navigation.Uri.Contains("/create-account");
+    private bool ShouldShowMenus => !Navigation.Uri.Contains("/login") && !Navigation.Uri.EndsWith("/") &&
+    !Navigation.Uri.Contains("/create-account") && !Navigation.Uri.Contains("/verify-email");
 }
 
 
@@ -14,12 +14,14 @@
 
     <div class="content-container">
         <div class="layout">
-            <aside class="sidebar">
-                <NavMenu />
-            </aside>
-
+            @if (ShouldShowMenus)
+            {
+                <aside class="sidebar">
+                    <NavMenu />
+                </aside>
+            }
             <main class="main-content">
-                @if (ShouldShowHeader)
+                @if (ShouldShowMenus)
                 {
                     <header class="header">
                         <HeaderMenu />

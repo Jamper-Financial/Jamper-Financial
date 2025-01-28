@@ -184,13 +184,3 @@ button {
     padding: 0 10px;
     margin: 20px;
 }
-
-.sidebar {
-    display: none;
-    /* This hides the sidebar */
-}
-
-.header-bar {
-    display: none;
-    /* Hide the header bar */
-}

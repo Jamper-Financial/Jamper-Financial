@@ -127,11 +127,3 @@ button {
         width: auto;
         max-width: 100%;
     }
-
-.sidebar {
-    display: none; /* This hides the sidebar */
-}
-
-.header-bar {
-    display: none; /* Hide the header bar */
-}
