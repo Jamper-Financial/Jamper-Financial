@@ -12,3 +12,7 @@ Jamper-Financial/obj/project.assets.json
 Jamper-Financial.Shared/obj/project.assets.json
 Jamper-Financial.Web/obj/project.assets.json
 AppDatabase.db
+*.cache
+*.json
+*.props
+*.targets
