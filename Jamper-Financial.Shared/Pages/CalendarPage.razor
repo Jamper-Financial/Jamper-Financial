@@ -1,6 +1,7 @@
 ﻿@page "/calendar-page"
 @using System.Globalization
 @using Jamper_Financial.Shared.Data
+@using Jamper_Financial.Shared.Utilities
 
 <div class="calendar-page">
     <!-- Header Section -->
@@ -254,7 +255,7 @@
     // Load Transactions Data
     protected override async Task OnInitializedAsync()
     {
-        Transactions = (await TransactionHelper.GetTransactionsAsync()).ToList();
+        Transactions = await TransactionManager.LoadTransactionsAsync();
         UpdateTransactionsForSelectedMonth();
         SortTransactions("Date", true); // Ensure default sort is by Date ascending
     }
@@ -483,16 +484,16 @@
     private void OpenAddTransactionModal()
     {
         NewTransaction = new Transaction
-            {
-                Date = SelectedDate != 0 ? new DateTime(SelectedYear, SelectedMonth, SelectedDate) : DateTime.Now,
-                Description = string.Empty,
-                Category = "Expenses",
-                Debit = 0,
-                Credit = 0,
-                Color = GetColorForCategory("Expenses"),
-                Frequency = "None",
-                EndDate = SelectedDate != 0 ? new DateTime(SelectedYear, SelectedMonth, SelectedDate) : DateTime.Now
-            };
+        {
+            Date = SelectedDate != 0 ? new DateTime(SelectedYear, SelectedMonth, SelectedDate) : DateTime.Now,
+            Description = string.Empty,
+            Category = "Expenses",
+            Debit = 0,
+            Credit = 0,
+            Color = GetColorForCategory("Expenses"),
+            Frequency = "None",
+            EndDate = SelectedDate != 0 ? new DateTime(SelectedYear, SelectedMonth, SelectedDate) : DateTime.Now
+        };
         Amount = 0;
         IsEditMode = false;
         ShowDeleteConfirmation = false;
@@ -515,158 +516,10 @@
 
     private async Task HandleAddOrEditTransaction()
     {
-        if (NewTransaction.Category == "Expenses" || NewTransaction.Category == "Debts & Loans" || NewTransaction.Category == "Subscriptions & Memberships")
-        {
-            NewTransaction.Debit = Amount;
-            NewTransaction.Credit = 0;
-        }
-        else
-        {
-            NewTransaction.Debit = 0;
-            NewTransaction.Credit = Amount;
-        }
-
-        // Ensure frequency and end date are null if frequency is "None"
-        if (NewTransaction.Frequency == "None")
-        {
-            NewTransaction.Frequency = null;
-            NewTransaction.EndDate = null;
-        }
-
-        if (IsEditMode)
-        {
-            await TransactionHelper.UpdateTransactionAsync(NewTransaction);
-
-            // Remove existing recurring transactions if frequency is changed to "None"
-            if (NewTransaction.Frequency == null)
-            {
-                RemoveRecurringTransactions(NewTransaction);
-            }
-            else
-            {
-                // Edit subsequent transactions
-                EditRecurringTransactions(NewTransaction);
-            }
-
-            // Add recurring transactions based on frequency and end date
-            if (NewTransaction.Frequency != null && NewTransaction.EndDate.HasValue)
-            {
-                AddRecurringTransactions(NewTransaction, true); // Pass true to indicate editing mode
-            }
-        }
-        else
-        {
-            await TransactionHelper.AddTransactionAsync(NewTransaction);
-            Transactions.Add(NewTransaction);
-
-            // Add recurring transactions based on frequency and end date
-            if (NewTransaction.Frequency != null && NewTransaction.EndDate.HasValue)
-        {
-                AddRecurringTransactions(NewTransaction, false); // Pass false to indicate adding mode
-            }
-        }
-
+        await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
         CloseAddTransactionModal();
         UpdateTransactionsForSelectedMonth();
         ReapplySort();
-    }
-
-
-    private void EditRecurringTransactions(Transaction transaction)
-    {
-        var recurringTransactions = Transactions
-            .Where(t => t.Description == transaction.Description &&
-                        t.Category == transaction.Category &&
-                        t.Color == transaction.Color &&
-                        t.Frequency == transaction.Frequency &&
-                        t.Date > transaction.Date)
-            .ToList();
-
-        foreach (var recurringTransaction in recurringTransactions)
-        {
-            recurringTransaction.Description = transaction.Description;
-            recurringTransaction.Amount = transaction.Amount;
-            recurringTransaction.Debit = transaction.Debit;
-            recurringTransaction.Credit = transaction.Credit;
-            recurringTransaction.Category = transaction.Category;
-            recurringTransaction.Color = transaction.Color;
-            recurringTransaction.Frequency = transaction.Frequency;
-            recurringTransaction.EndDate = transaction.EndDate;
-
-            TransactionHelper.UpdateTransactionAsync(recurringTransaction).Wait();
-        }
-    }
-
-    private void RemoveRecurringTransactions(Transaction transaction)
-    {
-        var recurringTransactions = Transactions
-            .Where(t => t.Description == transaction.Description &&
-                        t.Category == transaction.Category &&
-                        t.Color == transaction.Color &&
-                        t.Frequency == transaction.Frequency &&
-                        t.Date > transaction.Date)
-            .ToList();
-
-        foreach (var recurringTransaction in recurringTransactions)
-        {
-            Transactions.Remove(recurringTransaction);
-            TransactionHelper.DeleteTransactionAsync(recurringTransaction.TransactionID).Wait();
-        }
-    }
-
-    private void AddRecurringTransactions(Transaction transaction, bool isEditing)
-    {
-        DateTime nextDate = transaction.Date;
-        while (true)
-        {
-            nextDate = transaction.Frequency switch
-            {
-                "Monthly" => nextDate.AddMonths(1),
-                "Yearly" => nextDate.AddYears(1),
-                _ => nextDate
-            };
-
-            if (nextDate > transaction.EndDate.Value)
-            {
-                break;
-            }
-
-            var existingTransaction = Transactions.FirstOrDefault(t => t.Date == nextDate && t.Description == transaction.Description && t.Category == transaction.Category);
-
-            if (existingTransaction == null)
-            {
-                var newTransaction = new Transaction
-                    {
-                        Date = nextDate,
-                        Description = transaction.Description,
-                        Amount = transaction.Amount,
-                        Debit = transaction.Debit,
-                        Credit = transaction.Credit,
-                        Category = transaction.Category,
-                        Color = transaction.Color,
-                        Frequency = transaction.Frequency,
-                        EndDate = transaction.EndDate
-                    };
-
-                Transactions.Add(newTransaction);
-                TransactionHelper.AddTransactionAsync(newTransaction).Wait();
-            }
-            else if (isEditing)
-            {
-                // Update the existing transaction if in editing mode
-                existingTransaction.Description = transaction.Description;
-                existingTransaction.Amount = transaction.Amount;
-                existingTransaction.Debit = transaction.Debit;
-                existingTransaction.Credit = transaction.Credit;
-                existingTransaction.Category = transaction.Category;
-                existingTransaction.Color = transaction.Color;
-                existingTransaction.Frequency = transaction.Frequency;
-                existingTransaction.EndDate = transaction.EndDate;
-
-                TransactionHelper.UpdateTransactionAsync(existingTransaction).Wait();
-            }
-            
-        }
     }
 
     private void ShowDeleteConfirmationForm()
@@ -681,31 +534,10 @@
 
     private async Task ConfirmDeleteTransaction()
     {
-        await TransactionHelper.DeleteTransactionAsync(NewTransaction.TransactionID);
+        await TransactionManager.DeleteTransactionAsync(NewTransaction);
         Transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
-
-        // Delete subsequent recurring transactions
-        DeleteRecurringTransactions(NewTransaction);
-
         CloseAddTransactionModal();
         UpdateTransactionsForSelectedMonth();
-    }
-
-    private void DeleteRecurringTransactions(Transaction transaction)
-    {
-        var recurringTransactions = Transactions
-            .Where(t => t.Description == transaction.Description &&
-                        t.Category == transaction.Category &&
-                        t.Color == transaction.Color &&
-                        t.Frequency == transaction.Frequency &&
-                        t.Date > transaction.Date)
-            .ToList();
-
-        foreach (var recurringTransaction in recurringTransactions)
-        {
-            Transactions.Remove(recurringTransaction);
-            TransactionHelper.DeleteTransactionAsync(recurringTransaction.TransactionID).Wait();
-        }
     }
 
     private void HandleCategoryChange(ChangeEventArgs e)
@@ -713,7 +545,7 @@
         var selectedCategory = e.Value.ToString();
         NewTransaction.Category = selectedCategory;
         if (selectedCategory == "Subscriptions & Memberships")
-        {   
+        {
             // Do not change the color if it is already set (i.e., user selected a custom color)
             if (string.IsNullOrEmpty(NewTransaction.Color))
             {
@@ -723,29 +555,6 @@
         else
         {
             NewTransaction.Color = GetColorForCategory(selectedCategory);
-        }
-    }
-
-    private void HandleFrequencyChange(ChangeEventArgs e)
-    {
-        var selectedFrequency = e.Value.ToString();
-        NewTransaction.Frequency = selectedFrequency;
-        if (selectedFrequency == "None")
-        {
-            NewTransaction.Frequency = null;
-            NewTransaction.EndDate = null;
-        }
-        else if (selectedFrequency == "Monthly")
-        {
-            NewTransaction.EndDate = NewTransaction.Date.AddMonths(1);
-        }
-        else if (selectedFrequency == "Yearly")
-        {
-            NewTransaction.EndDate = NewTransaction.Date.AddYears(1);
-        }
-        else
-        {
-            NewTransaction.EndDate = null;
         }
     }
 
@@ -768,3 +577,4 @@
         return $"#{random.Next(0x1000000):X6}";
     }
 }
+

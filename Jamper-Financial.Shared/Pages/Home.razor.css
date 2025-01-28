@@ -1,0 +1,44 @@
+﻿.home-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 97vh; /* Full height of the viewport */
+    margin: 0;
+    background: url('images/Jamper.png') no-repeat center center;
+    background-size: contain;
+    background-color: #000;
+    position: relative;
+}
+
+.top-right-button {
+    position: absolute;
+    top: 55%; /* Center vertically */
+    left: 15%; /* Position the button closer to the left */
+    transform: translateY(-50%); /* Proper vertical alignment */
+}
+
+    .top-right-button button {
+        padding: 20px 30px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 8px;
+        background: #28a745;
+        color: black;
+        cursor: pointer;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+    }
+
+        .top-right-button button:hover {
+            background: #218838;
+            transform: scale(1.1); /* Slightly enlarge on hover */
+        }
+
+.sidebar {
+    display: none; /* This hides the sidebar */
+}
+
+.header-bar {
+    display: none; /* Hide the header bar */
+}

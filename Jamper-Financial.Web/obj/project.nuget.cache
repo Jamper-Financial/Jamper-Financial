@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "uIiVm8Iphug=",
+  "dgSpecHash": "viG47M97N4A=",
   "success": true,
   "projectFilePath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
   "expectedPackageFiles": [
@@ -41,12 +41,5 @@
     "C:\\Users\\emild\\.nuget\\packages\\system.memory\\4.5.3\\system.memory.4.5.3.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\tailwind.extensions.aspnetcore\\1.0.0\\tailwind.extensions.aspnetcore.1.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file C:\\School Files\\Jamper-Financial\\Jamper-Financial.Web\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    }
-  ]
+  "logs": []
 }

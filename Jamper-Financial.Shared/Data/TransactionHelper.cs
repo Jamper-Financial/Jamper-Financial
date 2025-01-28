@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using System.IO;
+using Jamper_Financial.Shared.Utilities;
 
 namespace Jamper_Financial.Shared.Data
 {
@@ -118,19 +119,5 @@ namespace Jamper_Financial.Shared.Data
         {
             return new SqliteConnection($"Data Source={DbPath}");
         }
-    }
-
-    public class Transaction
-    {
-        public int TransactionID { get; set; }
-        public DateTime Date { get; set; }
-        public string Description { get; set; }
-        public decimal Amount { get; set; }
-        public decimal Debit { get; set; }
-        public decimal Credit { get; set; }
-        public string Category { get; set; }
-        public string Color { get; set; }
-        public string Frequency { get; set; }
-        public DateTime? EndDate { get; set; }
     }
 }
