@@ -16,4 +16,3 @@ AppDatabase.db
 *.json
 *.props
 *.targets
-/Jamper-Financial.Web/obj

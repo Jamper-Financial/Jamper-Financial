@@ -1,13 +1,4 @@
 ﻿@page "/debt-tracking-page"
 @inherits LayoutComponentBase
-@code {
-    [CascadingParameter] private string PageTitle { get; set; }
-    [CascadingParameter] private Action<string> SetPageTitle { get; set; }
-
-    protected override void OnInitialized()
-    {
-        SetPageTitle("Debt Tracking");
-    }
-}
 
 <p>This page is to be implemented.</p>

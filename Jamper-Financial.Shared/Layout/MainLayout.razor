@@ -4,49 +4,37 @@
 @code {
     private bool ShouldShowMenus => !Navigation.Uri.Contains("/login") && !Navigation.Uri.EndsWith("/") &&
     !Navigation.Uri.Contains("/create-account") && !Navigation.Uri.Contains("/verify-email");
-
-    private string pageTitle = "Overview";
-
-    public void SetPageTitle(string title)
-    {
-        pageTitle = title;
-        StateHasChanged();
-    }
-
 }
 
 
 @* Include the custom CSS file *@
 <link href="css/MainLayout.css" rel="stylesheet" />
-<CascadingValue Value="pageTitle">
-    <CascadingValue Value="(Action<string>)SetPageTitle">
-        <div class="page">
 
-            <div class="content-container">
-                <div class="layout">
-                    @if (ShouldShowMenus)
-                    {
-                        <aside class="sidebar">
-                            <NavMenu />
-                        </aside>
-                    }
-                    <main class="main-content">
-                        @if (ShouldShowMenus)
-                        {
-                            <header class="header">
-                                <HeaderMenu />
-                            </header>
-                        }
+<div class="page">
 
-                        <article class="content">
-                            @Body
-                        </article>
-                    </main>
-                </div>
-            </div>
+    <div class="content-container">
+        <div class="layout">
+            @if (ShouldShowMenus)
+            {
+                <aside class="sidebar">
+                    <NavMenu />
+                </aside>
+            }
+            <main class="main-content">
+                @if (ShouldShowMenus)
+                {
+                    <header class="header">
+                        <HeaderMenu />
+                    </header>
+                }
+
+                <article class="content">
+                    @Body
+                </article>
+            </main>
         </div>
-    </CascadingValue>
-</CascadingValue>
+    </div>
+</div>
 
 <div id="blazor-error-ui" data-nosnippet>
     An unhandled error has occurred.

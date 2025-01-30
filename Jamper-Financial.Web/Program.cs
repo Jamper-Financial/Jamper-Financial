@@ -8,8 +8,7 @@ using Microsoft.AspNetCore.Builder.Extensions;
 using Jamper_Financial.Shared.Data;
 
 var builder = WebApplication.CreateBuilder(args);
-var dbPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "AppDatabase.db");
-var connectionString = $"Data Source={dbPath}";
+
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -18,9 +17,6 @@ builder.Services.AddRazorComponents()
 // Add device-specific services used by the Jamper_Financial.Shared project
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
 builder.Services.AddSingleton<LoginStateService>();
-
-// Register the UserService with the dependency injection container
-builder.Services.AddScoped<IUserService, UserService>(sp => new UserService(connectionString));
 
 // Add Firebase Service
 builder.Services.AddSingleton<FirebaseService>();

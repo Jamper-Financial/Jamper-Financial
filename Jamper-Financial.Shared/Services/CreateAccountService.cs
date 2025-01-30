@@ -1,6 +1,6 @@
 ﻿
-using Jamper_Financial.Shared.Data;
 using Microsoft.AspNetCore.Components;
+using Jamper_Financial.Shared.Data;
 
 
 namespace Jamper_Financial.Shared.Services

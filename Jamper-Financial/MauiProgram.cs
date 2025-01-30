@@ -17,8 +17,8 @@ namespace Jamper_Financial
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
 
-            // Initialize the database // as this is the mobile. Initial db should be done in the web project
-            //DatabaseHelper.InitializeDatabase();
+            // Initialize the database
+            DatabaseHelper.InitializeDatabase();
 
             // Add device-specific services used by the Jamper_Financial.Shared project
             builder.Services.AddSingleton<IFormFactor, FormFactor>();
