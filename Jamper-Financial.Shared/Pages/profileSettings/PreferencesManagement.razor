@@ -1,0 +1,164 @@
+﻿@namespace Jamper_Financial.Shared.Pages.profileSettings
+
+<style>
+    .profile-management {
+        position: relative;
+    }
+
+    .currency, .time-zone, .notification, .subscriptions, .change-theme-color, .goals, .budget, .save-button {
+        position: absolute;
+    }
+
+    .currency {
+        left: 70px;
+        top: 149px;
+    }
+
+    .time-zone {
+        left: 540px;
+        top: 149px;
+    }
+
+    .notification {
+        left: 70px;
+        top: 256px;
+    }
+
+    .subscriptions, .change-theme-color, .goals, .budget {
+        left: 70px;
+    }
+
+    .subscriptions {
+        top: 296px;
+    }
+
+    .change-theme-color {
+        top: 438px;
+    }
+
+    .goals {
+        top: 342px;
+    }
+
+    .budget {
+        top: 388px;
+    }
+
+    .save-button {
+        left: 860px;
+        top: 528px;
+    }
+
+    .box {
+        background: white;
+        border-radius: 15px;
+        border: 1px rgba(98, 173, 65, 0.20) solid;
+    }
+
+    .text {
+        color: black;
+        font-size: 16px;
+        font-family: Inter;
+        font-weight: 400;
+        word-wrap: break-word;
+    }
+
+    .sub-text {
+        color: #B1B1B1;
+        font-size: 15px;
+        font-family: Inter;
+        font-weight: 400;
+        word-wrap: break-word;
+    }
+
+    .notification-text {
+        color: black;
+        font-size: 17px;
+        font-family: Inter;
+        font-weight: 500;
+        word-wrap: break-word;
+    }
+
+    .toggle {
+        background: #62AD41;
+        border-radius: 25px;
+    }
+
+    .toggle-circle {
+        background: white;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.10);
+        border-radius: 9999px;
+    }
+
+    .toggle-inactive {
+        background: rgba(98, 173, 65, 0.20);
+        border: 1px solid;
+    }
+
+    .toggle-circle-inactive {
+        background: white;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.10);
+        border-radius: 9999px;
+        border: 1px solid;
+    }
+
+    .save-button-box {
+        background: #62AD41;
+        border-radius: 15px;
+    }
+
+    .save-button-text {
+        text-align: center;
+        color: white;
+        font-size: 18px;
+        font-family: Inter;
+        font-weight: 500;
+        word-wrap: break-word;
+    }
+</style>
+
+<div class="profile-management">
+    <div class="currency">
+        <div class="text">Currency</div>
+        <div class="box" style="top: 30px;">
+            <div class="sub-text" style="left: 20px; top: 16px;">CAD</div>
+        </div>
+    </div>
+    <div class="time-zone">
+        <div class="text">Time Zone</div>
+        <div class="box" style="top: 30px;">
+            <div class="sub-text" style="left: 20px; top: 16px;">(GMT-12:00) International Date Line West</div>
+        </div>
+    </div>
+    <div class="notification">
+        <div class="notification-text">Notification</div>
+        <div class="subscriptions">
+            <div class="sub-text" style="left: 76px; top: 6px;">Subscriptions</div>
+            <div class="toggle">
+                <div class="toggle-circle" style="left: 27px; top: 2px;"></div>
+            </div>
+        </div>
+        <div class="change-theme-color">
+            <div class="sub-text" style="left: 76px; top: 6px;">Change Theme Color</div>
+            <div class="toggle">
+                <div class="toggle-circle" style="left: 27px; top: 2px;"></div>
+            </div>
+        </div>
+        <div class="goals">
+            <div class="sub-text" style="left: 77px; top: 6px;">Goals</div>
+            <div class="toggle-inactive">
+                <div class="toggle-circle-inactive" style="left: 2px; top: 2px;"></div>
+            </div>
+        </div>
+        <div class="budget">
+            <div class="sub-text" style="left: 77px; top: 6px;">Budget</div>
+            <div class="toggle">
+                <div class="toggle-circle" style="left: 27px; top: 2px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="save-button">
+        <div class="save-button-box"></div>
+        <div class="save-button-text" style="left: 74px; top: 14px;">Save</div>
+    </div>
+</div>

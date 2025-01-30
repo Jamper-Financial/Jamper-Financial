@@ -1,20 +1,29 @@
-﻿<div class="header-container">
+﻿@inherits LayoutComponentBase
+@inject NavigationManager Navigation
+@using Microsoft.AspNetCore.Components
+
+@code {
+    [CascadingParameter] public string PageTitle { get; set; }
+}
+
+<div class="header-container">
     <div class="header-background"></div>
     <div class="header-content">
-        <div class="overview">Overview</div>
+        <div class="overview">@PageTitle</div>
         <div class="search">
             <div class="search-background"></div>
             <div class="search-text">Search for something</div>
         </div>
         <div class="icons">
             <div class="icon">
-                <img class="icon-image" src='../images/image.png'/>
+                <NavLink href="profile-page">
+                    <img class="icon-image" src='../images/image.png' />
+                </NavLink>
             </div>
             <div class="icon">
-                <img class="icon-image" src='../images/notification.svg' />
-            </div>
-            <div class="icon">
-                <img class="icon-image" src='../images/settings-icon.svg' />
+                <NavLink href="settings-page">
+                    <img class="icon-image" src='../images/notification.svg' />
+                </NavLink>
             </div>
         </div>
     </div>

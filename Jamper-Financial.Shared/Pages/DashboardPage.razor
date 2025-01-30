@@ -1,4 +1,12 @@
 ﻿@page "/dashboard-page"
 @inherits LayoutComponentBase
+@code {
+    [CascadingParameter] private string PageTitle { get; set; }
+    [CascadingParameter] private Action<string> SetPageTitle { get; set; }
 
-<p>This page is to be implemented.</p>
+    protected override void OnInitialized()
+    {
+        SetPageTitle("Dashboard");
+    }
+}
+<p>This page is to be implemented. Dashboard</p>

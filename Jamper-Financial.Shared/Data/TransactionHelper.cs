@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Jamper_Financial.Shared.Utilities;
 using Microsoft.Data.Sqlite;
-using System.IO;
-using Jamper_Financial.Shared.Utilities;
 
 namespace Jamper_Financial.Shared.Data
 {

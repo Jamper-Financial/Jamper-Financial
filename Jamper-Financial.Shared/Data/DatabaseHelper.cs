@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
-using System.IO;
-using SQLite;
+﻿using Microsoft.Data.Sqlite;
 
 namespace Jamper_Financial.Shared.Data
 {
     public static class DatabaseHelper
     {
         private static readonly string DbPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "AppDatabase.db");
+        private static readonly string[] stringArray = ["LastName", "FirstName", "Birthday"];
 
         // This method is used to initialize the database
         public static void InitializeDatabase()
@@ -24,13 +18,28 @@ namespace Jamper_Financial.Shared.Data
                 CreateTableIfNotExists(connection, "Users", @"
                     CREATE TABLE IF NOT EXISTS Users (
                         UserId INTEGER PRIMARY KEY AUTOINCREMENT,
-                        FirstName TEXT NOT NULL,
-                        LastName TEXT NOT NULL,
                         Username TEXT NOT NULL UNIQUE,
-                        Birthday TEXT NOT NULL,
                         Email TEXT NOT NULL UNIQUE,
                         Password TEXT NOT NULL
                     );
+                ");
+
+                CreateTableIfNotExists(connection, "Profile", @"
+                    CREATE TABLE IF NOT EXISTS Profile (
+                        ProfileID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        UserID INTEGER NOT NULL, 
+                        FirstName TEXT NOT NULL,
+                        LastName TEXT NOT NULL,
+                        Birthday TEXT,
+                        Address TEXT,
+                        City TEXT,
+                        postalCode TEXT,
+                        Country TEXT,
+                        PhoneNumber TEXT,
+                        EmailConfirmed INTEGER,
+                        PhoneNumberConfirmed INTEGER,
+                        FOREIGN KEY (UserID) REFERENCES Users(UserID)
+                        );
                 ");
 
                 CreateTableIfNotExists(connection, "Roles", @"
@@ -66,26 +75,125 @@ namespace Jamper_Financial.Shared.Data
 
                 // Insert initial roles
                 InsertInitialRoles(connection);
+
+
+                // Delete columns if exists
+                DeleteColumnsIfExists(connection, "Users", stringArray);
+
+            }
+        }
+
+        private static void AlterTableIfExists(SqliteConnection connection, string tableName, string alterTableQuery)
+        {
+            string checkTableQuery = $"SELECT name FROM sqlite_master WHERE type='table' AND name='{tableName}';";
+            using var command = new SqliteCommand(checkTableQuery, connection);
+            var result = command.ExecuteScalar();
+            if (result != null)
+            {
+                using (var alterCommand = new SqliteCommand(alterTableQuery, connection))
+                {
+                    alterCommand.ExecuteNonQuery();
+                }
+            }
+        }
+        private static void DeleteColumnsIfExists(SqliteConnection connection, string tableName, string[] columnsToDelete)
+        {
+            // Get the column names of the original table
+            string getColumnNamesQuery = $"PRAGMA table_info({tableName});";
+            var columnNames = new List<string>();
+            var columnsToInsert = new List<string>();
+            using (var getColumnNamesCommand = new SqliteCommand(getColumnNamesQuery, connection))
+            using (var reader = getColumnNamesCommand.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    string columnName = reader.GetString(1);
+                    if (!columnsToDelete.Contains(columnName))
+                    {
+                        columnNames.Add(columnName);
+                    }
+                    else
+                    {
+                        columnsToInsert.Add(columnName);
+                    }
+                }
+            }
+
+            // Create a temporary table with the desired structure
+            string columns = string.Join(", ", columnNames);
+            string createTempTableQuery = $@"
+                CREATE TABLE {tableName}_temp AS
+                SELECT {columns} FROM {tableName} WHERE 0;
+            ";
+            using (var createTempTableCommand = new SqliteCommand(createTempTableQuery, connection))
+            {
+                createTempTableCommand.ExecuteNonQuery();
+            }
+
+            // Copy data from the original table to the temporary table
+            string copyDataQuery = $@"
+                INSERT INTO {tableName}_temp ({columns})
+                SELECT {columns} FROM {tableName};
+            ";
+            using (var copyDataCommand = new SqliteCommand(copyDataQuery, connection))
+            {
+                copyDataCommand.ExecuteNonQuery();
+            }
+
+            // Temporarily disable foreign key checks
+            using (var disableForeignKeyChecksCommand = new SqliteCommand("PRAGMA foreign_keys = OFF;", connection))
+            {
+                disableForeignKeyChecksCommand.ExecuteNonQuery();
+            }
+
+            // Insert deleted columns into Profile table from Users Table
+            if (tableName == "Users" && columnsToInsert.Count > 0)
+            {
+                string columnsToInsertStr = string.Join(", ", columnsToInsert);
+                string insertProfileQuery = $@"
+                    INSERT INTO Profile (UserID, {columnsToInsertStr})
+                    SELECT UserId, {columnsToInsertStr} FROM {tableName};
+                ";
+                using (var insertProfileCommand = new SqliteCommand(insertProfileQuery, connection))
+                {
+                    insertProfileCommand.ExecuteNonQuery();
+                }
+            }
+
+            // Drop the original table
+            string dropTableQuery = $"DROP TABLE {tableName};";
+            using (var dropTableCommand = new SqliteCommand(dropTableQuery, connection))
+            {
+                dropTableCommand.ExecuteNonQuery();
+            }
+
+            // Rename the temporary table to the original table name
+            string renameTableQuery = $"ALTER TABLE {tableName}_temp RENAME TO {tableName};";
+            using (var renameTableCommand = new SqliteCommand(renameTableQuery, connection))
+            {
+                renameTableCommand.ExecuteNonQuery();
+            }
+
+            // Re-enable foreign key checks
+            using (var enableForeignKeyChecksCommand = new SqliteCommand("PRAGMA foreign_keys = ON;", connection))
+            {
+                enableForeignKeyChecksCommand.ExecuteNonQuery();
             }
         }
 
         private static void CreateTableIfNotExists(SqliteConnection connection, string tableName, string createTableQuery)
         {
             string checkTableQuery = $"SELECT name FROM sqlite_master WHERE type='table' AND name='{tableName}';";
-            using (var command = new SqliteCommand(checkTableQuery, connection))
+            using var command = new SqliteCommand(checkTableQuery, connection);
+            var result = command.ExecuteScalar();
+            if (result == null)
             {
-                var result = command.ExecuteScalar();
-                if (result == null)
-                {
-                    using (var createCommand = new SqliteCommand(createTableQuery, connection))
-                    {
-                        createCommand.ExecuteNonQuery();
-                    }
-                }
+                using var createCommand = new SqliteCommand(createTableQuery, connection);
+                createCommand.ExecuteNonQuery();
             }
         }
 
-                private static void InsertInitialRoles(SqliteConnection connection)
+        private static void InsertInitialRoles(SqliteConnection connection)
         {
             string[] roles = { "Admin", "User" };
 
@@ -131,24 +239,29 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
+        public static void InsertProfile()
+        {
+            using var connection = GetConnection();
+            connection.Open();
+            string insertQuery = @"
+                    INSERT INTO Profile (FirstName, LastName, Username, Birthday, Email, Password)
+                    VALUES ('John', 'Doe', 'johndoe', '1990-01-01', '};";
+        }
+
         // This method is used to insert a new role into the database
         public static void InsertRole(string roleName)
         {
-            using (var connection = GetConnection())
-            {
-                connection.Open();
+            using var connection = GetConnection();
+            connection.Open();
 
-                string insertQuery = @"
+            string insertQuery = @"
                     INSERT INTO Roles (RoleName)
                     VALUES (@RoleName);
                 ";
 
-                using (var command = new SqliteCommand(insertQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@RoleName", roleName);
-                    command.ExecuteNonQuery();
-                }
-            }
+            using var command = new SqliteCommand(insertQuery, connection);
+            command.Parameters.AddWithValue("@RoleName", roleName);
+            command.ExecuteNonQuery();
         }
 
         // This method is used to assign a role to a user
