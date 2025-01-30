@@ -1,0 +1,104 @@
+.profile-management {
+    position: relative;
+}
+
+.country, .postal-code, .city, .permanent-address, .present-address, .date-of-birth, .password, .email, .user-name, .your-name, .profile-picture, .save-button {
+    position: absolute;
+}
+
+.country {
+    left: 70px;
+    top: 149px;
+}
+
+.postal-code {
+    left: 185px;
+    top: 408px;
+}
+
+.city {
+    left: 632px;
+    top: 306px;
+}
+
+.permanent-address {
+    left: 185px;
+    top: 306px;
+}
+
+.present-address {
+    left: 632px;
+    top: 204px;
+}
+
+.date-of-birth {
+    left: 185px;
+    top: 204px;
+}
+
+.password {
+    left: 632px;
+    top: 102px;
+}
+
+.email {
+    left: 185px;
+    top: 102px;
+}
+
+.user-name {
+    left: 632px;
+    top: 0px;
+}
+
+.your-name {
+    left: 185px;
+    top: 0px;
+}
+
+.profile-picture {
+    left: 0px;
+    top: 3px;
+}
+
+.save-button {
+    left: 860px;
+    top: 528px;
+}
+
+.box {
+    background: white;
+    border-radius: 15px;
+    border: 1px rgba(98, 173, 65, 0.25) solid;
+    padding: 10px;
+}
+
+.text {
+    color: black;
+    font-size: 16px;
+    font-family: Inter;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+.sub-text {
+    color: #B1B1B1;
+    font-size: 15px;
+    font-family: Inter;
+    font-weight: 400;
+    word-wrap: break-word;
+}
+
+.save-button-box {
+    background: #62AD41;
+    border-radius: 15px;
+}
+
+.save-button-text {
+    text-align: center;
+    color: white;
+    font-size: 18px;
+    font-family: Inter;
+    font-weight: 500;
+    word-wrap: break-word;
+}
