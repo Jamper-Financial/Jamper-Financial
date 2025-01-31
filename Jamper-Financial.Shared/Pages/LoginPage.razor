@@ -4,6 +4,7 @@
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Services
 @inject LoginStateService LoginState
+@inject UserStateService UserStateService
 
 <div class="login-container">
     <div class="login-left">
@@ -126,6 +127,12 @@
             LoginState.IsGoogleLogin = false; // Set flag for normal login
             ErrorMessage = string.Empty;
             Console.WriteLine("Login successful");
+
+            // Get the user ID by username
+            int userId = DatabaseHelper.GetUserIdByUsername(Identifier);
+
+            // Set the logged-in user's information in the UserStateService
+            UserStateService.SetUser(userId, Identifier);
 
             if (RememberMe)
             {
