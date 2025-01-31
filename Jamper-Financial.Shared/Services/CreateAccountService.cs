@@ -90,12 +90,16 @@ namespace Jamper_Financial.Shared.Services
             string hashedPassword = AuthenticationService.HashPassword(Password);
 
             // Insert the user into the database with the hashed password
-            DatabaseHelper.InsertUser(FirstName, LastName, Username, BirthDate.ToString("yyyy-MM-dd"), Email, hashedPassword);
+            DatabaseHelper.InsertUser(Username, Email, hashedPassword);
+            
+            // Get the user ID after inserting the user
+            int userId = DatabaseHelper.GetUserIdByUsername(Username);
+            DatabaseHelper.InsertProfile(userId, FirstName, LastName, BirthDate.ToString("yyyy-MM-dd"));
+            
             // For Debugging
             Console.WriteLine("Account created successfully!");
 
             // Assign Admin role to the user
-            int userId = DatabaseHelper.GetUserIdByUsername(Username);
             int adminRoleId = DatabaseHelper.GetRoleIdByName("Admin");
             DatabaseHelper.AssignRoleToUser(userId, adminRoleId);
 
