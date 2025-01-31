@@ -252,19 +252,19 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
-        public static void InsertProfile(int UserId, string Firstname, string LastName, string Birthday)
+        public static void InsertProfile(int UserId, string FirstName, string LastName, string Birthday)
         {
             using var connection = GetConnection();
             connection.Open();
             string insertQuery = @"
                     INSERT INTO Profile (UserID, FirstName, LastName, Birthday)
-                    VALUES (@UserId, @Firstname, @LastName, @Birthday);";
+                    VALUES (@UserId, @FirstName, @LastName, @Birthday);";
 
                             using (var command = new SqliteCommand(insertQuery, connection))
                 {
                     command.Parameters.AddWithValue("@UserId", UserId);
-                    command.Parameters.AddWithValue("@LastName", Firstname);
-                    command.Parameters.AddWithValue("@Username", LastName);
+                    command.Parameters.AddWithValue("@FirstName", FirstName);
+                    command.Parameters.AddWithValue("@LastName", LastName);
                     command.Parameters.AddWithValue("@Birthday", Birthday);
 
                     command.ExecuteNonQuery();
