@@ -1473,23 +1473,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\emild\\.nuget\\packages\\": {},
+    "C:\\Users\\owner\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+      "projectUniqueName": "C:\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
       "projectName": "Jamper-Financial.Shared",
-      "projectPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
-      "packagesPath": "C:\\Users\\emild\\.nuget\\packages\\",
-      "outputPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
+      "projectPath": "C:\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+      "packagesPath": "C:\\Users\\owner\\.nuget\\packages\\",
+      "outputPath": "C:\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\emild\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\owner\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -1515,7 +1515,7 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
+        "auditMode": "direct"
       },
       "SdkAnalysisLevel": "9.0.100"
     },
@@ -1560,7 +1560,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
