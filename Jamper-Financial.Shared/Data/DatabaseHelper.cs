@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.Sqlite;
+﻿﻿using Microsoft.Data.Sqlite;
 
 namespace Jamper_Financial.Shared.Data
 {
@@ -96,12 +96,15 @@ namespace Jamper_Financial.Shared.Data
                 }
             }
         }
+        
         private static void DeleteColumnsIfExists(SqliteConnection connection, string tableName, string[] columnsToDelete)
         {
             // Get the column names of the original table
             string getColumnNamesQuery = $"PRAGMA table_info({tableName});";
             var columnNames = new List<string>();
             var columnsToInsert = new List<string>();
+            var columnsExist = false;
+
             using (var getColumnNamesCommand = new SqliteCommand(getColumnNamesQuery, connection))
             using (var reader = getColumnNamesCommand.ExecuteReader())
             {
@@ -115,15 +118,26 @@ namespace Jamper_Financial.Shared.Data
                     else
                     {
                         columnsToInsert.Add(columnName);
+                        columnsExist = true;
                     }
                 }
+            }
+
+            // If none of the columns to delete exist, return early
+            if (!columnsExist)
+            {
+                return;
             }
 
             // Create a temporary table with the desired structure
             string columns = string.Join(", ", columnNames);
             string createTempTableQuery = $@"
-                CREATE TABLE {tableName}_temp AS
-                SELECT {columns} FROM {tableName} WHERE 0;
+                CREATE TABLE {tableName}_temp (
+                        UserId INTEGER PRIMARY KEY AUTOINCREMENT,
+                        Username TEXT NOT NULL UNIQUE,
+                        Email TEXT NOT NULL UNIQUE,
+                        Password TEXT NOT NULL
+                );
             ";
             using (var createTempTableCommand = new SqliteCommand(createTempTableQuery, connection))
             {
@@ -180,6 +194,7 @@ namespace Jamper_Financial.Shared.Data
                 enableForeignKeyChecksCommand.ExecuteNonQuery();
             }
         }
+            
 
         private static void CreateTableIfNotExists(SqliteConnection connection, string tableName, string createTableQuery)
         {
@@ -214,23 +229,21 @@ namespace Jamper_Financial.Shared.Data
         }
 
         // This method is used to insert a new user into the database
-        public static void InsertUser(string firstName, string lastName, string username, string birthday, string email, string password)
+        public static void InsertUser(string username, string email, string password)
         {
             using (var connection = GetConnection())
             {
                 connection.Open();
 
                 string insertQuery = @"
-                    INSERT INTO Users (FirstName, LastName, Username, Birthday, Email, Password)
-                    VALUES (@FirstName, @LastName, @Username, @Birthday, @Email, @Password);
+                    INSERT INTO Users (Username, Email, Password)
+                    VALUES (@Username, @Email, @Password);
                 ";
 
                 using (var command = new SqliteCommand(insertQuery, connection))
                 {
-                    command.Parameters.AddWithValue("@FirstName", firstName);
-                    command.Parameters.AddWithValue("@LastName", lastName);
+                    
                     command.Parameters.AddWithValue("@Username", username);
-                    command.Parameters.AddWithValue("@Birthday", birthday);
                     command.Parameters.AddWithValue("@Email", email);
                     command.Parameters.AddWithValue("@Password", password);
 
@@ -239,13 +252,23 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
-        public static void InsertProfile()
+        public static void InsertProfile(int UserId, string Firstname, string LastName, string Birthday)
         {
             using var connection = GetConnection();
             connection.Open();
             string insertQuery = @"
-                    INSERT INTO Profile (FirstName, LastName, Username, Birthday, Email, Password)
-                    VALUES ('John', 'Doe', 'johndoe', '1990-01-01', '};";
+                    INSERT INTO Profile (UserID, FirstName, LastName, Birthday)
+                    VALUES (@UserId, @Firstname, @LastName, @Birthday);";
+
+                            using (var command = new SqliteCommand(insertQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@UserId", UserId);
+                    command.Parameters.AddWithValue("@LastName", Firstname);
+                    command.Parameters.AddWithValue("@Username", LastName);
+                    command.Parameters.AddWithValue("@Birthday", Birthday);
+
+                    command.ExecuteNonQuery();
+                }
         }
 
         // This method is used to insert a new role into the database
@@ -427,4 +450,3 @@ namespace Jamper_Financial.Shared.Data
         }
     }
 }
-

@@ -57,9 +57,10 @@ namespace Jamper_Financial.Shared.Services
         public static void CreateUserAccount(string firstName, string lastName, string username, DateTime birthDate, string email, string password)
         {
             string hashedPassword = HashPassword(password);
-            DatabaseHelper.InsertUser(firstName, lastName, username, birthDate.ToString("yyyy-MM-dd"), email, hashedPassword);
+            DatabaseHelper.InsertUser(username, email, hashedPassword);
 
             int userId = DatabaseHelper.GetUserIdByUsername(username);
+            DatabaseHelper.InsertProfile(userId, firstName, lastName, birthDate.ToString("yyyy-MM-dd"));
             int adminRoleId = DatabaseHelper.GetRoleIdByName("Admin");
             DatabaseHelper.AssignRoleToUser(userId, adminRoleId);
         }

@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {}
+    "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {}
   },
   "projects": {
-    "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+    "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+        "projectUniqueName": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
         "projectName": "Jamper-Financial.Shared",
-        "projectPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
-        "packagesPath": "C:\\Users\\emild\\.nuget\\packages\\",
-        "outputPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
+        "projectPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+        "packagesPath": "C:\\Users\\paolo\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\emild\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\paolo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -92,20 +92,20 @@
         }
       }
     },
-    "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {
+    "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
+        "projectUniqueName": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
         "projectName": "Jamper-Financial.Web",
-        "projectPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
-        "packagesPath": "C:\\Users\\emild\\.nuget\\packages\\",
-        "outputPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Web\\obj\\",
+        "projectPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
+        "packagesPath": "C:\\Users\\paolo\\.nuget\\packages\\",
+        "outputPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Web\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\emild\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\paolo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -121,8 +121,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-                "projectPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+              "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+                "projectPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
               }
             }
           }
