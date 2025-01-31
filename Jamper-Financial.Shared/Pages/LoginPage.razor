@@ -102,11 +102,14 @@
         {
             await JSRuntime.InvokeVoidAsync("signInWithGoogle");
             LoginState.IsGoogleLogin = true; // Set flag for Google Login
+            // NavigateToCreateAccount();
+
         }
         catch (Exception ex)
         {
             ErrorMessage = $"Error during Google login: {ex.Message}";
         }
+        NavigateToCreateAccount();
     }
 
     // Handle login process
@@ -141,7 +144,10 @@
                 }
             }
 
-            Navigation.NavigateTo("/calendar-page");
+            // Navigation.NavigateTo("/calendar-page");
+            // Navigation.NavigateTo("/dashboard-page");
+            
+            
         }
         else
         {
