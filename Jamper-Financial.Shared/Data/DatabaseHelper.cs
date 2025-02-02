@@ -1,4 +1,6 @@
-﻿﻿using Microsoft.Data.Sqlite;
+﻿﻿using System.Linq.Expressions;
+using Jamper_Financial.Shared.Models;
+using Microsoft.Data.Sqlite;
 
 namespace Jamper_Financial.Shared.Data
 {
@@ -395,26 +397,212 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
-        // This method deletes a user from the database
-        public static bool DeleteUser(string username, string email)
+        // public static (int UserId, int ProfileId, string Role)? GetUserDetailsByEmail(string email)
+        // {
+        //     try
+        //     {
+        //         using (var connection = GetConnection())
+        //         {
+        //             connection.Open();
+
+        //             // Corrected query to join Users, Profile, UserRoles, and Roles tables
+        //             string query = @"
+        //                 SELECT u.UserId, p.ProfileId, r.RoleName 
+        //                 FROM Users u
+        //                 LEFT JOIN Profile p ON u.UserId = p.UserId
+        //                 LEFT JOIN UserRoles ur ON u.UserId = ur.UserId
+        //                 LEFT JOIN Roles r ON ur.RoleId = r.RoleId
+        //                 WHERE u.Email = @Email;";
+
+        //             using (var command = new SqliteCommand(query, connection))
+        //             {
+        //                 command.Parameters.AddWithValue("@Email", email);
+
+        //                 using (var reader = command.ExecuteReader())
+        //                 {
+        //                     if (reader.Read())
+        //                     {
+        //                         int userId = reader.GetInt32(reader.GetOrdinal("UserId"));
+        //                         int profileId = reader.GetInt32(reader.GetOrdinal("ProfileId"));
+        //                         string role = reader["RoleName"].ToString();
+        //                         return (userId, profileId, role);
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         // Log the error (if you have a logging mechanism)
+        //         Console.WriteLine($"Error in GetUserDetailsByEmail: {ex.Message}");
+        //     }
+
+        //     return null;
+        // }
+
+        // public static (int UserId, int ProfileId, string Role)? GetUserDetailsByEmail(string email)
+        // {
+        //     try
+        //     {
+        //         using (var connection = GetConnection())
+        //         {
+        //             connection.Open();
+
+        //             // Normalize the email (trim and convert to lowercase)
+        //             string normalizedEmail = email.Trim().ToLower();
+
+        //             // Debugging: Log the normalized email
+        //             Console.WriteLine($"Querying database for email: {normalizedEmail}");
+
+        //             string query = @"
+        //                 SELECT u.UserId, p.ProfileId, r.RoleName 
+        //                 FROM Users u
+        //                 LEFT JOIN Profile p ON u.UserId = p.UserId
+        //                 LEFT JOIN UserRoles ur ON u.UserId = ur.UserId
+        //                 LEFT JOIN Roles r ON ur.RoleId = r.RoleId
+        //                 WHERE LOWER(TRIM(u.Email)) = @Email;";
+
+        //             using (var command = new SqliteCommand(query, connection))
+        //             {
+        //                 command.Parameters.AddWithValue("@Email", normalizedEmail);
+
+        //                 using (var reader = command.ExecuteReader())
+        //                 {
+        //                     if (reader.Read())
+        //                     {
+        //                         int userId = reader.GetInt32(reader.GetOrdinal("UserId"));
+        //                         int profileId = reader.GetInt32(reader.GetOrdinal("ProfileId"));
+        //                         string role = reader["RoleName"].ToString();
+
+        //                         // Debugging: Log the retrieved user details
+        //                         Console.WriteLine($"Retrieved UserId: {userId}, ProfileId: {profileId}, Role: {role}");
+
+        //                         return (userId, profileId, role);
+        //                     }
+        //                     else
+        //                     {
+        //                         // Debugging: Log if no rows are returned
+        //                         Console.WriteLine("No user found with the specified email.");
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         // Log the error (if you have a logging mechanism)
+        //         Console.WriteLine($"Error in GetUserDetailsByEmail: {ex.Message}");
+        //     }
+
+        //     return null;
+        // }
+
+        public static (int UserId, int ProfileId, string Role)? GetUserDetailsByUsernameOrEmail(string usernameOrEmail)
+        {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+
+                    // Normalize the username or email (trim and convert to lowercase)
+                    string normalizedUsernameOrEmail = usernameOrEmail.Trim().ToLower();
+
+                    // Debugging: Log the normalized username or email
+                    Console.WriteLine($"Querying database for username or email: {normalizedUsernameOrEmail}");
+
+                    string query = @"
+                        SELECT u.UserId, p.ProfileId, r.RoleName 
+                        FROM Users u
+                        LEFT JOIN Profile p ON u.UserId = p.UserId
+                        LEFT JOIN UserRoles ur ON u.UserId = ur.UserId
+                        LEFT JOIN Roles r ON ur.RoleId = r.RoleId
+                        WHERE LOWER(TRIM(u.Username)) = @UsernameOrEmail OR LOWER(TRIM(u.Email)) = @UsernameOrEmail;";
+
+                    using (var command = new SqliteCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@UsernameOrEmail", normalizedUsernameOrEmail);
+
+                        using (var reader = command.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                int userId = reader.GetInt32(reader.GetOrdinal("UserId"));
+                                int profileId = reader.GetInt32(reader.GetOrdinal("ProfileId"));
+                                string role = reader["RoleName"].ToString();
+
+                                // Debugging: Log the retrieved user details
+                                Console.WriteLine($"Retrieved UserId: {userId}, ProfileId: {profileId}, Role: {role}");
+
+                                return (userId, profileId, role);
+                            }
+                            else
+                            {
+                                // Debugging: Log if no rows are returned
+                                Console.WriteLine("No user found with the specified username or email.");
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the error (if you have a logging mechanism)
+                Console.WriteLine($"Error in GetUserDetailsByUsernameOrEmail: {ex.Message}");
+            }
+
+            return null;
+        }
+
+        // This method deletes a user and profile from the database
+        public static bool DeleteUserAndProfile(int userId)
         {
             using (var connection = GetConnection())
             {
                 connection.Open();
 
-                string deleteQuery = "DELETE FROM Users WHERE Username = @Username OR Email = @Email;";
-
-                using (var command = new SqliteCommand(deleteQuery, connection))
+                using (var transaction = connection.BeginTransaction())
                 {
-                    command.Parameters.AddWithValue("@Username", username);
-                    command.Parameters.AddWithValue("@Email", email);
+                    try
+                    {
+                        // Delete from UserRoles table
+                        string deleteUserRolesQuery = "DELETE FROM UserRoles WHERE UserId = @UserId;";
+                        using (var deleteUserRolesCommand = new SqliteCommand(deleteUserRolesQuery, connection, transaction))
+                        {
+                            deleteUserRolesCommand.Parameters.AddWithValue("@UserId", userId);
+                            deleteUserRolesCommand.ExecuteNonQuery();
+                        }
 
-                    int rowsAffected = command.ExecuteNonQuery();
-                    return rowsAffected > 0;
+                        // Delete from Profile table
+                        string deleteProfileQuery = "DELETE FROM Profile WHERE UserId = @UserId;";
+                        using (var deleteProfileCommand = new SqliteCommand(deleteProfileQuery, connection, transaction))
+                        {
+                            deleteProfileCommand.Parameters.AddWithValue("@UserId", userId);
+                            deleteProfileCommand.ExecuteNonQuery();
+                        }
+
+                        // Delete from Users table
+                        string deleteUserQuery = "DELETE FROM Users WHERE UserId = @UserId;";
+                        using (var deleteUserCommand = new SqliteCommand(deleteUserQuery, connection, transaction))
+                        {
+                            deleteUserCommand.Parameters.AddWithValue("@UserId", userId);
+                            deleteUserCommand.ExecuteNonQuery();
+                        }
+
+                        // Commit the transaction if all operations succeed
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        // Rollback the transaction if any operation fails
+                        transaction.Rollback();
+                        Console.WriteLine($"Error in DeleteUserAndProfile: {ex.Message}");
+                        return false;
+                    }
                 }
             }
         }
-
         // This method gets the user ID by username
         public static int GetUserIdByUsername(string username)
         {
@@ -448,5 +636,35 @@ namespace Jamper_Financial.Shared.Data
                 }
             }
         }
+
+        public static (string Username, string Email) GetUserDetails(string identifier)
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+
+                string query = @"
+                    SELECT Username, Email
+                    FROM Users
+                    WHERE Username = @Identifier OR Email = @Identifier;
+                ";
+
+                using (var command = new SqliteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@Identifier", identifier);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            string username = reader["Username"].ToString();
+                            string email = reader["Email"].ToString();
+                            return (username, email);
+                        }
+                    }
+                }
+                return (null, null); // Return null if no user found
+            }
+        }
+
     }
 }

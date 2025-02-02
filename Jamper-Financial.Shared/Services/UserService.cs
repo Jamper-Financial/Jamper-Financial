@@ -12,6 +12,54 @@ namespace Jamper_Financial.Shared.Services
             _connectionString = connectionString;
         }
 
+        public async Task<bool> DeleteUserProfileAsync(int userId)
+        {
+            using (var connection = new SqliteConnection(_connectionString))
+            {
+                await connection.OpenAsync();
+
+                // Start a transaction to ensure atomicity
+                using (var transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Delete the user's profile from the Profile table
+                        string deleteProfileQuery = "DELETE FROM Profile WHERE UserId = @UserId;";
+                        using (var deleteProfileCommand = new SqliteCommand(deleteProfileQuery, connection, transaction))
+                        {
+                            deleteProfileCommand.Parameters.AddWithValue("@UserId", userId);
+                            int profileRowsAffected = await deleteProfileCommand.ExecuteNonQueryAsync();
+
+                            // If no rows were affected, the profile didn't exist
+                            if (profileRowsAffected == 0)
+                            {
+                                return false;
+                            }
+                        }
+
+                        // Optionally, delete the user from the Users table
+                        string deleteUserQuery = "DELETE FROM Users WHERE UserId = @UserId;";
+                        using (var deleteUserCommand = new SqliteCommand(deleteUserQuery, connection, transaction))
+                        {
+                            deleteUserCommand.Parameters.AddWithValue("@UserId", userId);
+                            await deleteUserCommand.ExecuteNonQueryAsync();
+                        }
+
+                        // Commit the transaction if both deletions succeed
+                        transaction.Commit();
+                        return true;
+                    }
+                    catch (Exception ex)
+                    {
+                        // Rollback the transaction in case of an error
+                        transaction.Rollback();
+                        Console.WriteLine($"Error deleting user profile: {ex.Message}");
+                        return false;
+                    }
+                }
+            }
+        }
+
         public async Task<User> GetUserByIdAsync(int userId)
         {
             using (var connection = new SqliteConnection(_connectionString))

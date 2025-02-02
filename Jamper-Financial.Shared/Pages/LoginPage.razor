@@ -5,6 +5,8 @@
 @using Jamper_Financial.Shared.Services
 @inject LoginStateService LoginState
 @inject UserStateService UserStateService
+@inject LoginStateService LoginStateService
+@inject LoggedInUserService LoggedInUserService
 
 <div class="login-container">
     <div class="login-left">
@@ -67,6 +69,8 @@
     private string Password { get; set; } = string.Empty;
     private string ErrorMessage { get; set; } = string.Empty;
     private bool RememberMe { get; set; } = false;
+    private string Email { get; set; } = string.Empty;
+    private string UserName { get; set; } = string.Empty;
 
     private string FilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "credentials.txt");
 
@@ -121,6 +125,18 @@
         }
 
         var isValid = await Task.Run(() => AuthenticationService.ValidateUserCredentials(Identifier, Password));
+        if (isValid)
+        {
+            var (username, email) = DatabaseHelper.GetUserDetails(Identifier);
+        
+            if (username != null && email != null)
+            {
+                LoggedInUserService.UserName = username;
+                LoggedInUserService.Email = email;
+                
+                Console.WriteLine($"Logged in as: {username} with email: {email}");
+            }
+        }
 
         if (isValid)
         {
