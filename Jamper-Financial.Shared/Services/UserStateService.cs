@@ -16,5 +16,13 @@
             UserId = 0;
             Username = string.Empty;
         }
+
+        public class User
+        {
+            public string Username { get; set; }
+            public string Email { get; set; }
+            // Include other relevant properties and methods
+        }
+
     }
 }

@@ -37,6 +37,9 @@ FirebaseApp.Create(new AppOptions
     Credential = GoogleCredential.FromFile("../Jamper-Financial.Shared/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json")
 });
 
+// Register the LoggedInUserService with the dependency injection container
+builder.Services.AddScoped<LoggedInUserService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,105 +1,239 @@
 @page "/delete-account"
+@inject NavigationManager Navigation
+@inject LoggedInUserService LoggedInUserService
+@using System.ComponentModel.DataAnnotations
 @using Jamper_Financial.Shared.Data
-@inject IJSRuntime JSRuntime
-
+@using Jamper_Financial.Shared.Services
+@using Microsoft.Extensions.Logging
+@inject ILogger<DeleteAccount> Logger
 
 <div class="delete-account-container">
     <div class="delete-account-left">
-        <h1>Delete Account</h1>
         <div class="delete-form">
-            <h2>Please enter the account details below</h2>
-            <form>
-                <label for="username">Username <span class="required">*</span></label>
-                <input id="username" type="text" placeholder="Enter the username" @bind="Username" />
+            <h1>Delete Account</h1>
+            <h2>Please enter your username or email to confirm account deletion</h2>
 
-                <label for="email">Email <span class="required">*</span></label>
-                <input id="email" type="email" placeholder="Enter the email" @bind="Email" />
+            <EditForm Model="@deleteAccountModel" OnValidSubmit="ValidateAndDelete">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="form-group">
+                    <label for="usernameOrEmail">Username or Email <span class="required">*</span></label>
+                    <InputText id="usernameOrEmail" class="form-control" @bind-Value="deleteAccountModel.UsernameOrEmail" />
+                </div>
 
                 <div class="bottom-buttons">
-                    <button type="button" class="back-button" @onclick="NavigateToSettings">Back</button>
-                    <button type="button" class="submit-button" @onclick="ConfirmAndDeleteUserAccount">Delete</button>
+                    <button type="button" class="btn back-button" @onclick="NavigateBack">Back</button>
+                    <button type="submit" class="btn submit-button">Delete My Account</button>
                 </div>
-            </form>
+            </EditForm>
         </div>
     </div>
 </div>
 
-@if (!string.IsNullOrWhiteSpace(ErrorMessage))
+<!-- Confirmation Modal -->
+@if (showConfirmation)
 {
-    <div class="alert alert-danger" role="alert">
-        @ErrorMessage
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <p>Are you sure you want to delete your account? This action cannot be undone.</p>
+            <div class="modal-buttons">
+                <button @onclick="ConfirmDelete" class="btn submit-button">Yes, Delete My Account</button>
+                <button @onclick="CancelDelete" class="btn back-button">Cancel</button>
+            </div>
+        </div>
     </div>
 }
 
-@if (AccountDeleted)
+<!-- Admin Confirmation Modal -->
+@if (showAdminConfirmation)
 {
-    <div class="alert alert-success" role="alert">
-        Account deleted successfully!
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <p>You are deleting an admin account. Are you sure you want to proceed?</p>
+            <div class="modal-buttons">
+                <button @onclick="ConfirmAdminDelete" class="btn submit-button">Yes, Delete My Account</button>
+                <button @onclick="CancelAdminDelete" class="btn back-button">Cancel</button>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Alert Modal -->
+@if (showAlert)
+{
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <p>@alertMessage</p>
+            <div class="modal-buttons">
+                <button @onclick="CloseAlert" class="btn submit-button">OK</button>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Success Confirmation Modal -->
+@if (showSuccessConfirmation)
+{
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <p>Your account has been successfully deleted.</p>
+            <div class="modal-buttons">
+                <button @onclick="CloseSuccessConfirmation" class="btn submit-button">OK</button>
+            </div>
+        </div>
     </div>
 }
 
 @code {
-    private string Username { get; set; } = string.Empty;
-    private string Email { get; set; } = string.Empty;
-    private string ErrorMessage { get; set; } = string.Empty;
-    private bool AccountDeleted { get; set; } = false;
+    private bool showConfirmation = false;
+    private bool showAdminConfirmation = false; 
+    private bool showAlert = false; 
+    private bool showSuccessConfirmation = false; 
+    private string alertMessage = ""; 
+    private bool isAdmin = false; 
+    private DeleteAccountModel deleteAccountModel = new DeleteAccountModel(); 
 
-    [Inject]
-    private NavigationManager Navigation { get; set; }
-
-    private void NavigateToSettings()
+    // Model for the delete account form
+    private class DeleteAccountModel
     {
-        Navigation.NavigateTo("settings");
+        [Required(ErrorMessage = "Username or email is required.")]
+        public string UsernameOrEmail { get; set; }
     }
 
-    private bool ValidateForm()
+    // Validates the form and initiates the deletion process
+    private async Task ValidateAndDelete()
     {
-        if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Email))
+        try
         {
-            ErrorMessage = "Please fill in all required fields.";
-            return false;
-        }
+            // Trim and normalize the entered username or email
+            string enteredUsernameOrEmail = deleteAccountModel.UsernameOrEmail.Trim().ToLower();
 
-        if (!DatabaseHelper.IsUserExists(Username, Email))
+            // Retrieve the logged-in user's username and email
+            string loggedInUsername = LoggedInUserService.UserName?.Trim().ToLower();
+            string loggedInEmail = LoggedInUserService.Email?.Trim().ToLower();
+
+            // Check if the entered username or email matches the logged-in user's username or email
+            if (enteredUsernameOrEmail != loggedInUsername && enteredUsernameOrEmail != loggedInEmail)
+            {
+                ShowAlert("This is not the username or email registered with this account.");
+                return;
+            }
+
+            // Retrieve the UserId, ProfileId, and Role by username or email
+            var userDetails = DatabaseHelper.GetUserDetailsByUsernameOrEmail(enteredUsernameOrEmail);
+
+            if (!userDetails.HasValue)
+            {
+                ShowAlert("Username or email not found. Please try again.");
+                return;
+            }
+
+            int userId = userDetails.Value.UserId;
+            string role = userDetails.Value.Role;
+
+            // Check if the user is an admin
+            if (role == "Admin")
+            {
+                
+                showAdminConfirmation = true;
+            }
+            else
+            {
+                
+                showConfirmation = true;
+            }
+        }
+        catch (Exception ex)
         {
-            ErrorMessage = "Account not found. Please check the details and try again.";
-            return false;
+            Logger.LogError(ex, "An error occurred while validating the deletion request.");
+            ShowAlert("An error occurred. Please try again.");
         }
-
-        ErrorMessage = string.Empty;
-        return true;
     }
 
-    private async Task ConfirmAndDeleteUserAccount()
+    // Confirms the deletion for non-admin users
+    private async Task ConfirmDelete()
     {
-        // Show a confirmation dialog
-        bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to delete this account? This action cannot be undone.");
-
-        if (!confirmed)
-        {
-            return; // User canceled the action
-        }
-
-        DeleteUserAccount();
+        await DeleteAccountAsync();
+        showConfirmation = false;
     }
 
-    private void DeleteUserAccount()
+    // Confirms the deletion for admin users
+    private async Task ConfirmAdminDelete()
     {
-        if (!ValidateForm())
-        {
-            return;
-        }
+        await DeleteAccountAsync();
+        showAdminConfirmation = false;
+    }
 
-        bool result = DatabaseHelper.DeleteUser(Username, Email);
-        if (result)
+    private void CancelDelete()
+    {
+        showConfirmation = false;
+    }
+
+    private void CancelAdminDelete()
+    {
+        showAdminConfirmation = false;
+    }
+    private void NavigateBack()
+    {
+        Navigation.NavigateTo("/profile-management");
+    }
+
+    private void ShowAlert(string message)
+    {
+        alertMessage = message;
+        showAlert = true;
+    }
+
+    
+    private void CloseAlert()
+    {
+        showAlert = false;
+    }
+
+    private void ShowSuccessConfirmation()
+    {
+        showSuccessConfirmation = true;
+    }
+
+    private void CloseSuccessConfirmation()
+    {
+        showSuccessConfirmation = false;
+        Navigation.NavigateTo("/");
+    }
+
+    // Deletes the account
+    private async Task DeleteAccountAsync()
+    {
+        try
         {
-            AccountDeleted = true;
-            ErrorMessage = string.Empty;
-            Task.Delay(2000).ContinueWith(_ => Navigation.NavigateTo("/"));
+            // Retrieve the UserId by username or email
+            var userDetails = DatabaseHelper.GetUserDetailsByUsernameOrEmail(deleteAccountModel.UsernameOrEmail);
+
+            if (!userDetails.HasValue)
+            {
+                ShowAlert("Username or email not found. Please try again.");
+                return;
+            }
+
+            int userId = userDetails.Value.UserId;
+
+            // Delete the user, profile, and role
+            bool success = DatabaseHelper.DeleteUserAndProfile(userId);
+
+            if (success)
+            {
+                ShowSuccessConfirmation();
+            }
+            else
+            {
+                ShowAlert("Failed to delete account. Please try again.");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            ErrorMessage = "An error occurred while deleting the account. Please try again.";
+            Logger.LogError(ex, "An error occurred while deleting the account.");
+            ShowAlert("An error occurred. Please try again.");
         }
     }
 }
