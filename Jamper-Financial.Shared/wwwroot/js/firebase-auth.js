@@ -25,6 +25,8 @@ window.signInWithGoogle = async function () {
 
         window.location.href = `/create-account?email=${encodeURIComponent(user.email)}`;
         //window.location.href = "/create-account"; // Redirect after login
+        //window.location.href = "/calendar-page"; // Redirect after login       
+
     } catch (error) {
         console.error("Google sign-in error:", error);
         alert("Google sign-in failed: " + error.message);

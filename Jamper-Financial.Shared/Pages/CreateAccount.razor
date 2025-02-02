@@ -73,6 +73,7 @@
     private bool AccountCreated { get; set; } = false;
 
 
+
 	// This block captures the email upon using Google Sign In through firebase
     protected override void OnInitialized()
     {
@@ -85,6 +86,7 @@
             Email = emailFromQuery;
         }
     }
+
 
 
     private void NavigateToLoginPage()
