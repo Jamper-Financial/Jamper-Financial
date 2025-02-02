@@ -22,7 +22,9 @@ window.signInWithGoogle = async function () {
         const user = result.user;
         console.log("Google user signed in:", user);
         alert(`Welcome, ${user.displayName}`);
-        window.location.href = "/calendar-page"; // Redirect after login
+
+        window.location.href = `/create-account?email=${encodeURIComponent(user.email)}`;
+        window.location.href = "/create-account"; // Redirect after login
     } catch (error) {
         console.error("Google sign-in error:", error);
         alert("Google sign-in failed: " + error.message);
@@ -44,4 +46,17 @@ window.deleteCurrentUser = async function () {
         console.error("Error deleting user:", error);
         alert("Failed to delete account: " + error.message);
     }
+
+    window.onload = function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const email = urlParams.get('email');
+
+        if (email) {
+            const emailField = document.querySelector('#email'); // Adjust the selector based on your HTML structure
+            if (emailField) {
+                emailField.value = email;
+            }
+        }
+    };
+
 };
