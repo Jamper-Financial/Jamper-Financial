@@ -72,6 +72,21 @@
     private string ErrorMessage { get; set; } = string.Empty;
     private bool AccountCreated { get; set; } = false;
 
+
+	// This block captures the email upon using Google Sign In through firebase
+    protected override void OnInitialized()
+    {
+        var uri = new Uri(Navigation.Uri);
+        var queryParams = System.Web.HttpUtility.ParseQueryString(uri.Query);
+        var emailFromQuery = queryParams["email"];
+
+        if (!string.IsNullOrWhiteSpace(emailFromQuery))
+        {
+            Email = emailFromQuery;
+        }
+    }
+
+
     private void NavigateToLoginPage()
     {
         Navigation.NavigateTo("/login");
