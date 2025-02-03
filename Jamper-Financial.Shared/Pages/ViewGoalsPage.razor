@@ -3,6 +3,7 @@
 @inherits LayoutComponentBase
 @inject GoalState GoalState
 @inject NavigationManager Navigation
+@inject IJSRuntime JSRuntime
 
 <div class="header-container">
     <h3 class="header">Goals</h3>
@@ -14,35 +15,40 @@
             {
                 <li class="goal-item @(goal.IsFadingOut ? "fade-out" : "")">
                     <div class="goal-details">
-                        @if (goal.IsQuickGoal)
-                        {
-                            <h3>@goal.Name</h3>
-                            <p>Type: @goal.Type</p>
-                            <p>Amount: $@goal.Amount</p>
-                            <p>Date: @goal.Date.ToShortDateString()</p>
-                        }
-                        else
-                        {
-                            <h3>@goal.Name</h3>
-                            <p>Account Type: @goal.AccountType</p>
-                            <p>Category: @goal.Category</p>
-                            <p>Start Date: @goal.StartDate.ToShortDateString()</p>
-                            <p>End Date: @goal.EndDate.ToShortDateString()</p>
-                            <p>Amount: $@goal.Amount</p>
-                            <button class="see-more-btn" @onclick="() => ToggleDescription(goal)">...</button>
-                            @if (goal.ShowDescription)
+                        <div class="goal-info">
+                            @if (goal.IsQuickGoal)
                             {
-                                <p>Frequency: @goal.Frequency</p>
-                                <p>Description: @goal.Description</p>
+                                <h3>@goal.Name</h3>
+                                <p>Type: @goal.Type</p>
+                                <p>Amount: $@goal.Amount</p>
+                                <p>Date: @goal.Date.ToShortDateString()</p>
                             }
-                        }
-                        <button class="delete-btn" @onclick="() => DeleteGoal(goal)">
-                            <img src="images/bin.png" alt="Delete" />
-                        </button>
-                        <button class="check-off-btn" @onclick="() => CheckOffGoal(goal)">
-                            <img src="images/check.png" alt="Check Off" />
-                        </button>
+                            else
+                            {
+                                <h3>@goal.Name</h3>
+                                <p>Account Type: @goal.AccountType</p>
+                                <p>Category: @goal.Category</p>
+                                <p>Start Date: @goal.StartDate.ToShortDateString()</p>
+                                <p>End Date: @goal.EndDate.ToShortDateString()</p>
+                                <p>Amount: $@goal.Amount</p>
+                                @if (goal.ShowDescription)
+                                {
+                                    <p>Frequency: @goal.Frequency</p>
+                                    <p>Description: @goal.Description</p>
+                                }
+                            }
+                        </div>
+                        <div class="button-container">
+                            <button class="see-more-btn" @onclick="() => ToggleDescription(goal)">...</button>
+                            <button class="delete-btn" @onclick="() => ConfirmDeleteGoal(goal)">
+                                <img src="images/bin.png" alt="Delete" />
+                            </button>
+                            <button class="check-off-btn" @onclick="() => ConfirmCheckOffGoal(goal)">
+                                <img src="images/check.png" alt="Check Off" />
+                            </button>
+                        </div>
                     </div>
+
                 </li>
             }
         </ul>
@@ -65,22 +71,54 @@
 
     private async Task DeleteGoal(Goal goal)
     {
-        goal.IsFadingOut = true;
-        await Task.Delay(500);
-        GoalState.RemoveGoal(goal);
-        goals.Remove(goal);
+        try
+        {
+            goal.IsFadingOut = true;
+            await Task.Delay(500);
+            GoalState.RemoveGoal(goal);
+            goals.Remove(goal);
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            // Handle exception (e.g., log it)
+        }
     }
 
     private async Task CheckOffGoal(Goal goal)
     {
-        goal.IsFadingOut = true;
-        await Task.Delay(500);
-        GoalState.RemoveGoal(goal);
-        goals.Remove(goal);
+        try
+        {
+            goal.IsFadingOut = true;
+            await Task.Delay(500);
+            GoalState.RemoveGoal(goal);
+            goals.Remove(goal);
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            // Handle exception (e.g., log it)
+        }
     }
 
     private void NavigateToAddGoal()
     {
         Navigation.NavigateTo("/add-saving-goal");
+    }
+
+    private async Task ConfirmDeleteGoal(Goal goal)
+    {
+        if (await JSRuntime.InvokeAsync<bool>("confirm", new object[] { $"Are you sure you want to delete the goal '{goal.Name}'?" }))
+        {
+            await DeleteGoal(goal);
+        }
+    }
+
+    private async Task ConfirmCheckOffGoal(Goal goal)
+    {
+        if (await JSRuntime.InvokeAsync<bool>("confirm", new object[] { $"Are you sure you want to check off the goal '{goal.Name}'?" }))
+        {
+            await CheckOffGoal(goal);
+        }
     }
 }

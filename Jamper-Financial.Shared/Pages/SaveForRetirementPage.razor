@@ -1,0 +1,93 @@
+﻿@page "/save-for-retirement"
+@using Jamper_Financial.Shared.Services
+@using Jamper_Financial.Shared.Data
+@inject NavigationManager Navigation
+@inject GoalState GoalState
+
+<div class="header-container">
+    <h3 class="header">Save for Retirement</h3>
+</div>
+<div class="content-container">
+    <div class="form-container">
+        <div class="form-group">
+            <label for="goalName">Name of goal</label>
+            <input type="text" id="goalName" @bind="goalName" />
+            @if (string.IsNullOrEmpty(goalName))
+            {
+                <span class="error">Goal Name is required!</span>
+            }
+        </div>
+        <div class="form-group">
+            <label for="targetAmount">Target Amount</label>
+            <input type="number" id="targetAmount" step="0.01" @bind="targetAmount" />
+            @if (targetAmount <= 0)
+            {
+                <span class="error">Target Amount must be greater than zero!</span>
+            }
+        </div>
+        <div class="form-group">
+            <label for="currentSavings">Current Savings</label>
+            <input type="number" id="currentSavings" step="0.01" @bind="currentSavings" />
+        </div>
+        <div class="form-group">
+            <label for="monthlyContribution">Monthly Contribution</label>
+            <input type="number" id="monthlyContribution" step="0.01" @bind="monthlyContribution" />
+        </div>
+        <div class="form-group">
+            <label for="retirementDate">Retirement Date</label>
+            <input type="date" id="retirementDate" @bind="retirementDate" />
+        </div>
+        <div class="form-group">
+            <label for="investmentGrowthRate">Investment Growth Rate (%)</label>
+            <input type="number" id="investmentGrowthRate" step="0.01" @bind="investmentGrowthRate" />
+        </div>
+        <div class="form-group">
+            <label for="inflationRate">Inflation Rate (%)</label>
+            <input type="number" id="inflationRate" step="0.01" @bind="inflationRate" />
+        </div>
+        <div class="form-group">
+            <label for="retirementIncomeNeeds">Retirement Income Needs</label>
+            <input type="number" id="retirementIncomeNeeds" step="0.01" @bind="retirementIncomeNeeds" />
+        </div>
+        <div class="form-group">
+            <label for="otherIncomeSources">Other Sources of Income</label>
+            <input type="number" id="otherIncomeSources" step="0.01" @bind="otherIncomeSources" />
+        </div>
+        <button class="submit-button" @onclick="SubmitRetirementGoal">Submit</button>
+    </div>
+</div>
+
+@code {
+    private string goalName;
+    private decimal targetAmount;
+    private decimal currentSavings;
+    private decimal monthlyContribution;
+    private DateTime retirementDate;
+    private decimal investmentGrowthRate;
+    private decimal inflationRate;
+    private decimal retirementIncomeNeeds;
+    private decimal otherIncomeSources;
+
+    private void SubmitRetirementGoal()
+    {
+        if (!string.IsNullOrEmpty(goalName) && targetAmount > 0)
+        {
+            var retirementGoal = new Goal
+                {
+                    Name = goalName,
+                    Amount = targetAmount,
+                    StartDate = DateTime.Now,
+                    EndDate = retirementDate,
+                    Description = $"Current Savings: {currentSavings}, Monthly Contribution: {monthlyContribution}, " +
+                                  $"Investment Growth Rate: {investmentGrowthRate}%, Inflation Rate: {inflationRate}%, " +
+                                  $"Retirement Income Needs: {retirementIncomeNeeds}, Other Income Sources: {otherIncomeSources}",
+                    Category = "Retirement",
+                    AccountType = "Savings",
+                    Frequency = "Monthly"
+                };
+
+            GoalState.AddGoal(retirementGoal);
+            Navigation.NavigateTo("/view-goals-page");
+        }
+    }
+}

@@ -89,37 +89,43 @@
 
     private void CreateNewSavingGoal()
     {
+        //logic for creating a new goal
         Navigation.NavigateTo("/add-saving-goal");
     }
 
     private void SaveForRetirement()
     {
-        // Implement the logic for saving for retirement
+        //logic for saving for retirement
+        Navigation.NavigateTo("/save-for-retirement");
     }
 
     private void SaveForTraveling()
     {
-        // Implement the logic for saving for traveling
+        //logic for saving for traveling
+        Navigation.NavigateTo("/save-for-traveling");
     }
 
     private void SaveToBuyHome()
     {
-        // Implement the logic for saving to buy a home
+        //logic for saving to but a home
+        Navigation.NavigateTo("/save-to-buy-home");
     }
 
     private void SaveForEmergencyFund()
     {
-        // Implement the logic for saving for an emergency fund
+        //logic for an emergency fund
+        Navigation.NavigateTo("/save-for-emergency-fund");
     }
 
     private void ViewGoals()
     {
+        //logic to view goals
         Navigation.NavigateTo("/view-goals-page");
     }
 
     private void AddQuickGoal()
     {
-        // Implement the logic for adding a quick goal
+        //logic for adding a quick goal
         if (!string.IsNullOrEmpty(goalType) && !string.IsNullOrEmpty(goalName) && amount > 0 && date != default)
         {
             var newGoal = new Goal

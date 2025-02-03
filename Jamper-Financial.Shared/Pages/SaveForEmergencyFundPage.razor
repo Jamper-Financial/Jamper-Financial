@@ -1,0 +1,68 @@
+﻿@page "/save-for-emergency-fund"
+@using Jamper_Financial.Shared.Services
+@using Jamper_Financial.Shared.Data
+@inject NavigationManager Navigation
+@inject GoalState GoalState
+
+<div class="header-container">
+    <h3 class="header">Save for Emergency Fund</h3>
+</div>
+<div class="content-container">
+    <div class="form-container">
+        <div class="form-group">
+            <label for="targetAmount">Target Amount</label>
+            <input type="number" id="targetAmount" step="0.01" @bind="targetAmount" />
+            @if (targetAmount <= 0)
+            {
+                <span class="error">Target Amount must be greater than zero!</span>
+            }
+        </div>
+        <div class="form-group">
+            <label for="currentSavings">Current Savings</label>
+            <input type="number" id="currentSavings" step="0.01" @bind="currentSavings" />
+        </div>
+        <div class="form-group">
+            <label for="monthlyContribution">Monthly Contribution</label>
+            <input type="number" id="monthlyContribution" step="0.01" @bind="monthlyContribution" />
+        </div>
+        <div class="form-group">
+            <label for="targetDate">Target Date</label>
+            <input type="date" id="targetDate" @bind="targetDate" />
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" @bind="description"></textarea>
+        </div>
+        <button class="submit-button" @onclick="SubmitEmergencyFundGoal">Submit</button>
+    </div>
+</div>
+
+@code {
+    private decimal targetAmount;
+    private decimal currentSavings;
+    private decimal monthlyContribution;
+    private DateTime targetDate;
+    private string description;
+
+    private void SubmitEmergencyFundGoal()
+    {
+        if (targetAmount > 0)
+        {
+            var emergencyFundGoal = new Goal
+                {
+                    Name = "Emergency Fund",
+                    Amount = targetAmount,
+                    StartDate = DateTime.Now,
+                    EndDate = targetDate,
+                    Description = $"Current Savings: {currentSavings}, Monthly Contribution: {monthlyContribution}, " +
+                                  $"Description: {description}",
+                    Category = "Emergency Fund",
+                    AccountType = "Savings",
+                    Frequency = "Monthly"
+                };
+
+            GoalState.AddGoal(emergencyFundGoal);
+            Navigation.NavigateTo("/view-goals-page");
+        }
+    }
+}

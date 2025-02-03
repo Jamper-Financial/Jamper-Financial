@@ -16,9 +16,6 @@ namespace Jamper_Financial.Shared.Data
             Goals.Remove(goal);
         }
     }
-
-
-
     public class Goal
     {
         public string Type { get; set; }
@@ -34,6 +31,5 @@ namespace Jamper_Financial.Shared.Data
         public bool ShowDescription { get; set; }
         public string Frequency { get; set; }
         public bool IsFadingOut { get; set; }
-
     }
 }
