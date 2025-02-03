@@ -24,6 +24,10 @@ namespace Jamper_Financial.Shared.Data
         public DateTime Date { get; set; }
         public string AccountType { get; set; }
         public bool IsQuickGoal { get; set; }
+        public bool IsRetirementGoal { get; set; }
+        public bool IsEmergencyFundGoal { get; set; }
+        public bool IsTravelGoal { get; set; }
+        public bool IsHomeGoal { get; set; }
         public string Category { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
