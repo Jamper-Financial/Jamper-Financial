@@ -11,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 var dbPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "AppDatabase.db");
 var connectionString = $"Data Source={dbPath}";
 
+//add GoalState
+builder.Services.AddSingleton<GoalState>();
+
 //add stateservice
 builder.Services.AddSingleton<UserStateService>();
 

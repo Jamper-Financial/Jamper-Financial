@@ -1,0 +1,86 @@
+﻿@page "/view-goals-page"
+@using Jamper_Financial.Shared.Data
+@inherits LayoutComponentBase
+@inject GoalState GoalState
+@inject NavigationManager Navigation
+
+<div class="header-container">
+    <h3 class="header">Goals</h3>
+</div>
+<div class="content-container">
+    <div class="view-goals-page">
+        <ul>
+            @foreach (var goal in goals)
+            {
+                <li class="goal-item @(goal.IsFadingOut ? "fade-out" : "")">
+                    <div class="goal-details">
+                        @if (goal.IsQuickGoal)
+                        {
+                            <h3>@goal.Name</h3>
+                            <p>Type: @goal.Type</p>
+                            <p>Amount: $@goal.Amount</p>
+                            <p>Date: @goal.Date.ToShortDateString()</p>
+                        }
+                        else
+                        {
+                            <h3>@goal.Name</h3>
+                            <p>Account Type: @goal.AccountType</p>
+                            <p>Category: @goal.Category</p>
+                            <p>Start Date: @goal.StartDate.ToShortDateString()</p>
+                            <p>End Date: @goal.EndDate.ToShortDateString()</p>
+                            <p>Amount: $@goal.Amount</p>
+                            <button class="see-more-btn" @onclick="() => ToggleDescription(goal)">...</button>
+                            @if (goal.ShowDescription)
+                            {
+                                <p>Frequency: @goal.Frequency</p>
+                                <p>Description: @goal.Description</p>
+                            }
+                        }
+                        <button class="delete-btn" @onclick="() => DeleteGoal(goal)">
+                            <img src="images/bin.png" alt="Delete" />
+                        </button>
+                        <button class="check-off-btn" @onclick="() => CheckOffGoal(goal)">
+                            <img src="images/check.png" alt="Check Off" />
+                        </button>
+                    </div>
+                </li>
+            }
+        </ul>
+        <button class="add-goal-btn" @onclick="NavigateToAddGoal">Add New Goal</button>
+    </div>
+</div>
+
+@code {
+    private List<Goal> goals = new List<Goal>();
+
+    protected override void OnInitialized()
+    {
+        goals = GoalState.Goals;
+    }
+
+    private void ToggleDescription(Goal goal)
+    {
+        goal.ShowDescription = !goal.ShowDescription;
+    }
+
+    private async Task DeleteGoal(Goal goal)
+    {
+        goal.IsFadingOut = true;
+        await Task.Delay(500);
+        GoalState.RemoveGoal(goal);
+        goals.Remove(goal);
+    }
+
+    private async Task CheckOffGoal(Goal goal)
+    {
+        goal.IsFadingOut = true;
+        await Task.Delay(500);
+        GoalState.RemoveGoal(goal);
+        goals.Remove(goal);
+    }
+
+    private void NavigateToAddGoal()
+    {
+        Navigation.NavigateTo("/add-saving-goal");
+    }
+}
