@@ -4,6 +4,7 @@
 @using Jamper_Financial.Shared.Services
 @inject IUserService UserService
 @using Jamper_Financial.Shared.Models
+@inject UserStateService UserStateService
 
 @code {
     private UserProfile userProfile = new UserProfile();
@@ -11,18 +12,18 @@
     protected override async Task OnInitializedAsync()
     {
         // Get the logged-in user's ID and username from the UserStateService
-        // int userId = UserStateService.UserId;
-        // string username = UserStateService.Username;
+        int userId = UserStateService.UserId;
+        string username = UserStateService.Username;
 
-        // if (userId > 0)
-        // {
-        //     userProfile = await UserService.GetUserProfileByIdAsync(userId);
-        // }
-        // else
-        // {
-        //     Handle the case where the user is not logged in
-        //     For example, redirect to the login page
-        // }
+        if (userId > 0)
+        {
+            userProfile = await UserService.GetUserProfileByIdAsync(userId);
+        }
+        else
+        {
+            // Handle the case where the user is not logged in
+            // For example, redirect to the login page
+        }
     }
 }
 
