@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj": {}
+    "C:\\School Files\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj": {}
   },
   "projects": {
-    "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+    "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+        "projectUniqueName": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
         "projectName": "Jamper-Financial.Shared",
-        "projectPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
-        "packagesPath": "C:\\Users\\paolo\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
+        "projectPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+        "packagesPath": "C:\\Users\\emild\\.nuget\\packages\\",
+        "outputPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\paolo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\emild\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -92,21 +92,21 @@
         }
       }
     },
-    "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj": {
+    "C:\\School Files\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
+        "projectUniqueName": "C:\\School Files\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
         "projectName": "Jamper-Financial",
-        "projectPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
-        "packagesPath": "C:\\Users\\paolo\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\obj\\",
+        "projectPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
+        "packagesPath": "C:\\Users\\emild\\.nuget\\packages\\",
+        "outputPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\paolo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\emild\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -125,32 +125,32 @@
           "net9.0-android35.0": {
             "targetAlias": "net9.0-android",
             "projectReferences": {
-              "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-                "projectPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+              "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+                "projectPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
               }
             }
           },
-          "net9.0-ios18.2": {
+          "net9.0-ios18.0": {
             "targetAlias": "net9.0-ios",
             "projectReferences": {
-              "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-                "projectPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+              "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+                "projectPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
               }
             }
           },
-          "net9.0-maccatalyst18.2": {
+          "net9.0-maccatalyst18.0": {
             "targetAlias": "net9.0-maccatalyst",
             "projectReferences": {
-              "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-                "projectPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+              "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+                "projectPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
               }
             }
           },
           "net9.0-windows10.0.19041": {
             "targetAlias": "net9.0-windows10.0.19041.0",
             "projectReferences": {
-              "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-                "projectPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+              "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+                "projectPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
               }
             }
           }
@@ -173,7 +173,7 @@
           "dependencies": {
             "Microsoft.AspNetCore.Components.WebView.Maui": {
               "target": "Package",
-              "version": "[9.0.14, )"
+              "version": "[9.0.0, )"
             },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
@@ -181,7 +181,7 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[9.0.14, )"
+              "version": "[9.0.0, )"
             },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
@@ -205,12 +205,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[9.0.1, 9.0.1]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.Android": {
               "privateAssets": "all"
@@ -221,12 +215,12 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         },
-        "net9.0-ios18.2": {
+        "net9.0-ios18.0": {
           "targetAlias": "net9.0-ios",
           "dependencies": {
             "Microsoft.AspNetCore.Components.WebView.Maui": {
               "target": "Package",
-              "version": "[9.0.14, )"
+              "version": "[9.0.0, )"
             },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
@@ -234,7 +228,7 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[9.0.14, )"
+              "version": "[9.0.0, )"
             },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
@@ -258,12 +252,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[9.0.1, 9.0.1]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.iOS": {
               "privateAssets": "all"
@@ -274,12 +262,12 @@
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         },
-        "net9.0-maccatalyst18.2": {
+        "net9.0-maccatalyst18.0": {
           "targetAlias": "net9.0-maccatalyst",
           "dependencies": {
             "Microsoft.AspNetCore.Components.WebView.Maui": {
               "target": "Package",
-              "version": "[9.0.14, )"
+              "version": "[9.0.0, )"
             },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
@@ -287,7 +275,7 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[9.0.14, )"
+              "version": "[9.0.0, )"
             },
             "Microsoft.NET.ILLink.Tasks": {
               "suppressParent": "All",
@@ -312,12 +300,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "downloadDependencies": [
-            {
-              "name": "Microsoft.NETCore.App.Ref",
-              "version": "[9.0.1, 9.0.1]"
-            }
-          ],
           "frameworkReferences": {
             "Microsoft.MacCatalyst": {
               "privateAssets": "all"
@@ -333,7 +315,7 @@
           "dependencies": {
             "Microsoft.AspNetCore.Components.WebView.Maui": {
               "target": "Package",
-              "version": "[9.0.14, )"
+              "version": "[9.0.0, )"
             },
             "Microsoft.Extensions.Logging.Debug": {
               "target": "Package",
@@ -341,7 +323,7 @@
             },
             "Microsoft.Maui.Controls": {
               "target": "Package",
-              "version": "[9.0.14, )"
+              "version": "[9.0.0, )"
             },
             "Tailwind.Extensions.AspNetCore": {
               "target": "Package",

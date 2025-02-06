@@ -1,0 +1,154 @@
+﻿html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Prevent scrollbars from appearing */
+    box-sizing: border-box;
+}
+
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    padding: 20px;
+    color: #000; /* Use content color */
+}
+
+.expenses-section {
+    flex: 0 0 33%; /* Take up 33% of the height */
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.charts-container {
+    display: flex;
+    flex-direction: row; /* Display charts in a row */
+    justify-content: space-between;
+    flex-wrap: wrap; /* Allow wrapping if needed */
+}
+
+.chart {
+    flex: 1;
+    margin-right: 10px;
+}
+
+    .chart:last-child {
+        margin-right: 0;
+    }
+
+.chart-placeholder {
+    background: #fff;
+    width: 100%;
+    height: 150px;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    margin: 0;
+    color: #417828;
+    font-weight: bold; /* Bold the section titles */
+}
+
+.left-align {
+    align-self: flex-start;
+}
+
+.transactions-section {
+    flex: 1; /* Take up the remaining 67% of the height */
+    display: flex;
+    flex-direction: column;
+}
+
+.transactions-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.transactions-table {
+    flex: 1;
+    overflow-y: auto; /* Add scroll if content overflows */
+    border: 0.0625rem solid #ddd;
+    border-radius: 0.625rem;
+    padding: 1.25rem;
+    background-color: #fff;
+    box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
+    height: 100%; /* Ensure the transaction details take up the full height */
+    width: 100%;
+}
+
+    .transactions-table table {
+        width: 100%;
+        background: #fff;
+        color: #000;
+        border-radius: 10px;
+        padding: 10px;
+        border-collapse: collapse; /* Ensure borders are collapsed */
+    }
+
+    .transactions-table th, .transactions-table td {
+        padding: 10px;
+        text-align: left;
+        border: 1px solid #ddd; /* Add border to table cells */
+    }
+
+    .transactions-table th {
+        background-color: #62ad41; /* Main green color for headers */
+        color: white;
+    }
+
+    .transactions-table tr {
+        border-radius: 10px; /* Round the corners of the transactions */
+    }
+
+.positive {
+    color: green;
+}
+
+.negative {
+    color: red;
+}
+
+.view-details {
+    background: #62ad41; /* Green color */
+    color: white;
+    border: none;
+    padding: 0.625rem 0.9375rem;
+    border-radius: 0.625rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+    .view-details:hover {
+        background-color: #519a37; /* Darker green on hover */
+    }
+
+.add-transaction {
+    background-color: #62ad41;
+    color: white;
+    border: none;
+    padding: 0.625rem 0.9375rem;
+    border-radius: 0.625rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+}
+
+    .add-transaction:hover {
+        background-color: #519a37;
+    }
+
+/* Add this CSS to your stylesheet */
+.scrollable-table {
+    max-height: 400px; /* Adjust the height as needed */
+    overflow-y: auto;
+}

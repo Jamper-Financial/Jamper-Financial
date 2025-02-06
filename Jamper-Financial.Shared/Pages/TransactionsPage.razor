@@ -1,4 +1,74 @@
 ﻿@page "/Transactions-Page"
 @inherits LayoutComponentBase
 
-<p>This page is to be implemented. Transaction</p>
+@using Jamper_Financial.Shared.Data;
+@using Jamper_Financial.Shared.Utilities;
+
+<div class="dashboard-container">
+
+    @* Expenses Section *@
+    <div class="expenses-section">
+        <h3 class="section-title left-align">Expenses</h3>
+        <div class="charts-container">
+            <div class="chart">
+                <div class="chart-placeholder">[Bar Chart]</div>
+            </div>
+            <div class="chart">
+                <div class="chart-placeholder">[Line Chart]</div>
+            </div>
+            <div class="chart">
+                <div class="chart-placeholder">[Pie Chart 1]</div>
+            </div>
+        </div>
+    </div>
+
+    @* Transactions Section *@
+    <div class="transactions-section">
+        <div class="transactions-header">
+            <h3 class="section-title">Recent Transactions</h3>
+            <button class="add-transaction">+ Add a transaction</button>
+        </div>
+        <div class="transactions-table scrollable-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Transaction ID</th>
+                        <th>Type</th>
+                        <th>Card</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Receipt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (transactions != null)
+                    {
+                        @foreach (var transaction in transactions)
+                        {
+                            <tr>
+                                <td>@transaction.Description</td>
+                                <td>@transaction.TransactionID</td>
+                                <td>@transaction.Category</td>
+                                <td>1234 ****</td>
+                                <td>@transaction.Date.ToString("dd MMM, hh:mm tt")</td>
+                                <td class="@(transaction.Debit > 0 ? "negative" : "positive")">@transaction.Amount.ToString("C")</td>
+                                <td><button class="view-details">View Details</button></td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@code {
+    private List<Transaction> transactions;
+
+    protected override async Task OnInitializedAsync()
+    {
+        transactions = await TransactionManager.LoadTransactionsAsync();
+    }
+}
+
