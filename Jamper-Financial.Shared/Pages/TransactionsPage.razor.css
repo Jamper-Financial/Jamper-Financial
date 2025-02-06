@@ -7,14 +7,22 @@
     box-sizing: border-box;
 }
 
-.dashboard-container {
+.transactions-page {
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: 100%;
     font-family: 'Inter', sans-serif;
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
     padding: 20px;
     color: #000; /* Use content color */
+}
+
+.expenses-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
 .expenses-section {
@@ -25,6 +33,7 @@
 }
 
 .charts-container {
+    height: 100%;
     display: flex;
     flex-direction: row; /* Display charts in a row */
     justify-content: space-between;
@@ -43,7 +52,7 @@
 .chart-placeholder {
     background: #fff;
     width: 100%;
-    height: 150px;
+    height: 100%;
     color: #000;
     display: flex;
     align-items: center;
@@ -80,7 +89,6 @@
     overflow-y: auto; /* Add scroll if content overflows */
     border: 0.0625rem solid #ddd;
     border-radius: 0.625rem;
-    padding: 1.25rem;
     background-color: #fff;
     box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
     height: 100%; /* Ensure the transaction details take up the full height */
@@ -89,6 +97,7 @@
 
     .transactions-table table {
         width: 100%;
+        height: 100%;
         background: #fff;
         color: #000;
         border-radius: 10px;
@@ -149,6 +158,6 @@
 
 /* Add this CSS to your stylesheet */
 .scrollable-table {
-    max-height: 400px; /* Adjust the height as needed */
+    max-height: 40rem; /* Adjust the height as needed */
     overflow-y: auto;
 }
