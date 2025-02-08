@@ -20,7 +20,8 @@ namespace Jamper_Financial.Shared.Data
                         UserId INTEGER PRIMARY KEY AUTOINCREMENT,
                         Username TEXT NOT NULL UNIQUE,
                         Email TEXT NOT NULL UNIQUE,
-                        Password TEXT NOT NULL
+                        Password TEXT NOT NULL,
+                        SSO TEXT
                     );
                 ");
 

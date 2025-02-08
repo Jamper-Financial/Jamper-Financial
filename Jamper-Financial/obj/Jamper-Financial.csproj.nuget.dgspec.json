@@ -217,6 +217,33 @@
         },
         "net9.0-ios18.1": {
           "targetAlias": "net9.0-ios",
+<<<<<<< Updated upstream
+=======
+          "dependencies": {
+            "Microsoft.AspNetCore.Components.WebView.Maui": {
+              "target": "Package",
+              "version": "[9.0.14, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.Maui.Controls": {
+              "target": "Package",
+              "version": "[9.0.14, )"
+            },
+            "Microsoft.NET.ILLink.Tasks": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.1, )",
+              "autoReferenced": true
+            },
+            "Tailwind.Extensions.AspNetCore": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            }
+          },
+>>>>>>> Stashed changes
           "imports": [
             "net461",
             "net462",
@@ -228,10 +255,48 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+<<<<<<< Updated upstream
+=======
+          "frameworkReferences": {
+            "Microsoft.iOS": {
+              "privateAssets": "all"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+>>>>>>> Stashed changes
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
         },
         "net9.0-maccatalyst18.1": {
           "targetAlias": "net9.0-maccatalyst",
+<<<<<<< Updated upstream
+=======
+          "dependencies": {
+            "Microsoft.AspNetCore.Components.WebView.Maui": {
+              "target": "Package",
+              "version": "[9.0.14, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Microsoft.Maui.Controls": {
+              "target": "Package",
+              "version": "[9.0.14, )"
+            },
+            "Microsoft.NET.ILLink.Tasks": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.1, )",
+              "autoReferenced": true
+            },
+            "Tailwind.Extensions.AspNetCore": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            }
+          },
+>>>>>>> Stashed changes
           "imports": [
             "xamarinios10",
             "net461",
@@ -244,6 +309,17 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+<<<<<<< Updated upstream
+=======
+          "frameworkReferences": {
+            "Microsoft.MacCatalyst": {
+              "privateAssets": "all"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+>>>>>>> Stashed changes
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
         },
         "net9.0-windows10.0.19041": {

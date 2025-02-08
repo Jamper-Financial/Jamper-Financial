@@ -1,6 +1,10 @@
 {
   "version": 2,
+<<<<<<< Updated upstream
   "dgSpecHash": "4e3yTI8v1gI=",
+=======
+  "dgSpecHash": "JtfUEi1QiLI=",
+>>>>>>> Stashed changes
   "success": true,
   "projectFilePath": "C:\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
   "expectedPackageFiles": [
@@ -29,6 +33,7 @@
     "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.configuration.json\\9.0.0\\microsoft.extensions.configuration.json.9.0.0.nupkg.sha512",
     "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\9.0.0\\microsoft.extensions.dependencyinjection.9.0.0.nupkg.sha512",
     "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.0\\microsoft.extensions.dependencyinjection.abstractions.9.0.0.nupkg.sha512",
+<<<<<<< Updated upstream
     "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\6.0.0\\microsoft.extensions.fileproviders.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\9.0.0\\microsoft.extensions.fileproviders.abstractions.9.0.0.nupkg.sha512",
     "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.fileproviders.composite\\9.0.0\\microsoft.extensions.fileproviders.composite.9.0.0.nupkg.sha512",
@@ -36,6 +41,12 @@
     "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\6.0.0\\microsoft.extensions.fileproviders.physical.6.0.0.nupkg.sha512",
     "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\9.0.0\\microsoft.extensions.fileproviders.physical.9.0.0.nupkg.sha512",
     "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\6.0.0\\microsoft.extensions.filesystemglobbing.6.0.0.nupkg.sha512",
+=======
+    "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\9.0.0\\microsoft.extensions.fileproviders.abstractions.9.0.0.nupkg.sha512",
+    "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.fileproviders.composite\\9.0.0\\microsoft.extensions.fileproviders.composite.9.0.0.nupkg.sha512",
+    "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.fileproviders.embedded\\9.0.0\\microsoft.extensions.fileproviders.embedded.9.0.0.nupkg.sha512",
+    "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\9.0.0\\microsoft.extensions.fileproviders.physical.9.0.0.nupkg.sha512",
+>>>>>>> Stashed changes
     "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\9.0.0\\microsoft.extensions.filesystemglobbing.9.0.0.nupkg.sha512",
     "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.logging\\9.0.0\\microsoft.extensions.logging.9.0.0.nupkg.sha512",
     "C:\\Users\\owner\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.0\\microsoft.extensions.logging.abstractions.9.0.0.nupkg.sha512",
