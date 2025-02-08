@@ -217,8 +217,6 @@
         },
         "net9.0-ios18.1": {
           "targetAlias": "net9.0-ios",
-<<<<<<< Updated upstream
-=======
           "dependencies": {
             "Microsoft.AspNetCore.Components.WebView.Maui": {
               "target": "Package",
@@ -243,7 +241,6 @@
               "version": "[1.0.0, )"
             }
           },
->>>>>>> Stashed changes
           "imports": [
             "net461",
             "net462",
@@ -255,8 +252,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-<<<<<<< Updated upstream
-=======
           "frameworkReferences": {
             "Microsoft.iOS": {
               "privateAssets": "all"
@@ -265,13 +260,10 @@
               "privateAssets": "all"
             }
           },
->>>>>>> Stashed changes
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
         },
         "net9.0-maccatalyst18.1": {
           "targetAlias": "net9.0-maccatalyst",
-<<<<<<< Updated upstream
-=======
           "dependencies": {
             "Microsoft.AspNetCore.Components.WebView.Maui": {
               "target": "Package",
@@ -296,7 +288,6 @@
               "version": "[1.0.0, )"
             }
           },
->>>>>>> Stashed changes
           "imports": [
             "xamarinios10",
             "net461",
@@ -309,8 +300,6 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-<<<<<<< Updated upstream
-=======
           "frameworkReferences": {
             "Microsoft.MacCatalyst": {
               "privateAssets": "all"
@@ -319,7 +308,6 @@
               "privateAssets": "all"
             }
           },
->>>>>>> Stashed changes
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.102/PortableRuntimeIdentifierGraph.json"
         },
         "net9.0-windows10.0.19041": {
