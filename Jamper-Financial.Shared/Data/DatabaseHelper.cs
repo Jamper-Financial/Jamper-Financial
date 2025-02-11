@@ -69,7 +69,7 @@ namespace Jamper_Financial.Shared.Data
                         Debit REAL NOT NULL,
                         Credit REAL NOT NULL,
                         Category TEXT NOT NULL,
-                        Color TEXT NOT NULL,
+                        Color TEXT,
                         Frequency TEXT,
                         EndDate TEXT
                     );
