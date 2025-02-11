@@ -165,7 +165,7 @@
     }
 
 .scrollable-table {
-    max-height: 40rem; /* Adjust the height as needed */
+    max-height: 27rem; /* Adjust the height as needed */
     overflow-y: auto;
 }
 .delete, .cancel, .save, .add {
