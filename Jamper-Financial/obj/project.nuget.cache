@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "e9Vxhzte/bg=",
+  "dgSpecHash": "Nt0IW4qKFpM=",
   "success": true,
   "projectFilePath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
   "expectedPackageFiles": [
@@ -29,10 +29,13 @@
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.configuration.json\\9.0.0\\microsoft.extensions.configuration.json.9.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\9.0.0\\microsoft.extensions.dependencyinjection.9.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.0\\microsoft.extensions.dependencyinjection.abstractions.9.0.0.nupkg.sha512",
+    "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\6.0.0\\microsoft.extensions.fileproviders.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\9.0.0\\microsoft.extensions.fileproviders.abstractions.9.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.fileproviders.composite\\9.0.0\\microsoft.extensions.fileproviders.composite.9.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.fileproviders.embedded\\9.0.0\\microsoft.extensions.fileproviders.embedded.9.0.0.nupkg.sha512",
+    "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\6.0.0\\microsoft.extensions.fileproviders.physical.6.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\9.0.0\\microsoft.extensions.fileproviders.physical.9.0.0.nupkg.sha512",
+    "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\6.0.0\\microsoft.extensions.filesystemglobbing.6.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\9.0.0\\microsoft.extensions.filesystemglobbing.9.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.logging\\9.0.0\\microsoft.extensions.logging.9.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.0\\microsoft.extensions.logging.abstractions.9.0.0.nupkg.sha512",
