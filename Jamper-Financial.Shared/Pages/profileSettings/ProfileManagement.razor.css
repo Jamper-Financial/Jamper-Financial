@@ -1,4 +1,4 @@
-@ -1,124 +1,162 @@ label {
+@ label {
     color: #000000;
     font-size: 18px;
     font-family: Inter;
@@ -153,10 +153,10 @@
     transition: opacity 0.5s ease-in-out;
 }
 
-.status-message.failed {
-    background-color: #dc3545; /* Failed color */
-}
+    .status-message.failed {
+        background-color: #dc3545; /* Failed color */
+    }
 
-.status-message.show {
-    opacity: 1;
-}
+    .status-message.show {
+        opacity: 1;
+    }

@@ -1,5 +1,4 @@
-﻿@ -1,144 + 1,150 @@
-﻿using Jamper_Financial.Shared.Models;
+﻿﻿using Jamper_Financial.Shared.Models;
 using Microsoft.Data.Sqlite;
 
 namespace Jamper_Financial.Shared.Services
@@ -149,7 +148,7 @@ namespace Jamper_Financial.Shared.Services
                     UPDATE Profile
                     SET FirstName = @FirstName,
                         LastName = @LastName,
-@ -146,34 +152,53 @@ namespace Jamper_Financial.Shared.Services
+                        Birthday = @Birthday,
                         Address = @Address,
                         City = @City,
                         PostalCode = @PostalCode,
@@ -188,14 +187,14 @@ namespace Jamper_Financial.Shared.Services
 
                         // Commit the transaction if both updates succeed
                         transaction.Commit();
-                        return true;
+                                        return true;
                     }
                     catch (Exception ex)
                     {
                         // Rollback the transaction in case of an error
                         transaction.Rollback();
-                        Console.WriteLine($"Error updating user profile: {ex.Message}");
-                        return false;
+                Console.WriteLine($"Error updating user profile: {ex.Message}");
+                return false;
                     }
                 }
             }

@@ -5,6 +5,7 @@
 @using Jamper_Financial.Shared.Services
 @inject LoginStateService LoginState
 @inject UserStateService UserStateService
+@using Jamper_Financial.Shared.Models
 
 <div class="login-container">
     <div class="login-left">
@@ -67,6 +68,8 @@
     private string Password { get; set; } = string.Empty;
     private string ErrorMessage { get; set; } = string.Empty;
     private bool RememberMe { get; set; } = false;
+    private string Email { get; set; } = string.Empty;
+    private string UserName { get; set; } = string.Empty;
 
     private string FilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "credentials.txt");
 
@@ -121,6 +124,18 @@
         }
 
         var isValid = await Task.Run(() => AuthenticationService.ValidateUserCredentials(Identifier, Password));
+        if (isValid)
+        {
+            var (userid, username, email) = DatabaseHelper.GetUserDetails(Identifier);
+        
+            if (username != null && email != null)
+            {
+                UserStateService.LoggedInUser.UserName = username;
+                UserStateService.LoggedInUser.Email = email;
+                
+                Console.WriteLine($"Logged in as: {username} with email: {email}");
+            }
+        }
 
         if (isValid)
         {
@@ -129,10 +144,10 @@
             Console.WriteLine("Login successful");
 
             // Get the user ID by username
-            int userId = DatabaseHelper.GetUserIdByUsername(Identifier);
+            var details = DatabaseHelper.GetUserDetails(Identifier);
 
             // Set the logged-in user's information in the UserStateService
-            UserStateService.SetUser(userId, Identifier);
+            UserStateService.SetUser(details.Userid, Identifier, details.Email);
 
             if (RememberMe)
             {
