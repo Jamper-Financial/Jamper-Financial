@@ -1,13 +1,18 @@
 ﻿@page "/profile-management"
-@namespace Jamper_Financial.Shared.Pages.profileSettings
+
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Services
-@inject IUserService UserService
 @using Jamper_Financial.Shared.Models
+@inject NavigationManager Navigation
+@inject IUserService UserService
 @inject UserStateService UserStateService
 
+@namespace Jamper_Financial.Shared.Pages.profileSettings
 @code {
     private UserProfile userProfile = new UserProfile();
+    private string statusMessage = string.Empty;
+    private bool showStatusMessage;
+    private string statusMessageClass = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -21,91 +26,154 @@
         }
         else
         {
-            // Handle the case where the user is not logged in
-            // For example, redirect to the login page
+            Navigation.NavigateTo("/login");
         }
+    }
+
+    private void DeleteProfile()
+    {
+        Navigation.NavigateTo("/delete-account");
+    }
+
+    private async Task SaveProfile()
+    {
+        bool updateStatus = await UserService.UpdateUserProfileAsync(userProfile);
+
+        if (updateStatus)
+        {
+            ShowStatusMessage("Save successful!", true);
+        }
+        else
+        {
+            ShowStatusMessage("Failed to save profile!", false);
+        }
+    }
+
+    private void ShowStatusMessage(string message, bool isSuccess)
+    {
+        statusMessage = message;
+        statusMessageClass = isSuccess ? "success" : "failed";
+        showStatusMessage = true;
+        StateHasChanged();
+
+        // Hide the status message after 5 seconds
+        var timer = new System.Timers.Timer(5000);
+        timer.Elapsed += (sender, e) =>
+        {
+            showStatusMessage = false;
+            StateHasChanged();
+            timer.Dispose();
+        };
+        timer.Start();
     }
 }
 
-@if (userProfile != null)
-{
-<div class="profile-management">
-    <div class="country">
-        <label class="text">Country</label>
-        <div class="box" style="top: 30px;">
-            <input type="text" class="sub-text" @bind="userProfile.Country" style="border: none; outline: none; width: 100%;" />
+<EditForm Model="userProfile" OnValidSubmit="SaveProfile">
+    <DataAnnotationsValidator />
+    @* <ValidationSummary /> *@
+
+    @if (userProfile != null)
+    {
+        <div class="content-container">
+            <div class="profile-management">
+                <div class="profile-management-column">
+                    <div class="profile-picture">
+                        <img src="./images/placeholder.png" />
+                    </div>
+                    <div class="edit-icon">
+                    </div>
+                    <div class="username">
+                        <label>@userProfile.Username</label>
+                    </div>
+                </div>
+                <div class="profile-management-column">
+                    <div class="your-name">
+                        <label class="text">First Name</label>
+                        <div class="box">
+                            <InputText class="sub-text input-style" @bind-Value="userProfile.FirstName" placeholder="First Name" />
+                            <ValidationMessage For="@(() => userProfile.FirstName)" />
+                        </div>
+                    </div>
+                    <div class="email">
+                        <label class="text">Email</label>
+                        <div class="box">
+                            <InputText type="email" class="sub-text input-style" @bind-Value="userProfile.Email" placeholder="Email address" />
+                            <ValidationMessage For="@(() => userProfile.Email)" />
+                        </div>
+                    </div>
+                    <div class="present-address">
+                        <label class="text">Present Address</label>
+                        <div class="box">
+                            <InputText class="sub-text input-style" @bind-Value="userProfile.Address" placeholder="Present Address" />
+                            <ValidationMessage For="@(() => userProfile.Address)" />
+                        </div>
+                    </div>
+                    <div class="postal-code">
+                        <label class="text">Postal Code</label>
+                        <div class="box">
+                            <InputText class="sub-text input-style" @bind-Value="userProfile.PostalCode" placeholder="Postal Code" />
+                            <ValidationMessage For="@(() => userProfile.PostalCode)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-management-column">
+                    <div class="last-name">
+                        <label class="text">Last Name</label>
+                        <div class="box">
+                            <InputText class="sub-text input-style" @bind-Value="userProfile.LastName" placeholder="Last Name" />
+                            <ValidationMessage For="@(() => userProfile.LastName)" />
+                        </div>
+                    </div>
+                    <div class="date-of-birth">
+                        <label class="text">Date of Birth</label>
+                        <div class="box">
+                            <InputDate class="sub-text input-style" @bind-Value="userProfile.Birthday" />
+                            <ValidationMessage For="@(() => userProfile.Birthday)" />
+                        </div>
+                    </div>
+                    <div class="city">
+                        <label class="text">City</label>
+                        <div class="box">
+                            <InputText class="sub-text input-style" @bind-Value="userProfile.City" />
+                            <ValidationMessage For="@(() => userProfile.City)" />
+                        </div>
+                    </div>
+                    <div class="country">
+                        <label class="text">Country</label>
+                        <div class="box">
+                            <InputText class="sub-text input-style" @bind-Value="userProfile.Country" />
+                            <ValidationMessage For="@(() => userProfile.Country)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delete Button -->
+            <div class="button-container">
+                <div class="delete-button-container">
+                    <button @onclick="DeleteProfile" class="delete-button">
+                        Delete Profile
+                    </button>
+                </div>
+                <div class="save-button-container">
+                    <button type="submit" class="save-button">
+                        Save Profile
+                    </button>
+                </div>
+            </div>
+
+            <!-- Status Message -->
+            @if (showStatusMessage)
+            {
+                <div class="status-message">
+                    @statusMessage
+                </div>
+            }
+
         </div>
-    </div>
-    <div class="postal-code">
-        <label class="text">Postal Code</label>
-        <div class="box" style="top: 30px;">
-            <input type="text" class="sub-text" @bind="userProfile.PostalCode" style="border: none; outline: none; width: 100%;" />
-        </div>
-    </div>
-    <div class="city">
-        <label class="text">City</label>
-        <div class="box" style="top: 30px;">
-            <input type="text" class="sub-text" @bind="userProfile.City" style="border: none; outline: none; width: 100%;" />
-        </div>
-    </div>
-    <div class="permanent-address">
-        <label class="text">Permanent Address</label>
-        <div class="box" style="top: 30px;">
-            <input type="text" class="sub-text" @bind="userProfile.Address" style="border: none; outline: none; width: 100%;" />
-        </div>
-    </div>
-    <div class="present-address">
-        <label class="text">Present Address</label>
-        <div class="box" style="top: 30px;">
-            <input type="text" class="sub-text" @bind="userProfile.Address" style="border: none; outline: none; width: 100%;" />
-        </div>
-    </div>
-    <div class="date-of-birth">
-        <label class="text">Date of Birth</label>
-        <div class="box" style="top: 30px;">
-            <input type="text" class="sub-text" @bind="userProfile.Birthday" style="border: none; outline: none; width: 100%;" />
-        </div>
-    </div>
-    <div class="password">
-        <label class="text">Password</label>
-        <div class="box" style="top: 30px;">
-            <input type="password" class="sub-text" @bind="userProfile.Password" style="border: none; outline: none; width: 100%;" />
-        </div>
-    </div>
-    <div class="email">
-        <label class="text">Email</label>
-        <div class="box" style="top: 30px;">
-            <input type="email" class="sub-text" @bind="userProfile.Email" style="border: none; outline: none; width: 100%;" />
-        </div>
-    </div>
-    <div class="user-name">
-        <label class="text">User Name</label>
-        <div class="box" style="top: 30px;">
-            <input type="text" class="sub-text" @bind="userProfile.Username" style="border: none; outline: none; width: 100%;" />
-        </div>
-    </div>
-    <div class="your-name">
-        <label class="text">Your Name</label>
-        <div class="box" style="top: 30px;">
-            <input type="text" class="sub-text" @bind="userProfile.FirstName" style="border: none; outline: none; width: 100%;" />
-        </div>
-    </div>
-    <div class="profile-picture">
-        <div>
-            <div style="background: #C4C4C4; border-radius: 9999px"></div>
-            <img src="https://via.placeholder.com/130x130" />
-        </div>
-        <div class="edit-icon">
-            <div></div>
-        </div>
-    </div>
-    <div class="save-button">
-        <div class="save-button-box"></div>
-        <div class="save-button-text" style="left: 74px; top: 14px;">Save</div>
-    </div>
-</div>
-}
-else
-{
-    <p>Loading...</p>
-}
+    }
+    else
+    {
+        <p>Loading...</p>
+    }
+</EditForm>

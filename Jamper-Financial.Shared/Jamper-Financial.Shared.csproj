@@ -7,10 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\images\placeholder.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\images\budget-insights-icon.svg" />
     <None Include="wwwroot\images\calendar-icon.svg" />
     <None Include="wwwroot\images\dashboard-icon.svg" />
     <None Include="wwwroot\images\debt-tracking-icon.svg" />
+    <None Include="wwwroot\images\placeholder.png" />
     <None Include="wwwroot\images\image.png" />
     <None Include="wwwroot\images\notification.svg" />
     <None Include="wwwroot\images\receipt-management-icon.svg" />
