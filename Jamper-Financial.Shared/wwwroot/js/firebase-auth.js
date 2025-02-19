@@ -22,7 +22,7 @@ window.signInWithGoogle = async function () {
         const user = result.user;
         console.log("Google user signed in:", user);
         alert(`Welcome, ${user.displayName}`);
-        window.location.href = "/calendar-page"; // Redirect after login
+        window.location.href = "/dashboard-page"; // Redirect after login
     } catch (error) {
         console.error("Google sign-in error:", error);
         alert("Google sign-in failed: " + error.message);

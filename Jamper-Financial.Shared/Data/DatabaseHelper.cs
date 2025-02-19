@@ -69,10 +69,20 @@ namespace Jamper_Financial.Shared.Data
                         Debit REAL NOT NULL,
                         Credit REAL NOT NULL,
                         Category TEXT NOT NULL,
-                        Color TEXT NOT NULL,
+                        Color TEXT,
                         Frequency TEXT,
                         EndDate TEXT
                     );
+                ");
+
+                CreateTableIfNotExists(connection, "Categories", @"
+                    CREATE TABLE IF NOT EXISTS Categories (
+                        CategoryID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        UserID INTEGER NOT NULL,
+                        Name TEXT NOT NULL UNIQUE,
+                        FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+                    );
+
                 ");
 
                 // Insert initial roles
@@ -207,6 +217,108 @@ namespace Jamper_Financial.Shared.Data
             {
                 using var createCommand = new SqliteCommand(createTableQuery, connection);
                 createCommand.ExecuteNonQuery();
+            }
+        }
+
+        // Add categories 
+        public static void AddCategory(int userId, string name)
+        {
+            using (var connection = new SqliteConnection($"Data Source={DbPath}"))
+            {
+                connection.Open();
+                string insertQuery = "INSERT INTO Categories (UserID, Name) VALUES (@UserID, @Name);";
+                using (var command = new SqliteCommand(insertQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@UserID", userId);
+                    command.Parameters.AddWithValue("@Name", name);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Update Categories
+        public static void UpdateCategory(int userId, int categoryId, string newName)
+        {
+            using (var connection = new SqliteConnection($"Data Source={DbPath}"))
+            {
+                connection.Open();
+                string updateQuery = "UPDATE Categories SET Name = @NewName WHERE CategoryID = @CategoryID AND UserID = @UserID;";
+                using (var command = new SqliteCommand(updateQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@NewName", newName);
+                    command.Parameters.AddWithValue("@CategoryID", categoryId);
+                    command.Parameters.AddWithValue("@UserID", userId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Delete Categories
+        public static void DeleteCategory(int userId, int categoryId)
+        {
+            using (var connection = new SqliteConnection($"Data Source={DbPath}"))
+            {
+                connection.Open();
+                string deleteQuery = "DELETE FROM Categories WHERE CategoryID = @CategoryID AND UserID = @UserID;";
+                using (var command = new SqliteCommand(deleteQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@CategoryID", categoryId);
+                    command.Parameters.AddWithValue("@UserID", userId);
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Get Categories
+        public static List<Category> GetCategories(int userId)
+        {
+            var categories = new List<Category>();
+            using (var connection = new SqliteConnection($"Data Source={DbPath}"))
+            {
+                connection.Open();
+                string query = "SELECT CategoryID, Name FROM Categories WHERE UserID = @UserID;";
+                using (var command = new SqliteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserID", userId);
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            categories.Add(new Category
+                            {
+                                CategoryID = reader.GetInt32(0),
+                                Name = reader.GetString(1)
+                            });
+                        }
+                    }
+                }
+            }
+            return categories;
+        }
+
+
+        // Insert Set Categories
+        private static void InsertDefaultCategories(int userId, SqliteConnection connection)
+        {
+            string[] defaultCategories = {
+        "Rent", "Mortgage", "Utilities", "Insurance", "Condo fees",
+        "Car maintenance", "Car payment", "Gas", "Public transportation",
+        "Groceries", "Restaurant", "Take Out",
+        "Gym", "Medical",
+        "Entertainment", "Going out", "Subscriptions",
+        "Clothing", "Gifts", "Electronics", "Home maintenance",
+        "Debt", "Work (Job)", "Side project", "Tax refund", "Expense reimbursement"
+    };
+
+            foreach (var category in defaultCategories)
+            {
+                string insertCategoryQuery = "INSERT INTO Categories (UserID, Name) VALUES (@UserID, @Name);";
+                using (var command = new SqliteCommand(insertCategoryQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@UserID", userId);
+                    command.Parameters.AddWithValue("@Name", category);
+                    command.ExecuteNonQuery();
+                }
             }
         }
 
