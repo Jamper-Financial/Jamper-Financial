@@ -3,9 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jamper-Financial", "Jamper-Financial\Jamper-Financial.csproj", "{3C034CE5-45BE-4FFD-A019-06C7812B1796}"
-	ProjectSection(ProjectDependencies) = postProject
-		{EF1E2792-1BF1-4904-A399-832774D61057} = {EF1E2792-1BF1-4904-A399-832774D61057}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jamper-Financial.Shared", "Jamper-Financial.Shared\Jamper-Financial.Shared.csproj", "{12CD219B-0B0F-434F-B75C-1B813A38DB00}"
 EndProject
