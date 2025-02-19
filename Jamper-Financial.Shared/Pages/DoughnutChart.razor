@@ -1,0 +1,44 @@
+@page "/custom-doughnut-chart"
+@inject IJSRuntime JSRuntime
+
+<canvas id="doughnutChartCanvas" width="250" height="250"></canvas> <!-- Set the desired width and height -->
+
+@code {
+    [Parameter] public List<string> Labels { get; set; } = new List<string>();
+    [Parameter] public List<decimal> Data { get; set; } = new List<decimal>();
+    [Parameter] public List<string> BackgroundColors { get; set; } = new List<string>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) // Only initialize chart on first render
+        {
+            await InitializeChart();
+        }
+    }
+
+    private async Task InitializeChart()
+    {
+        Console.WriteLine("Initializing doughnut chart...");
+        var chartData = new
+        {
+            labels = Labels,
+            datasets = new[]
+            {
+                new {
+                    data = Data,
+                    backgroundColor = BackgroundColors,
+                    hoverOffset = 4
+                }
+            }
+        };
+
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("initializeDoughnutChart", "doughnutChartCanvas", chartData);
+        }
+        catch (JSException ex)
+        {
+            Console.WriteLine($"JSException: {ex.Message}"); // Log detailed JS errors
+        }
+    }
+}

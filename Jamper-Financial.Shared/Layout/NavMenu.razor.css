@@ -123,3 +123,15 @@
 .selected {
     color: #62ad41;
 }
+
+.logout-icon {
+    position: relative;
+}
+
+.logout-icon:hover rect {
+    fill: #62ad41; /* Change the fill color on hover */
+}
+
+.logout-icon:hover path {
+    fill: #FFFFFF; /* Change the path fill color on hover */
+}

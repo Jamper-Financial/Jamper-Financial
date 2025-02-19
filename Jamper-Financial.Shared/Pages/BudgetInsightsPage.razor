@@ -1,4 +1,155 @@
 ﻿@page "/budget-insights-page"
-@inherits LayoutComponentBase
+@using Jamper_Financial.Shared.Models
+@using Jamper_Financial.Shared.Services
+@using System.Collections.ObjectModel
+@inject NavigationManager Navigation
+@inject UserStateService UserStateService
+@inject IBudgetInsightsService BudgetInsightsService
+@inject IUserService UserService
 
-<p>This page is to be implemented.</p>
+@code {
+    [CascadingParameter] private string? PageTitle { get; set; }
+    [CascadingParameter] private Action<string>? SetPageTitle { get; set; }
+    [CascadingParameter] private Action<bool>? LoadBlazoriseScripts { get; set; }
+
+    private ObservableCollection<BudgetItem> budgetItems = new ObservableCollection<BudgetItem>();
+    private string[] currentColors = { "#FF9AA2", "#B5EAD7", "#FFDAC1", "#C7CEEA" };
+    private string[] colors = { "#346A46", "#02B098", "#2A9569", "#6BB2C9" };
+    private UserProfile userProfile = new UserProfile();
+
+    private List<string> chartLabels = new List<string>();
+    private List<decimal> chartData = new List<decimal>();
+    private List<string> chartBackgroundColors = new List<string>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        SetPageTitle?.Invoke("Budget Insights");
+        LoadBlazoriseScripts?.Invoke(true);
+
+        int userId = UserStateService.UserId;
+        string username = UserStateService.Username;
+
+        if (userId > 0)
+        {
+            userProfile = await UserService.GetUserProfileByIdAsync(userId);
+            await LoadBudgetItemsAsync();
+
+            // Add sample data
+            // budgetItems.Add(new BudgetItem { Category = "Housing", PlannedAmount = 1500, CurrentAmount = 1400 });
+            // budgetItems.Add(new BudgetItem { Category = "Food", PlannedAmount = 500, CurrentAmount = 450 });
+            // budgetItems.Add(new BudgetItem { Category = "Transportation", PlannedAmount = 300, CurrentAmount = 280 });
+            // budgetItems.Add(new BudgetItem { Category = "Entertainment", PlannedAmount = 200, CurrentAmount = 150 });
+            // budgetItems.Add(new BudgetItem { Category = "Savings", PlannedAmount = 1000, CurrentAmount = 1200 });
+
+            UpdateChartData();
+        }
+        else
+        {
+            Navigation.NavigateTo("/login");
+        }
+
+
+    }
+
+    private async Task LoadBudgetItemsAsync()
+    {
+        var items = await BudgetInsightsService.GetBudgetItemsAsync();
+        foreach (var item in items)
+        {
+            budgetItems.Add(item);
+        }
+    }
+
+    private void UpdatePlannedAmount(BudgetItem item, ChangeEventArgs e)
+    {
+        if (e.Value != null && decimal.TryParse(e.Value.ToString().Replace("$", "").Replace(",", ""), out var result))
+        {
+            item.PlannedAmount = result;
+            UpdateChartData();
+        }
+    }
+
+    private void UpdateChartData()
+    {
+        chartLabels = budgetItems.Select(i => i.Category).ToList();
+        chartData = budgetItems.Select(i => i.PlannedAmount).ToList();
+        chartBackgroundColors = colors.Take(chartData.Count).ToList();
+    }
+
+    public void Dispose()
+    {
+        LoadBlazoriseScripts?.Invoke(false);
+    }
+}
+
+<div class="budget-page">
+    <div class="dashboard">
+        <div class="table-container">
+            <h3 class="mb-3">Overview</h3>
+            <div class="table-wrapper">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Planned Amount</th>
+                            <th>Current Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in budgetItems)
+                        {
+                            <tr>
+                                <td>@item.Category</td>
+                                <td class="planned-column">
+                                    <input type="text" value="@item.PlannedAmount.ToString("C")" @oninput="(e) => UpdatePlannedAmount(item, e)" />
+                                </td>
+                                <td class="current-column">@item.CurrentAmount.ToString("C")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="expense-distribution">
+            <h3 class="mb-3">Expense Distribution</h3>
+            <div class="flex-container row-direction">
+                <div class="chart-container flex-item">
+                    <PieChart Labels="chartLabels" Data="chartData" BackgroundColors="chartBackgroundColors" />
+                </div>
+                <div class="stats-container">
+                    <ul class="stats-list">
+                        <li class="flex-container row-direction">
+                            <img class="stat-icon flex-item" src="images/balance-icon.svg" />
+                            <div class="flex-container column-direction">
+                                <span class="stat-label flex-item">My Balance</span>
+                                <span class="stat-value flex-item">$255,010</span>
+                            </div>
+                        </li>
+                        <li class="flex-container row-direction">
+                            <img class="stat-icon flex-item" src="images/income-icon.svg" />
+                            <div class="flex-container column-direction">
+                                <span class="stat-label flex-item">Income/year</span>
+                                <span class="stat-value flex-item">$240,000</span>
+                            </div>
+                        </li>
+                        <li class="flex-container row-direction">
+                            <img class="stat-icon flex-item" src="images/expense-icon.svg" />
+                            <div class="flex-container column-direction">
+                                <span class="stat-label flex-item">Expense</span>
+                                <span class="stat-value flex-item">$14,463</span>
+                            </div>
+                        </li>
+                        <li class="flex-container row-direction">
+                            <img class="stat-icon flex-item" src="images/total-savings-icon.svg" />
+                            <div class="flex-container column-direction">
+                                <span class="stat-label flex-item">Total Savings</span>
+                                <span class="stat-value flex-item">$123,000</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
