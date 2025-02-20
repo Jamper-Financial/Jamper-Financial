@@ -55,9 +55,29 @@
     border-bottom-color: #417828;
 }
 
+.planned-column input {
+    border: 1px solid #ccc; /* Subtle border */
+    background-color: rgba(255, 255, 255, 0.3); /* Light background color */
+    color: inherit; /* Ensure the text color matches the surrounding text */
+    outline: none; /* Remove the default focus outline */
+    cursor: text; /* Change cursor to text */
+    padding: 5px; /* Add some padding for better usability */
+    border-radius: 4px; /* Slightly rounded corners */
+}
+
+    .planned-column input:focus {
+        border-color: #62AD41; /* Change border color on focus */
+        background-color: rgba(255, 255, 255, 1); /* Full white background on focus */
+        color: #62AD41;
+    }
+
+
 /* Ensure table rows have a white background */
 .table {
-    background-color: #ffffff !important;
+    position: sticky;
+    top: 0;
+    background-color: #fff; /* Adjust the background color as needed */
+    z-index: 1;
 }
 
 .table-container {
@@ -66,6 +86,7 @@
     width: 100%;
     padding: 1rem;
     color: #417828;
+    overflow-x: auto;
 }
 
 .budget-page {
@@ -179,6 +200,5 @@
         .stats-list li .stat-icon {
             width: 70px; /* Set icon width */
             height: 70px; /* Set icon height */
-            margin:10px;
-
+            margin: 10px;
         }

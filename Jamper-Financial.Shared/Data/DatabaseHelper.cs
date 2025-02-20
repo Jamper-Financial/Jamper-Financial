@@ -71,7 +71,9 @@ namespace Jamper_Financial.Shared.Data
                         Category TEXT NOT NULL,
                         Color TEXT,
                         Frequency TEXT,
-                        EndDate TEXT
+                        EndDate TEXT,
+	                    CategoryID INTEGER,
+	                    CONSTRAINT Transactions_Categories_FK FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID) ON UPDATE CASCADE
                     );
                 ");
 
@@ -79,11 +81,25 @@ namespace Jamper_Financial.Shared.Data
                     CREATE TABLE IF NOT EXISTS Categories (
                         CategoryID INTEGER PRIMARY KEY AUTOINCREMENT,
                         UserID INTEGER NOT NULL,
+                        TransactionType INTEGER NOT NULL CHECK (TransactionType IN (0, 1),
                         Name TEXT NOT NULL UNIQUE,
                         FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+                        
                     );
 
                 ");
+
+                CreateTableIfNotExists(connection, "Budget", @"
+                    CREATE TABLE IF NOT EXISTS Budget (
+                        BudgetID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        UserID INTEGER NOT NULL,
+                        CategoryID INTEGER NOT NULL,
+                        PlannedAmount REAL NOT NULL,
+                        FOREIGN KEY (UserID) REFERENCES Users(UserID),
+                        FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID)
+                    );
+                ");
+
 
                 // Insert initial roles
                 InsertInitialRoles(connection);

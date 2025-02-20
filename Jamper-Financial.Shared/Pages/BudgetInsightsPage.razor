@@ -21,52 +21,132 @@
     private List<decimal> chartData = new List<decimal>();
     private List<string> chartBackgroundColors = new List<string>();
 
+    private decimal income;
+    private decimal expenses;
+    private decimal totalSavings;
+
     protected override async Task OnInitializedAsync()
     {
-        SetPageTitle?.Invoke("Budget Insights");
-        LoadBlazoriseScripts?.Invoke(true);
-
-        int userId = UserStateService.UserId;
-        string username = UserStateService.Username;
-
-        if (userId > 0)
+        try
         {
-            userProfile = await UserService.GetUserProfileByIdAsync(userId);
-            await LoadBudgetItemsAsync();
+            SetPageTitle?.Invoke("Budget Insights");
+            LoadBlazoriseScripts?.Invoke(true);
 
-            UpdateChartData();
+            int userId = UserStateService.UserId;
+            string username = UserStateService.Username;
+
+            if (userId > 0)
+            {
+                userProfile = await UserService.GetUserProfileByIdAsync(userId);
+                await LoadBudgetItemsAsync();
+
+                UpdateChartData();
+            }
+            else
+            {
+                Navigation.NavigateTo("/login");
+            }
         }
-        else
+        catch (Exception ex)
         {
-            Navigation.NavigateTo("/login");
+            // Log the exception (if you have a logging mechanism)
+            Console.WriteLine($"Error in OnInitializedAsync: {ex.Message}");
         }
-
-
     }
 
     private async Task LoadBudgetItemsAsync()
     {
-        var items = await BudgetInsightsService.GetBudgetItemsAsync();
-        foreach (var item in items)
+        try
         {
-            budgetItems.Add(item);
+            var items = await BudgetInsightsService.GetBudgetItemsAsync(UserStateService.UserId);
+            foreach (var item in items)
+            {
+                budgetItems.Add(item);
+            }
+
+            // Calculate income, expenses, and total savings
+            CalculateStats();
+        }
+        catch (Exception ex)
+        {
+            // Log the exception (if you have a logging mechanism)
+            Console.WriteLine($"Error in LoadBudgetItemsAsync: {ex.Message}");
         }
     }
 
-    private void UpdatePlannedAmount(BudgetItem item, ChangeEventArgs e)
+
+    private void CalculateStats()
+    {
+        income = budgetItems
+            .Where(i => i.TransactionType == 0)
+            .Sum(i => i.CurrentAmount);
+
+        expenses = budgetItems
+            .Where(i => i.TransactionType == 1)
+            .Sum(i => i.CurrentAmount);
+        Console.WriteLine($"Income: {income}, Expenses: {expenses}");
+        totalSavings = 255010 + income - expenses; // Assuming 255010 is the balance value
+    }
+
+
+    private string GetFormattedPlannedAmount(BudgetItem item)
+    {
+        return item.PlannedAmount.ToString("C");
+    }
+
+    private void OnPlannedAmountInput(BudgetItem item, ChangeEventArgs e)
     {
         if (e.Value != null && decimal.TryParse(e.Value.ToString().Replace("$", "").Replace(",", ""), out var result))
         {
             item.PlannedAmount = result;
+        }
+    }
+
+    private async void UpdatePlannedAmount(BudgetItem item)
+    {
+        try
+        {
+            await BudgetInsightsService.UpdatePlannedAmountAsync(UserStateService.UserId, item.Category, item.PlannedAmount);
             UpdateChartData();
+            CalculateStats();
+        }
+        catch (Exception ex)
+        {
+            // Log the exception (if you have a logging mechanism)
+            Console.WriteLine($"Error in UpdatePlannedAmount: {ex.Message}");
         }
     }
 
     private void UpdateChartData()
     {
-        chartLabels = budgetItems.Select(i => i.Category).ToList();
-        chartData = budgetItems.Select(i => i.PlannedAmount).ToList();
-        chartBackgroundColors = colors.Take(chartData.Count).ToList();
+        try
+        {
+            var top3Items = budgetItems
+                .OrderByDescending(i => i.PlannedAmount)
+                .Take(3)
+                .ToList();
+
+            var othersAmount = budgetItems
+                .OrderByDescending(i => i.PlannedAmount)
+                .Skip(3)
+                .Sum(i => i.PlannedAmount);
+
+            chartLabels = top3Items.Select(i => i.Category).ToList();
+            chartData = top3Items.Select(i => i.PlannedAmount).ToList();
+            chartBackgroundColors = colors.Take(chartData.Count).ToList();
+
+            if (othersAmount > 0)
+            {
+                chartLabels.Add("Others");
+                chartData.Add(othersAmount);
+                chartBackgroundColors.Add("#CCCCCC"); // Add a color for "Others"
+            }
+        }
+        catch (Exception ex)
+        {
+            // Log the exception (if you have a logging mechanism)
+            Console.WriteLine($"Error in UpdateChartData: {ex.Message}");
+        }
     }
 
     public void Dispose()
@@ -94,7 +174,7 @@
                             <tr>
                                 <td>@item.Category</td>
                                 <td class="planned-column">
-                                    <input type="text" value="@item.PlannedAmount.ToString("C")" @oninput="(e) => UpdatePlannedAmount(item, e)" />
+                                    <input type="text" value="@GetFormattedPlannedAmount(item)" @oninput="(e) => OnPlannedAmountInput(item, e)" @onblur="(e) => UpdatePlannedAmount(item)" />
                                 </td>
                                 <td class="current-column">@item.CurrentAmount.ToString("C")</td>
                             </tr>
@@ -122,21 +202,21 @@
                             <img class="stat-icon flex-item" src="images/income-icon.svg" />
                             <div class="flex-container column-direction">
                                 <span class="stat-label flex-item">Income/year</span>
-                                <span class="stat-value flex-item">$240,000</span>
+                                <span class="stat-value flex-item">@income.ToString("C")</span>
                             </div>
                         </li>
                         <li class="flex-container row-direction">
                             <img class="stat-icon flex-item" src="images/expense-icon.svg" />
                             <div class="flex-container column-direction">
                                 <span class="stat-label flex-item">Expense</span>
-                                <span class="stat-value flex-item">$14,463</span>
+                                <span class="stat-value flex-item">@expenses.ToString("C")</span>
                             </div>
                         </li>
                         <li class="flex-container row-direction">
                             <img class="stat-icon flex-item" src="images/total-savings-icon.svg" />
                             <div class="flex-container column-direction">
                                 <span class="stat-label flex-item">Total Savings</span>
-                                <span class="stat-value flex-item">$123,000</span>
+                                <span class="stat-value flex-item">@totalSavings.ToString("C")</span>
                             </div>
                         </li>
                     </ul>
@@ -145,4 +225,3 @@
         </div>
     </div>
 </div>
-

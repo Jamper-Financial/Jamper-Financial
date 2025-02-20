@@ -46,7 +46,9 @@
 ::deep .main-content {
     flex: 1;
     padding: 1rem;
-/*    overflow-y: auto;*/
+    /*    overflow-y: auto;*/
+    height: 100vh;
+    overflow-y: hidden;
 }
 
 ::deep .article-content {
@@ -56,7 +58,7 @@
     flex-grow: 1;
     padding: 2rem;
     overflow-y: auto; /* Add vertical scroll if content overflows */
-    height: calc(100vh - 60px); /* Adjust height to account for the header */
+    height: 100%;
 }
 
 ::deep .top-row {
