@@ -6,16 +6,17 @@
     align-items: center;
 }
 
-.header-container {
+.article-header-container {
     padding-top: 3rem;
     display: flex;
     justify-content: space-between;
 }
 
-.header {
+.article-header {
+    font-size: 24px;
     font-weight: bold;
-    font-size: 2rem;
     color: #417828;
+    text-align: center;
 }
 
 .content-container {

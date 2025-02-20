@@ -6,6 +6,19 @@ a, .btn-link {
     color: #006bb7;
 }
 
+h3 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #417828;
+    text-align: left;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+}
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
@@ -71,3 +84,67 @@ canvas {
     -webkit-align-content: center;
     align-content: center;
 }
+
+.header-container {
+    top: 0;
+}
+
+//common styles
+/* Common styles */
+ .header {
+    font-size: 24px;
+    font-weight: bold;
+    color: #417828;
+    text-align: center;
+}
+
+ .content-container {
+    margin-top: -10px;
+    padding-bottom: 10px 20px;
+}
+
+ .form-group {
+    margin-bottom: 6px;
+}
+
+     .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+     .form-group input,
+     .form-group select,
+     .form-group textarea {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ced4da;
+        border-radius: 0.5rem;
+        color: #B1BCC4;
+    }
+
+     .form-group .error {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+ .submit-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 1px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #62AD41;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+     .submit-button:hover {
+        background-color: #417828;
+    }
+

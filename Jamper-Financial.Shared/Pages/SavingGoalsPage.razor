@@ -7,12 +7,12 @@
 @inject NavigationManager Navigation
 @inject GoalState GoalState
 
-<div class="header-container">
-    <h3 class="header">Goals</h3>
-    <h3 class="header2">Quick Add Goal</h3>
+<div class="header-container flex-container flex-row">
+    <h3 class="header flex-item column-1">Goals</h3>
+    <h3 class="header2 flex-item  column-2">Quick Add Goal</h3>
 </div>
-<div class="content-container">
-    <div class="saving-goals-page">
+<div class="content-container flex-container flex-row">
+    <div class="saving-goals-page flex-item column-1">
         <div class="button-container">
             <button class="goal-button" @onclick="CreateNewSavingGoal">
                 Create Custom Goal
@@ -40,7 +40,7 @@
             </button>
         </div>
     </div>
-    <div class="quick-add-goal">
+    <div class="quick-add-goal flex-item column-2">
         <div class="quick-add-goal-section">
             <p class="description">
                 Quick goals help you stay focused and motivated by setting short,

@@ -15,15 +15,12 @@
 
 }
 
-
-@* Include the custom CSS file *@
-
 <CascadingValue Value="pageTitle">
     <CascadingValue Value="(Action<string>)SetPageTitle">
         <div class="page">
             <script src="js/chart-interop.js"></script>
 
-            <div class="content-container">
+            <div class="page-container">
                 <div class="layout">
                     @if (ShouldShowMenus)
                     {
@@ -39,7 +36,7 @@
                             </header>
                         }
 
-                        <article class="content">
+                        <article class="article-content">
                             @Body
                         </article>
                     </main>

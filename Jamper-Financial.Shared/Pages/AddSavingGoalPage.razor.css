@@ -1,16 +1,9 @@
-﻿.header {
-    font-size: 24px;
-    font-weight: bold;
-    color: #417828;
-    text-align: center;
-}
-
-.content-container {
+﻿::deep .content-container {
     margin-top: -10px;
     padding-bottom: 10px 20px;
 }
 
-.form-container {
+::deep .form-container {
     max-width: 1000px;
     margin: 10px auto;
     background-color: #ffffff;
@@ -20,19 +13,19 @@
     align-items: center;
 }
 
-.form-group {
+::deep .form-group {
     margin-bottom: 6px;
 }
 
-    .form-group label {
+    ::deep .form-group label {
         display: block;
         font-weight: bold;
         margin-bottom: 5px;
     }
 
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
+    ::deep .form-group input,
+    ::deep .form-group select,
+    ::deep .form-group textarea {
         width: 100%;
         padding: 5px;
         border: 1px solid #ced4da;
@@ -40,15 +33,15 @@
         color: #B1BCC4;
     }
 
-    .form-group .error {
+    ::deep .form-group .error {
         color: #dc3545;
         font-size: 14px;
         margin-top: 5px;
     }
 
-.account-button,
-.category-button,
-.submit-button {
+::deep .account-button,
+::deep .category-button,
+::deep .submit-button {
     display: inline-block;
     padding: 10px 20px;
     margin: 1px;
@@ -61,20 +54,18 @@
     text-align: center;
 }
 
-    .account-button:hover,
-    .category-button:hover,
-    .submit-button:hover {
+    ::deep .account-button:hover,
+    ::deep .category-button:hover,
+    ::deep .submit-button:hover {
         background-color: #417828;
     }
 
-.submit-button {
+::deep .submit-button {
     width: 100%;
     margin-top: 10px;
 }
 
-.selected-button {
+::deep .selected-button {
     background-color: #417828;
     color: #ffffff;
 }
-
-

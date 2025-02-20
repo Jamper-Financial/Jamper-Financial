@@ -116,10 +116,10 @@
     background-color: transparent;
 }
 
-.chart-container {
+::deep .chart-container {
     position: relative; /* Keep position: relative; if you need it */
-    width: 100%; /* Keep width: 100%; if you need it */
-    height: 100%; /* Keep height: 100%; if you need it, or set a fixed height if needed */
+    /*width: 100%;*/ /* Keep width: 100%; if you need it */
+    /*height: 100%;*/ /* Keep height: 100%; if you need it, or set a fixed height if needed */
     border-radius: 20px;
     background-color: white;
     display: flex; /* **Add display: flex; to make it a flex container** */
@@ -128,7 +128,7 @@
     padding: 20px; /* Optional padding */
 }
 
-canvas {
+::deep canvas {
     width: 80% !important;
     height: 80% !important;
 }

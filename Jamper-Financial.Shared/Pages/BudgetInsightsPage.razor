@@ -34,13 +34,6 @@
             userProfile = await UserService.GetUserProfileByIdAsync(userId);
             await LoadBudgetItemsAsync();
 
-            // Add sample data
-            // budgetItems.Add(new BudgetItem { Category = "Housing", PlannedAmount = 1500, CurrentAmount = 1400 });
-            // budgetItems.Add(new BudgetItem { Category = "Food", PlannedAmount = 500, CurrentAmount = 450 });
-            // budgetItems.Add(new BudgetItem { Category = "Transportation", PlannedAmount = 300, CurrentAmount = 280 });
-            // budgetItems.Add(new BudgetItem { Category = "Entertainment", PlannedAmount = 200, CurrentAmount = 150 });
-            // budgetItems.Add(new BudgetItem { Category = "Savings", PlannedAmount = 1000, CurrentAmount = 1200 });
-
             UpdateChartData();
         }
         else
@@ -85,7 +78,7 @@
 <div class="budget-page">
     <div class="dashboard">
         <div class="table-container">
-            <h3 class="mb-3">Overview</h3>
+            <h3 class="mb-3">Budget Overview</h3>
             <div class="table-wrapper">
                 <table class="table table-striped">
                     <thead>

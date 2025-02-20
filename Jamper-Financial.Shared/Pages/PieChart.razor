@@ -1,7 +1,7 @@
 @page "/custom-pie-chart"
 @inject IJSRuntime JSRuntime
 
-<canvas id="pieChartCanvas" width="200" height="200"></canvas>
+<canvas id="pieChartCanvas" width="50" height="50"></canvas>
 @code {
     [Parameter] public List<string> Labels { get; set; } = new List<string>();
     [Parameter] public List<decimal> Data { get; set; } = new List<decimal>();
