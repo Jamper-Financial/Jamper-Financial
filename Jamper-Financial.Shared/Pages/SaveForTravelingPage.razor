@@ -4,6 +4,25 @@
 @inject NavigationManager Navigation
 @inject GoalState GoalState
 
+<style>
+    .back-button {
+        display: block;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #ffffff;
+        background-color: #6c757d; 
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px; 
+    }
+
+    .back-button:hover {
+        background-color: #5a6268;
+    }
+</style>
+
 <div class="header-container">
     <h3 class="header">Save for Traveling</h3>
 </div>
@@ -18,9 +37,12 @@
             }
         </div>
         <div class="form-group">
-            <label for="travelDates">Travel Dates</label>
-            <input type="date" id="startDate" @bind="startDate" />
-            <input type="date" id="endDate" @bind="endDate" />
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" @bind="startDate" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        </div>
+        <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" @bind="endDate" min="@startDate.ToString("yyyy-MM-dd")" />
         </div>
         <div class="form-group">
             <label for="estimatedCost">Estimated Cost</label>
@@ -59,13 +81,14 @@
             <input type="number" id="foodEntertainmentCosts" step="0.01" @bind="foodEntertainmentCosts" />
         </div>
         <button class="submit-button" @onclick="SubmitTravelGoal">Submit</button>
+        <button class="back-button" @onclick="GoBack">Back</button>
     </div>
 </div>
 
 @code {
     private string destination;
-    private DateTime startDate;
-    private DateTime endDate;
+    private DateTime startDate = DateTime.Today;
+    private DateTime endDate = DateTime.Today.AddDays(1);
     private decimal estimatedCost;
     private decimal currentSavings;
     private decimal monthlyContribution;
@@ -98,5 +121,8 @@
             GoalState.AddGoal(travelGoal);
             Navigation.NavigateTo("/view-goals-page");
         }
+    }
+    private void GoBack() {
+        Navigation.NavigateTo("/saving-goals-page");
     }
 }

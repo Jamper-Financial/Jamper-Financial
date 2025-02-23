@@ -4,6 +4,25 @@
 @inject NavigationManager Navigation
 @inject GoalState GoalState
 
+<style>
+    .back-button {
+        display: block;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #ffffff;
+        background-color: #6c757d; 
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px; 
+    }
+
+    .back-button:hover {
+        background-color: #5a6268;
+    }
+</style>
+
 <div class="header-container">
     <h3 class="header">Save for Emergency Fund</h3>
 </div>
@@ -27,13 +46,14 @@
         </div>
         <div class="form-group">
             <label for="targetDate">Target Date</label>
-            <input type="date" id="targetDate" @bind="targetDate" />
+            <input type="date" id="targetDate" @bind="targetDate" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
         </div>
         <div class="form-group">
             <label for="description">Description</label>
             <textarea id="description" @bind="description"></textarea>
         </div>
         <button class="submit-button" @onclick="SubmitEmergencyFundGoal">Submit</button>
+        <button class="back-button" @onclick="GoBack">Back</button>
     </div>
 </div>
 
@@ -41,7 +61,7 @@
     private decimal targetAmount;
     private decimal currentSavings;
     private decimal monthlyContribution;
-    private DateTime targetDate;
+    private DateTime targetDate = DateTime.Today;
     private string description;
 
     private void SubmitEmergencyFundGoal()
@@ -52,7 +72,7 @@
                 {
                     Name = "Emergency Fund",
                     Amount = targetAmount,
-                    StartDate = DateTime.Now,
+                    StartDate = DateTime.Today,
                     EndDate = targetDate,
                     Description = $"Current Savings: {currentSavings}, Monthly Contribution: {monthlyContribution}, " +
                                   $"Description: {description}",
@@ -65,5 +85,8 @@
             GoalState.AddGoal(emergencyFundGoal);
             Navigation.NavigateTo("/view-goals-page");
         }
+    }
+    private void GoBack() {
+        Navigation.NavigateTo("/saving-goals-page");
     }
 }
