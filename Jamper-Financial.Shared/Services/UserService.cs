@@ -1,4 +1,4 @@
-﻿using Jamper_Financial.Shared.Models;
+﻿﻿using Jamper_Financial.Shared.Models;
 using Microsoft.Data.Sqlite;
 
 namespace Jamper_Financial.Shared.Services

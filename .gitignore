@@ -17,3 +17,5 @@ AppDatabase.db
 *.props
 *.targets
 /Jamper-Financial.Web/obj
+/Jamper-Financial.Shared/node_modules
+/Jamper-Financial.Shared/obj

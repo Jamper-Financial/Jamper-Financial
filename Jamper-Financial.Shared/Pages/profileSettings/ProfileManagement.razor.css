@@ -1,4 +1,4 @@
-label {
+@ label {
     color: #000000;
     font-size: 18px;
     font-family: Inter;
@@ -31,7 +31,7 @@ label {
 }
 
 ::deep .input-style {
-    padding-left:10px;
+    padding-left: 10px;
     border: solid 2px rgba(98, 173, 65, 0.25);
     border-radius: 20px;
 }
@@ -91,7 +91,7 @@ label {
     }
 
 
-.username label{
+.username label {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -159,4 +159,50 @@ label {
 
     .status-message.show {
         opacity: 1;
+    }
+
+/* Modal */
+.modal {
+    display: block;
+    position: center;
+
+.modal-dialog {
+    display: flex;
+    position: fixed;
+    bottom: 25vh;
+    right: 50vh;
+    justify-content: center;
+    align-items: center;
+    height: 50vh; 
+}
+
+
+.modal-content {
+    background-color: #fff;
+    text-align: center;
+}
+
+.modal-header h3 {
+    color: #28a745;
+    width: 100%;
+}
+
+.modal-body {
+    margin: 20px 0;
+}
+
+    .modal-body p {
+        font-size: 14px;
+        color: #17a2b8;
+    }
+
+    .modal-body .icon {
+        color: #28a745;
+        font-size: 40px;
+    }
+
+    .modal-body .success-text {
+        font-weight: bold;
+        color: #28a745;
+        font-size: 16px;
     }

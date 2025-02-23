@@ -1,0 +1,102 @@
+﻿@page "/save-for-traveling"
+@using Jamper_Financial.Shared.Services
+@using Jamper_Financial.Shared.Data
+@inject NavigationManager Navigation
+@inject GoalState GoalState
+
+<div class="header-container">
+    <h3 class="header">Save for Traveling</h3>
+</div>
+<div class="content-container">
+    <div class="form-container">
+        <div class="form-group">
+            <label for="destination">Destination</label>
+            <input type="text" id="destination" @bind="destination" />
+            @if (string.IsNullOrEmpty(destination))
+            {
+                <span class="error">Destination is required!</span>
+            }
+        </div>
+        <div class="form-group">
+            <label for="travelDates">Travel Dates</label>
+            <input type="date" id="startDate" @bind="startDate" />
+            <input type="date" id="endDate" @bind="endDate" />
+        </div>
+        <div class="form-group">
+            <label for="estimatedCost">Estimated Cost</label>
+            <input type="number" id="estimatedCost" step="0.01" @bind="estimatedCost" />
+            @if (estimatedCost <= 0)
+            {
+                <span class="error">Estimated Cost must be greater than zero!</span>
+            }
+        </div>
+        <div class="form-group">
+            <label for="currentSavings">Current Savings</label>
+            <input type="number" id="currentSavings" step="0.01" @bind="currentSavings" />
+        </div>
+        <div class="form-group">
+            <label for="monthlyContribution">Monthly Contribution</label>
+            <input type="number" id="monthlyContribution" step="0.01" @bind="monthlyContribution" />
+        </div>
+        <div class="form-group">
+            <label for="travelCategory">Travel Category</label>
+            <input type="text" id="travelCategory" @bind="travelCategory" />
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" @bind="description"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="accommodationCosts">Accommodation Costs</label>
+            <input type="number" id="accommodationCosts" step="0.01" @bind="accommodationCosts" />
+        </div>
+        <div class="form-group">
+            <label for="transportationCosts">Transportation Costs</label>
+            <input type="number" id="transportationCosts" step="0.01" @bind="transportationCosts" />
+        </div>
+        <div class="form-group">
+            <label for="foodEntertainmentCosts">Food and Entertainment Costs</label>
+            <input type="number" id="foodEntertainmentCosts" step="0.01" @bind="foodEntertainmentCosts" />
+        </div>
+        <button class="submit-button" @onclick="SubmitTravelGoal">Submit</button>
+    </div>
+</div>
+
+@code {
+    private string destination;
+    private DateTime startDate;
+    private DateTime endDate;
+    private decimal estimatedCost;
+    private decimal currentSavings;
+    private decimal monthlyContribution;
+    private string travelCategory;
+    private string description;
+    private decimal accommodationCosts;
+    private decimal transportationCosts;
+    private decimal foodEntertainmentCosts;
+
+    private void SubmitTravelGoal()
+    {
+        if (!string.IsNullOrEmpty(destination) && estimatedCost > 0)
+        {
+            var travelGoal = new Goal
+                {
+                    Name = $"Travel to {destination}",
+                    Amount = estimatedCost,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    Description = $"Current Savings: {currentSavings}, Monthly Contribution: {monthlyContribution}, " +
+                                  $"Accommodation Costs: {accommodationCosts}, Transportation Costs: {transportationCosts}, " +
+                                  $"Food and Entertainment Costs: {foodEntertainmentCosts}, Travel Category: {travelCategory}, " +
+                                  $"Description: {description}",
+                    Category = "Travel",
+                    AccountType = "Savings",
+                    Frequency = "Monthly",
+                    IsTravelGoal = true
+                };
+
+            GoalState.AddGoal(travelGoal);
+            Navigation.NavigateTo("/view-goals-page");
+        }
+    }
+}
