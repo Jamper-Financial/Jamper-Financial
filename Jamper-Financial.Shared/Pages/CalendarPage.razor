@@ -29,9 +29,6 @@
                     <option value="DescriptionDesc">Description ↓</option>
                 </select>
             </div>
-        </div>
-        <div class="search-container">
-            <input type="text" class="search-bar" placeholder="Search transactions..." @bind="SearchTerm" @oninput="UpdateSearchResults" />
             <button class="filter-button" @onclick="ToggleFilterDropdown">Filter</button>
             <!-- Filter Dropdown -->
             @if (ShowFilterDropdown)
@@ -294,14 +291,7 @@
 
     private void UpdateFilteredTransactionsForSelectedMonth()
     {
-        FilteredTransactionsForSelectedMonth = TransactionsForSelectedMonth
-            .Where(t => (string.IsNullOrEmpty(FilterCategory) || t.Category.Equals(FilterCategory, StringComparison.OrdinalIgnoreCase)) &&
-                        (!MinAmount.HasValue ||
-                            (MinAmount.Value >= 0 ? (t.Debit >= (decimal)MinAmount || t.Credit >= (decimal)MinAmount) : (t.Debit >= (decimal)MinAmount || t.Credit >= (decimal)MinAmount))) &&
-                        (!MaxAmount.HasValue ||
-                            (MaxAmount.Value >= 0 ? (t.Debit <= (decimal)MaxAmount || t.Credit <= (decimal)MaxAmount) : (t.Debit <= (decimal)MaxAmount || t.Credit <= (decimal)MaxAmount))) &&
-                        (string.IsNullOrEmpty(SearchTerm) || t.Description.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)))
-            .ToList();
+        FilteredTransactionsForSelectedMonth = Filters.ApplyFilters(TransactionsForSelectedMonth, FilterCategory, MinAmount, MaxAmount, SearchTerm);
         ReapplySort();
         StateHasChanged();
     }
@@ -373,18 +363,12 @@
     private bool HasTransactions(DateTime date) =>
         GetFilteredTransactions(date).Any();
 
-    private List<Transaction> GetTransactions(DateTime date) =>
-        Transactions.Where(t => t.Date.Date == date.Date).ToList();
+    private List<Transaction> GetTransactions(DateTime date) => 
+        GetFilteredTransactions(date);
 
     private List<Transaction> GetFilteredTransactions(DateTime date) =>
-        Transactions.Where(t => t.Date.Date == date.Date &&
-                                (string.IsNullOrEmpty(FilterCategory) || t.Category.Equals(FilterCategory, StringComparison.OrdinalIgnoreCase)) &&
-                                (!MinAmount.HasValue ||
-                                 (MinAmount.Value >= 0 ? (t.Debit >= (decimal)MinAmount || t.Credit >= (decimal)MinAmount) : (t.Debit >= (decimal)MinAmount || t.Credit >= (decimal)MinAmount))) &&
-                                (!MaxAmount.HasValue ||
-                                 (MaxAmount.Value >= 0 ? (t.Debit <= (decimal)MaxAmount || t.Credit <= (decimal)MaxAmount) : (t.Debit <= (decimal)MaxAmount || t.Credit <= (decimal)MaxAmount))) &&
-                                (string.IsNullOrEmpty(SearchTerm) || t.Description.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)))
-                    .ToList();
+    Filters.ApplyFilters(Transactions.Where(t => t.Date.Date == date.Date).ToList(), FilterCategory, MinAmount, MaxAmount, SearchTerm);
+
 
     private void UpdateTransactionsForSelectedMonth()
     {
@@ -432,29 +416,7 @@
 
     private void SortTransactions(string sortBy, bool ascending)
     {
-        switch (sortBy)
-        {
-            case "Date":
-                FilteredTransactionsForSelectedMonth = ascending
-                    ? FilteredTransactionsForSelectedMonth.OrderBy(t => t.Date).ToList()
-                    : FilteredTransactionsForSelectedMonth.OrderByDescending(t => t.Date).ToList();
-                break;
-            case "Category":
-                FilteredTransactionsForSelectedMonth = ascending
-                    ? FilteredTransactionsForSelectedMonth.OrderBy(t => t.Category).ToList()
-                    : FilteredTransactionsForSelectedMonth.OrderByDescending(t => t.Category).ToList();
-                break;
-            case "Amount":
-                FilteredTransactionsForSelectedMonth = ascending
-                    ? FilteredTransactionsForSelectedMonth.OrderBy(t => t.Debit > 0 ? -t.Debit : t.Credit).ToList()
-                    : FilteredTransactionsForSelectedMonth.OrderByDescending(t => t.Debit > 0 ? -t.Debit : t.Credit).ToList();
-                break;
-            case "Description":
-                FilteredTransactionsForSelectedMonth = ascending
-                    ? FilteredTransactionsForSelectedMonth.OrderBy(t => t.Description).ToList()
-                    : FilteredTransactionsForSelectedMonth.OrderByDescending(t => t.Description).ToList();
-                break;
-        }
+        FilteredTransactionsForSelectedMonth = Sort.ApplySort(FilteredTransactionsForSelectedMonth, sortBy, ascending);
         StateHasChanged();
     }
 

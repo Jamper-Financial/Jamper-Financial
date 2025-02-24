@@ -32,48 +32,29 @@
 .sort-button {
     padding: 0.625rem;
     border: 0.0625rem solid #ddd;
-    border-radius: 0.625rem;
+    border-radius: 0.625rem 0 0 0.625rem;
     font-size: 0.875rem;
     cursor: pointer;
     background-color: #fff;
 }
 
-.search-container {
-    display: flex;
-    justify-content: center; /* Center content horizontally */
-    align-items: center; /* Center content vertically */
-    position: relative; /* Added to position the filter dropdown relative to this container */
-}
 
 .sort-container, .new-transaction {
     display: flex;
     justify-content: center; /* Center content horizontally */
+    position: relative;
     align-items: center; /* Center content vertically */
 }
 
-.sort-container select, .search-container input, .new-transaction {
+.sort-container select, .new-transaction {
     max-width: 100%; /* Ensure elements don't overflow */
-}
-
-.search-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-}
-
-.search-bar {
-    padding: 0.625rem;
-    border: 0.0625rem solid #ddd;
-    border-radius: 0.625rem 0 0 0.625rem;
-    width: 15.625rem;
-    font-size: 0.875rem;
 }
 
 .filter-button {
     background-color: #62ad41;
     color: white;
     border: none;
-    padding: 0.625rem 0.9375rem;
+    padding: 0.625rem 1.1rem;
     border-radius: 0 0.625rem 0.625rem 0;
     cursor: pointer;
     font-size: 0.875rem;
