@@ -180,6 +180,10 @@
         IsEditMode = true;
         ShowDeleteConfirmation = false;
         ShowAddTransactionModal = true;
+        if (string.IsNullOrEmpty(NewTransaction.Frequency))
+        {
+            NewTransaction.Frequency = "None";
+        }
     }
 
     private void CloseAddTransactionModal()
@@ -189,6 +193,7 @@
 
     private async Task HandleAddOrEditTransaction()
     {
+        NewTransaction.Amount = Amount;
         await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
         CloseAddTransactionModal();
         transactions = await TransactionManager.LoadTransactionsAsync();

@@ -138,7 +138,7 @@
                             @(transaction.Debit > 0 ? "-" : "+")@((transaction.Debit > 0 ? transaction.Debit : transaction.Credit).ToString("C"))
                         </p>
                         <p>@transaction.Date.ToString("d")</p>
-                        <p>Frequency: @transaction.Frequency</p>
+                        <p>Frequency: @(string.IsNullOrEmpty(transaction.Frequency) ? "None" : transaction.Frequency)</p>
                         @if (transaction.EndDate.HasValue)
                         {
                             <p>End Date: @transaction.EndDate.Value.ToString("d")</p>
@@ -516,6 +516,10 @@
         IsEditMode = true;
         ShowDeleteConfirmation = false;
         ShowAddTransactionModal = true;
+        if (string.IsNullOrEmpty(NewTransaction.Frequency))
+        {
+            NewTransaction.Frequency = "None";
+        }
     }
 
     private void CloseAddTransactionModal()
@@ -525,7 +529,9 @@
 
     private async Task HandleAddOrEditTransaction()
     {
+        NewTransaction.Amount = Amount;
         await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
+        Transactions = await TransactionManager.LoadTransactionsAsync();
         CloseAddTransactionModal();
         UpdateTransactionsForSelectedMonth();
         ReapplySort();
