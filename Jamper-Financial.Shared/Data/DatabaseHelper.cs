@@ -398,106 +398,7 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
-        // public static (int UserId, int ProfileId, string Role)? GetUserDetailsByEmail(string email)
-        // {
-        //     try
-        //     {
-        //         using (var connection = GetConnection())
-        //         {
-        //             connection.Open();
-
-        //             // Corrected query to join Users, Profile, UserRoles, and Roles tables
-        //             string query = @"
-        //                 SELECT u.UserId, p.ProfileId, r.RoleName 
-        //                 FROM Users u
-        //                 LEFT JOIN Profile p ON u.UserId = p.UserId
-        //                 LEFT JOIN UserRoles ur ON u.UserId = ur.UserId
-        //                 LEFT JOIN Roles r ON ur.RoleId = r.RoleId
-        //                 WHERE u.Email = @Email;";
-
-        //             using (var command = new SqliteCommand(query, connection))
-        //             {
-        //                 command.Parameters.AddWithValue("@Email", email);
-
-        //                 using (var reader = command.ExecuteReader())
-        //                 {
-        //                     if (reader.Read())
-        //                     {
-        //                         int userId = reader.GetInt32(reader.GetOrdinal("UserId"));
-        //                         int profileId = reader.GetInt32(reader.GetOrdinal("ProfileId"));
-        //                         string role = reader["RoleName"].ToString();
-        //                         return (userId, profileId, role);
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         // Log the error (if you have a logging mechanism)
-        //         Console.WriteLine($"Error in GetUserDetailsByEmail: {ex.Message}");
-        //     }
-
-        //     return null;
-        // }
-
-        // public static (int UserId, int ProfileId, string Role)? GetUserDetailsByEmail(string email)
-        // {
-        //     try
-        //     {
-        //         using (var connection = GetConnection())
-        //         {
-        //             connection.Open();
-
-        //             // Normalize the email (trim and convert to lowercase)
-        //             string normalizedEmail = email.Trim().ToLower();
-
-        //             // Debugging: Log the normalized email
-        //             Console.WriteLine($"Querying database for email: {normalizedEmail}");
-
-        //             string query = @"
-        //                 SELECT u.UserId, p.ProfileId, r.RoleName 
-        //                 FROM Users u
-        //                 LEFT JOIN Profile p ON u.UserId = p.UserId
-        //                 LEFT JOIN UserRoles ur ON u.UserId = ur.UserId
-        //                 LEFT JOIN Roles r ON ur.RoleId = r.RoleId
-        //                 WHERE LOWER(TRIM(u.Email)) = @Email;";
-
-        //             using (var command = new SqliteCommand(query, connection))
-        //             {
-        //                 command.Parameters.AddWithValue("@Email", normalizedEmail);
-
-        //                 using (var reader = command.ExecuteReader())
-        //                 {
-        //                     if (reader.Read())
-        //                     {
-        //                         int userId = reader.GetInt32(reader.GetOrdinal("UserId"));
-        //                         int profileId = reader.GetInt32(reader.GetOrdinal("ProfileId"));
-        //                         string role = reader["RoleName"].ToString();
-
-        //                         // Debugging: Log the retrieved user details
-        //                         Console.WriteLine($"Retrieved UserId: {userId}, ProfileId: {profileId}, Role: {role}");
-
-        //                         return (userId, profileId, role);
-        //                     }
-        //                     else
-        //                     {
-        //                         // Debugging: Log if no rows are returned
-        //                         Console.WriteLine("No user found with the specified email.");
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         // Log the error (if you have a logging mechanism)
-        //         Console.WriteLine($"Error in GetUserDetailsByEmail: {ex.Message}");
-        //     }
-
-        //     return null;
-        // }
-
+        
         public static (int UserId, int ProfileId, string Role)? GetUserDetailsByUsernameOrEmail(string usernameOrEmail)
         {
             try
@@ -668,67 +569,69 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
-        public static int InsertOrUpdateGoogleUser(string username, string email, string firstName, string lastName)
-{
-    using (var connection = GetConnection())
-    {
-        connection.Open();
-
-        // Check if the user already exists by email
-        string checkQuery = "SELECT UserId FROM Users WHERE Email = @Email;";
-        using (var checkCommand = new SqliteCommand(checkQuery, connection))
+        public static int InsertOrUpdateGoogleUser(string username, string email, string firstName, string lastName, DateTime? birthDate)
         {
-            checkCommand.Parameters.AddWithValue("@Email", email);
-            var existingUserId = checkCommand.ExecuteScalar();
-
-            if (existingUserId != null)
+            using (var connection = GetConnection())
             {
-                Console.WriteLine("User already exists in the database.");
-                return Convert.ToInt32(existingUserId); // Return existing user ID
+                connection.Open();
+
+                // Convert DateTime? to a string format (or NULL)
+                string birthDateString = birthDate.HasValue ? birthDate.Value.ToString("yyyy-MM-dd") : null;
+
+                // Check if user exists
+                string checkQuery = "SELECT UserId FROM Users WHERE Email = @Email;";
+                using (var checkCommand = new SqliteCommand(checkQuery, connection))
+                {
+                    checkCommand.Parameters.AddWithValue("@Email", email);
+                    var existingUserId = checkCommand.ExecuteScalar();
+
+                    if (existingUserId != null)
+                    {
+                        return Convert.ToInt32(existingUserId);
+                    }
+                }
+
+                // Insert new Google user into Users table
+                string insertUserQuery = @"
+            INSERT INTO Users (Username, Email, Password, SSO)
+            VALUES (@Username, @Email,'', 'GoogleAuth');
+        ";
+
+                using (var insertUserCommand = new SqliteCommand(insertUserQuery, connection))
+                {
+                    insertUserCommand.Parameters.AddWithValue("@Username", username);
+                    insertUserCommand.Parameters.AddWithValue("@Email", email);
+                    insertUserCommand.ExecuteNonQuery();
+                }
+
+                // Retrieve newly created user ID
+                int newUserId;
+                string getUserIdQuery = "SELECT UserId FROM Users WHERE Email = @Email;";
+                using (var getUserIdCommand = new SqliteCommand(getUserIdQuery, connection))
+                {
+                    getUserIdCommand.Parameters.AddWithValue("@Email", email);
+                    newUserId = Convert.ToInt32(getUserIdCommand.ExecuteScalar());
+                }
+
+                // Insert user details into Profile table (including BirthDate)
+                string insertProfileQuery = @"
+            INSERT INTO Profile (UserID, FirstName, LastName, Birthday)
+            VALUES (@UserId, @FirstName, @LastName, @Birthday);
+        ";
+
+                using (var insertProfileCommand = new SqliteCommand(insertProfileQuery, connection))
+                {
+                    insertProfileCommand.Parameters.AddWithValue("@UserId", newUserId);
+                    insertProfileCommand.Parameters.AddWithValue("@FirstName", firstName);
+                    insertProfileCommand.Parameters.AddWithValue("@LastName", lastName);
+                    insertProfileCommand.Parameters.AddWithValue("@Birthday", (object?)birthDateString ?? DBNull.Value); // ✅ Convert DateTime to string
+                    insertProfileCommand.ExecuteNonQuery();
+                }
+
+                return newUserId;
             }
         }
 
-        // Insert new Google user into Users table
-        string insertUserQuery = @"
-            INSERT INTO Users (Username, Email, Password, SSO)
-            VALUES (@Username, @Email, '', 'GoogleAuth');
-        ";
-
-        using (var insertUserCommand = new SqliteCommand(insertUserQuery, connection))
-        {
-            insertUserCommand.Parameters.AddWithValue("@Username", username);
-            insertUserCommand.Parameters.AddWithValue("@Email", email);
-
-            insertUserCommand.ExecuteNonQuery();
-        }
-
-        // Retrieve the newly created user ID
-        int newUserId;
-        string getUserIdQuery = "SELECT UserId FROM Users WHERE Email = @Email;";
-        using (var getUserIdCommand = new SqliteCommand(getUserIdQuery, connection))
-        {
-            getUserIdCommand.Parameters.AddWithValue("@Email", email);
-            newUserId = Convert.ToInt32(getUserIdCommand.ExecuteScalar());
-        }
-
-        // Insert user details into Profile table
-        string insertProfileQuery = @"
-            INSERT INTO Profile (UserID, FirstName, LastName)
-            VALUES (@UserId, @FirstName, @LastName);
-        ";
-
-        using (var insertProfileCommand = new SqliteCommand(insertProfileQuery, connection))
-        {
-            insertProfileCommand.Parameters.AddWithValue("@UserId", newUserId);
-            insertProfileCommand.Parameters.AddWithValue("@FirstName", firstName);
-            insertProfileCommand.Parameters.AddWithValue("@LastName", lastName);
-            insertProfileCommand.ExecuteNonQuery();
-        }
-
-        Console.WriteLine("New Google user inserted into database.");
-        return newUserId;
     }
-}
 
-    }
 }
