@@ -668,5 +668,67 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
+        public static int InsertOrUpdateGoogleUser(string username, string email, string firstName, string lastName)
+{
+    using (var connection = GetConnection())
+    {
+        connection.Open();
+
+        // Check if the user already exists by email
+        string checkQuery = "SELECT UserId FROM Users WHERE Email = @Email;";
+        using (var checkCommand = new SqliteCommand(checkQuery, connection))
+        {
+            checkCommand.Parameters.AddWithValue("@Email", email);
+            var existingUserId = checkCommand.ExecuteScalar();
+
+            if (existingUserId != null)
+            {
+                Console.WriteLine("User already exists in the database.");
+                return Convert.ToInt32(existingUserId); // Return existing user ID
+            }
+        }
+
+        // Insert new Google user into Users table
+        string insertUserQuery = @"
+            INSERT INTO Users (Username, Email, Password, SSO)
+            VALUES (@Username, @Email, '', 'GoogleAuth');
+        ";
+
+        using (var insertUserCommand = new SqliteCommand(insertUserQuery, connection))
+        {
+            insertUserCommand.Parameters.AddWithValue("@Username", username);
+            insertUserCommand.Parameters.AddWithValue("@Email", email);
+
+            insertUserCommand.ExecuteNonQuery();
+        }
+
+        // Retrieve the newly created user ID
+        int newUserId;
+        string getUserIdQuery = "SELECT UserId FROM Users WHERE Email = @Email;";
+        using (var getUserIdCommand = new SqliteCommand(getUserIdQuery, connection))
+        {
+            getUserIdCommand.Parameters.AddWithValue("@Email", email);
+            newUserId = Convert.ToInt32(getUserIdCommand.ExecuteScalar());
+        }
+
+        // Insert user details into Profile table
+        string insertProfileQuery = @"
+            INSERT INTO Profile (UserID, FirstName, LastName)
+            VALUES (@UserId, @FirstName, @LastName);
+        ";
+
+        using (var insertProfileCommand = new SqliteCommand(insertProfileQuery, connection))
+        {
+            insertProfileCommand.Parameters.AddWithValue("@UserId", newUserId);
+            insertProfileCommand.Parameters.AddWithValue("@FirstName", firstName);
+            insertProfileCommand.Parameters.AddWithValue("@LastName", lastName);
+            insertProfileCommand.ExecuteNonQuery();
+        }
+
+        Console.WriteLine("New Google user inserted into database.");
+        return newUserId;
+    }
+}
+
     }
 }

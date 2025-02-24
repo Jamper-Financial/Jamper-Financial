@@ -1,0 +1,114 @@
+@page "/create-account-google"
+@using Microsoft.AspNetCore.WebUtilities
+@using Jamper_Financial.Shared.Services
+@using Jamper_Financial.Shared.Data
+@inject NavigationManager Navigation
+
+<div class="registration-container">
+    <div class="registration-left">
+        <h1>Complete Your Account Setup</h1>
+        <div class="registration-form">
+            <h2>We need a few more details</h2>
+            <form>
+                <label for="username">Username <span class="required">*</span></label>
+                <input id="username" type="text" placeholder="Choose a username" @bind="Username" />
+
+                <label for="email">Email <span class="required">*</span></label>
+                <input id="email" type="email" readonly @bind="Email" />
+
+                <label for="first-name">First Name <span class="required">*</span></label>
+                <input id="first-name" type="text" placeholder="Enter your first name" @bind="FirstName" />
+
+                <label for="last-name">Last Name <span class="required">*</span></label>
+                <input id="last-name" type="text" placeholder="Enter your last name" @bind="LastName" />
+
+                <div class="bottom-buttons">
+                    <button type="button" class="back-button" @onclick="NavigateToLoginPage">Cancel</button>
+                    <button type="button" class="submit-button" @onclick="CompleteRegistration">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrWhiteSpace(ErrorMessage))
+{
+    <div class="alert alert-danger" role="alert">
+        @ErrorMessage
+    </div>
+}
+
+@if (AccountCreated)
+{
+    <div class="alert alert-success" role="alert">
+        Account created successfully! Redirecting to dashboard...
+    </div>
+}
+
+@code {
+    private string FirstName { get; set; } = string.Empty;
+    private string LastName { get; set; } = string.Empty;
+    private string Username { get; set; } = string.Empty;
+    private string Email { get; set; } = string.Empty;
+    private string ErrorMessage { get; set; } = string.Empty;
+    private bool AccountCreated { get; set; } = false;
+    private int UserId { get; set; }
+
+    // protected override void OnInitialized()
+    // {
+    //     var uri = new Uri(Navigation.Uri);
+    //     if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("email", out var emailValue))
+    //     {
+    //         Email = emailValue;
+    //         Username = emailValue.Split('@')[0]; Default username as email prefix
+    //     }
+    // }
+
+    protected override void OnInitialized()
+    {
+        var uri = new Uri(Navigation.Uri);
+        var queryParams = QueryHelpers.ParseQuery(uri.Query);
+
+        if (queryParams.TryGetValue("email", out var emailValue))
+        {
+            Email = emailValue.ToString(); // Convert StringValues to string
+            Username = Email.Split('@')[0]; // Default username as email prefix
+        }
+
+        if (queryParams.TryGetValue("firstName", out var firstNameValue))
+        {
+            FirstName = firstNameValue.ToString(); // Convert to string
+        }
+
+        if (queryParams.TryGetValue("lastName", out var lastNameValue))
+        {
+            LastName = lastNameValue.ToString(); // Convert to string
+        }
+    }
+
+    private void NavigateToLoginPage()
+    {
+        Navigation.NavigateTo("/login");
+    }
+
+    private void CompleteRegistration()
+    {
+        if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName))
+        {
+            ErrorMessage = "Please fill in all required fields.";
+            return;
+        }
+
+        if (DatabaseHelper.IsUsernameTaken(Username))
+        {
+            ErrorMessage = "Username is already taken. Please choose another.";
+            return;
+        }
+
+        // Use new InsertOrUpdateGoogleUser function
+        UserId = DatabaseHelper.InsertOrUpdateGoogleUser(Username, Email, FirstName, LastName);
+
+        AccountCreated = true;
+        Task.Delay(2000).ContinueWith(_ => Navigation.NavigateTo("/dashboard"));
+    }
+}

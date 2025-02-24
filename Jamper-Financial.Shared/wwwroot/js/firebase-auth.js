@@ -22,12 +22,15 @@ window.signInWithGoogle = async function () {
         const user = result.user;
         console.log("Google user signed in:", user);
         alert(`Welcome, ${user.displayName}`);
-        window.location.href = "/calendar-page"; // Redirect after login
+
+        // Redirect to create-account-google with email as a query parameter
+        window.location.href = `/create-account-google?email=${encodeURIComponent(user.email)}&firstName=${encodeURIComponent(user.displayName.split(' ')[0])}&lastName=${encodeURIComponent(user.displayName.split(' ')[1] || '')}`;
     } catch (error) {
         console.error("Google sign-in error:", error);
         alert("Google sign-in failed: " + error.message);
     }
 };
+
 
 window.deleteCurrentUser = async function () {
     const auth = getAuth();
