@@ -10,24 +10,31 @@
         <div class="registration-form">
             <h2>We need a few more details</h2>
             <form>
+
+                <label for="first-name">First Name <span class="required">*</span></label>
+                <input id="first-name" type="text" placeholder="Enter your first name" @bind="FirstName" />
+
+                <label for="last-name">Last Name <span></span></label>
+                <input id="last-name" type="text" placeholder="Enter your last name" @bind="LastName" />
+
                 <label for="username">Username <span class="required">*</span></label>
                 <input id="username" type="text" placeholder="Choose a username" @bind="Username" />
 
                 <label for="email">Email <span class="required">*</span></label>
                 <input id="email" type="email" readonly @bind="Email" />
 
-                <label for="first-name">First Name <span class="required">*</span></label>
-                <input id="first-name" type="text" placeholder="Enter your first name" @bind="FirstName" />
-
-                <label for="last-name">Last Name <span class="required">*</span></label>
-                <input id="last-name" type="text" placeholder="Enter your last name" @bind="LastName" />
+                <label for="birthdate">Birth date (yyyy-mm-dd) <span class="required">*</span></label>
+                <input id="birthdate" type="date" placeholder="YYYY-MM-DD" @bind="BirthDate" />
 
                 <div class="bottom-buttons">
                     <button type="button" class="back-button" @onclick="NavigateToLoginPage">Cancel</button>
                     <button type="button" class="submit-button" @onclick="CompleteRegistration">Submit</button>
                 </div>
             </form>
-        </div>
+        </div>        
+    </div>
+    <div class="registration-right">
+        <img src="/images/logo.png" alt="Jamper Logo" />
     </div>
 </div>
 
@@ -50,6 +57,7 @@
     private string LastName { get; set; } = string.Empty;
     private string Username { get; set; } = string.Empty;
     private string Email { get; set; } = string.Empty;
+    private DateTime BirthDate { get; set; } = DateTime.Now;
     private string ErrorMessage { get; set; } = string.Empty;
     private bool AccountCreated { get; set; } = false;
     private int UserId { get; set; }
@@ -93,7 +101,7 @@
 
     private void CompleteRegistration()
     {
-        if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName))
+        if (string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(FirstName))
         {
             ErrorMessage = "Please fill in all required fields.";
             return;
@@ -109,6 +117,6 @@
         UserId = DatabaseHelper.InsertOrUpdateGoogleUser(Username, Email, FirstName, LastName);
 
         AccountCreated = true;
-        Task.Delay(2000).ContinueWith(_ => Navigation.NavigateTo("/dashboard"));
+        Task.Delay(2000).ContinueWith(_ => Navigation.NavigateTo("/dashboard-page"));
     }
 }
