@@ -4,6 +4,25 @@
 @inject NavigationManager Navigation
 @inject GoalState GoalState
 
+<style>
+    .back-button {
+        display: block;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #ffffff;
+        background-color: #6c757d; 
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px; 
+    }
+
+    .back-button:hover {
+        background-color: #5a6268;
+    }
+</style>
+
 <div class="header-container">
     <h3 class="header">Add a Saving Goal</h3>
 </div>
@@ -43,11 +62,11 @@
         </div>
         <div class="form-group">
             <label for="startDate">Start Date</label>
-            <input type="date" id="startDate" @bind="startDate" />
+            <input type="date" id="startDate" @bind="startDate" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
         </div>
         <div class="form-group">
             <label for="endDate">End Date</label>
-            <input type="date" id="endDate" @bind="endDate" />
+            <input type="date" id="endDate" @bind="endDate" min="@startDate.ToString("yyyy-MM-dd")" />
         </div>
         <div class="form-group">
             <label for="amount">Amount</label>
@@ -68,6 +87,7 @@
             <textarea id="description" @bind="description"></textarea>
         </div>
         <button class="submit-button" @onclick="SubmitGoal">Submit</button>
+        <button class="back-button" @onclick="GoBack">Back</button>
     </div>
 </div>
 
@@ -75,8 +95,8 @@
     private string goalName;
     private string accountType;
     private string category;
-    private DateTime startDate;
-    private DateTime endDate;
+    private DateTime startDate = DateTime.Today;
+    private DateTime endDate = DateTime.Today.AddDays(1);  
     private decimal amount;
     private string frequency;
     private string description;
@@ -110,5 +130,8 @@
             GoalState.AddGoal(newGoal);
             Navigation.NavigateTo("/view-goals-page");
         }
+    }
+    private void GoBack() {
+        Navigation.NavigateTo("/saving-goals-page");
     }
 }
