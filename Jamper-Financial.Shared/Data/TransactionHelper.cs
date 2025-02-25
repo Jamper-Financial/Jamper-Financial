@@ -31,7 +31,7 @@ namespace Jamper_Financial.Shared.Data
                                 Debit = reader.GetDecimal(3),
                                 Credit = reader.GetDecimal(4),
                                 Category = reader.GetString(5),
-                                Color = reader.IsDBNull(6) ? null : reader.GetString(6),
+                                Color = reader.GetString(6),
                                 Frequency = reader.IsDBNull(7) ? null : reader.GetString(7),
                                 EndDate = reader.IsDBNull(8) ? (DateTime?)null : DateTime.Parse(reader.GetString(8))
                             });
