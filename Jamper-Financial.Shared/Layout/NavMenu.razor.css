@@ -15,10 +15,6 @@
         background-color: rgba(255, 255, 255, 0.5);
     }
 
-.top-row {
-    height: 3.5rem;
-    background-color: white;
-}
 
 .navbar-brand {
     font-size: 1.1rem;
@@ -122,4 +118,16 @@
 /* Specific styles for Dashboard */
 .selected {
     color: #62ad41;
+}
+
+.logout-icon {
+    position: relative;
+}
+
+.logout-icon:hover rect {
+    fill: #62ad41; /* Change the fill color on hover */
+}
+
+.logout-icon:hover path {
+    fill: #FFFFFF; /* Change the path fill color on hover */
 }

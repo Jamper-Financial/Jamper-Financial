@@ -2,27 +2,31 @@
 @inject NavigationManager Navigation
 
 @code {
+    [CascadingParameter] private Action<bool>? LoadBlazoriseScripts { get; set; }
+
     private bool ShouldShowMenus => !Navigation.Uri.Contains("/login") && !Navigation.Uri.EndsWith("/") &&
     !Navigation.Uri.Contains("/create-account") && !Navigation.Uri.Contains("/verify-email");
 
     private string pageTitle = "Overview";
+
+    protected override void OnInitialized()
+    {
+        LoadBlazoriseScripts?.Invoke(false);
+    }
 
     public void SetPageTitle(string title)
     {
         pageTitle = title;
         StateHasChanged();
     }
-
 }
 
-
-@* Include the custom CSS file *@
-<link href="css/MainLayout.css" rel="stylesheet" />
 <CascadingValue Value="pageTitle">
     <CascadingValue Value="(Action<string>)SetPageTitle">
         <div class="page">
+            <script src="js/chart-interop.js"></script>
 
-            <div class="content-container">
+            <div class="page-container">
                 <div class="layout">
                     @if (ShouldShowMenus)
                     {
@@ -38,7 +42,7 @@
                             </header>
                         }
 
-                        <article class="content">
+                        <article class="article-content">
                             @Body
                         </article>
                     </main>
@@ -47,9 +51,3 @@
         </div>
     </CascadingValue>
 </CascadingValue>
-
-<div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
-</div>

@@ -21,12 +21,15 @@ builder.Services.AddSingleton<UserStateService>();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddBlazorBootstrap();
+
 // Add device-specific services used by the Jamper_Financial.Shared project
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
 builder.Services.AddSingleton<LoginStateService>();
 
 // Register the UserService with the dependency injection container
 builder.Services.AddScoped<IUserService, UserService>(sp => new UserService(connectionString));
+builder.Services.AddScoped<IBudgetInsightsService, BudgetInsightsService>(sp => new BudgetInsightsService(connectionString));
 
 // Add Firebase Service
 builder.Services.AddSingleton<FirebaseService>();
