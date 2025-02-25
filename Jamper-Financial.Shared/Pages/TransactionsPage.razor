@@ -19,7 +19,7 @@
                 <div class="chart-placeholder">[Line Chart]</div>
             </div>
             <div class="chart">
-                <div class="chart-placeholder">[Pie Chart]</div>
+                <div class="chart-placeholder">[Pie Chart 1]</div>
             </div>
         </div>
     </div>
@@ -55,7 +55,7 @@
                                 <td>1234 ****</td>
                                 <td>@transaction.Date.ToString("dd MMM, hh:mm tt")</td>
                                 <td class="@(transaction.Debit > 0 ? "negative" : "positive")">@((transaction.Debit > 0 ? transaction.Debit : transaction.Credit).ToString("C"))</td>
-                                <td @onclick:stopPropagation="true"><button class="view-details">View Receipt</button></td>
+                                <td><button class="view-details">View Receipt</button></td>
                             </tr>
                         }
                     }
@@ -180,10 +180,6 @@
         IsEditMode = true;
         ShowDeleteConfirmation = false;
         ShowAddTransactionModal = true;
-        if (string.IsNullOrEmpty(NewTransaction.Frequency))
-        {
-            NewTransaction.Frequency = "None";
-        }
     }
 
     private void CloseAddTransactionModal()
@@ -193,7 +189,6 @@
 
     private async Task HandleAddOrEditTransaction()
     {
-        NewTransaction.Amount = Amount;
         await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
         CloseAddTransactionModal();
         transactions = await TransactionManager.LoadTransactionsAsync();
@@ -254,3 +249,4 @@
         return $"#{random.Next(0x1000000):X6}";
     }
 }
+

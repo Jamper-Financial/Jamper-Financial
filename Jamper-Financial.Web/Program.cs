@@ -11,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 var dbPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "AppDatabase.db");
 var connectionString = $"Data Source={dbPath}";
 
+//add GoalState
+builder.Services.AddSingleton<GoalState>();
+
 //add stateservice
 builder.Services.AddSingleton<UserStateService>();
 
@@ -18,12 +21,15 @@ builder.Services.AddSingleton<UserStateService>();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
+builder.Services.AddBlazorBootstrap();
+
 // Add device-specific services used by the Jamper_Financial.Shared project
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
 builder.Services.AddSingleton<LoginStateService>();
 
 // Register the UserService with the dependency injection container
 builder.Services.AddScoped<IUserService, UserService>(sp => new UserService(connectionString));
+builder.Services.AddScoped<IBudgetInsightsService, BudgetInsightsService>(sp => new BudgetInsightsService(connectionString));
 
 // Add Firebase Service
 builder.Services.AddSingleton<FirebaseService>();
@@ -36,9 +42,6 @@ FirebaseApp.Create(new AppOptions
 {
     Credential = GoogleCredential.FromFile("../Jamper-Financial.Shared/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json")
 });
-
-// Register the LoggedInUserService with the dependency injection container
-builder.Services.AddScoped<LoggedInUserService>();
 
 var app = builder.Build();
 

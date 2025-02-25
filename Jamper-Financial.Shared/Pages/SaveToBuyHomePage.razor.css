@@ -1,0 +1,56 @@
+﻿::deep .header {
+    font-size: 24px;
+    font-weight: bold;
+    color: #417828;
+    text-align: center;
+}
+
+::deep .content-container {
+    margin-top: -10px;
+    padding-bottom: 10px 20px;
+}
+
+::deep .form-group {
+    margin-bottom: 6px;
+}
+
+    ::deep .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    ::deep .form-group input,
+    ::deep .form-group select,
+    ::deep .form-group textarea {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ced4da;
+        border-radius: 0.5rem;
+        color: #B1BCC4;
+    }
+
+    ::deep .form-group .error {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+::deep .submit-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 1px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #62AD41;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+}
+
+    ::deep .submit-button:hover {
+        background-color: #417828;
+    }

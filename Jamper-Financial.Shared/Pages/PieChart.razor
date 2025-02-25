@@ -1,0 +1,43 @@
+@page "/custom-pie-chart"
+@inject IJSRuntime JSRuntime
+
+<canvas id="pieChartCanvas" width="50" height="50"></canvas>
+@code {
+    [Parameter] public List<string> Labels { get; set; } = new List<string>();
+    [Parameter] public List<decimal> Data { get; set; } = new List<decimal>();
+    [Parameter] public List<string> BackgroundColors { get; set; } = new List<string>();
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender) // Only initialize chart on first render
+        {
+            await InitializeChart();
+        }
+    }
+
+    private async Task InitializeChart()
+    {
+        Console.WriteLine("Initializing pie chart...");
+        var chartData = new
+        {
+            labels = Labels,
+            datasets = new[]
+            {
+                new {
+                    data = Data,
+                    backgroundColor = BackgroundColors,
+                    hoverOffset = 100
+                     }
+            }
+        };
+
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("initializePieChart", "pieChartCanvas", chartData);
+        }
+        catch (JSException ex)
+        {
+            Console.WriteLine($"JSException: {ex.Message}"); // Log detailed JS errors
+        }
+    }
+}

@@ -53,6 +53,7 @@ namespace Jamper_Financial.Shared.Services
                 }
             }
         }
+
         public static void CreateUserAccount(string firstName, string lastName, string username, DateTime Birthday, string email, string password)
         {
             string hashedPassword = HashPassword(password);

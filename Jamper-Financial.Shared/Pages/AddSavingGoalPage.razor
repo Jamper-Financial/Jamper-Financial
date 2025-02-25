@@ -1,0 +1,137 @@
+﻿@page "/add-saving-goal"
+@using Jamper_Financial.Shared.Services
+@using Jamper_Financial.Shared.Data
+@inject NavigationManager Navigation
+@inject GoalState GoalState
+
+<style>
+    .back-button {
+        display: block;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #ffffff;
+        background-color: #6c757d; 
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px; 
+    }
+
+    .back-button:hover {
+        background-color: #5a6268;
+    }
+</style>
+
+<div class="header-container">
+    <h3 class="header">Add a Saving Goal</h3>
+</div>
+<div class="content-container">
+    <div class="form-container">
+        <div class="form-group">
+            <label for="goalName">Name of goal</label>
+            <input type="text" id="goalName" @bind="goalName" />
+            @if (string.IsNullOrEmpty(goalName))
+            {
+                <span class="error">Goal Name is required!</span>
+            }
+        </div>
+        <div class="form-group">
+            <label>Account Type</label>
+            <div>
+                <button class="account-button @(accountType == "Savings" ? "selected-button" : "")" @onclick='() => SetAccountType("Savings")'>Savings Account</button>
+                <button class="account-button @(accountType == "Checking" ? "selected-button" : "")" @onclick='() => SetAccountType("Checking")'>Checking Account</button>
+            </div>
+            @if (string.IsNullOrEmpty(accountType))
+            {
+                <span class="error">Account Type is required!</span>
+            }
+        </div>
+        <div class="form-group">
+            <label>Category</label>
+            <div>
+                <button class="category-button @(category == "Entertainment" ? "selected-button" : "")" @onclick='() => SetCategory("Entertainment")'>Entertainment</button>
+                <button class="category-button @(category == "Debt & Loans" ? "selected-button" : "")" @onclick='() => SetCategory("Debt & Loans")'>Debt & Loans</button>
+                <button class="category-button @(category == "Subscriptions & Memberships" ? "selected-button" : "")" @onclick='() => SetCategory("Subscriptions & Memberships")'>Subscriptions & Memberships</button>
+                <button class="category-button @(category == "Savings & Investments" ? "selected-button" : "")" @onclick='() => SetCategory("Savings & Investments")'>Savings & Investments</button>
+            </div>
+            @if (string.IsNullOrEmpty(category))
+            {
+                <span class="error">Category is required!</span>
+            }
+        </div>
+        <div class="form-group">
+            <label for="startDate">Start Date</label>
+            <input type="date" id="startDate" @bind="startDate" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        </div>
+        <div class="form-group">
+            <label for="endDate">End Date</label>
+            <input type="date" id="endDate" @bind="endDate" min="@startDate.ToString("yyyy-MM-dd")" />
+        </div>
+        <div class="form-group">
+            <label for="amount">Amount</label>
+            <input type="number" id="amount" step="0.01" @bind="amount" />
+        </div>
+        <div class="form-group">
+            <label for="frequency">Frequency</label>
+            <select id="frequency" @bind="frequency">
+                <option value="">Select Frequency</option>
+                <option value="Daily">Daily</option>
+                <option value="Every 2 Weeks">Every 2 Weeks</option>
+                <option value="Monthly">Monthly</option>
+                <option value="Annually">Annually</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea id="description" @bind="description"></textarea>
+        </div>
+        <button class="submit-button" @onclick="SubmitGoal">Submit</button>
+        <button class="back-button" @onclick="GoBack">Back</button>
+    </div>
+</div>
+
+@code {
+    private string goalName;
+    private string accountType;
+    private string category;
+    private DateTime startDate = DateTime.Today;
+    private DateTime endDate = DateTime.Today.AddDays(1);  
+    private decimal amount;
+    private string frequency;
+    private string description;
+
+    private void SetAccountType(string type)
+    {
+        accountType = type;
+    }
+
+    private void SetCategory(string selectedCategory)
+    {
+        category = selectedCategory;
+    }
+
+    private void SubmitGoal()
+    {
+        if (!string.IsNullOrEmpty(goalName) && !string.IsNullOrEmpty(accountType) && !string.IsNullOrEmpty(category))
+        {
+            var newGoal = new Goal
+                {
+                    Name = goalName,
+                    AccountType = accountType,
+                    Category = category,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    Amount = amount,
+                    Frequency = frequency,
+                    Description = description
+                };
+
+            GoalState.AddGoal(newGoal);
+            Navigation.NavigateTo("/view-goals-page");
+        }
+    }
+    private void GoBack() {
+        Navigation.NavigateTo("/saving-goals-page");
+    }
+}

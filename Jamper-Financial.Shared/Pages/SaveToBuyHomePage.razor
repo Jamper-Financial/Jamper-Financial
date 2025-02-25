@@ -1,0 +1,122 @@
+﻿@page "/save-to-buy-home"
+@using Jamper_Financial.Shared.Services
+@using Jamper_Financial.Shared.Data
+@inject NavigationManager Navigation
+@inject GoalState GoalState
+
+<style>
+    .back-button {
+        display: block;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #ffffff;
+        background-color: #6c757d; 
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 10px; 
+    }
+
+    .back-button:hover {
+        background-color: #5a6268;
+    }
+</style>
+
+<div class="header-container">
+    <h3 class="header">Save to Buy a Home</h3>
+</div>
+<div class="content-container">
+    <div class="form-container">
+        <div class="form-group">
+            <label for="homePrice">Home Price</label>
+            <input type="number" id="homePrice" step="0.01" @bind="homePrice" />
+            @if (homePrice <= 0)
+            {
+                <span class="error">Home Price must be greater than zero!</span>
+            }
+        </div>
+        <div class="form-group">
+            <label for="downPayment">Down Payment</label>
+            <input type="number" id="downPayment" step="0.01" @bind="downPayment" />
+            @if (downPayment <= 0)
+            {
+                <span class="error">Down Payment must be greater than zero!</span>
+            }
+        </div>
+        <div class="form-group">
+            <label for="currentSavings">Current Savings</label>
+            <input type="number" id="currentSavings" step="0.01" @bind="currentSavings" />
+        </div>
+        <div class="form-group">
+            <label for="monthlySavings">Monthly Savings</label>
+            <input type="number" id="monthlySavings" step="0.01" @bind="monthlySavings" />
+        </div>
+        <div class="form-group">
+            <label for="targetPurchaseDate">Target Purchase Date</label>
+            <input type="date" id="targetPurchaseDate" @bind="targetPurchaseDate" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        </div>
+        <div class="form-group">
+            <label for="loanInterestRate">Loan Interest Rate (%)</label>
+            <input type="number" id="loanInterestRate" step="0.01" @bind="loanInterestRate" />
+        </div>
+        <div class="form-group">
+            <label for="loanTerm">Loan Term (years)</label>
+            <input type="number" id="loanTerm" step="1" @bind="loanTerm" />
+        </div>
+        <div class="form-group">
+            <label for="propertyTaxes">Property Taxes</label>
+            <input type="number" id="propertyTaxes" step="0.01" @bind="propertyTaxes" />
+        </div>
+        <div class="form-group">
+            <label for="homeInsurance">Home Insurance</label>
+            <input type="number" id="homeInsurance" step="0.01" @bind="homeInsurance" />
+        </div>
+        <div class="form-group">
+            <label for="otherCosts">Other Costs</label>
+            <input type="number" id="otherCosts" step="0.01" @bind="otherCosts" />
+        </div>
+        <button class="submit-button" @onclick="SubmitHomeGoal">Submit</button>
+        <button class="back-button" @onclick="GoBack">Back</button>
+    </div>
+</div>
+
+@code {
+    private decimal homePrice;
+    private decimal downPayment;
+    private decimal currentSavings;
+    private decimal monthlySavings;
+    private DateTime targetPurchaseDate = DateTime.Today;
+    private decimal loanInterestRate;
+    private int loanTerm;
+    private decimal propertyTaxes;
+    private decimal homeInsurance;
+    private decimal otherCosts;
+
+    private void SubmitHomeGoal()
+    {
+        if (homePrice > 0 && downPayment > 0)
+        {
+            var homeGoal = new Goal
+                {
+                    Name = "Save to Buy a Home",
+                    Amount = downPayment,
+                    StartDate = DateTime.Now,
+                    EndDate = targetPurchaseDate,
+                    Description = $"Home Price: {homePrice}, Current Savings: {currentSavings}, Monthly Savings: {monthlySavings}, " +
+                                  $"Loan Interest Rate: {loanInterestRate}%, Loan Term: {loanTerm} years, Property Taxes: {propertyTaxes}, " +
+                                  $"Home Insurance: {homeInsurance}, Other Costs: {otherCosts}",
+                    Category = "Home",
+                    AccountType = "Savings",
+                    Frequency = "Monthly",
+                    IsHomeGoal = true
+                };
+
+            GoalState.AddGoal(homeGoal);
+            Navigation.NavigateTo("/view-goals-page");
+        }
+    }
+    private void GoBack() {
+        Navigation.NavigateTo("/saving-goals-page");
+    }
+}
