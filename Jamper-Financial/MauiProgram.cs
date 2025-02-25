@@ -25,6 +25,11 @@ namespace Jamper_Financial
 
             builder.Services.AddMauiBlazorWebView();
 
+            var builder = WebAssemblyHostBuilder.CreateDefault(args);
+            builder.Services.AddSingleton<GoalState>();
+
+            await builder.Build().RunAsync();
+
 #if DEBUG
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();

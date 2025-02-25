@@ -1,4 +1,144 @@
 ﻿@page "/saving-goals-page"
+@using Jamper_Financial.Shared.Services
+@using System.Globalization
+@using Jamper_Financial.Shared.Data
+@using Jamper_Financial.Shared.Utilities
 @inherits LayoutComponentBase
+@inject NavigationManager Navigation
+@inject GoalState GoalState
 
-<p>This page is to be implemented.</p>
+<div class="header-container">
+    <h3 class="header">Goals</h3>
+    <h3 class="header2">Quick Add Goal</h3>
+</div>
+<div class="content-container">
+    <div class="saving-goals-page">
+        <div class="button-container">
+            <button class="goal-button" @onclick="CreateNewSavingGoal">
+                Create Custom Goal
+                <img src="images/right-arrow.png" alt="Arrow" class="arrow-icon" />
+            </button>
+            <button class="goal-button" @onclick="SaveForEmergencyFund">
+                Emergency Fund
+                <img src="images/right-arrow.png" alt="Arrow" class="arrow-icon" />
+            </button>
+            <button class="goal-button" @onclick="SaveToBuyHome">
+                Save to Buy a Home
+                <img src="images/right-arrow.png" alt="Arrow" class="arrow-icon" />
+            </button>
+            <button class="goal-button" @onclick="SaveForTraveling">
+                Save for Traveling
+                <img src="images/right-arrow.png" alt="Arrow" class="arrow-icon" />
+            </button>
+            <button class="goal-button" @onclick="SaveForRetirement">
+                Save for Retirement
+                <img src="images/right-arrow.png" alt="Arrow" class="arrow-icon" />
+            </button>
+            <button class="view-goal-button" @onclick="ViewGoals">
+                View Goals
+                <img src="images/right-arrow.png" alt="Arrow" class="arrow-icon2" />
+            </button>
+        </div>
+    </div>
+    <div class="quick-add-goal">
+        <div class="quick-add-goal-section">
+            <p class="description">
+                Quick goals help you stay focused and motivated by setting short,
+                manageable objectives that prioritize immediate needs.
+                Easily add a quick goal to your list and track your progress with minimal setup,
+                keeping yourself on track without overwhelming planning.
+            </p>
+            <div class="form-group">
+                <label for="goalType">Goal Type</label>
+                <input type="text" id="goalType" @bind="goalType" />
+                @if (string.IsNullOrEmpty(goalType))
+                {
+                    <span class="error">Goal Type is required!</span>
+                }
+            </div>
+            <div class="form-group">
+                <label for="goalName">Name of goal</label>
+                <input type="text" id="goalName" @bind="goalName" />
+                @if (string.IsNullOrEmpty(goalName))
+                {
+                    <span class="error">Goal Name is required!</span>
+                }
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <input id="amount" type="number" step="0.01" @bind="amount" required />
+                @if (string.IsNullOrEmpty(goalName))
+                {
+                    <span class="error">Amount is required and must be greater than zero!</span>
+                }
+            </div>
+            <div class="form-group">
+                <label for="date">Date</label>
+                <input id="date" type="date" @bind="date" min="@DateTime.Today.ToString("yyyy-MM-dd")" required />
+            </div>
+        </div>
+        <button class="add-goal" @onclick="AddQuickGoal">Add Goal</button>
+    </div>
+</div>
+
+@code {
+    private string goalType;
+    private string goalName;
+    private decimal amount;
+    private DateTime date = DateTime.Today;
+
+    private void CreateNewSavingGoal()
+    {
+        //logic for creating a new goal
+        Navigation.NavigateTo("/add-saving-goal");
+    }
+
+    private void SaveForRetirement()
+    {
+        //logic for saving for retirement
+        Navigation.NavigateTo("/save-for-retirement");
+    }
+
+    private void SaveForTraveling()
+    {
+        //logic for saving for traveling
+        Navigation.NavigateTo("/save-for-traveling");
+    }
+
+    private void SaveToBuyHome()
+    {
+        //logic for saving to but a home
+        Navigation.NavigateTo("/save-to-buy-home");
+    }
+
+    private void SaveForEmergencyFund()
+    {
+        //logic for an emergency fund
+        Navigation.NavigateTo("/save-for-emergency-fund");
+    }
+
+    private void ViewGoals()
+    {
+        //logic to view goals
+        Navigation.NavigateTo("/view-goals-page");
+    }
+
+    private void AddQuickGoal()
+    {
+        //logic for adding a quick goal
+        if (!string.IsNullOrEmpty(goalType) && !string.IsNullOrEmpty(goalName) && amount > 0 && date != default)
+        {
+            var newGoal = new Goal
+                {
+                    Type = goalType,
+                    Name = goalName,
+                    Amount = amount,
+                    Date = date,
+                    IsQuickGoal = true
+                };
+
+            GoalState.AddGoal(newGoal);
+            Navigation.NavigateTo("/view-goals-page");
+        }
+    }
+}
