@@ -5,10 +5,17 @@
 @code {
     [CascadingParameter] private string PageTitle { get; set; }
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
+    [CascadingParameter] public string SearchTerm { get; set; }
 
     protected override void OnInitialized()
     {
         SetPageTitle("Calendar");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        UpdateFilteredTransactionsForSelectedMonth();
     }
 }
 
@@ -19,14 +26,14 @@
             <div class="sort-button">
                 <select @onchange="HandleSortChange" class="border-0">
                     <option value="" selected>Sort By</option>
-                    <option value="DateAsc">Date Asc</option>
-                    <option value="DateDesc">Date Desc</option>
-                    <option value="CategoryAsc">Category ↑</option>
-                    <option value="CategoryDesc">Category ↓</option>
-                    <option value="AmountAsc">Amount ↑</option>
-                    <option value="AmountDesc">Amount ↓</option>
-                    <option value="DescriptionAsc">Description ↑</option>
-                    <option value="DescriptionDesc">Description ↓</option>
+                    <option value="DateAsc">Date Ascending</option>
+                    <option value="DateDesc">Date Descending</option>
+                    <option value="CategoryAsc">Category Ascending</option>
+                    <option value="CategoryDesc">Category Descending</option>
+                    <option value="AmountAsc">Amount Ascending</option>
+                    <option value="AmountDesc">Amount Descending</option>
+                    <option value="DescriptionAsc">Description Ascending</option>
+                    <option value="DescriptionDesc">Description Descending</option>
                 </select>
             </div>
             <button class="filter-button" @onclick="ToggleFilterDropdown">Filter</button>
@@ -242,7 +249,6 @@
     public List<Transaction> FilteredTransactionsForSelectedMonth { get; set; } = new();
 
     // Search and Filter State
-    public string SearchTerm { get; set; } = string.Empty;
     public string FilterCategory { get; set; } = string.Empty;
     public double? MinAmount { get; set; } = null;
     public double? MaxAmount { get; set; } = null;
