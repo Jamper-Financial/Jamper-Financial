@@ -81,7 +81,7 @@ namespace Jamper_Financial.Shared.Data
                     CREATE TABLE IF NOT EXISTS Categories (
                         CategoryID INTEGER PRIMARY KEY AUTOINCREMENT,
                         UserID INTEGER NOT NULL,
-                        TransactionType INTEGER NOT NULL CHECK (TransactionType IN (0, 1),
+                        TransactionType INTEGER NOT NULL CHECK (TransactionType IN (0, 1)),
                         Name TEXT NOT NULL UNIQUE,
                         FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
                         
