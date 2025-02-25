@@ -4,6 +4,24 @@
 
 @code {
     [CascadingParameter] public string PageTitle { get; set; }
+    [Parameter] public EventCallback<string> OnSearch { get; set; }
+    private string searchTerm { get; set; } = string.Empty;
+
+    private async Task HandleSearch()
+    {
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            await OnSearch.InvokeAsync(searchTerm);
+        }
+    }
+
+    private async Task HandleKeyPress(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+        {
+            await HandleSearch();
+        }
+    }
 }
 
 <div class="header-container">
@@ -12,7 +30,8 @@
         <div class="overview">@PageTitle</div>
         <div class="search">
             <div class="search-background"></div>
-            <div class="search-text">Search for something</div>
+            <input type="text" @bind="searchTerm" @onkeypress="HandleKeyPress" placeholder="Search for something" />
+            <button @onclick="HandleSearch">Search</button>
         </div>
         <div class="icons">
             <div class="icon">

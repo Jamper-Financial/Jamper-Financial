@@ -17,5 +17,8 @@ AppDatabase.db
 *.props
 *.targets
 /Jamper-Financial.Web/obj
-/Jamper-Financial.Shared/node_modules
-/Jamper-Financial.Shared/obj
+Jamper-Financial/obj/Jamper-Financial.csproj.nuget.dgspec.json
+Jamper-Financial/obj/Jamper-Financial.csproj.nuget.g.props
+Jamper-Financial/obj/Jamper-Financial.csproj.nuget.g.targets
+Jamper-Financial/obj/project.assets.json
+Jamper-Financial/obj/project.nuget.cache
