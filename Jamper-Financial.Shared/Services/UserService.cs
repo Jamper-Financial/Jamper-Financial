@@ -1,4 +1,4 @@
-﻿﻿using Jamper_Financial.Shared.Models;
+﻿using Jamper_Financial.Shared.Models;
 using Microsoft.Data.Sqlite;
 
 namespace Jamper_Financial.Shared.Services
@@ -132,19 +132,13 @@ namespace Jamper_Financial.Shared.Services
             return null;
         }
 
-        public async Task<bool> UpdateUserProfileAsync(UserProfile userProfile)
+        public async Task UpdateUserProfileAsync(UserProfile userProfile)
         {
             using (var connection = new SqliteConnection(_connectionString))
             {
                 await connection.OpenAsync();
 
-                // Start a transaction to ensure atomicity
-                using (var transaction = connection.BeginTransaction())
-                {
-                    try
-                    {
-                        // Update the Profile table
-                        string updateProfileQuery = @"
+                string updateQuery = @"
                     UPDATE Profile
                     SET FirstName = @FirstName,
                         LastName = @LastName,
@@ -152,53 +146,34 @@ namespace Jamper_Financial.Shared.Services
                         Address = @Address,
                         City = @City,
                         PostalCode = @PostalCode,
-                        Country = @Country
+                        Country = @Country,
+                        Password = @Password,
+                        Email = @Email,
+                        PhoneNumber = @PhoneNumber,
+                        EmailConfirmed = @EmailConfirmed,
+                        PhoneNumberConfirmed = @PhoneNumberConfirmed
                     WHERE UserId = @UserId;
                 ";
 
-                        using (var updateProfileCommand = new SqliteCommand(updateProfileQuery, connection, transaction))
-                        {
-                            updateProfileCommand.Parameters.AddWithValue("@FirstName", userProfile.FirstName);
-                            updateProfileCommand.Parameters.AddWithValue("@LastName", userProfile.LastName);
-                            updateProfileCommand.Parameters.AddWithValue("@Birthday", (object)userProfile.Birthday ?? DBNull.Value);
-                            updateProfileCommand.Parameters.AddWithValue("@Address", (object)userProfile.Address ?? DBNull.Value);
-                            updateProfileCommand.Parameters.AddWithValue("@City", (object)userProfile.City ?? DBNull.Value);
-                            updateProfileCommand.Parameters.AddWithValue("@PostalCode", (object)userProfile.PostalCode ?? DBNull.Value);
-                            updateProfileCommand.Parameters.AddWithValue("@Country", (object)userProfile.Country ?? DBNull.Value);
-                            updateProfileCommand.Parameters.AddWithValue("@UserId", userProfile.UserId);
+                using (var command = new SqliteCommand(updateQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@FirstName", userProfile.FirstName);
+                    command.Parameters.AddWithValue("@LastName", userProfile.LastName);
+                    command.Parameters.AddWithValue("@Birthday", userProfile.Birthday);
+                    command.Parameters.AddWithValue("@Address", userProfile.Address);
+                    command.Parameters.AddWithValue("@City", userProfile.City);
+                    command.Parameters.AddWithValue("@PostalCode", userProfile.PostalCode);
+                    command.Parameters.AddWithValue("@Country", userProfile.Country);
+                    command.Parameters.AddWithValue("@Password", userProfile.Password);
+                    command.Parameters.AddWithValue("@Email", userProfile.Email);
+                    command.Parameters.AddWithValue("@PhoneNumber", userProfile.PhoneNumber);
+                    command.Parameters.AddWithValue("@EmailConfirmed", userProfile.EmailConfirmed);
+                    command.Parameters.AddWithValue("@PhoneNumberConfirmed", userProfile.PhoneNumberConfirmed);
+                    command.Parameters.AddWithValue("@UserId", userProfile.UserId);
 
-                            await updateProfileCommand.ExecuteNonQueryAsync();
-                        }
-
-                        // Update the Users table
-                        string updateUserQuery = @"
-                    UPDATE Users
-                    SET Email = @Email
-                    WHERE UserId = @UserId;
-                ";
-
-                        using (var updateUserCommand = new SqliteCommand(updateUserQuery, connection, transaction))
-                        {
-                            updateUserCommand.Parameters.AddWithValue("@Email", userProfile.Email);
-                            updateUserCommand.Parameters.AddWithValue("@UserId", userProfile.UserId);
-
-                            await updateUserCommand.ExecuteNonQueryAsync();
-                        }
-
-                        // Commit the transaction if both updates succeed
-                        transaction.Commit();
-                                        return true;
-                    }
-                    catch (Exception ex)
-                    {
-                        // Rollback the transaction in case of an error
-                        transaction.Rollback();
-                Console.WriteLine($"Error updating user profile: {ex.Message}");
-                return false;
-                    }
+                    await command.ExecuteNonQueryAsync();
                 }
             }
         }
-
     }
 }

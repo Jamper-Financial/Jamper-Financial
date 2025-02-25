@@ -1,12 +1,11 @@
 @page "/delete-account"
+@inject NavigationManager Navigation
+@inject LoggedInUserService LoggedInUserService
 @using System.ComponentModel.DataAnnotations
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Services
 @using Microsoft.Extensions.Logging
-@using Jamper_Financial.Shared.Models
-@inject NavigationManager Navigation
 @inject ILogger<DeleteAccount> Logger
-@inject UserStateService UserStateService
 
 <div class="delete-account-container">
     <div class="delete-account-left">
@@ -88,12 +87,12 @@
 
 @code {
     private bool showConfirmation = false;
-    private bool showAdminConfirmation = false;
-    private bool showAlert = false;
-    private bool showSuccessConfirmation = false;
-    private string alertMessage = "";
-    private bool isAdmin = false;
-    private DeleteAccountModel deleteAccountModel = new DeleteAccountModel();
+    private bool showAdminConfirmation = false; 
+    private bool showAlert = false; 
+    private bool showSuccessConfirmation = false; 
+    private string alertMessage = ""; 
+    private bool isAdmin = false; 
+    private DeleteAccountModel deleteAccountModel = new DeleteAccountModel(); 
 
     // Model for the delete account form
     private class DeleteAccountModel
@@ -111,8 +110,8 @@
             string enteredUsernameOrEmail = deleteAccountModel.UsernameOrEmail.Trim().ToLower();
 
             // Retrieve the logged-in user's username and email
-            string loggedInUsername = UserStateService.LoggedInUser.UserName?.Trim().ToLower();
-            string loggedInEmail = UserStateService.LoggedInUser.Email?.Trim().ToLower();
+            string loggedInUsername = LoggedInUserService.UserName?.Trim().ToLower();
+            string loggedInEmail = LoggedInUserService.Email?.Trim().ToLower();
 
             // Check if the entered username or email matches the logged-in user's username or email
             if (enteredUsernameOrEmail != loggedInUsername && enteredUsernameOrEmail != loggedInEmail)
@@ -136,12 +135,12 @@
             // Check if the user is an admin
             if (role == "Admin")
             {
-
+                
                 showAdminConfirmation = true;
             }
             else
             {
-
+                
                 showConfirmation = true;
             }
         }
@@ -186,7 +185,7 @@
         showAlert = true;
     }
 
-
+    
     private void CloseAlert()
     {
         showAlert = false;

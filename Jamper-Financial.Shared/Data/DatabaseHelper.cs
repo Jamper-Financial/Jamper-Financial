@@ -1,4 +1,4 @@
-﻿using System.Linq.Expressions;
+﻿﻿using System.Linq.Expressions;
 using Jamper_Financial.Shared.Models;
 using Microsoft.Data.Sqlite;
 
@@ -69,7 +69,7 @@ namespace Jamper_Financial.Shared.Data
                         Debit REAL NOT NULL,
                         Credit REAL NOT NULL,
                         Category TEXT NOT NULL,
-                        Color TEXT NOT NULL,
+                        Color TEXT,
                         Frequency TEXT,
                         EndDate TEXT
                     );
@@ -98,7 +98,7 @@ namespace Jamper_Financial.Shared.Data
                 }
             }
         }
-
+        
         private static void DeleteColumnsIfExists(SqliteConnection connection, string tableName, string[] columnsToDelete)
         {
             // Get the column names of the original table
@@ -196,7 +196,7 @@ namespace Jamper_Financial.Shared.Data
                 enableForeignKeyChecksCommand.ExecuteNonQuery();
             }
         }
-
+            
 
         private static void CreateTableIfNotExists(SqliteConnection connection, string tableName, string createTableQuery)
         {
@@ -244,7 +244,7 @@ namespace Jamper_Financial.Shared.Data
 
                 using (var command = new SqliteCommand(insertQuery, connection))
                 {
-
+                    
                     command.Parameters.AddWithValue("@Username", username);
                     command.Parameters.AddWithValue("@Email", email);
                     command.Parameters.AddWithValue("@Password", password);
@@ -262,15 +262,15 @@ namespace Jamper_Financial.Shared.Data
                     INSERT INTO Profile (UserID, FirstName, LastName, Birthday)
                     VALUES (@UserId, @FirstName, @LastName, @Birthday);";
 
-            using (var command = new SqliteCommand(insertQuery, connection))
-            {
-                command.Parameters.AddWithValue("@UserId", UserId);
-                command.Parameters.AddWithValue("@FirstName", FirstName);
-                command.Parameters.AddWithValue("@LastName", LastName);
-                command.Parameters.AddWithValue("@Birthday", Birthday);
+                            using (var command = new SqliteCommand(insertQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@UserId", UserId);
+                    command.Parameters.AddWithValue("@FirstName", FirstName);
+                    command.Parameters.AddWithValue("@LastName", LastName);
+                    command.Parameters.AddWithValue("@Birthday", Birthday);
 
-                command.ExecuteNonQuery();
-            }
+                    command.ExecuteNonQuery();
+                }
         }
 
         // This method is used to insert a new role into the database
@@ -637,14 +637,14 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
-        public static (int Userid, string Username, string Email) GetUserDetails(string identifier)
+        public static (string Username, string Email) GetUserDetails(string identifier)
         {
             using (var connection = GetConnection())
             {
                 connection.Open();
 
                 string query = @"
-                    SELECT UserId, Username, Email
+                    SELECT Username, Email
                     FROM Users
                     WHERE Username = @Identifier OR Email = @Identifier;
                 ";
@@ -656,14 +656,13 @@ namespace Jamper_Financial.Shared.Data
                     {
                         if (reader.Read())
                         {
-                            int userid = reader.GetInt32(reader.GetOrdinal("UserId"));
                             string username = reader["Username"].ToString();
                             string email = reader["Email"].ToString();
-                            return (userid, username, email);
+                            return (username, email);
                         }
                     }
                 }
-                return (0, null, null); // Return null if no user found
+                return (null, null); // Return null if no user found
             }
         }
 
