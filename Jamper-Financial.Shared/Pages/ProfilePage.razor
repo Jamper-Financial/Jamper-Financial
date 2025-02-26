@@ -6,7 +6,6 @@
 @inject LoginStateService LoginState
 
 @code {
-    [CascadingParameter] private string PageTitle { get; set; }
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
 
     protected override void OnInitialized()
