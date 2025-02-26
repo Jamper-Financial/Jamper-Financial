@@ -7,7 +7,7 @@
 
 .registration-container {
     display: flex;
-    height: 90vh;
+    height: 100%;
 }
 
 .registration-left {
@@ -81,6 +81,7 @@ button {
 }
 
 .back-button {
+    flex: 1;
     background-color: #f5f5f5;
     color: #62ad41;
     border: 1px solid #62ad41;
@@ -92,6 +93,7 @@ button {
     }
 
 .submit-button {
+    flex: 1;
     background-color: #62ad41;
     color: white;
     border: none;

@@ -141,7 +141,7 @@ canvas {
     cursor: pointer;
     text-align: center;
     width: 100%;
-    margin-top: 10px;
+/*    margin-top: 10px;*/
 }
 
      .submit-button:hover {

@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 97vh; /* Full height of the viewport */
+    height: 100%; /* Full height of the viewport */
     margin: 0;
     background: url('images/Jamper.png') no-repeat center center;
     background-size: contain;

@@ -1,4 +1,4 @@
-﻿using Jamper_Financial.Shared.Data;
+﻿﻿using Jamper_Financial.Shared.Data;
 
 namespace Jamper_Financial.Shared.Utilities
 {
