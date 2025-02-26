@@ -1,5 +1,4 @@
-﻿/* HeaderMenu.css */
-
+﻿﻿ /* HeaderMenu.css */
 .header-container {
     display: flex;
     width: 100%;
@@ -37,28 +36,49 @@
     flex: 2;
     position: relative;
     width: 100%;
-    max-width: 255px; /* Ensure the search bar doesn't grow too large */
-    height: 50px;
+    max-width: 400px; /* Increase max-width for better usability */
+    height: 40px; /* Adjust height for better alignment */
     display: flex;
     justify-content: center; /* Center the search bar */
+    align-items: center; /* Center items vertically */
 }
 
 .search-background {
     width: 100%;
     height: 100%;
     background-color: #f4f6f9;
-    border-radius: 40px;
+    border-radius: 20px; /* Adjust border-radius for a smoother look */
     position: absolute;
 }
 
-.search-text {
-    position: absolute;
-    left: 60px;
-    top: 16px;
-    color: #b1b1b1;
+.search input[type="text"] {
+    width: 100%;
+    height: 100%;
+    padding: 0 1rem; /* Add padding for better spacing */
+    border: none;
+    border-radius: 20px 0 0 20px; /* Match the background border-radius */
     font-size: 15px;
     font-family: 'Inter', sans-serif;
+    background-color: transparent; /* Make input background transparent */
+    z-index: 2; /* Ensure input is above the background */
 }
+
+.search button {
+    height: 100%;
+    padding: 0 1rem; /* Add padding for better spacing */
+    border: none;
+    border-radius: 0 20px 20px 0; /* Match the background border-radius */
+    background-color: #62ad41; /* Match the theme color */
+    color: white;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    z-index: 2; /* Ensure button is above the background */
+}
+
+    .search button:hover {
+        background-color: #519a37; /* Darker green on hover */
+    }
 
 .icons {
     flex: 1;

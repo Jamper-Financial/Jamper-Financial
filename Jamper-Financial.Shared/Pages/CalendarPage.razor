@@ -2,13 +2,21 @@
 @using System.Globalization
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Utilities
+
 @code {
     [CascadingParameter] private string PageTitle { get; set; }
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
+    [CascadingParameter] public string SearchTerm { get; set; }
 
     protected override void OnInitialized()
     {
         SetPageTitle("Calendar");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await base.OnParametersSetAsync();
+        UpdateFilteredTransactionsForSelectedMonth();
     }
 }
 
@@ -19,19 +27,16 @@
             <div class="sort-button">
                 <select @onchange="HandleSortChange" class="border-0">
                     <option value="" selected>Sort By</option>
-                    <option value="DateAsc">Date Asc</option>
-                    <option value="DateDesc">Date Desc</option>
-                    <option value="CategoryAsc">Category ↑</option>
-                    <option value="CategoryDesc">Category ↓</option>
-                    <option value="AmountAsc">Amount ↑</option>
-                    <option value="AmountDesc">Amount ↓</option>
-                    <option value="DescriptionAsc">Description ↑</option>
-                    <option value="DescriptionDesc">Description ↓</option>
+                    <option value="DateAsc">Date Ascending</option>
+                    <option value="DateDesc">Date Descending</option>
+                    <option value="CategoryAsc">Category Ascending</option>
+                    <option value="CategoryDesc">Category Descending</option>
+                    <option value="AmountAsc">Amount Ascending</option>
+                    <option value="AmountDesc">Amount Descending</option>
+                    <option value="DescriptionAsc">Description Ascending</option>
+                    <option value="DescriptionDesc">Description Descending</option>
                 </select>
             </div>
-        </div>
-        <div class="search-container">
-            <input type="text" class="search-bar" placeholder="Search transactions..." @bind="SearchTerm" @oninput="UpdateSearchResults" />
             <button class="filter-button" @onclick="ToggleFilterDropdown">Filter</button>
             <!-- Filter Dropdown -->
             @if (ShowFilterDropdown)
@@ -138,7 +143,7 @@
                             @(transaction.Debit > 0 ? "-" : "+")@((transaction.Debit > 0 ? transaction.Debit : transaction.Credit).ToString("C"))
                         </p>
                         <p>@transaction.Date.ToString("d")</p>
-                        <p>Frequency: @transaction.Frequency</p>
+                        <p>Frequency: @(string.IsNullOrEmpty(transaction.Frequency) ? "None" : transaction.Frequency)</p>
                         @if (transaction.EndDate.HasValue)
                         {
                             <p>End Date: @transaction.EndDate.Value.ToString("d")</p>
@@ -245,7 +250,6 @@
     public List<Transaction> FilteredTransactionsForSelectedMonth { get; set; } = new();
 
     // Search and Filter State
-    public string SearchTerm { get; set; } = string.Empty;
     public string FilterCategory { get; set; } = string.Empty;
     public double? MinAmount { get; set; } = null;
     public double? MaxAmount { get; set; } = null;
@@ -294,14 +298,7 @@
 
     private void UpdateFilteredTransactionsForSelectedMonth()
     {
-        FilteredTransactionsForSelectedMonth = TransactionsForSelectedMonth
-            .Where(t => (string.IsNullOrEmpty(FilterCategory) || t.Category.Equals(FilterCategory, StringComparison.OrdinalIgnoreCase)) &&
-                        (!MinAmount.HasValue ||
-                            (MinAmount.Value >= 0 ? (t.Debit >= (decimal)MinAmount || t.Credit >= (decimal)MinAmount) : (t.Debit >= (decimal)MinAmount || t.Credit >= (decimal)MinAmount))) &&
-                        (!MaxAmount.HasValue ||
-                            (MaxAmount.Value >= 0 ? (t.Debit <= (decimal)MaxAmount || t.Credit <= (decimal)MaxAmount) : (t.Debit <= (decimal)MaxAmount || t.Credit <= (decimal)MaxAmount))) &&
-                        (string.IsNullOrEmpty(SearchTerm) || t.Description.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)))
-            .ToList();
+        FilteredTransactionsForSelectedMonth = Filters.ApplyFilters(TransactionsForSelectedMonth, FilterCategory, MinAmount, MaxAmount, SearchTerm);
         ReapplySort();
         StateHasChanged();
     }
@@ -373,18 +370,12 @@
     private bool HasTransactions(DateTime date) =>
         GetFilteredTransactions(date).Any();
 
-    private List<Transaction> GetTransactions(DateTime date) =>
-        Transactions.Where(t => t.Date.Date == date.Date).ToList();
+    private List<Transaction> GetTransactions(DateTime date) => 
+        GetFilteredTransactions(date);
 
     private List<Transaction> GetFilteredTransactions(DateTime date) =>
-        Transactions.Where(t => t.Date.Date == date.Date &&
-                                (string.IsNullOrEmpty(FilterCategory) || t.Category.Equals(FilterCategory, StringComparison.OrdinalIgnoreCase)) &&
-                                (!MinAmount.HasValue ||
-                                 (MinAmount.Value >= 0 ? (t.Debit >= (decimal)MinAmount || t.Credit >= (decimal)MinAmount) : (t.Debit >= (decimal)MinAmount || t.Credit >= (decimal)MinAmount))) &&
-                                (!MaxAmount.HasValue ||
-                                 (MaxAmount.Value >= 0 ? (t.Debit <= (decimal)MaxAmount || t.Credit <= (decimal)MaxAmount) : (t.Debit <= (decimal)MaxAmount || t.Credit <= (decimal)MaxAmount))) &&
-                                (string.IsNullOrEmpty(SearchTerm) || t.Description.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)))
-                    .ToList();
+    Filters.ApplyFilters(Transactions.Where(t => t.Date.Date == date.Date).ToList(), FilterCategory, MinAmount, MaxAmount, SearchTerm);
+
 
     private void UpdateTransactionsForSelectedMonth()
     {
@@ -432,29 +423,7 @@
 
     private void SortTransactions(string sortBy, bool ascending)
     {
-        switch (sortBy)
-        {
-            case "Date":
-                FilteredTransactionsForSelectedMonth = ascending
-                    ? FilteredTransactionsForSelectedMonth.OrderBy(t => t.Date).ToList()
-                    : FilteredTransactionsForSelectedMonth.OrderByDescending(t => t.Date).ToList();
-                break;
-            case "Category":
-                FilteredTransactionsForSelectedMonth = ascending
-                    ? FilteredTransactionsForSelectedMonth.OrderBy(t => t.Category).ToList()
-                    : FilteredTransactionsForSelectedMonth.OrderByDescending(t => t.Category).ToList();
-                break;
-            case "Amount":
-                FilteredTransactionsForSelectedMonth = ascending
-                    ? FilteredTransactionsForSelectedMonth.OrderBy(t => t.Debit > 0 ? -t.Debit : t.Credit).ToList()
-                    : FilteredTransactionsForSelectedMonth.OrderByDescending(t => t.Debit > 0 ? -t.Debit : t.Credit).ToList();
-                break;
-            case "Description":
-                FilteredTransactionsForSelectedMonth = ascending
-                    ? FilteredTransactionsForSelectedMonth.OrderBy(t => t.Description).ToList()
-                    : FilteredTransactionsForSelectedMonth.OrderByDescending(t => t.Description).ToList();
-                break;
-        }
+        FilteredTransactionsForSelectedMonth = Sort.ApplySort(FilteredTransactionsForSelectedMonth, sortBy, ascending);
         StateHasChanged();
     }
 
@@ -516,6 +485,10 @@
         IsEditMode = true;
         ShowDeleteConfirmation = false;
         ShowAddTransactionModal = true;
+        if (string.IsNullOrEmpty(NewTransaction.Frequency))
+        {
+            NewTransaction.Frequency = "None";
+        }
     }
 
     private void CloseAddTransactionModal()
@@ -525,7 +498,9 @@
 
     private async Task HandleAddOrEditTransaction()
     {
+        NewTransaction.Amount = Amount;
         await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
+        Transactions = await TransactionManager.LoadTransactionsAsync();
         CloseAddTransactionModal();
         UpdateTransactionsForSelectedMonth();
         ReapplySort();
@@ -586,4 +561,3 @@
         return $"#{random.Next(0x1000000):X6}";
     }
 }
-

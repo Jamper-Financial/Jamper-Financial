@@ -1,4 +1,4 @@
-﻿html, body {
+﻿﻿html, body {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -32,56 +32,37 @@
 .sort-button {
     padding: 0.625rem;
     border: 0.0625rem solid #ddd;
-    border-radius: 0.625rem;
+    border-radius: 0.625rem 0 0 0.625rem;
     font-size: 0.875rem;
     cursor: pointer;
     background-color: #fff;
 }
 
-.search-container {
-    display: flex;
-    justify-content: center; /* Center content horizontally */
-    align-items: center; /* Center content vertically */
-    position: relative; /* Added to position the filter dropdown relative to this container */
-}
 
 .sort-container, .new-transaction {
     display: flex;
     justify-content: center; /* Center content horizontally */
+    position: relative;
     align-items: center; /* Center content vertically */
 }
 
-.sort-container select, .search-container input, .new-transaction {
-    max-width: 100%; /* Ensure elements don't overflow */
-}
-
-.search-container {
-    display: flex;
-    align-items: center;
-    position: relative;
-}
-
-.search-bar {
-    padding: 0.625rem;
-    border: 0.0625rem solid #ddd;
-    border-radius: 0.625rem 0 0 0.625rem;
-    width: 15.625rem;
-    font-size: 0.875rem;
-}
+    .sort-container select, .new-transaction {
+        max-width: 100%; /* Ensure elements don't overflow */
+    }
 
 .filter-button {
     background-color: #62ad41;
     color: white;
     border: none;
-    padding: 0.625rem 0.9375rem;
+    padding: 0.625rem 1.1rem;
     border-radius: 0 0.625rem 0.625rem 0;
     cursor: pointer;
     font-size: 0.875rem;
 }
 
-.filter-button:hover {
-    background-color: #519a37;
-}
+    .filter-button:hover {
+        background-color: #519a37;
+    }
 
 .amount-filter {
     display: flex;
@@ -103,19 +84,18 @@
     font-size: 0.875rem;
 }
 
-.new-transaction:hover {
-    background-color: #519a37;
-}
+    .new-transaction:hover {
+        background-color: #519a37;
+    }
 
 .calendar-page {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
-    height: 100vh; /* Full height of the viewport */
     background-color: #f5f5f5;
     font-family: 'Inter', sans-serif;
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
+    height: 100%;
 }
 
 /* Main Content Section */
@@ -126,7 +106,6 @@
     flex-grow: 1; /* Take up remaining space */
     padding: 1.25rem;
     box-sizing: border-box;
-    height: calc(100vh - 5rem); /* Adjust height to fit within viewport minus header */
 }
 
 /* Calendar Section */
@@ -184,7 +163,6 @@
 }
 
 .day-box {
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -261,27 +239,27 @@
     margin-bottom: 0.625rem;
 }
 
-.transaction-details-header h3 {
-    font-size: 1.125rem;
-    color: #417828;
-    margin: 0;
-    font-weight: bold;
-}
+    .transaction-details-header h3 {
+        font-size: 1.125rem;
+        color: #417828;
+        margin: 0;
+        font-weight: bold;
+    }
 
-.transaction-details-header .transaction-date {
-    font-weight: bold;
-    margin-top: 0.3125rem;
-}
+    .transaction-details-header .transaction-date {
+        font-weight: bold;
+        margin-top: 0.3125rem;
+    }
 
-.transaction-details-header select {
-    padding: 0.625rem;
-    border: 0.0625rem solid #ddd;
-    border-radius: 0.625rem;
-    font-size: 1rem;
-    cursor: pointer;
-    background-color: #fff;
-    height: 2.5rem; /* Ensure dropdown is the same height as others */
-}
+    .transaction-details-header select {
+        padding: 0.625rem;
+        border: 0.0625rem solid #ddd;
+        border-radius: 0.625rem;
+        font-size: 1rem;
+        cursor: pointer;
+        background-color: #fff;
+        height: 2.5rem; /* Ensure dropdown is the same height as others */
+    }
 
 .transaction-item {
     margin-bottom: 0.625rem;
@@ -296,55 +274,55 @@
     position: relative; /* Add this to position the edit button */
 }
 
-.transaction-item:hover {
-    background-color: rgba(98, 173, 65, 0.3); /* Darker background with 30% transparency */
-}
+    .transaction-item:hover {
+        background-color: rgba(98, 173, 65, 0.3); /* Darker background with 30% transparency */
+    }
 
     .transaction-item.selected-transaction {
         background-color: #ffe194; /* Highlight color for selected date transactions */
     }
 
-.transaction-item h4 {
-    margin: 0;
-    color: #6C63FF;
-    font-size: 1rem;
-    font-weight: bold;
-}
+    .transaction-item h4 {
+        margin: 0;
+        color: #6C63FF;
+        font-size: 1rem;
+        font-weight: bold;
+    }
 
-.transaction-item p {
-    margin: 0.125rem 0;
-    color: #555;
-}
+    .transaction-item p {
+        margin: 0.125rem 0;
+        color: #555;
+    }
 
-.transaction-item .description {
-    color: inherit; /* Inherit color from parent */
-}
+    .transaction-item .description {
+        color: inherit; /* Inherit color from parent */
+    }
 
-.transaction-item .positive-amount {
-    color: green;
-}
+    .transaction-item .positive-amount {
+        color: green;
+    }
 
-.transaction-item .negative-amount {
-    color: red;
-}
+    .transaction-item .negative-amount {
+        color: red;
+    }
 
-.transaction-item button {
-    background-color: #62ad41; /* Green color */
-    color: white;
-    border: none;
-    padding: 0.625rem 0.9375rem;
-    border-radius: 0.625rem;
-    cursor: pointer;
-    font-size: 0.875rem;
-    position: absolute; /* Position the button absolutely */
-    right: 0.625rem; /* Align it to the right */
-    top: 50%; /* Center it vertically */
-    transform: translateY(-50%); /* Adjust for perfect centering */
-}
+    .transaction-item button {
+        background-color: #62ad41; /* Green color */
+        color: white;
+        border: none;
+        padding: 0.625rem 0.9375rem;
+        border-radius: 0.625rem;
+        cursor: pointer;
+        font-size: 0.875rem;
+        position: absolute; /* Position the button absolutely */
+        right: 0.625rem; /* Align it to the right */
+        top: 50%; /* Center it vertically */
+        transform: translateY(-50%); /* Adjust for perfect centering */
+    }
 
-.transaction-item button:hover {
-    background-color: #519a37; /* Darker green on hover */
-}
+        .transaction-item button:hover {
+            background-color: #519a37; /* Darker green on hover */
+        }
 
 /* Modal */
 .modal {
@@ -372,22 +350,22 @@
     margin-bottom: 0.625rem;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 0.3125rem;
-    color: #444;
-    font-size: 0.875rem;
-}
+    .form-group label {
+        display: block;
+        margin-bottom: 0.3125rem;
+        color: #444;
+        font-size: 0.875rem;
+    }
 
-.form-group input,
-.form-group select {
-    width: 100%;
-    padding: 0.625rem;
-    box-sizing: border-box;
-    border: 0.0625rem solid #ddd;
-    border-radius: 0.625rem;
-    font-size: 0.875rem;
-}
+    .form-group input,
+    .form-group select {
+        width: 100%;
+        padding: 0.625rem;
+        box-sizing: border-box;
+        border: 0.0625rem solid #ddd;
+        border-radius: 0.625rem;
+        font-size: 0.875rem;
+    }
 
 /* Modal Buttons */
 .modal-content .button-group {
@@ -395,25 +373,25 @@
     justify-content: space-between;
 }
 
-.modal-content .button-group button {
-    flex: 1;
-    margin: 0 0.3125rem;
-}
+    .modal-content .button-group button {
+        flex: 1;
+        margin: 0 0.3125rem;
+    }
 
-.modal-content .button-group button.delete {
-    order: 1;
-    margin-right: auto;
-}
+        .modal-content .button-group button.delete {
+            order: 1;
+            margin-right: auto;
+        }
 
-.modal-content .button-group button.cancel {
-    order: 2;
-}
+        .modal-content .button-group button.cancel {
+            order: 2;
+        }
 
-.modal-content .button-group button.save,
-.modal-content .button-group button.add {
-    order: 3;
-    margin-left: auto;
-}
+        .modal-content .button-group button.save,
+        .modal-content .button-group button.add {
+            order: 3;
+            margin-left: auto;
+        }
 
 .modal-content .form-group button {
     width: 100%;
@@ -425,34 +403,34 @@
     margin-bottom: 0.625rem;
 }
 
-.modal-content .form-group button.save,
-.modal-content .form-group button.add {
-    background-color: #62ad41;
-    color: white;
-}
+    .modal-content .form-group button.save,
+    .modal-content .form-group button.add {
+        background-color: #62ad41;
+        color: white;
+    }
 
-.modal-content .form-group button.save:hover,
-.modal-content .form-group button.add:hover {
-    background-color: #519a37;
-}
+        .modal-content .form-group button.save:hover,
+        .modal-content .form-group button.add:hover {
+            background-color: #519a37;
+        }
 
-.modal-content .form-group button.cancel {
-    background-color: #ccc;
-    color: white;
-}
+    .modal-content .form-group button.cancel {
+        background-color: #ccc;
+        color: white;
+    }
 
-.modal-content .form-group button.cancel:hover {
-    background-color: #aaa;
-}
+        .modal-content .form-group button.cancel:hover {
+            background-color: #aaa;
+        }
 
-.modal-content .form-group button.delete {
-    background-color: #db4437;
-    color: white;
-}
+    .modal-content .form-group button.delete {
+        background-color: #db4437;
+        color: white;
+    }
 
-.modal-content .form-group button.delete:hover {
-    background-color: #c33c2f;
-}
+        .modal-content .form-group button.delete:hover {
+            background-color: #c33c2f;
+        }
 
 /* Filter Modal Buttons */
 .filter-dropdown .button-group {
@@ -460,47 +438,47 @@
     justify-content: flex-end;
 }
 
-.filter-dropdown .button-group button {
-    flex: 1;
-    margin: 0 0.3125rem;
-}
+    .filter-dropdown .button-group button {
+        flex: 1;
+        margin: 0 0.3125rem;
+    }
 
-.filter-dropdown .button-group button.cancel {
-    order: 1;
-}
+        .filter-dropdown .button-group button.cancel {
+            order: 1;
+        }
 
-.filter-dropdown .button-group button.apply {
-    order: 2;
-    margin-left: auto;
-}
+        .filter-dropdown .button-group button.apply {
+            order: 2;
+            margin-left: auto;
+        }
 
-.filter-dropdown .button-group button {
-    width: 100%;
-    padding: 0.625rem;
-    border: none;
-    border-radius: 0.625rem;
-    font-size: 0.875rem;
-    cursor: pointer;
-    margin-bottom: 0.625rem;
-}
+    .filter-dropdown .button-group button {
+        width: 100%;
+        padding: 0.625rem;
+        border: none;
+        border-radius: 0.625rem;
+        font-size: 0.875rem;
+        cursor: pointer;
+        margin-bottom: 0.625rem;
+    }
 
-.filter-dropdown .button-group button.apply {
-    background-color: #62ad41;
-    color: white;
-}
+        .filter-dropdown .button-group button.apply {
+            background-color: #62ad41;
+            color: white;
+        }
 
-.filter-dropdown .button-group button.apply:hover {
-    background-color: #519a37;
-}
+            .filter-dropdown .button-group button.apply:hover {
+                background-color: #519a37;
+            }
 
-.filter-dropdown .button-group button.cancel {
-    background-color: #ccc;
-    color: white;
-}
+        .filter-dropdown .button-group button.cancel {
+            background-color: #ccc;
+            color: white;
+        }
 
-.filter-dropdown .button-group button.cancel:hover {
-    background-color: #aaa;
-}
+            .filter-dropdown .button-group button.cancel:hover {
+                background-color: #aaa;
+            }
 
 .filter-dropdown {
     position: absolute;

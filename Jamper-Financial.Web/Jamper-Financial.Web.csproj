@@ -7,10 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Blazor.Bootstrap" />
-        <PackageReference Include="FirebaseAdmin" />
-        <PackageReference Include="sqlite-net-pcl" />
-        <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" />
+        <PackageReference Include="Blazor.Bootstrap" Version="3.3.1" />
+        <PackageReference Include="FirebaseAdmin" Version="3.1.0" />
+        <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+        <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.10" />
         <PackageReference Include="Tailwind.Extensions.AspNetCore" />
     </ItemGroup>
 
