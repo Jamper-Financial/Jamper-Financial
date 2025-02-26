@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "oEoFIZZkcDQ=",
+  "dgSpecHash": "Ckgn5bmJlHw=",
   "success": true,
   "projectFilePath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
   "expectedPackageFiles": [
@@ -30,13 +30,10 @@
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.configuration.json\\9.0.0\\microsoft.extensions.configuration.json.9.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\9.0.2\\microsoft.extensions.dependencyinjection.9.0.2.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\9.0.2\\microsoft.extensions.dependencyinjection.abstractions.9.0.2.nupkg.sha512",
-    "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\6.0.0\\microsoft.extensions.fileproviders.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\9.0.0\\microsoft.extensions.fileproviders.abstractions.9.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.fileproviders.composite\\9.0.0\\microsoft.extensions.fileproviders.composite.9.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.fileproviders.embedded\\9.0.0\\microsoft.extensions.fileproviders.embedded.9.0.0.nupkg.sha512",
-    "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\6.0.0\\microsoft.extensions.fileproviders.physical.6.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.fileproviders.physical\\9.0.0\\microsoft.extensions.fileproviders.physical.9.0.0.nupkg.sha512",
-    "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\6.0.0\\microsoft.extensions.filesystemglobbing.6.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.filesystemglobbing\\9.0.0\\microsoft.extensions.filesystemglobbing.9.0.0.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.logging\\9.0.2\\microsoft.extensions.logging.9.0.2.nupkg.sha512",
     "C:\\Users\\emild\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\9.0.2\\microsoft.extensions.logging.abstractions.9.0.2.nupkg.sha512",
@@ -175,6 +172,8 @@
       "message": "Project dependency Tailwind.Extensions.AspNetCore does not contain an inclusive lower bound. Include a lower bound in the dependency version to ensure consistent restore results.",
       "libraryId": "Tailwind.Extensions.AspNetCore",
       "targetGraphs": [
+        ".NETCoreApp,Version=v9.0",
+        ".NETCoreApp,Version=v9.0",
         ".NETCoreApp,Version=v9.0",
         ".NETCoreApp,Version=v9.0"
       ]
