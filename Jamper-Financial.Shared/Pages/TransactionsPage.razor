@@ -4,6 +4,16 @@
 @using Jamper_Financial.Shared.Data;
 @using Jamper_Financial.Shared.Utilities;
 
+@code {
+    [CascadingParameter] private Action<string> SetPageTitle { get; set; }
+
+    protected override void OnInitialized()
+    {
+        SetPageTitle("Transactions");
+    }
+
+}
+
 <div class="transactions-page">
 
     @* Expenses Section *@

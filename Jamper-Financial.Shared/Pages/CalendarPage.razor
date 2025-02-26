@@ -4,7 +4,6 @@
 @using Jamper_Financial.Shared.Utilities
 
 @code {
-    [CascadingParameter] private string PageTitle { get; set; }
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
     [CascadingParameter] public string SearchTerm { get; set; }
 

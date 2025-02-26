@@ -8,7 +8,6 @@
 @inject IUserService UserService
 
 @code {
-    [CascadingParameter] private string? PageTitle { get; set; }
     [CascadingParameter] private Action<string>? SetPageTitle { get; set; }
     [CascadingParameter] private Action<bool>? LoadBlazoriseScripts { get; set; }
 
