@@ -24,6 +24,7 @@ namespace Jamper_Financial.Shared.Data
                         Email TEXT NOT NULL UNIQUE,
                         Password TEXT NOT NULL,
                         SSO TEXT
+
                     );
                 ");
 
