@@ -17995,7 +17995,7 @@
         }
       }
     },
-    "net9.0-ios18.0": {
+    "net9.0-ios18.2": {
       "Blazor.Bootstrap/3.3.1": {
         "type": "package",
         "dependencies": {
@@ -19046,7 +19046,7 @@
         }
       }
     },
-    "net9.0-ios18.0/android-arm64": {
+    "net9.0-ios18.2/android-arm64": {
       "Blazor.Bootstrap/3.3.1": {
         "type": "package",
         "dependencies": {
@@ -20091,7 +20091,7 @@
         }
       }
     },
-    "net9.0-ios18.0/android-x64": {
+    "net9.0-ios18.2/android-x64": {
       "Blazor.Bootstrap/3.3.1": {
         "type": "package",
         "dependencies": {
@@ -21136,7 +21136,7 @@
         }
       }
     },
-    "net9.0-ios18.0/iossimulator-x64": {
+    "net9.0-ios18.2/iossimulator-x64": {
       "Blazor.Bootstrap/3.3.1": {
         "type": "package",
         "dependencies": {
@@ -22181,7 +22181,7 @@
         }
       }
     },
-    "net9.0-ios18.0/maccatalyst-x64": {
+    "net9.0-ios18.2/maccatalyst-x64": {
       "Blazor.Bootstrap/3.3.1": {
         "type": "package",
         "dependencies": {
@@ -23226,7 +23226,7 @@
         }
       }
     },
-    "net9.0-ios18.0/win10-x64": {
+    "net9.0-ios18.2/win10-x64": {
       "Blazor.Bootstrap/3.3.1": {
         "type": "package",
         "dependencies": {
@@ -24271,7 +24271,7 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0": {
+    "net9.0-maccatalyst18.2": {
       "Blazor.Bootstrap/3.3.1": {
         "type": "package",
         "dependencies": {
@@ -25416,7 +25416,7 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0/android-arm64": {
+    "net9.0-maccatalyst18.2/android-arm64": {
       "Blazor.Bootstrap/3.3.1": {
         "type": "package",
         "dependencies": {
@@ -26468,7 +26468,7 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0/android-x64": {
+    "net9.0-maccatalyst18.2/android-x64": {
       "Blazor.Bootstrap/3.3.1": {
         "type": "package",
         "dependencies": {
@@ -27520,7 +27520,7 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0/iossimulator-x64": {
+    "net9.0-maccatalyst18.2/iossimulator-x64": {
       "Blazor.Bootstrap/3.3.1": {
         "type": "package",
         "dependencies": {
@@ -28569,7 +28569,7 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0/maccatalyst-x64": {
+    "net9.0-maccatalyst18.2/maccatalyst-x64": {
       "Blazor.Bootstrap/3.3.1": {
         "type": "package",
         "dependencies": {
@@ -29621,7 +29621,7 @@
         }
       }
     },
-    "net9.0-maccatalyst18.0/win10-x64": {
+    "net9.0-maccatalyst18.2/win10-x64": {
       "Blazor.Bootstrap/3.3.1": {
         "type": "package",
         "dependencies": {
@@ -43080,7 +43080,7 @@
       "Microsoft.NET.ILLink.Tasks >= 9.0.0",
       "Tailwind.Extensions.AspNetCore"
     ],
-    "net9.0-ios18.0": [
+    "net9.0-ios18.2": [
       "Jamper-Financial.Shared >= 1.0.0",
       "Microsoft.AspNetCore.Components.WebView.Maui >= 9.0.40",
       "Microsoft.Extensions.Logging.Debug >= 9.0.2",
@@ -43088,7 +43088,7 @@
       "Microsoft.NET.ILLink.Tasks >= 9.0.0",
       "Tailwind.Extensions.AspNetCore"
     ],
-    "net9.0-maccatalyst18.0": [
+    "net9.0-maccatalyst18.2": [
       "Jamper-Financial.Shared >= 1.0.0",
       "Microsoft.AspNetCore.Components.WebView.Maui >= 9.0.40",
       "Microsoft.Extensions.Logging.Debug >= 9.0.2",
@@ -43105,24 +43105,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\emild\\.nuget\\packages\\": {},
+    "C:\\Users\\paolo\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\School Files\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
+      "projectUniqueName": "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
       "projectName": "Jamper-Financial",
-      "projectPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
-      "packagesPath": "C:\\Users\\emild\\.nuget\\packages\\",
-      "outputPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial\\obj\\",
+      "projectPath": "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
+      "packagesPath": "C:\\Users\\paolo\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\obj\\",
       "projectStyle": "PackageReference",
       "crossTargeting": true,
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\emild\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\paolo\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -43141,32 +43141,32 @@
         "net9.0-android35.0": {
           "targetAlias": "net9.0-android",
           "projectReferences": {
-            "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         },
-        "net9.0-ios18.0": {
+        "net9.0-ios18.2": {
           "targetAlias": "net9.0-ios",
           "projectReferences": {
-            "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         },
-        "net9.0-maccatalyst18.0": {
+        "net9.0-maccatalyst18.2": {
           "targetAlias": "net9.0-maccatalyst",
           "projectReferences": {
-            "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         },
         "net9.0-windows10.0.19041": {
           "targetAlias": "net9.0-windows10.0.19041.0",
           "projectReferences": {
-            "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-              "projectPath": "C:\\School Files\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+            "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+              "projectPath": "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
             }
           }
         }
@@ -43221,6 +43221,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[9.0.1, 9.0.1]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.Android": {
             "privateAssets": "all"
@@ -43231,7 +43237,7 @@
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
       },
-      "net9.0-ios18.0": {
+      "net9.0-ios18.2": {
         "targetAlias": "net9.0-ios",
         "dependencies": {
           "Microsoft.AspNetCore.Components.WebView.Maui": {
@@ -43268,6 +43274,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[9.0.1, 9.0.1]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.iOS": {
             "privateAssets": "all"
@@ -43278,7 +43290,7 @@
         },
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
       },
-      "net9.0-maccatalyst18.0": {
+      "net9.0-maccatalyst18.2": {
         "targetAlias": "net9.0-maccatalyst",
         "dependencies": {
           "Microsoft.AspNetCore.Components.WebView.Maui": {
@@ -43316,6 +43328,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[9.0.1, 9.0.1]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.MacCatalyst": {
             "privateAssets": "all"

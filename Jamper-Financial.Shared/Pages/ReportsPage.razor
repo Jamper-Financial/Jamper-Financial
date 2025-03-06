@@ -10,4 +10,94 @@
     }
 }
 
-<p>This page is to be implemented.</p>
+<style>
+    .reports-page {
+        padding: 20px;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .report-container {
+        width: 100%;
+        max-width: 1200px;
+        margin-bottom: 20px;
+    }
+
+    .months {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+    }
+
+    .export-buttons {
+        display: flex;
+        gap: 10px;
+        margin: 10px 0;
+    }
+
+    .btn {
+        padding: 5px 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .custom-report-btn {
+        background-color: #28a745;
+    }
+
+    .graph-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 25px;
+        margin: 10px 0;
+        height: 250px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+    }
+
+    .savings-info {
+        margin-bottom: 10px;
+    }
+
+    .savings-info p {
+        margin: 5px 0;
+    }
+</style>
+
+<div class="reports-page">
+    <div class="report-container">
+        <h3>Budget Report Overview</h3>
+
+        
+        <div class="graph-card">
+            <!-- Placeholder for the graph -->
+            <p>Graph will be displayed here.</p>
+        </div>
+
+        <div class="export-buttons">
+            <button class="btn">Export to CSV</button>
+            <button class="btn">Export to PDF</button>
+        </div>
+    </div>
+
+    <div class="report-container">
+        <h3>Savings Report Overview</h3>        
+
+        <div class="graph-card">
+            <!-- Placeholder for the graph -->
+            <p>Graph will be displayed here.</p>
+        </div>
+        <div class="export-buttons">
+            <button class="btn">Export to CSV</button>
+            <button class="btn">Export to PDF</button>
+        </div>
+        <button class="btn custom-report-btn">Create Custom Report</button>
+    </div>
+</div>
