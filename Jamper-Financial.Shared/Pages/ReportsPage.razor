@@ -1,103 +1,596 @@
 ﻿@page "/reports-page"
+@using Jamper_Financial.Shared.Utilities
+@using Jamper_Financial.Shared.Data
+@using System.Text
 @inherits LayoutComponentBase
+
+@inject NavigationManager NavigationManager
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
 
-    protected override void OnInitialized()
+    // Toggles the "Create Custom Report" modal
+    private bool showCreateReportModal = false;
+    // Toggles the "Report Results" modal
+    private bool showResultsModal = false;
+
+    // User-selected categories, date range, etc.
+    private List<string> selectedCategories = new List<string>();
+    private bool useLast6Months = true;
+    private DateTime fromDate = DateTime.Now.AddMonths(-6);
+    private DateTime toDate = DateTime.Now;
+
+    // Validation error messages
+    private string categoryError = string.Empty;
+    private string dateError = string.Empty;
+
+    // Transactions from the DB, and the filtered subset
+    private List<Transaction> transactions = new List<Transaction>();
+    private List<Transaction> filteredTransactions = new List<Transaction>();
+
+    // Report fields
+    private string reportName = string.Empty;
+    private string reportDescription = string.Empty;
+
+    // Calculate totals for Debit/Credit columns
+    private decimal totalDebit => filteredTransactions.Sum(t => t.Debit);
+    private decimal totalCredit => filteredTransactions.Sum(t => t.Credit);
+
+    protected override async Task OnInitializedAsync()
     {
+        // Set page title in your layout
         SetPageTitle("Reports");
+
+        // Load all transactions from the database
+        var allFromDb = await TransactionHelper.GetTransactionsAsync();
+        transactions = allFromDb.ToList();
+
+        // By default, show all transactions
+        filteredTransactions = transactions;
+    }
+
+    // -------------------------
+    // Modal: Create Custom Report
+    // -------------------------
+    private void OpenCreateReportModal()
+    {
+        // Show the Create Custom Report modal
+        showCreateReportModal = true;
+        // Clear any previous error messages
+        categoryError = string.Empty;
+        dateError = string.Empty;
+    }
+
+    private void CloseCreateReportModal()
+    {
+        // Hide the Create Custom Report modal
+        showCreateReportModal = false;
+    }
+
+    // -------------------------
+    // Modal: Report Results
+    // -------------------------
+    private void OpenResultsModal()
+    {
+        // Show the Report Results modal
+        showResultsModal = true;
+    }
+
+    private void CloseResultsModal()
+    {
+        // Hide the Report Results modal
+        showResultsModal = false;
+    }
+
+    // -------------------------
+    // View Report logic
+    // -------------------------
+    private void ViewReport()
+    {
+        // If user checks "Last 6 Months," override the date range
+        if (useLast6Months)
+        {
+            fromDate = DateTime.Now.AddMonths(-6);
+            toDate   = DateTime.Now;
+        }
+
+        // Validate category selection and date range
+        if (!ValidateCategories() | !ValidateDates())
+        {
+            return; // If invalid, do nothing
+        }
+
+        // Filter transactions by categories and date range
+        filteredTransactions = transactions
+            .Where(t => selectedCategories.Contains("All") || selectedCategories.Contains(t.Category))
+            .Where(t => t.Date >= fromDate && t.Date <= toDate)
+            .ToList();
+
+        // Close the Create Custom Report modal, then show the Report Results
+        CloseCreateReportModal();
+        OpenResultsModal();
+    }
+
+    // Make sure the user selected at least one category
+    private bool ValidateCategories()
+    {
+        if (selectedCategories.Count == 0)
+        {
+            categoryError = "Please select at least one category.";
+            return false;
+        }
+        categoryError = string.Empty;
+        return true;
+    }
+
+    // Ensure "To" date is not before "From" date
+    private bool ValidateDates()
+    {
+        if (toDate < fromDate)
+        {
+            dateError = "The 'To' date cannot be before the 'From' date.";
+            return false;
+        }
+        dateError = string.Empty;
+        return true;
+    }
+
+    // Called when the user changes the "From" date input
+    private void OnFromDateChange(ChangeEventArgs e)
+    {
+        if (DateTime.TryParse(e.Value?.ToString(), out var newDate))
+        {
+            fromDate = newDate;
+        }
+        ValidateDates();
+    }
+
+    // Called when the user changes the "To" date input
+    private void OnToDateChange(ChangeEventArgs e)
+    {
+        if (DateTime.TryParse(e.Value?.ToString(), out var newDate))
+        {
+            toDate = newDate;
+        }
+        ValidateDates();
+    }
+
+    // Called when the user changes categories in the multi-select
+    private void OnCategoriesChange(ChangeEventArgs e)
+    {
+        var selectedOptions = (e.Value as IEnumerable<string>)?.ToList() ?? new List<string>();
+        selectedCategories = selectedOptions;
+        ValidateCategories();
+    }
+
+    // Only enable "View Report" if no errors
+    private bool CanViewReport => string.IsNullOrEmpty(categoryError) && string.IsNullOrEmpty(dateError);
+
+    // Go back from the Report Results to the Create Custom Report modal
+    private void GoBackToFilters()
+    {
+        showResultsModal = false;
+        showCreateReportModal = true;
+    }
+
+    // -------------------------
+    // Export CSV/PDF
+    // -------------------------
+    private void ExportToCsv()
+    {
+        // If "Last 6 Months" is checked, override date range
+        if (useLast6Months)
+        {
+            fromDate = DateTime.Now.AddMonths(-6);
+            toDate   = DateTime.Now;
+        }
+
+        // Build query string for categories, name, description, etc.
+        var catParam = string.Join(",", selectedCategories);
+        var url = $"/export/csv?reportName={Uri.EscapeDataString(reportName)}" +
+                  $"&description={Uri.EscapeDataString(reportDescription)}" +
+                  $"&fromDate={fromDate:o}&toDate={toDate:o}" +
+                  $"&categories={Uri.EscapeDataString(catParam)}";
+
+        // Force a navigation to download the CSV
+        NavigationManager.NavigateTo(url, forceLoad: true);
+    }
+
+    private void ExportToPdf()
+    {
+        // If "Last 6 Months" is checked, override date range
+        if (useLast6Months)
+        {
+            fromDate = DateTime.Now.AddMonths(-6);
+            toDate   = DateTime.Now;
+        }
+
+        var catParam = string.Join(",", selectedCategories);
+        var url = $"/export/pdf?reportName={Uri.EscapeDataString(reportName)}" +
+                  $"&description={Uri.EscapeDataString(reportDescription)}" +
+                  $"&fromDate={fromDate:o}&toDate={toDate:o}" +
+                  $"&categories={Uri.EscapeDataString(catParam)}";
+
+        // Force a navigation to download the PDF
+        NavigationManager.NavigateTo(url, forceLoad: true);
     }
 }
 
 <style>
-    .reports-page {
-        padding: 20px;
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-    }
+/* Container for all styling on this page */
+.reports-page {
+    padding: 20px !important;
+    font-family: Arial, sans-serif !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    width: 100% !important;
+}
 
-    .report-container {
-        width: 100%;
-        max-width: 1200px;
-        margin-bottom: 20px;
-    }
+/* Container for each section (Budget Report, Savings Report, etc.) */
+.reports-page .report-container {
+    width: 100% !important;
+    max-width: 1200px !important;
+    margin-bottom: 20px !important;
+}
 
-    .months {
-        display: flex;
-        justify-content: space-between;
-        margin: 10px 0;
-    }
+/* Buttons for CSV/PDF export */
+.reports-page .export-buttons {
+    display: flex !important;
+    gap: 10px !important;
+    margin: 10px 0 !important;
+}
 
-    .export-buttons {
-        display: flex;
-        gap: 10px;
-        margin: 10px 0;
-    }
+/* Green background, white text */
+.reports-page .reports-btn {
+    padding: 5px 10px !important;
+    background-color: #62AD41 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    transition: background-color 0.2s !important;
+}
+.reports-page .reports-btn:hover {
+    background-color: #58a93b !important; 
+}
 
-    .btn {
-        padding: 5px 10px;
-        background-color: #007bff;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+.reports-page .reports-custom-btn {
+    padding: 12px 24px !important;
+    background-color: white !important;
+    color: #62AD41 !important;
+    font-size: 18px !important;
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    margin-top: 20px !important;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    transition: background-color 0.2s, color 0.2s !important;
+}
+.reports-page .reports-custom-btn:hover {
+    background-color: #62AD41 !important; /* green background on hover */
+    color: #e3f2dc !important;           /* pale green text on hover */
+}
 
-    .custom-report-btn {
-        background-color: #28a745;
-    }
+/* Card styling for the placeholder graphs */
+.reports-page .graph-card {
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 12px !important;
+    padding: 25px !important;
+    margin: 10px 0 !important;
+    height: 250px !important;
+    text-align: center !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    background-color: #ffffff !important;
+}
 
-    .graph-card {
-        border: 1px solid #e0e0e0;
-        border-radius: 12px;
-        padding: 25px;
-        margin: 10px 0;
-        height: 250px;
-        text-align: center;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        background-color: #ffffff;
-    }
+/* 
+   Two modals:
+   - create-report-modal => "Create Custom Report"
+   - results-modal => "Report Results"
+   Both are centered overlays
+*/
+.reports-page .create-report-modal,
+.reports-page .results-modal {
+    position: fixed !important;
+    top: 0 !important; 
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: flex !important; 
+    justify-content: center !important; 
+    align-items: center !important;
+    background-color: rgba(0,0,0,0.5) !important;
+    z-index: 9999 !important;
+}
 
-    .savings-info {
-        margin-bottom: 10px;
-    }
+/* Container for modal content */
+.reports-page .modal-content {
+    background-color: #fff !important;
+    width: 90% !important;
+    max-width: 500px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+    padding: 20px !important;
+    position: relative !important;
+}
 
-    .savings-info p {
-        margin: 5px 0;
-    }
+/* "X" button in the top-right corner */
+.reports-page .close {
+    color: #aaa !important;
+    float: right !important;
+    font-size: 28px !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+}
+.reports-page .close:hover {
+    color: #000 !important;
+}
+
+.reports-page .modal-body {
+    margin-top: 20px !important;
+}
+
+.reports-page .form-group {
+    margin-bottom: 15px !important;
+}
+
+.reports-page .form-group label {
+    display: block !important;
+    margin-bottom: 5px !important;
+    font-weight: bold !important;
+}
+
+/* Inputs and selects in the modal forms */
+.reports-page .form-group input,
+.reports-page .form-group select,
+.reports-page .form-group textarea {
+    width: 100% !important;
+    padding: 8px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+}
+
+/* Multi-select styling */
+.reports-page .form-group .multi-select {
+    width: 100% !important;
+    padding: 8px !important;
+    border: 1px solid #ccc !important;
+    border-radius: 4px !important;
+    background-color: #fff !important;
+}
+
+/* Date range styling */
+.reports-page .form-group .date-range {
+    display: flex !important;
+    align-items: center !important;
+}
+.reports-page .form-group .date-range label {
+    display: flex !important;
+    align-items: center !important;
+    margin-right: 20px !important;
+}
+.reports-page .form-group .date-range input[type="checkbox"] {
+    margin-right: 5px !important;
+    position: relative !important;
+    top: -2px !important;
+}
+.reports-page .form-group .date-range .date-inputs {
+    display: flex !important;
+    gap: 10px !important;
+}
+.reports-page .form-group .date-range .date-inputs input {
+    flex: 1 !important;
+}
+
+/* Error message styling */
+.reports-page .error-message {
+    color: red !important;
+    font-size: 0.9em !important;
+    margin-top: 5px !important;
+}
+
+/* Report results container */
+.reports-page .report-results {
+    margin-top: 20px !important;
+    width: 100% !important;
+    max-width: 1200px !important;
+}
+
+/* Transactions table styling */
+.reports-page .transactions-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+}
+.reports-page .transactions-table th,
+.reports-page .transactions-table td {
+    padding: 10px !important;
+    border: 1px solid #ccc !important;
+    text-align: left !important;
+}
+.reports-page .transactions-table th {
+    background-color: #f5f5f5 !important;
+}
+
+/* Negative amounts in red, positive in green */
+.reports-page .negative {
+    color: red !important;
+}
+.reports-page .positive {
+    color: green !important;
+}
 </style>
 
 <div class="reports-page">
+    <!-- Budget Report Section -->
     <div class="report-container">
         <h3>Budget Report Overview</h3>
-
-        
         <div class="graph-card">
-            <!-- Placeholder for the graph -->
             <p>Graph will be displayed here.</p>
         </div>
-
         <div class="export-buttons">
-            <button class="btn">Export to CSV</button>
-            <button class="btn">Export to PDF</button>
+            
+            <button class="reports-btn">Export to CSV</button>
+            <button class="reports-btn">Export to PDF</button>
         </div>
     </div>
 
+    <!-- Savings Report Section -->
     <div class="report-container">
-        <h3>Savings Report Overview</h3>        
-
+        <h3>Savings Report Overview</h3>
         <div class="graph-card">
-            <!-- Placeholder for the graph -->
             <p>Graph will be displayed here.</p>
         </div>
         <div class="export-buttons">
-            <button class="btn">Export to CSV</button>
-            <button class="btn">Export to PDF</button>
+            
+            <button class="reports-btn">Export to CSV</button>
+            <button class="reports-btn">Export to PDF</button>
         </div>
-        <button class="btn custom-report-btn">Create Custom Report</button>
+
+    
+        <button class="reports-custom-btn" @onclick="OpenCreateReportModal">
+            Create Custom Report
+        </button>
     </div>
+
+    <!-- Create Custom Report Modal -->
+    @if (showCreateReportModal)
+    {
+        <div class="create-report-modal">
+            <div class="modal-content">
+                <span class="close" @onclick="CloseCreateReportModal">&times;</span>
+                <h3>Create Custom Report</h3>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Enter the name of the report:</label>
+                        <input type="text" @bind="reportName" placeholder="Report Name" />
+                    </div>
+
+                    <div class="form-group">
+                        @* Not functional yet *@
+                        <label>Select accounts: (use ctrl to multi-select)</label>
+                        <select class="multi-select" multiple>
+                            <option value="All">All</option>
+                            <option value="Checking">Checking</option>
+                            <option value="Savings">Savings</option>
+                            <option value="Credit Card">Credit Card</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Select categories: (use ctrl to multi-select)</label>
+                        <select class="multi-select" multiple @onchange="OnCategoriesChange">
+                            <option value="All">All</option>
+                            <option value="Expenses">Expenses</option>
+                            <option value="Income">Income</option>
+                            <option value="Debts & Loans">Debts & Loans</option>
+                            <option value="Savings & Investments">Savings & Investments</option>
+                            <option value="Subscriptions & Memberships">Subscriptions & Memberships</option>
+                        </select>
+                        @if (!string.IsNullOrEmpty(categoryError))
+                        {
+                            <div class="error-message">@categoryError</div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date range:</label>
+                        <div class="date-range">
+                            <label>
+                                <input type="checkbox" @bind="useLast6Months" />
+                                Last 6 Months
+                            </label>
+                            <div class="date-inputs">
+                                <input type="date" disabled="@useLast6Months"
+                                       value="@fromDate.ToString("yyyy-MM-dd")"
+                                       @onchange="OnFromDateChange" />
+                                <input type="date" disabled="@useLast6Months"
+                                       value="@toDate.ToString("yyyy-MM-dd")"
+                                       @onchange="OnToDateChange"
+                                       min="@fromDate.ToString("yyyy-MM-dd")" />
+                            </div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(dateError))
+                        {
+                            <div class="error-message">@dateError</div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description:</label>
+                        <textarea @bind="reportDescription" placeholder="Enter description"></textarea>
+                    </div>
+
+                    <button class="reports-custom-btn"
+                            @onclick="ViewReport"
+                            disabled="@(!CanViewReport)">
+                        View Report
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- Report Results Modal -->
+    @if (showResultsModal)
+    {
+        <div class="results-modal">
+            <div class="modal-content">
+                <span class="close" @onclick="CloseResultsModal">&times;</span>
+                <h3>Report Results</h3>
+                <div class="report-results">
+                    @if (filteredTransactions.Count == 0)
+                    {
+                        <p>No transactions found for the selected filters.</p>
+                    }
+                    else
+                    {
+                        <table class="transactions-table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Date</th>
+                                    <th>Debit</th>
+                                    <th>Credit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var t in filteredTransactions)
+                                {
+                                    <tr>
+                                        <td>@t.Description</td>
+                                        <td>@t.Category</td>
+                                        <td>@t.Date.ToString("dd MMM yyyy")</td>
+                                        <td class="@(t.Debit > 0 ? "negative" : "")">
+                                            @(t.Debit != 0 ? t.Debit.ToString("C") : "")
+                                        </td>
+                                        <td class="@(t.Credit > 0 ? "positive" : "")">
+                                            @(t.Credit != 0 ? t.Credit.ToString("C") : "")
+                                        </td>
+                                    </tr>
+                                }
+                                <tr>
+                                    <td colspan="3"><strong>Totals:</strong></td>
+                                    <td><strong>@totalDebit.ToString("C")</strong></td>
+                                    <td><strong>@totalCredit.ToString("C")</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="export-buttons">
+                            <button class="reports-btn" @onclick="ExportToCsv">Export to CSV</button>
+                            <button class="reports-btn" @onclick="ExportToPdf">Export to PDF</button>
+                        </div>
+                    }
+
+                    <button class="reports-custom-btn" @onclick="GoBackToFilters">
+                        Back to Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
 </div>

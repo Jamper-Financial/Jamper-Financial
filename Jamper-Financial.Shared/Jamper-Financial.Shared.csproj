@@ -28,8 +28,11 @@
     </ItemGroup>
     <ItemGroup>
          <PackageReference Include="Blazor.Bootstrap" Version="3.3.1" />
+         <PackageReference Include="Blazorise" Version="1.7.5" />
+         <PackageReference Include="Blazorise.Bootstrap" Version="1.7.5" />
          <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.2" />
         <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.2" />
+        <PackageReference Include="QuestPDF" Version="2025.1.5" />
         <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
         <PackageReference Include="FirebaseAdmin" Version="3.1.0" />
         <PackageReference Include="Tailwind.Extensions.AspNetCore" />

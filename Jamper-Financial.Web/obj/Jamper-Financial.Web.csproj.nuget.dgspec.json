@@ -55,6 +55,14 @@
               "target": "Package",
               "version": "[3.3.1, )"
             },
+            "Blazorise": {
+              "target": "Package",
+              "version": "[1.7.5, )"
+            },
+            "Blazorise.Bootstrap": {
+              "target": "Package",
+              "version": "[1.7.5, )"
+            },
             "FirebaseAdmin": {
               "target": "Package",
               "version": "[3.1.0, )"
@@ -66,6 +74,10 @@
             "Microsoft.Data.Sqlite.Core": {
               "target": "Package",
               "version": "[9.0.2, )"
+            },
+            "QuestPDF": {
+              "target": "Package",
+              "version": "[2025.1.5, )"
             },
             "Tailwind.Extensions.AspNetCore": {
               "target": "Package",
