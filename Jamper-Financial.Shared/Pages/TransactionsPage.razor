@@ -3,6 +3,7 @@
 
 @using Jamper_Financial.Shared.Data;
 @using Jamper_Financial.Shared.Utilities;
+@using Jamper_Financial.Shared.Pages.Components;
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -65,7 +66,7 @@
                                 <td>1234 ****</td>
                                 <td>@transaction.Date.ToString("dd MMM, hh:mm tt")</td>
                                 <td class="@(transaction.Debit > 0 ? "negative" : "positive")">@((transaction.Debit > 0 ? transaction.Debit : transaction.Credit).ToString("C"))</td>
-                                <td @onclick:stopPropagation="true"><button class="view-details">View Receipt</button></td>
+                                <td @onclick:stopPropagation="true"><button class="view-details" @onclick="() => OpenReceiptModal(transaction)">View Receipt</button></td>
                             </tr>
                         }
                     }
@@ -151,17 +152,41 @@
     </div>
 }
 
+@* Receipt Modal *@
+
+@if (ShowReceiptModal)
+{
+    <ReceiptModal IsVisible="ShowReceiptModal" Transaction="SelectedTransaction" OnClose="CloseReceiptModal" />
+
+}
+
 @code {
     private List<Transaction> transactions;
     public bool ShowAddTransactionModal { get; set; } = false;
+    public bool ShowReceiptModal { get; set; } = false;
     public bool IsEditMode { get; set; } = false;
     public bool ShowDeleteConfirmation { get; set; } = false;
     public Transaction NewTransaction { get; set; } = new Transaction();
+    public Transaction SelectedTransaction { get; set; } = new Transaction();
     public decimal Amount { get; set; } = 0;
 
     protected override async Task OnInitializedAsync()
     {
         transactions = await TransactionManager.LoadTransactionsAsync();
+    }
+
+    private void OpenReceiptModal(Transaction transaction)
+    {
+        Console.Write("Trying to open receipt modal");
+
+        SelectedTransaction = transaction;
+        Console.WriteLine(transaction);
+        ShowReceiptModal = true;
+    }
+
+    private void CloseReceiptModal()
+    {
+        ShowReceiptModal = false;
     }
 
     private void OpenAddTransactionModal()
