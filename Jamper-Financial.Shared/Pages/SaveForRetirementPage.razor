@@ -3,6 +3,7 @@
 @using Jamper_Financial.Shared.Data
 @inject NavigationManager Navigation
 @inject GoalState GoalState
+@inject DatabaseHelperFactory DatabaseHelper
 
 <style>
     .back-button {
@@ -102,12 +103,13 @@
                                   $"Investment Growth Rate: {investmentGrowthRate}%, Inflation Rate: {inflationRate}%, " +
                                   $"Retirement Income Needs: {retirementIncomeNeeds}, Other Income Sources: {otherIncomeSources}",
                     Category = "Retirement",
-                    AccountType = "Savings",
+                    GoalType = "Savings",
                     Frequency = "Monthly",
                     IsRetirementGoal = true
                 };
 
             GoalState.AddGoal(retirementGoal);
+            DatabaseHelper.InsertGoal(retirementGoal);
             Navigation.NavigateTo("/view-goals-page");
         }
     }

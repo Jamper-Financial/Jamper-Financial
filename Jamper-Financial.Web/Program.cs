@@ -27,6 +27,7 @@ builder.Services.AddSingleton<GoalState>();
 builder.Services.AddSingleton<UserStateService>();
 
 // Add services
+builder.Services.AddSingleton<DatabaseHelperFactory>();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddBlazorBootstrap();
@@ -70,14 +71,14 @@ app.UseAntiforgery();
 // --------------------------------------------------
 app.MapGet("/export/csv", async (HttpContext context) =>
 {
-    var reportName    = context.Request.Query["reportName"];
-    var description   = context.Request.Query["description"];
-    var fromDateStr   = context.Request.Query["fromDate"];
-    var toDateStr     = context.Request.Query["toDate"];
+    var reportName = context.Request.Query["reportName"];
+    var description = context.Request.Query["description"];
+    var fromDateStr = context.Request.Query["fromDate"];
+    var toDateStr = context.Request.Query["toDate"];
     var categoriesStr = context.Request.Query["categories"];
 
     DateTime fromDate = DateTime.Now.AddMonths(-6);
-    DateTime toDate   = DateTime.Now;
+    DateTime toDate = DateTime.Now;
     DateTime.TryParse(fromDateStr, out fromDate);
     DateTime.TryParse(toDateStr, out toDate);
 
@@ -128,14 +129,14 @@ app.MapGet("/export/csv", async (HttpContext context) =>
 // --------------------------------------------------
 app.MapGet("/export/pdf", async (HttpContext context) =>
 {
-    var reportName    = context.Request.Query["reportName"];
-    var description   = context.Request.Query["description"];
-    var fromDateStr   = context.Request.Query["fromDate"];
-    var toDateStr     = context.Request.Query["toDate"];
+    var reportName = context.Request.Query["reportName"];
+    var description = context.Request.Query["description"];
+    var fromDateStr = context.Request.Query["fromDate"];
+    var toDateStr = context.Request.Query["toDate"];
     var categoriesStr = context.Request.Query["categories"];
 
     DateTime fromDate = DateTime.Now.AddMonths(-6);
-    DateTime toDate   = DateTime.Now;
+    DateTime toDate = DateTime.Now;
     DateTime.TryParse(fromDateStr, out fromDate);
     DateTime.TryParse(toDateStr, out toDate);
 

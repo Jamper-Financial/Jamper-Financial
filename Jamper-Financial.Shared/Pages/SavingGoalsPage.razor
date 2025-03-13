@@ -6,6 +6,7 @@
 @inherits LayoutComponentBase
 @inject NavigationManager Navigation
 @inject GoalState GoalState
+@inject DatabaseHelperFactory DatabaseHelper
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -17,8 +18,8 @@
 }
 
 <div class="header-container flex-container flex-row">
-    <h3 class="header flex-item column-1">Goals</h3>
-    <h3 class="header2 flex-item  column-2">Quick Add Goal</h3>
+    <h3 class="header flex-item flex-row column-1">Goals</h3>
+    <h3 class="header2 flex-item flex-row column-2">Quick Add Goal</h3>
 </div>
 <div class="content-container flex-container flex-row">
     <div class="saving-goals-page flex-item column-1">
@@ -147,6 +148,7 @@
                 };
 
             GoalState.AddGoal(newGoal);
+            DatabaseHelper.InsertGoal(newGoal);
             Navigation.NavigateTo("/view-goals-page");
         }
     }

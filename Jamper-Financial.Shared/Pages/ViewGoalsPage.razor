@@ -4,9 +4,10 @@
 @inject GoalState GoalState
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
+@inject DatabaseHelperFactory DatabaseHelper
 
-<div class="article-header-container">
-    <h3 class="article-header">Goals</h3>
+<div class="header-container">
+    <h3 class="header">Goals</h3>
 </div>
 <div class="content-container">
     <div class="view-goals-page">
@@ -88,7 +89,7 @@
                             else
                             {
                                 <h3>@goal.Name</h3>
-                                <p>Account Type: @goal.AccountType</p>
+                                <p>Account Type: @goal.GoalType</p>
                                 <p>Category: @goal.Category</p>
                                 <p>Start Date: @goal.StartDate.ToShortDateString()</p>
                                 <p>End Date: @goal.EndDate.ToShortDateString()</p>
@@ -114,18 +115,16 @@
                 </li>
             }
         </ul>
-        <button class="add-goal-btn" @onclick="NavigateToAddGoal">Add New Goal</button>
+        <button class="back-button" @onclick="GoBack">Back</button>
     </div>
 </div>
 
 @code {
-
-    
     private List<Goal> goals = new List<Goal>();
 
     protected override void OnInitialized()
     {
-        goals = GoalState.Goals;
+        goals = DatabaseHelper.GetGoals();
     }
 
     private void ToggleDescription(Goal goal)
@@ -139,6 +138,7 @@
         {
             goal.IsFadingOut = true;
             await Task.Delay(500);
+            DatabaseHelper.DeleteGoal(goal.GoalId); // Delete from database
             GoalState.RemoveGoal(goal);
             goals.Remove(goal);
             StateHasChanged();
@@ -165,11 +165,6 @@
         }
     }
 
-    private void NavigateToAddGoal()
-    {
-        Navigation.NavigateTo("/add-saving-goal");
-    }
-
     private async Task ConfirmDeleteGoal(Goal goal)
     {
         if (await JSRuntime.InvokeAsync<bool>("confirm", new object[] { $"Are you sure you want to delete the goal '{goal.Name}'?" }))
@@ -184,5 +179,10 @@
         {
             await CheckOffGoal(goal);
         }
+    }
+
+    private void GoBack()
+    {
+        Navigation.NavigateTo("/saving-goals-page");
     }
 }

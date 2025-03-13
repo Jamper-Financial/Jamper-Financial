@@ -1,9 +1,14 @@
-﻿::deep .content-container {
+﻿.header-container {
+    padding-top: 10px;
+
+}
+
+.content-container {
     margin-top: -10px;
     padding-bottom: 10px 20px;
 }
 
-::deep .form-container {
+.form-container {
     max-width: 1000px;
     margin: 10px auto;
     background-color: #ffffff;
@@ -13,19 +18,19 @@
     align-items: center;
 }
 
-::deep .form-group {
+.form-group {
     margin-bottom: 6px;
 }
 
-    ::deep .form-group label {
+    .form-group label {
         display: block;
         font-weight: bold;
         margin-bottom: 5px;
     }
 
-    ::deep .form-group input,
-    ::deep .form-group select,
-    ::deep .form-group textarea {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
         width: 100%;
         padding: 5px;
         border: 1px solid #ced4da;
@@ -33,15 +38,15 @@
         color: #B1BCC4;
     }
 
-    ::deep .form-group .error {
+    .form-group .error {
         color: #dc3545;
         font-size: 14px;
         margin-top: 5px;
     }
 
-::deep .account-button,
-::deep .category-button,
-::deep .submit-button {
+.account-button,
+.category-button,
+.submit-button {
     display: inline-block;
     padding: 10px 20px;
     margin: 1px;
@@ -54,21 +59,35 @@
     text-align: center;
 }
 
-    ::deep .account-button:hover,
-    ::deep .category-button:hover,
-    ::deep .submit-button:hover {
+    .account-button:hover,
+    .category-button:hover,
+    .submit-button:hover {
         background-color: #417828;
     }
 
-::deep .submit-button {
+.submit-button {
     width: 100%;
     margin-top: 10px;
 }
 
-::deep .selected-button {
+.selected-button {
     background-color: #417828;
     color: #ffffff;
 }
 
+.back-button {
+    display: block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #6c757d;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
 
-
+    .back-button:hover {
+        background-color: #5a6268;
+    }

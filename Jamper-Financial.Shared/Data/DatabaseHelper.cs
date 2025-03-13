@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Jamper_Financial.Shared.Models;
 using Microsoft.Data.Sqlite;
+using Microsoft.VisualBasic;
 
 namespace Jamper_Financial.Shared.Data
 {
@@ -15,6 +16,30 @@ namespace Jamper_Financial.Shared.Data
             using (var connection = new SqliteConnection($"Data Source={DbPath}"))
             {
                 connection.Open();
+
+                // Create Goals table
+                CreateTableIfNotExists(connection, "Goals", @"
+               CREATE TABLE IF NOT EXISTS Goals (
+                    GoalId INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Type TEXT,
+                    Name TEXT,
+                    Amount REAL,
+                    Date TEXT,
+                    GoalType TEXT,
+                    IsQuickGoal INTEGER,
+                    IsRetirementGoal INTEGER,
+                    IsEmergencyFundGoal INTEGER,
+                    IsTravelGoal INTEGER,
+                    IsHomeGoal INTEGER,
+                    Category TEXT,
+                    StartDate TEXT,
+                    EndDate TEXT,
+                    Description TEXT,
+                    ShowDescription INTEGER,
+                    Frequency TEXT,
+                    IsFadingOut INTEGER
+                );
+        ");
 
                 // Check and create tables if they do not exist
                 CreateTableIfNotExists(connection, "Users", @"
@@ -124,6 +149,114 @@ namespace Jamper_Financial.Shared.Data
                 }
             }
         }
+        public static List<Goal> GetGoals()
+        {
+            var goals = new List<Goal>();
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                string query = "SELECT * FROM Goals;";
+                using (var command = new SqliteCommand(query, connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DateTime date, startDate, endDate;
+                        DateTime.TryParseExact(reader["Date"].ToString(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out date);
+                        DateTime.TryParseExact(reader["StartDate"].ToString(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out startDate);
+                        DateTime.TryParseExact(reader["EndDate"].ToString(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out endDate);
+
+                        goals.Add(new Goal
+                        {
+                            Type = reader["Type"].ToString(),
+                            Name = reader["Name"].ToString(),
+                            Amount = reader.GetDecimal(reader.GetOrdinal("Amount")),
+                            Date = date,
+                            GoalType = reader["GoalType"].ToString(),
+                            IsQuickGoal = reader.GetBoolean(reader.GetOrdinal("IsQuickGoal")),
+                            IsRetirementGoal = reader.GetBoolean(reader.GetOrdinal("IsRetirementGoal")),
+                            IsEmergencyFundGoal = reader.GetBoolean(reader.GetOrdinal("IsEmergencyFundGoal")),
+                            IsTravelGoal = reader.GetBoolean(reader.GetOrdinal("IsTravelGoal")),
+                            IsHomeGoal = reader.GetBoolean(reader.GetOrdinal("IsHomeGoal")),
+                            Category = reader["Category"].ToString(),
+                            StartDate = startDate,
+                            EndDate = endDate,
+                            Description = reader["Description"].ToString(),
+                            ShowDescription = reader.GetBoolean(reader.GetOrdinal("ShowDescription")),
+                            Frequency = reader["Frequency"].ToString(),
+                            IsFadingOut = reader.GetBoolean(reader.GetOrdinal("IsFadingOut"))
+                        });
+                    }
+                }
+            }
+            return goals;
+        }
+        public static void InsertGoal(Goal goal)
+        {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    string insertQuery = @"
+                    INSERT INTO Goals (Type, Name, Amount, Date, GoalType, IsQuickGoal, IsRetirementGoal, IsEmergencyFundGoal, IsTravelGoal, IsHomeGoal, Category, StartDate, EndDate, Description, ShowDescription, Frequency, IsFadingOut)
+                    VALUES (@Type, @Name, @Amount, @Date, @GoalType, @IsQuickGoal, @IsRetirementGoal, @IsEmergencyFundGoal, @IsTravelGoal, @IsHomeGoal, @Category, @StartDate, @EndDate, @Description, @ShowDescription, @Frequency, @IsFadingOut);
+                ";
+                    using (var command = new SqliteCommand(insertQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@Type", goal.Type ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@Name", goal.Name ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@Amount", goal.Amount);
+                        command.Parameters.AddWithValue("@Date", goal.Date != default ? goal.Date.ToString("yyyy-MM-dd") : (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@GoalType", goal.GoalType ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@IsQuickGoal", goal.IsQuickGoal);
+                        command.Parameters.AddWithValue("@IsRetirementGoal", goal.IsRetirementGoal);
+                        command.Parameters.AddWithValue("@IsEmergencyFundGoal", goal.IsEmergencyFundGoal);
+                        command.Parameters.AddWithValue("@IsTravelGoal", goal.IsTravelGoal);
+                        command.Parameters.AddWithValue("@IsHomeGoal", goal.IsHomeGoal);
+                        command.Parameters.AddWithValue("@Category", goal.Category ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@StartDate", goal.StartDate != default ? goal.StartDate.ToString("yyyy-MM-dd") : (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@EndDate", goal.EndDate != default ? goal.EndDate.ToString("yyyy-MM-dd") : (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@Description", goal.Description ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@ShowDescription", goal.ShowDescription);
+                        command.Parameters.AddWithValue("@Frequency", goal.Frequency ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@IsFadingOut", goal.IsFadingOut);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error inserting goal: {ex.Message}");
+                throw;
+            }
+        }
+
+        public static void DeleteGoal(int goalId)
+        {
+            try
+            {
+                using (var connection = GetConnection())
+                {
+                    connection.Open();
+                    string deleteQuery = "DELETE FROM Goals WHERE GoalId = @GoalId;";
+                    using (var command = new SqliteCommand(deleteQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@GoalId", goalId);
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting goal: {ex.Message}");
+                throw;
+            }
+        }
+
+
+
+
 
         private static void DeleteColumnsIfExists(SqliteConnection connection, string tableName, string[] columnsToDelete)
         {
