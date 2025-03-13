@@ -258,7 +258,7 @@
     public decimal Amount { get; set; } = 0;
 
     // Load Transactions Data
-   protected override async Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         Transactions = await TransactionManager.LoadTransactionsAsync();
         UpdateTransactionsForSelectedMonth();
@@ -339,11 +339,15 @@
             {
                 // Unselect the date if it is already selected
                 SelectedDate = 0;
+                UpdateFilteredTransactionsForSelectedMonth();
             }
             else
             {
                 // Select the date
                 SelectedDate = date.Day;
+                FilteredTransactionsForSelectedMonth = TransactionsForSelectedMonth
+                    .Where(t => t.Date.Day == SelectedDate)
+                    .ToList();
             }
             StateHasChanged();
         }
