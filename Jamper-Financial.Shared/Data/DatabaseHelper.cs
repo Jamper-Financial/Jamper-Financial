@@ -73,6 +73,7 @@ namespace Jamper_Financial.Shared.Data
                         Frequency TEXT,
                         EndDate TEXT,
 	                    CategoryID INTEGER,
+                        HasReceipt INTEGER,
 	                    CONSTRAINT Transactions_Categories_FK FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID) ON UPDATE CASCADE
                     );
                 ");
@@ -100,6 +101,15 @@ namespace Jamper_Financial.Shared.Data
                     );
                 ");
 
+                CreateTableIfNotExists(connection, "Receipts", @"
+                    CREATE TABLE IF NOT EXISTS Receipts (
+                        ReceiptID INTEGER PRIMARY KEY AUTOINCREMENT,
+                        TransactionID INTEGER NOT NULL,
+                        ReceiptData BLOB NOT NULL,
+                        Description TEXT NULL,
+                        FOREIGN KEY (TransactionID) REFERENCES Transactions(TransactionID)
+                    );
+                ");
 
                 // Insert initial roles
                 InsertInitialRoles(connection);
