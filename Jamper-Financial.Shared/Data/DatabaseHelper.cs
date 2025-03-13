@@ -227,7 +227,6 @@ namespace Jamper_Financial.Shared.Data
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error inserting goal: {ex.Message}");
                 throw;
             }
         }
@@ -240,7 +239,7 @@ namespace Jamper_Financial.Shared.Data
                 {
                     connection.Open();
 
-                    using (var transaction = connection.BeginTransaction()) // Use transaction for safety
+                    using (var transaction = connection.BeginTransaction())
                     {
                         string deleteQuery = "DELETE FROM Goals WHERE GoalId = @GoalId;";
                         using (var command = new SqliteCommand(deleteQuery, connection, transaction))
@@ -250,12 +249,10 @@ namespace Jamper_Financial.Shared.Data
 
                             if (rowsAffected > 0)
                             {
-                                Console.WriteLine($"✅ Goal with ID {goalId} deleted successfully.");
                                 transaction.Commit();
                             }
                             else
                             {
-                                Console.WriteLine($"❌ No goal found with ID {goalId} - Deletion failed.");
                                 transaction.Rollback();
                             }
                         }
@@ -264,7 +261,7 @@ namespace Jamper_Financial.Shared.Data
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"🔥 Error deleting goal {goalId}: {ex.Message}");
+            
             }
         }
 

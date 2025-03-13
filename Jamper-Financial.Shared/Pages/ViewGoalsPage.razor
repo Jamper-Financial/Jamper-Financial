@@ -157,8 +157,7 @@
 
             Console.WriteLine($"Goal with ID: {goal.GoalId} deleted from the database.");
 
-            // Remove from UI state
-            GoalState.RemoveGoal(goal);
+       
             goals.Remove(goal);
 
             // Reload goals from database to ensure consistency
@@ -192,7 +191,6 @@
         {
             goal.IsFadingOut = true;
             await Task.Delay(500);
-            GoalState.RemoveGoal(goal);
             goals.Remove(goal);
             StateHasChanged();
         }

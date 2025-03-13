@@ -5,7 +5,7 @@
     padding-top: 30px;
     padding-left: 2rem;
     font-size: 24px;
-    color: #2d3436;
+    color: #417828;
 }
 
 .content-container {
@@ -23,6 +23,7 @@
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%; /* Ensure the container takes up the full width */
+    
 }
 
 .button-container {
@@ -30,14 +31,13 @@
     flex-direction: column;
     gap: 10px;
     width: 100%; /* Ensure the container takes up the full width */
-
 }
 
 .goal-button, .view-goal-button {
     display: flex;
     align-items: center;
     justify-content: space-between; /* Space between text and icon */
-    padding: 30px 30px;
+    padding: 40px 30px;
     font-size: 16px;
     font-weight: bold;
     color: #ffffff;
@@ -53,7 +53,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between; /* Space between text and icon */
-    padding: 10px 20px;
+    padding: 15px 20px;
     font-size: 16px;
     color: #ffffff;
     background-color: #62ad41;
@@ -82,7 +82,7 @@
 
 .description {
     font-size: 14px;
-    color: #6c757d;
+    color: #62AD41;
 }
 
 .form-group {
