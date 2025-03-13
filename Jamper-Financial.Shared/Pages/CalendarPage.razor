@@ -5,17 +5,10 @@
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
-    [CascadingParameter] public string SearchTerm { get; set; }
 
     protected override void OnInitialized()
     {
         SetPageTitle("Calendar");
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await base.OnParametersSetAsync();
-        UpdateFilteredTransactionsForSelectedMonth();
     }
 }
 
@@ -101,7 +94,7 @@
             <div class="calendar">
                 @foreach (var date in GetCalendarDates())
                 {
-                    <div class="day-box @(date.Month != SelectedMonth ? "greyed-out" : "") @(SelectedDate == date.Day && date.Month == SelectedMonth ? "selected" : "") @(IsDateHighlighted(date) ? "search-highlight" : "")"
+                    <div class="day-box @(date.Month != SelectedMonth ? "greyed-out" : "") @(SelectedDate == date.Day && date.Month == SelectedMonth ? "selected" : "")"
                     @onclick="() => SelectDate(date)">
                         <span class="day">@date.Day</span>
                         @if (HasTransactions(date))
@@ -265,18 +258,11 @@
     public decimal Amount { get; set; } = 0;
 
     // Load Transactions Data
-    protected override async Task OnInitializedAsync()
+   protected override async Task OnInitializedAsync()
     {
         Transactions = await TransactionManager.LoadTransactionsAsync();
         UpdateTransactionsForSelectedMonth();
         SortTransactions("Date", true); // Ensure default sort is by Date ascending
-    }
-
-    // Search and Filter Methods
-    private void UpdateSearchResults(ChangeEventArgs e)
-    {
-        SearchTerm = e.Value?.ToString() ?? string.Empty;
-        UpdateFilteredTransactionsForSelectedMonth();
     }
 
     private void ToggleFilterDropdown() => ShowFilterDropdown = !ShowFilterDropdown;
@@ -297,7 +283,7 @@
 
     private void UpdateFilteredTransactionsForSelectedMonth()
     {
-        FilteredTransactionsForSelectedMonth = Filters.ApplyFilters(TransactionsForSelectedMonth, FilterCategory, MinAmount, MaxAmount, SearchTerm);
+        FilteredTransactionsForSelectedMonth = Filters.ApplyFilters(TransactionsForSelectedMonth, FilterCategory, MinAmount, MaxAmount);
         ReapplySort();
         StateHasChanged();
     }
@@ -363,9 +349,6 @@
         }
     }
 
-    private bool IsDateHighlighted(DateTime date) =>
-        !string.IsNullOrEmpty(SearchTerm) && FilteredTransactionsForSelectedMonth.Any(t => t.Date.Date == date.Date && t.Description.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase));
-
     private bool HasTransactions(DateTime date) =>
         GetFilteredTransactions(date).Any();
 
@@ -373,7 +356,7 @@
         GetFilteredTransactions(date);
 
     private List<Transaction> GetFilteredTransactions(DateTime date) =>
-    Filters.ApplyFilters(Transactions.Where(t => t.Date.Date == date.Date).ToList(), FilterCategory, MinAmount, MaxAmount, SearchTerm);
+        Filters.ApplyFilters(Transactions.Where(t => t.Date.Date == date.Date).ToList(), FilterCategory, MinAmount, MaxAmount);
 
 
     private void UpdateTransactionsForSelectedMonth()
