@@ -1,4 +1,5 @@
 // File: Jamper-Financial.Shared/Data/GoalState.cs
+using Jamper_Financial.Shared.Models;
 using System.Collections.Generic;
 
 namespace Jamper_Financial.Shared.Data
@@ -13,6 +14,7 @@ namespace Jamper_Financial.Shared.Data
         }
         public void RemoveGoal(Goal goal)
         {
+            DatabaseHelper.DeleteGoal(goal.GoalId);   
             Goals.Remove(goal);
         }
     }

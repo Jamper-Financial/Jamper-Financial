@@ -20,7 +20,7 @@ namespace Jamper_Financial.Shared.Data
                 // Create Goals table
                 CreateTableIfNotExists(connection, "Goals", @"
                CREATE TABLE IF NOT EXISTS Goals (
-                    GoalId INTEGER PRIMARY KEY AUTOINCREMENT,
+                   GoalId INTEGER PRIMARY KEY AUTOINCREMENT,
                     Type TEXT,
                     Name TEXT,
                     Amount REAL,
@@ -239,21 +239,34 @@ namespace Jamper_Financial.Shared.Data
                 using (var connection = GetConnection())
                 {
                     connection.Open();
-                    string deleteQuery = "DELETE FROM Goals WHERE GoalId = @GoalId;";
-                    using (var command = new SqliteCommand(deleteQuery, connection))
+
+                    using (var transaction = connection.BeginTransaction()) // Use transaction for safety
                     {
-                        command.Parameters.AddWithValue("@GoalId", goalId);
-                        command.ExecuteNonQuery();
+                        string deleteQuery = "DELETE FROM Goals WHERE GoalId = @GoalId;";
+                        using (var command = new SqliteCommand(deleteQuery, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@GoalId", goalId);
+                            int rowsAffected = command.ExecuteNonQuery();
+
+                            if (rowsAffected > 0)
+                            {
+                                Console.WriteLine($"✅ Goal with ID {goalId} deleted successfully.");
+                                transaction.Commit();
+                            }
+                            else
+                            {
+                                Console.WriteLine($"❌ No goal found with ID {goalId} - Deletion failed.");
+                                transaction.Rollback();
+                            }
+                        }
                     }
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error deleting goal: {ex.Message}");
-                throw;
+                Console.WriteLine($"🔥 Error deleting goal {goalId}: {ex.Message}");
             }
         }
-
 
 
 

@@ -131,21 +131,58 @@
     {
         goal.ShowDescription = !goal.ShowDescription;
     }
-
     private async Task DeleteGoal(Goal goal)
     {
         try
         {
+            Console.WriteLine($"Attempting to delete goal with ID: {goal.GoalId}");
+
+            // Trigger the fade-out animation
             goal.IsFadingOut = true;
-            await Task.Delay(500);
-            DatabaseHelper.DeleteGoal(goal.GoalId); // Delete from database
+            StateHasChanged(); // Force UI update
+
+            await Task.Delay(500); // Wait for animation to complete
+
+            // Remove from database and check if deletion was successful
+            DatabaseHelper.DeleteGoal(goal.GoalId);
+            await Task.Delay(100); // Give database time to process
+
+            // Verify that the goal no longer exists
+            var updatedGoals = DatabaseHelper.GetGoals();
+            if (updatedGoals.Any(g => g.GoalId == goal.GoalId))
+            {
+                Console.WriteLine($"Failed to delete goal with ID: {goal.GoalId} from the database.");
+                return; // Stop further UI updates if DB deletion failed
+            }
+
+            Console.WriteLine($"Goal with ID: {goal.GoalId} deleted from the database.");
+
+            // Remove from UI state
             GoalState.RemoveGoal(goal);
             goals.Remove(goal);
+
+            // Reload goals from database to ensure consistency
+            goals = DatabaseHelper.GetGoals();
+            Console.WriteLine($"Reloaded goals from database. Total goals: {goals.Count}");
+
             StateHasChanged();
         }
         catch (Exception ex)
         {
-            // Handle exception (e.g., log it)
+            Console.WriteLine($"Error in DeleteGoal: {ex.Message}");
+        }
+    }
+
+
+    private async Task ConfirmDeleteGoal(Goal goal)
+    {
+        // Show a confirmation dialog
+        bool isConfirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete the goal '{goal.Name}'?");
+
+        if (isConfirmed)
+        {
+            // If confirmed, delete the goal
+            await DeleteGoal(goal);
         }
     }
 
@@ -161,15 +198,7 @@
         }
         catch (Exception ex)
         {
-            // Handle exception (e.g., log it)
-        }
-    }
-
-    private async Task ConfirmDeleteGoal(Goal goal)
-    {
-        if (await JSRuntime.InvokeAsync<bool>("confirm", new object[] { $"Are you sure you want to delete the goal '{goal.Name}'?" }))
-        {
-            await DeleteGoal(goal);
+            Console.WriteLine($"Error in CheckOffGoal: {ex.Message}"); // Log any errors
         }
     }
 
