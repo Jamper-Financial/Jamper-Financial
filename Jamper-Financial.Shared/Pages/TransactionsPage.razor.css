@@ -16,6 +16,7 @@
     box-sizing: border-box; /* Include padding and border in the element's total width and height */
     padding: 20px;
     color: #000; /* Use content color */
+    overflow: hidden; /* Prevent scrollbars from appearing on the page */
 }
 
 .expenses-header {
@@ -75,6 +76,7 @@
     flex: 1; /* Take up the remaining 67% of the height */
     display: flex;
     flex-direction: column;
+    overflow: hidden; /* Prevent scrollbars from appearing on the section */
 }
 
 .transactions-header {
@@ -165,7 +167,7 @@
     }
 
 .scrollable-table {
-    max-height: 27rem; /* Adjust the height as needed */
+    max-height: 100%; /* Adjust the height as needed */
     overflow-y: auto;
 }
 
