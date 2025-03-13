@@ -160,12 +160,25 @@
             <div class="modal-content">
                 @if (ShowDeleteConfirmation)
                 {
-                    <h3>Confirm Deletion</h3>
-                    <p>Are you sure you want to delete this transaction?</p>
-                    <div class="form-group button-group">
-                        <button type="button" class="save" @onclick="ConfirmDeleteTransaction">Confirm</button>
-                        <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
-                    </div>
+                    @if (NewTransaction.Frequency != "None")
+                    {
+                        <h3>Confirm Deletion</h3>
+                        <p>This transaction is recurring. Do you want to delete all occurrences or just this one?</p>
+                        <div class="form-group button-group">
+                            <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(true)">Delete All</button>
+                            <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(false)">Delete This One</button>
+                            <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <h3>Confirm Deletion</h3>
+                        <p>Are you sure you want to delete this transaction?</p>
+                        <div class="form-group button-group">
+                            <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(false)">Confirm</button>
+                            <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
+                        </div>
+                    }
                 }
                 else
                 {
@@ -502,10 +515,22 @@
         ShowDeleteConfirmation = false;
     }
 
-    private async Task ConfirmDeleteTransaction()
+    private async Task ConfirmDeleteTransaction(bool deleteAll)
     {
-        await TransactionManager.DeleteTransactionAsync(NewTransaction);
-        Transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
+        if (deleteAll)
+        {
+            await TransactionManager.DeleteRecurringTransactionsAsync(NewTransaction);
+            Transactions.RemoveAll(t => t.Description == NewTransaction.Description &&
+                                        t.Category == NewTransaction.Category &&
+                                        t.Color == NewTransaction.Color &&
+                                        t.Frequency == NewTransaction.Frequency &&
+                                        t.Date > NewTransaction.Date);
+        }
+        else
+        {
+            await TransactionManager.DeleteTransactionAsync(NewTransaction);
+            Transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
+        }
         CloseAddTransactionModal();
         UpdateTransactionsForSelectedMonth();
     }

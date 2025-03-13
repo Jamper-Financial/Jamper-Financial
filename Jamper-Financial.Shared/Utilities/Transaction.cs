@@ -51,7 +51,7 @@ namespace Jamper_Financial.Shared.Utilities
                 await TransactionHelper.UpdateTransactionAsync(transaction);
                 if (transaction.Frequency == null)
                 {
-                    RemoveRecurringTransactions(transaction);
+                    await DeleteRecurringTransactionsAsync(transaction);
                 }
                 else
                 {
@@ -76,7 +76,22 @@ namespace Jamper_Financial.Shared.Utilities
         public static async Task DeleteTransactionAsync(Transaction transaction)
         {
             await TransactionHelper.DeleteTransactionAsync(transaction.TransactionID);
-            RemoveRecurringTransactions(transaction);
+        }
+
+        public static async Task DeleteRecurringTransactionsAsync(Transaction transaction)
+        {
+            var transactions = await TransactionHelper.GetTransactionsAsync();
+            var recurringTransactions = transactions
+                .Where(t => t.Description == transaction.Description &&
+                            t.Category == transaction.Category &&
+                            t.Color == transaction.Color &&
+                            t.Frequency == transaction.Frequency)
+                .ToList();
+
+            foreach (var recurringTransaction in recurringTransactions)
+            {
+                await TransactionHelper.DeleteTransactionAsync(recurringTransaction.TransactionID);
+            }
         }
 
         private static void EditRecurringTransactions(Transaction transaction)
@@ -101,22 +116,6 @@ namespace Jamper_Financial.Shared.Utilities
                 recurringTransaction.EndDate = transaction.EndDate;
 
                 TransactionHelper.UpdateTransactionAsync(recurringTransaction).Wait();
-            }
-        }
-
-        private static void RemoveRecurringTransactions(Transaction transaction)
-        {
-            var recurringTransactions = TransactionHelper.GetTransactionsAsync().Result
-                .Where(t => t.Description == transaction.Description &&
-                            t.Category == transaction.Category &&
-                            t.Color == transaction.Color &&
-                            t.Frequency == transaction.Frequency &&
-                            t.Date > transaction.Date)
-                .ToList();
-
-            foreach (var recurringTransaction in recurringTransactions)
-            {
-                TransactionHelper.DeleteTransactionAsync(recurringTransaction.TransactionID).Wait();
             }
         }
 
