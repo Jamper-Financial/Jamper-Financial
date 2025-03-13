@@ -3,6 +3,7 @@
 @using Jamper_Financial.Shared.Data
 @inject NavigationManager Navigation
 @inject GoalState GoalState
+@inject DatabaseHelperFactory DatabaseHelper
 
 <style>
     .back-button {
@@ -113,12 +114,13 @@
                                   $"Food and Entertainment Costs: {foodEntertainmentCosts}, Travel Category: {travelCategory}, " +
                                   $"Description: {description}",
                     Category = "Travel",
-                    AccountType = "Savings",
+                    GoalType = "Savings",
                     Frequency = "Monthly",
                     IsTravelGoal = true
                 };
 
             GoalState.AddGoal(travelGoal);
+            DatabaseHelper.InsertGoal(travelGoal);
             Navigation.NavigateTo("/view-goals-page");
         }
     }

@@ -3,25 +3,7 @@
 @using Jamper_Financial.Shared.Data
 @inject NavigationManager Navigation
 @inject GoalState GoalState
-
-<style>
-    .back-button {
-        display: block;
-        padding: 10px 20px;
-        font-size: 16px;
-        color: #ffffff;
-        background-color: #6c757d; 
-        border: none;
-        border-radius: 0.5rem;
-        cursor: pointer;
-        width: 100%;
-        margin-top: 10px; 
-    }
-
-    .back-button:hover {
-        background-color: #5a6268;
-    }
-</style>
+@inject DatabaseHelperFactory DatabaseHelper
 
 <div class="header-container">
     <h3 class="header">Add a Saving Goal</h3>
@@ -37,14 +19,14 @@
             }
         </div>
         <div class="form-group">
-            <label>Account Type</label>
+            <label>Goal Type</label>
             <div>
-                <button class="account-button @(accountType == "Savings" ? "selected-button" : "")" @onclick='() => SetAccountType("Savings")'>Savings Account</button>
-                <button class="account-button @(accountType == "Checking" ? "selected-button" : "")" @onclick='() => SetAccountType("Checking")'>Checking Account</button>
+                <button class="account-button @(goalType == "Savings" ? "selected-button" : "")" @onclick='() => SetGoalType("Savings")'>Savings Account</button>
+                <button class="account-button @(goalType == "Checking" ? "selected-button" : "")" @onclick='() => SetGoalType("Checking")'>Checking Account</button>
             </div>
-            @if (string.IsNullOrEmpty(accountType))
+            @if (string.IsNullOrEmpty(goalType))
             {
-                <span class="error">Account Type is required!</span>
+                <span class="error">Goal Type is required!</span>
             }
         </div>
         <div class="form-group">
@@ -93,17 +75,17 @@
 
 @code {
     private string goalName;
-    private string accountType;
+    private string goalType;
     private string category;
     private DateTime startDate = DateTime.Today;
-    private DateTime endDate = DateTime.Today.AddDays(1);  
+    private DateTime endDate = DateTime.Today.AddDays(1);
     private decimal amount;
     private string frequency;
     private string description;
 
-    private void SetAccountType(string type)
+    private void SetGoalType(string type)
     {
-        accountType = type;
+        goalType = type;
     }
 
     private void SetCategory(string selectedCategory)
@@ -113,12 +95,12 @@
 
     private void SubmitGoal()
     {
-        if (!string.IsNullOrEmpty(goalName) && !string.IsNullOrEmpty(accountType) && !string.IsNullOrEmpty(category))
+        if (!string.IsNullOrEmpty(goalName) && !string.IsNullOrEmpty(goalType) && !string.IsNullOrEmpty(category))
         {
             var newGoal = new Goal
                 {
                     Name = goalName,
-                    AccountType = accountType,
+                    GoalType = goalType,
                     Category = category,
                     StartDate = startDate,
                     EndDate = endDate,
@@ -128,10 +110,17 @@
                 };
 
             GoalState.AddGoal(newGoal);
+            DatabaseHelper.InsertGoal(newGoal);
             Navigation.NavigateTo("/view-goals-page");
         }
+        else
+        {
+            // Handle validation errors
+            Console.WriteLine($"Validation failed. GoalName: {goalName}, GoalType: {goalType}, Category: {category}, Amount: {amount}");
+        }
     }
-    private void GoBack() {
+    private void GoBack()
+    {
         Navigation.NavigateTo("/saving-goals-page");
     }
 }

@@ -1,4 +1,5 @@
 // File: Jamper-Financial.Shared/Data/GoalState.cs
+using Jamper_Financial.Shared.Models;
 using System.Collections.Generic;
 
 namespace Jamper_Financial.Shared.Data
@@ -11,18 +12,15 @@ namespace Jamper_Financial.Shared.Data
         {
             Goals.Add(goal);
         }
-        public void RemoveGoal(Goal goal)
-        {
-            Goals.Remove(goal);
-        }
     }
     public class Goal
     {
+        public int GoalId { get; set; }
         public string Type { get; set; }
         public string Name { get; set; }
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
-        public string AccountType { get; set; }
+        public string GoalType { get; set; }
         public bool IsQuickGoal { get; set; }
         public bool IsRetirementGoal { get; set; }
         public bool IsEmergencyFundGoal { get; set; }

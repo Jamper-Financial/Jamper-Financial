@@ -3,25 +3,7 @@
 @using Jamper_Financial.Shared.Data
 @inject NavigationManager Navigation
 @inject GoalState GoalState
-
-<style>
-    .back-button {
-        display: block;
-        padding: 10px 20px;
-        font-size: 16px;
-        color: #ffffff;
-        background-color: #6c757d; 
-        border: none;
-        border-radius: 0.5rem;
-        cursor: pointer;
-        width: 100%;
-        margin-top: 10px; 
-    }
-
-    .back-button:hover {
-        background-color: #5a6268;
-    }
-</style>
+@inject DatabaseHelperFactory DatabaseHelper
 
 <div class="header-container">
     <h3 class="header">Save for Emergency Fund</h3>
@@ -77,12 +59,13 @@
                     Description = $"Current Savings: {currentSavings}, Monthly Contribution: {monthlyContribution}, " +
                                   $"Description: {description}",
                     Category = "Emergency Fund",
-                    AccountType = "Savings",
+                    GoalType = "Savings",
                     Frequency = "Monthly",
                     IsEmergencyFundGoal = true
                 };
 
             GoalState.AddGoal(emergencyFundGoal);
+            DatabaseHelper.InsertGoal(emergencyFundGoal);
             Navigation.NavigateTo("/view-goals-page");
         }
     }

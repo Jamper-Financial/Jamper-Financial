@@ -1,5 +1,5 @@
 ﻿.view-goals-page {
-    padding-top: 0.5rem;
+    padding-top: 1rem;
     max-width: 100%;
     display: flex;
     flex-direction: column;
@@ -7,9 +7,9 @@
 }
 
 .article-header-container {
-    padding-top: 3rem;
+    padding-top: 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .article-header {
@@ -23,6 +23,8 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    margin-top: -10px;
+    padding-bottom: 10px 20px;
 }
 
 .goal-item {
@@ -117,7 +119,7 @@
     cursor: pointer;
     padding: 0.5rem 1rem;
     margin-top: 1rem;
-    border-radius: 1rem;
+    border-radius: 8px;
     color: #ffffff;
     font-size: 1rem;
     display: block;
@@ -144,3 +146,87 @@
     display: flex;
     flex-direction: row;
 }
+
+.form-container {
+    max-width: 1000px;
+    margin: 10px auto;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    align-items: center;
+}
+
+.form-group {
+    margin-bottom: 6px;
+}
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 5px;
+        border: 1px solid #ced4da;
+        border-radius: 0.5rem;
+        color: #B1BCC4;
+    }
+
+    .form-group .error {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+.account-button,
+.category-button,
+.submit-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 1px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #62AD41;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    text-align: center;
+}
+
+    .account-button:hover,
+    .category-button:hover,
+    .submit-button:hover {
+        background-color: #417828;
+    }
+
+.submit-button {
+    width: 100%;
+    margin-top: 10px;
+}
+
+.selected-button {
+    background-color: #417828;
+    color: #ffffff;
+}
+
+.back-button {
+    display: block;
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #ffffff;
+    background-color: #6c757d;
+    border: none;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    width: 30%;
+    margin-top: 10px;
+}
+
+    .back-button:hover {
+        background-color: #5a6268;
+    }
