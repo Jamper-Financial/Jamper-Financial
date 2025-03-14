@@ -178,6 +178,7 @@ namespace Jamper_Financial.Shared.Data
 
                         goals.Add(new Goal
                         {
+                            GoalId = reader.GetInt32(reader.GetOrdinal("GoalId")),
                             Type = reader["Type"].ToString(),
                             Name = reader["Name"].ToString(),
                             Amount = reader.GetDecimal(reader.GetOrdinal("Amount")),
@@ -232,12 +233,66 @@ namespace Jamper_Financial.Shared.Data
                         command.Parameters.AddWithValue("@Frequency", goal.Frequency ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@IsFadingOut", goal.IsFadingOut);
                         command.ExecuteNonQuery();
+
+                        command.CommandText = "SELECT last_insert_rowid();"; // ADDED
+                        long newId = (long)command.ExecuteScalar();         // ADDED
+                        goal.GoalId = (int)newId; 
                     }
                 }
             }
             catch (Exception ex)
             {
                 throw;
+            }
+        }
+
+        public static void UpdateGoal(Goal goal) // ADDED
+        {
+            using (var connection = GetConnection())
+            {
+                connection.Open();
+                string updateQuery = @"
+                    UPDATE Goals SET 
+                        Type = @Type,
+                        Name = @Name,
+                        Amount = @Amount,
+                        Date = @Date,
+                        GoalType = @GoalType,
+                        IsQuickGoal = @IsQuickGoal,
+                        IsRetirementGoal = @IsRetirementGoal,
+                        IsEmergencyFundGoal = @IsEmergencyFundGoal,
+                        IsTravelGoal = @IsTravelGoal,
+                        IsHomeGoal = @IsHomeGoal,
+                        Category = @Category,
+                        StartDate = @StartDate,
+                        EndDate = @EndDate,
+                        Description = @Description,
+                        ShowDescription = @ShowDescription,
+                        Frequency = @Frequency,
+                        IsFadingOut = @IsFadingOut
+                    WHERE GoalId = @GoalId";
+                using (var command = new SqliteCommand(updateQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@Type", goal.Type ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Name", goal.Name ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Amount", goal.Amount);
+                    command.Parameters.AddWithValue("@Date", goal.Date != default ? goal.Date.ToString("yyyy-MM-dd") : (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@GoalType", goal.GoalType ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@IsQuickGoal", goal.IsQuickGoal ? 1 : 0);
+                    command.Parameters.AddWithValue("@IsRetirementGoal", goal.IsRetirementGoal ? 1 : 0);
+                    command.Parameters.AddWithValue("@IsEmergencyFundGoal", goal.IsEmergencyFundGoal ? 1 : 0);
+                    command.Parameters.AddWithValue("@IsTravelGoal", goal.IsTravelGoal ? 1 : 0);
+                    command.Parameters.AddWithValue("@IsHomeGoal", goal.IsHomeGoal ? 1 : 0);
+                    command.Parameters.AddWithValue("@Category", goal.Category ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@StartDate", goal.StartDate != default ? goal.StartDate.ToString("yyyy-MM-dd") : (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@EndDate", goal.EndDate != default ? goal.EndDate.ToString("yyyy-MM-dd") : (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@Description", goal.Description ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@ShowDescription", goal.ShowDescription ? 1 : 0);
+                    command.Parameters.AddWithValue("@Frequency", goal.Frequency ?? (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@IsFadingOut", goal.IsFadingOut ? 1 : 0);
+                    command.Parameters.AddWithValue("@GoalId", goal.GoalId);
+                    command.ExecuteNonQuery();
+                }
             }
         }
 
