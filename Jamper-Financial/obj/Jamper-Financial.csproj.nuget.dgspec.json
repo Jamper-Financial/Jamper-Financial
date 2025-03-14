@@ -1,7 +1,7 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj": {}
+    "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj": {}
   },
   "projects": {
     "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
@@ -108,14 +108,14 @@
         }
       }
     },
-    "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj": {
+    "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
+        "projectUniqueName": "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
         "projectName": "Jamper-Financial",
-        "projectPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
+        "projectPath": "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
         "packagesPath": "C:\\Users\\paolo\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\obj\\",
+        "outputPath": "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [

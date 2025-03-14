@@ -19,5 +19,9 @@ namespace Jamper_Financial.Shared.Data
         {
             DatabaseHelper.DeleteGoal(goalId);
         }
+        public void UpdateGoal(Goal goal) // ADDED
+        {
+            DatabaseHelper.UpdateGoal(goal);
+        }
     }
 }
