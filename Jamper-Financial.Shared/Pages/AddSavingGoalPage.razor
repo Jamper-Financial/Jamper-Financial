@@ -28,6 +28,13 @@
                 <option value="Checking Account 1">Checking Account 1</option>
                 <option value="Checking Account 2">Checking Account 2</option>
             </select>
+
+            <label>Goal Type</label>
+            <div>
+                <button class="account-button @(goalType == "Savings" ? "selected-button" : "")" @onclick='() => SetGoalType("Savings")'>Savings Account</button>
+                <button class="account-button @(goalType == "Checking" ? "selected-button" : "")" @onclick='() => SetGoalType("Checking")'>Checking Account</button>
+            </div>
+
             @if (string.IsNullOrEmpty(goalType))
             {
                 <span class="error">Goal Type is required!</span>
@@ -86,6 +93,11 @@
     private decimal amount;
     private string frequency;
     private string description;
+    private void SetGoalType(string type)
+    {
+        goalType = type;
+    }
+
 
     private void SetCategory(string selectedCategory)
     {

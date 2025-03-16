@@ -1,0 +1,105 @@
+﻿@using Jamper_Financial.Shared.Data;
+@using Jamper_Financial.Shared.Utilities;
+@using Jamper_Financial.Shared.Pages.Components;
+@using Microsoft.AspNetCore.Components.Forms;
+@using Jamper_Financial.Shared.Models;
+@inject IJSRuntime JSRuntime
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback<bool> OnClose { get; set; }
+    [Parameter] public Transaction Transaction { get; set; }
+    private IBrowserFile? uploadedFile;
+    private string? receiptPreviewUrl;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Transaction.HasReceipt == 1)
+        {
+            Console.WriteLine("Transaction has receipt " + Transaction.HasReceipt);
+            await GetReceipt();
+        }
+    }
+
+    // Inject the TransactionManager service
+    private void CloseModal()
+    {
+        OnClose.InvokeAsync(false);
+    }
+
+    // This method is called when the Save button is clicked
+    private async Task SaveReceipt()
+    {
+        if (Transaction != null && uploadedFile != null)
+        {
+            Console.WriteLine("Saving receipt...");
+            // Implement the logic to save the receipt
+            Transaction.HasReceipt = 1;
+            if (await TransactionManager.UpdateReceiptAsync(Transaction, uploadedFile))
+            {
+                await GetReceipt();
+            }
+            else
+            {
+                Console.WriteLine("Failed to save receipt");
+            }
+        }
+    }
+
+    private async Task GetReceipt()
+    {
+        Console.WriteLine("Displaying receipt");
+        var receiptData = await TransactionHelper.GetReceiptAsync(Transaction.TransactionID);
+        if (receiptData != null)
+        {
+            receiptPreviewUrl = $"data:image/png;base64,{Convert.ToBase64String(receiptData.ReceiptFileData)}";
+        }
+    }
+
+    private async Task OpenReceiptInNewTab()
+    {
+        if (receiptPreviewUrl != null)
+        {
+            await JSRuntime.InvokeVoidAsync("openInNewTab", receiptPreviewUrl);
+        }
+    }
+
+    // This method is called when a file is selected
+    private Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        uploadedFile = e.File;
+        return Task.CompletedTask;
+    }
+}
+
+@if (IsVisible)
+{
+    <div class="modal" @onclick="CloseModal">
+        <div class="modal-content" @onclick:stopPropagation="true">
+            <h3>Receipt Details</h3>
+            <p><strong>Description:</strong> @Transaction.Description</p>
+            <p><strong>Transaction ID:</strong> @Transaction.TransactionID</p>
+            <p><strong>Category:</strong> @Transaction.Category</p>
+            <p><strong>Date:</strong> @Transaction.Date.ToString("dd MMM, hh:mm tt")</p>
+            <p><strong>Amount:</strong> @((Transaction.Debit > 0 ? Transaction.Debit : Transaction.Credit).ToString("C"))</p>
+            @if (Transaction.HasReceipt == 1)
+            {
+                <p>Receipt is available.</p>
+                @if (receiptPreviewUrl != null)
+                {
+                    <img src="@receiptPreviewUrl" alt="Receipt" style="max-width: 100%;" @onclick="OpenReceiptInNewTab" />
+                }
+            }
+            else
+            {
+                <p>No receipt available.</p>
+                <InputFile OnChange="HandleFileSelected" />
+                <div class="button-container">
+                    <button class="save-button" @onclick=" SaveReceipt">Save</button>
+                    <button class="delete-button" @onclick="CloseModal">Cancel</button>
+                </div>
+            }
+        </div>
+    </div>
+}

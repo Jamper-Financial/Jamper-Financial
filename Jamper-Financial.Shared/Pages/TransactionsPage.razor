@@ -3,6 +3,7 @@
 
 @using Jamper_Financial.Shared.Data;
 @using Jamper_Financial.Shared.Utilities;
+@using Jamper_Financial.Shared.Pages.Components;
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -65,7 +66,7 @@
                                 <td>1234 ****</td>
                                 <td>@transaction.Date.ToString("dd MMM, hh:mm tt")</td>
                                 <td class="@(transaction.Debit > 0 ? "negative" : "positive")">@((transaction.Debit > 0 ? transaction.Debit : transaction.Credit).ToString("C"))</td>
-                                <td @onclick:stopPropagation="true"><button class="view-details">View Receipt</button></td>
+                                <td @onclick:stopPropagation="true"><button class="view-details" @onclick="() => OpenReceiptModal(transaction)">View Receipt</button></td>
                             </tr>
                         }
                     }
@@ -82,12 +83,25 @@
         <div class="modal-content">
             @if (ShowDeleteConfirmation)
             {
-                <h3>Confirm Deletion</h3>
-                <p>Are you sure you want to delete this transaction?</p>
-                <div class="form-group button-group">
-                    <button type="button" class="save" @onclick="ConfirmDeleteTransaction">Confirm</button>
-                    <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
-                </div>
+                @if (NewTransaction.Frequency != "None")
+                {
+                    <h3>Confirm Deletion</h3>
+                    <p>This transaction is recurring. Do you want to delete all occurrences or just this one?</p>
+                    <div class="form-group button-group">
+                        <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(true)">Delete All</button>
+                        <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(false)">Delete This One</button>
+                        <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
+                    </div>
+                }
+                else
+                {
+                    <h3>Confirm Deletion</h3>
+                    <p>Are you sure you want to delete this transaction?</p>
+                    <div class="form-group button-group">
+                        <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(false)">Confirm</button>
+                        <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
+                    </div>
+                }
             }
             else
             {
@@ -151,17 +165,41 @@
     </div>
 }
 
+@* Receipt Modal *@
+
+@if (ShowReceiptModal)
+{
+    <ReceiptModal IsVisible="ShowReceiptModal" Transaction="SelectedTransaction" OnClose="CloseReceiptModal" />
+
+}
+
 @code {
     private List<Transaction> transactions;
     public bool ShowAddTransactionModal { get; set; } = false;
+    public bool ShowReceiptModal { get; set; } = false;
     public bool IsEditMode { get; set; } = false;
     public bool ShowDeleteConfirmation { get; set; } = false;
     public Transaction NewTransaction { get; set; } = new Transaction();
+    public Transaction SelectedTransaction { get; set; } = new Transaction();
     public decimal Amount { get; set; } = 0;
 
     protected override async Task OnInitializedAsync()
     {
         transactions = await TransactionManager.LoadTransactionsAsync();
+    }
+
+    private void OpenReceiptModal(Transaction transaction)
+    {
+        Console.Write("Trying to open receipt modal");
+
+        SelectedTransaction = transaction;
+        Console.WriteLine(transaction);
+        ShowReceiptModal = true;
+    }
+
+    private void CloseReceiptModal()
+    {
+        ShowReceiptModal = false;
     }
 
     private void OpenAddTransactionModal()
@@ -219,10 +257,22 @@
         ShowDeleteConfirmation = false;
     }
 
-    private async Task ConfirmDeleteTransaction()
+    private async Task ConfirmDeleteTransaction(bool deleteAll)
     {
-        await TransactionManager.DeleteTransactionAsync(NewTransaction);
-        transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
+        if (deleteAll)
+        {
+            await TransactionManager.DeleteRecurringTransactionsAsync(NewTransaction);
+            transactions.RemoveAll(t => t.Description == NewTransaction.Description &&
+                                        t.Category == NewTransaction.Category &&
+                                        t.Color == NewTransaction.Color &&
+                                        t.Frequency == NewTransaction.Frequency &&
+                                        t.Date > NewTransaction.Date);
+        }
+        else
+        {
+            await TransactionManager.DeleteTransactionAsync(NewTransaction);
+            transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
+        }
         CloseAddTransactionModal();
         transactions = await TransactionManager.LoadTransactionsAsync();
     }

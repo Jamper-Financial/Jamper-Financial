@@ -1,4 +1,6 @@
-﻿﻿using Jamper_Financial.Shared.Data;
+﻿using Jamper_Financial.Shared.Data;
+using Jamper_Financial.Shared.Models;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace Jamper_Financial.Shared.Utilities
 {
@@ -14,6 +16,8 @@ namespace Jamper_Financial.Shared.Utilities
         public string Color { get; set; }
         public string Frequency { get; set; }
         public DateTime? EndDate { get; set; }
+        public int CategoryID { get; set; } = 0;
+        public int HasReceipt { get; set; } = 0;
     }
 
     public static class TransactionManager
@@ -47,7 +51,7 @@ namespace Jamper_Financial.Shared.Utilities
                 await TransactionHelper.UpdateTransactionAsync(transaction);
                 if (transaction.Frequency == null)
                 {
-                    RemoveRecurringTransactions(transaction);
+                    await DeleteRecurringTransactionsAsync(transaction);
                 }
                 else
                 {
@@ -72,7 +76,22 @@ namespace Jamper_Financial.Shared.Utilities
         public static async Task DeleteTransactionAsync(Transaction transaction)
         {
             await TransactionHelper.DeleteTransactionAsync(transaction.TransactionID);
-            RemoveRecurringTransactions(transaction);
+        }
+
+        public static async Task DeleteRecurringTransactionsAsync(Transaction transaction)
+        {
+            var transactions = await TransactionHelper.GetTransactionsAsync();
+            var recurringTransactions = transactions
+                .Where(t => t.Description == transaction.Description &&
+                            t.Category == transaction.Category &&
+                            t.Color == transaction.Color &&
+                            t.Frequency == transaction.Frequency)
+                .ToList();
+
+            foreach (var recurringTransaction in recurringTransactions)
+            {
+                await TransactionHelper.DeleteTransactionAsync(recurringTransaction.TransactionID);
+            }
         }
 
         private static void EditRecurringTransactions(Transaction transaction)
@@ -97,22 +116,6 @@ namespace Jamper_Financial.Shared.Utilities
                 recurringTransaction.EndDate = transaction.EndDate;
 
                 TransactionHelper.UpdateTransactionAsync(recurringTransaction).Wait();
-            }
-        }
-
-        private static void RemoveRecurringTransactions(Transaction transaction)
-        {
-            var recurringTransactions = TransactionHelper.GetTransactionsAsync().Result
-                .Where(t => t.Description == transaction.Description &&
-                            t.Category == transaction.Category &&
-                            t.Color == transaction.Color &&
-                            t.Frequency == transaction.Frequency &&
-                            t.Date > transaction.Date)
-                .ToList();
-
-            foreach (var recurringTransaction in recurringTransactions)
-            {
-                TransactionHelper.DeleteTransactionAsync(recurringTransaction.TransactionID).Wait();
             }
         }
 
@@ -167,6 +170,44 @@ namespace Jamper_Financial.Shared.Utilities
                     TransactionHelper.UpdateTransactionAsync(existingTransaction).Wait();
                 }
             }
+        }
+
+        public static async Task<bool> UpdateReceiptAsync(Transaction transaction, IBrowserFile file)
+        {
+            try
+            { 
+            using (var stream = new MemoryStream())
+            {
+                await file.OpenReadStream().CopyToAsync(stream);
+                var receiptData = new ReceiptData
+                {
+                    ReceiptDescription = transaction.Description,
+                    ReceiptFileData = stream.ToArray(),
+                    TransactionID = transaction.TransactionID
+                };
+
+                // Save the receipt data to the database
+                await TransactionHelper.AddOrUpdateReceiptAsync(receiptData);
+            }
+
+            // Update the transaction's receipt status in the database
+            transaction.HasReceipt = 1;
+
+            // Update the transaction in the database
+            await TransactionHelper.UpdateTransactionAsync(transaction);
+                        return true;
+            } catch (Exception ex) {
+                Console.WriteLine(ex.Message);
+                return false;
+
+            }
+        }
+
+        public static async Task<ReceiptData> GetReceiptAsync(Transaction transaction)
+        {
+            ReceiptData receiptData = await TransactionHelper.GetReceiptAsync(transaction.TransactionID);
+
+            return receiptData;
         }
     }
 }

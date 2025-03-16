@@ -5,17 +5,10 @@
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
-    [CascadingParameter] public string SearchTerm { get; set; }
 
     protected override void OnInitialized()
     {
         SetPageTitle("Calendar");
-    }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        await base.OnParametersSetAsync();
-        UpdateFilteredTransactionsForSelectedMonth();
     }
 }
 
@@ -101,7 +94,7 @@
             <div class="calendar">
                 @foreach (var date in GetCalendarDates())
                 {
-                    <div class="day-box @(date.Month != SelectedMonth ? "greyed-out" : "") @(SelectedDate == date.Day && date.Month == SelectedMonth ? "selected" : "") @(IsDateHighlighted(date) ? "search-highlight" : "")"
+                    <div class="day-box @(date.Month != SelectedMonth ? "greyed-out" : "") @(SelectedDate == date.Day && date.Month == SelectedMonth ? "selected" : "")"
                     @onclick="() => SelectDate(date)">
                         <span class="day">@date.Day</span>
                         @if (HasTransactions(date))
@@ -167,12 +160,25 @@
             <div class="modal-content">
                 @if (ShowDeleteConfirmation)
                 {
-                    <h3>Confirm Deletion</h3>
-                    <p>Are you sure you want to delete this transaction?</p>
-                    <div class="form-group button-group">
-                        <button type="button" class="save" @onclick="ConfirmDeleteTransaction">Confirm</button>
-                        <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
-                    </div>
+                    @if (NewTransaction.Frequency != "None")
+                    {
+                        <h3>Confirm Deletion</h3>
+                        <p>This transaction is recurring. Do you want to delete all occurrences or just this one?</p>
+                        <div class="form-group button-group">
+                            <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(true)">Delete All</button>
+                            <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(false)">Delete This One</button>
+                            <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <h3>Confirm Deletion</h3>
+                        <p>Are you sure you want to delete this transaction?</p>
+                        <div class="form-group button-group">
+                            <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(false)">Confirm</button>
+                            <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
+                        </div>
+                    }
                 }
                 else
                 {
@@ -272,13 +278,6 @@
         SortTransactions("Date", true); // Ensure default sort is by Date ascending
     }
 
-    // Search and Filter Methods
-    private void UpdateSearchResults(ChangeEventArgs e)
-    {
-        SearchTerm = e.Value?.ToString() ?? string.Empty;
-        UpdateFilteredTransactionsForSelectedMonth();
-    }
-
     private void ToggleFilterDropdown() => ShowFilterDropdown = !ShowFilterDropdown;
 
     private void CloseFilterDropdown()
@@ -297,7 +296,7 @@
 
     private void UpdateFilteredTransactionsForSelectedMonth()
     {
-        FilteredTransactionsForSelectedMonth = Filters.ApplyFilters(TransactionsForSelectedMonth, FilterCategory, MinAmount, MaxAmount, SearchTerm);
+        FilteredTransactionsForSelectedMonth = Filters.ApplyFilters(TransactionsForSelectedMonth, FilterCategory, MinAmount, MaxAmount);
         ReapplySort();
         StateHasChanged();
     }
@@ -353,18 +352,19 @@
             {
                 // Unselect the date if it is already selected
                 SelectedDate = 0;
+                UpdateFilteredTransactionsForSelectedMonth();
             }
             else
             {
                 // Select the date
                 SelectedDate = date.Day;
+                FilteredTransactionsForSelectedMonth = TransactionsForSelectedMonth
+                    .Where(t => t.Date.Day == SelectedDate)
+                    .ToList();
             }
             StateHasChanged();
         }
     }
-
-    private bool IsDateHighlighted(DateTime date) =>
-        !string.IsNullOrEmpty(SearchTerm) && FilteredTransactionsForSelectedMonth.Any(t => t.Date.Date == date.Date && t.Description.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase));
 
     private bool HasTransactions(DateTime date) =>
         GetFilteredTransactions(date).Any();
@@ -373,7 +373,7 @@
         GetFilteredTransactions(date);
 
     private List<Transaction> GetFilteredTransactions(DateTime date) =>
-    Filters.ApplyFilters(Transactions.Where(t => t.Date.Date == date.Date).ToList(), FilterCategory, MinAmount, MaxAmount, SearchTerm);
+        Filters.ApplyFilters(Transactions.Where(t => t.Date.Date == date.Date).ToList(), FilterCategory, MinAmount, MaxAmount);
 
 
     private void UpdateTransactionsForSelectedMonth()
@@ -515,10 +515,22 @@
         ShowDeleteConfirmation = false;
     }
 
-    private async Task ConfirmDeleteTransaction()
+    private async Task ConfirmDeleteTransaction(bool deleteAll)
     {
-        await TransactionManager.DeleteTransactionAsync(NewTransaction);
-        Transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
+        if (deleteAll)
+        {
+            await TransactionManager.DeleteRecurringTransactionsAsync(NewTransaction);
+            Transactions.RemoveAll(t => t.Description == NewTransaction.Description &&
+                                        t.Category == NewTransaction.Category &&
+                                        t.Color == NewTransaction.Color &&
+                                        t.Frequency == NewTransaction.Frequency &&
+                                        t.Date > NewTransaction.Date);
+        }
+        else
+        {
+            await TransactionManager.DeleteTransactionAsync(NewTransaction);
+            Transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
+        }
         CloseAddTransactionModal();
         UpdateTransactionsForSelectedMonth();
     }
