@@ -6,6 +6,7 @@
 @inject IJSRuntime JSRuntime
 @inject DatabaseHelperFactory DatabaseHelper
 
+
 <style> 
     .modify-btn {
         border: none;
@@ -57,6 +58,7 @@
         background-color: #f9f9f9;
     }
 </style>
+
 <div class="header-container">
     <h3 class="header">Goals</h3>
 </div>
@@ -177,103 +179,6 @@
                         <div class="edit-goal-form"> 
                             @if (goal.IsQuickGoal) 
                             {
-                                <h3>@goal.Name</h3>
-                                <p>Type: @goal.Type</p>
-                                <p>Amount: $@goal.Amount</p>
-                                <p>Start Date: @goal.StartDate.ToShortDateString()</p>
-                                <p>End Date: @goal.EndDate.ToShortDateString()</p>
-                            }
-                            else if (goal.IsRetirementGoal)
-                            {
-                                <h3>Retirement Goal</h3>
-                                <p>Target Amount: $@goal.Amount</p>
-                                <p>Retirement Date: @goal.EndDate.ToShortDateString()</p>
-                                @if (goal.ShowDescription)
-                                {
-                                    var parts = goal.Description.Split(',');
-                                    if (parts.Length >= 2)
-                                    {
-                                        <p>Current Savings: $@parts[0].Split(':')[1].Trim()</p>
-                                        <p>Monthly Contribution: $@parts[1].Split(':')[1].Trim()</p>
-                                    }
-                                }
-                            }
-                            else if (goal.IsEmergencyFundGoal)
-                            {
-                                <h3>@goal.Name</h3>
-                                <p>Target Amount: $@goal.Amount</p>
-                                <p>Target Date: @goal.EndDate.ToShortDateString()</p>
-                                @if (goal.ShowDescription)
-                                {
-                                    var parts = goal.Description.Split(',');
-                                    if (parts.Length >= 3)
-                                    {
-                                        <p>Current Savings: $@parts[0].Split(':')[1].Trim()</p>
-                                        <p>Monthly Contribution: $@parts[1].Split(':')[1].Trim()</p>
-                                        <p>Description: $@parts[2].Split(':')[1].Trim()</p>
-                                    }
-                                }
-                            }
-                            else if (goal.IsTravelGoal)
-                            {
-                                <h3>@goal.Name</h3>
-                                <p>Destination: @goal.Name.Split(' ')[2]</p>
-                                <p>Estimated Cost: $@goal.Amount</p>
-                                <p>Travel Dates: @goal.StartDate.ToShortDateString() - @goal.EndDate.ToShortDateString()</p>
-                                @if (goal.ShowDescription)
-                                {
-                                    var parts = goal.Description.Split(',');
-                                    if (parts.Length >= 2)
-                                    {
-                                        <p>Current Savings: $@parts[0].Split(':')[1].Trim()</p>
-                                        <p>Monthly Contribution: $@parts[1].Split(':')[1].Trim()</p>
-                                        if (parts.Length > 6)
-                                        {
-                                            <p>Description: $@parts[6].Split(':')[1].Trim()</p>
-                                        }
-                                    }
-                                }
-                            }
-                            else if (goal.IsHomeGoal)
-                            {
-                                <h3>@goal.Name</h3>
-                                <p>Target Purchase Date: @goal.EndDate.ToShortDateString()</p>
-                                @if (goal.ShowDescription)
-                                {
-                                    var parts = goal.Description.Split(',');
-                                    if (parts.Length >= 3)
-                                    {
-                                        <p>Home Price: $@parts[0].Split(':')[1].Trim()</p>
-                                        <p>Current Savings: $@parts[1].Split(':')[1].Trim()</p>
-                                        <p>Monthly Savings: $@parts[2].Split(':')[1].Trim()</p>
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                <h3>@goal.Name</h3>
-                                <p>Account Type: @goal.GoalType</p>
-                                <p>Category: @goal.Category</p>
-                                <p>Start Date: @goal.StartDate.ToShortDateString()</p>
-                                <p>End Date: @goal.EndDate.ToShortDateString()</p>
-                                <p>Amount: $@goal.Amount</p>
-                                @if (goal.ShowDescription)
-                                {
-                                    <p>Frequency: @goal.Frequency</p>
-                                    <p>Description: @goal.Description</p>
-                                }
-                            }
-                        </div>
-                        <div class="button-container">
-                            <button class="see-more-btn" @onclick="() => ToggleDescription(goal)">...</button>
-                            <button class="delete-btn" @onclick="async () => await ConfirmDeleteGoal(goal)">
-                                <img src="images/bin.png" alt="Delete" />
-                            </button>
-                            <button class="check-off-btn" @onclick="async () => await ConfirmCheckOffGoal(goal)">
-                                <img src="images/check.png" alt="Check Off" />
-                            </button>
-                        </div>
-                    </div>
                                 <h3>Editing Quick Goal</h3>
                                 <div class="form-group">
                                     <label>Goal Type</label>
@@ -539,6 +444,7 @@
     {
         goal.ShowDescription = !goal.ShowDescription;
     }
+
     private async Task DeleteGoal(Goal goal)
     {
         try
@@ -547,16 +453,6 @@
 
             // Trigger the fade-out animation
             goal.IsFadingOut = true;
-            StateHasChanged(); // Force UI update
-
-            await Task.Delay(500); // Wait for animation to complete
-
-            // Remove from database and check if deletion was successful
-            DatabaseHelper.DeleteGoal(goal.GoalId);
-            await Task.Delay(100); // Give database time to process
-
-            // Verify that the goal no longer exists
-
             StateHasChanged();
 
             await Task.Delay(500);
@@ -564,22 +460,15 @@
             DatabaseHelper.DeleteGoal(goal.GoalId);
             await Task.Delay(100);
 
-
             var updatedGoals = DatabaseHelper.GetGoals();
             if (updatedGoals.Any(g => g.GoalId == goal.GoalId))
             {
                 Console.WriteLine($"Failed to delete goal with ID: {goal.GoalId} from the database.");
-                return; // Stop further UI updates if DB deletion failed
-
                 return;
-
             }
 
             Console.WriteLine($"Goal with ID: {goal.GoalId} deleted from the database.");
 
-            goals.Remove(goal);
-
-            // Reload goals from database to ensure consistency
             goals.Remove(goal);
 
             goals = DatabaseHelper.GetGoals();
@@ -595,19 +484,9 @@
 
     private async Task ConfirmDeleteGoal(Goal goal)
     {
-        // Show a confirmation dialog
-        bool isConfirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete the goal '{goal.Name}'?");
-
-        if (isConfirmed)
-        {
-            // If confirmed, delete the goal
-
-    private async Task ConfirmDeleteGoal(Goal goal)
-    {
         bool isConfirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete the goal '{goal.Name}'?");
         if (isConfirmed)
         {
-
             await DeleteGoal(goal);
         }
     }
@@ -624,8 +503,6 @@
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error in CheckOffGoal: {ex.Message}"); // Log any errors
-
             Console.WriteLine($"Error in CheckOffGoal: {ex.Message}");
         }
     }
@@ -776,9 +653,6 @@
         }
     }
 
-    private void GoBack()
-    {
-        Navigation.NavigateTo("/saving-goals-page");
     
     private void CancelEdit(Goal goal) 
     {

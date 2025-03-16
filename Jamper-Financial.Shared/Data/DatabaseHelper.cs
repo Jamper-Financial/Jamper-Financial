@@ -178,9 +178,7 @@ namespace Jamper_Financial.Shared.Data
 
                         goals.Add(new Goal
                         {
-
                             GoalId = reader.GetInt32(reader.GetOrdinal("GoalId")),
-
                             Type = reader["Type"].ToString(),
                             Name = reader["Name"].ToString(),
                             Amount = reader.GetDecimal(reader.GetOrdinal("Amount")),
@@ -239,7 +237,6 @@ namespace Jamper_Financial.Shared.Data
                         command.CommandText = "SELECT last_insert_rowid();"; // ADDED
                         long newId = (long)command.ExecuteScalar();         // ADDED
                         goal.GoalId = (int)newId; 
-
                     }
                 }
             }
@@ -248,6 +245,7 @@ namespace Jamper_Financial.Shared.Data
                 throw;
             }
         }
+
         public static void UpdateGoal(Goal goal) // ADDED
         {
             using (var connection = GetConnection())
@@ -297,6 +295,7 @@ namespace Jamper_Financial.Shared.Data
                 }
             }
         }
+
         public static void DeleteGoal(int goalId)
         {
             try

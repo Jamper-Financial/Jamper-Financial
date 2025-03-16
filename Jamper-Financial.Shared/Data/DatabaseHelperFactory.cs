@@ -23,6 +23,5 @@ namespace Jamper_Financial.Shared.Data
         {
             DatabaseHelper.UpdateGoal(goal);
         }
-
     }
 }
