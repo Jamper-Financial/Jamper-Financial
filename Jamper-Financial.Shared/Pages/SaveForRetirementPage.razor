@@ -30,14 +30,6 @@
 <div class="content-container">
     <div class="form-container">
         <div class="form-group">
-            <label for="goalName">Name of goal</label>
-            <input type="text" id="goalName" @bind="goalName" />
-            @if (string.IsNullOrEmpty(goalName))
-            {
-                <span class="error">Goal Name is required!</span>
-            }
-        </div>
-        <div class="form-group">
             <label for="targetAmount">Target Amount</label>
             <input type="number" id="targetAmount" step="0.01" @bind="targetAmount" />
             @if (targetAmount <= 0)
@@ -54,24 +46,8 @@
             <input type="number" id="monthlyContribution" step="0.01" @bind="monthlyContribution" />
         </div>
         <div class="form-group">
-            <label for="retirementDate">Retirement Date</label>
+            <label for="retirementDate">Goal Retirement Date</label>
             <input type="date" id="retirementDate" @bind="retirementDate" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
-        </div>
-        <div class="form-group">
-            <label for="investmentGrowthRate">Investment Growth Rate (%)</label>
-            <input type="number" id="investmentGrowthRate" step="0.01" @bind="investmentGrowthRate" />
-        </div>
-        <div class="form-group">
-            <label for="inflationRate">Inflation Rate (%)</label>
-            <input type="number" id="inflationRate" step="0.01" @bind="inflationRate" />
-        </div>
-        <div class="form-group">
-            <label for="retirementIncomeNeeds">Retirement Income Needs</label>
-            <input type="number" id="retirementIncomeNeeds" step="0.01" @bind="retirementIncomeNeeds" />
-        </div>
-        <div class="form-group">
-            <label for="otherIncomeSources">Other Sources of Income</label>
-            <input type="number" id="otherIncomeSources" step="0.01" @bind="otherIncomeSources" />
         </div>
         <button class="submit-button" @onclick="SubmitRetirementGoal">Submit</button>
         <button class="back-button" @onclick="GoBack">Back</button>
@@ -79,29 +55,21 @@
 </div>
 
 @code {
-    private string goalName;
     private decimal targetAmount;
     private decimal currentSavings;
     private decimal monthlyContribution;
     private DateTime retirementDate = DateTime.Today;
-    private decimal investmentGrowthRate;
-    private decimal inflationRate;
-    private decimal retirementIncomeNeeds;
-    private decimal otherIncomeSources;
 
     private void SubmitRetirementGoal()
     {
-        if (!string.IsNullOrEmpty(goalName) && targetAmount > 0)
+        if (targetAmount > 0)
         {
             var retirementGoal = new Goal
                 {
-                    Name = goalName,
                     Amount = targetAmount,
                     StartDate = DateTime.Now,
                     EndDate = retirementDate,
-                    Description = $"Current Savings: {currentSavings}, Monthly Contribution: {monthlyContribution}, " +
-                                  $"Investment Growth Rate: {investmentGrowthRate}%, Inflation Rate: {inflationRate}%, " +
-                                  $"Retirement Income Needs: {retirementIncomeNeeds}, Other Income Sources: {otherIncomeSources}",
+                    Description = $"Current Savings: {currentSavings}, Monthly Contribution: {monthlyContribution}, ",
                     Category = "Retirement",
                     GoalType = "Savings",
                     Frequency = "Monthly",

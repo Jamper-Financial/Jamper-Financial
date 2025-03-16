@@ -19,14 +19,6 @@
             }
         </div>
         <div class="form-group">
-            <label for="downPayment">Down Payment</label>
-            <input type="number" id="downPayment" step="0.01" @bind="downPayment" />
-            @if (downPayment <= 0)
-            {
-                <span class="error">Down Payment must be greater than zero!</span>
-            }
-        </div>
-        <div class="form-group">
             <label for="currentSavings">Current Savings</label>
             <input type="number" id="currentSavings" step="0.01" @bind="currentSavings" />
         </div>
@@ -38,6 +30,7 @@
             <label for="targetPurchaseDate">Target Purchase Date</label>
             <input type="date" id="targetPurchaseDate" @bind="targetPurchaseDate" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
         </div>
+
         <div class="form-group">
             <label for="loanInterestRate">Loan Interest Rate (%)</label>
             <input type="number" id="loanInterestRate" step="0.01" @bind="loanInterestRate" />
@@ -61,7 +54,6 @@
         <label for="predictedDate">Predicted Date to Reach Goal</label>
         <input type="text" id="predictedDate" value="@predictedDate.ToShortDateString()" readonly />
         <button class="submit-button" @onclick="CalculatePredictedDate">Calculate Predicted Date</button>
-
         <button class="submit-button" @onclick="SubmitHomeGoal">Submit</button>
         <button class="back-button" @onclick="GoBack">Back</button>
 
@@ -70,7 +62,6 @@
 
 @code {
     private decimal homePrice;
-    private decimal downPayment;
     private decimal currentSavings;
     private decimal monthlySavings;
     private DateTime targetPurchaseDate = DateTime.Today;
@@ -81,19 +72,22 @@
     private decimal otherCosts;
     private DateTime predictedDate;
 
+
     private void SubmitHomeGoal()
     {
-        if (homePrice > 0 && downPayment > 0)
+        if (homePrice > 0)
         {
             var homeGoal = new Goal
                 {
                     Name = "Save to Buy a Home",
-                    Amount = downPayment,
                     StartDate = DateTime.Now,
                     EndDate = targetPurchaseDate,
+                    Description = $"Home Price: {homePrice}, Current Savings: {currentSavings}, Monthly Savings: {monthlySavings}, ",
+
                     Description = $"Home Price: {homePrice}, Current Savings: {currentSavings}, Monthly Savings: {monthlySavings}, " +
                                       $"Loan Interest Rate: {loanInterestRate}%, Loan Term: {loanTerm} years, Property Taxes: {propertyTaxes}, " +
                                       $"Home Insurance: {homeInsurance}, Other Costs: {otherCosts}",
+
                     Category = "Home",
                     GoalType = "Savings",
                     Frequency = "Monthly",
