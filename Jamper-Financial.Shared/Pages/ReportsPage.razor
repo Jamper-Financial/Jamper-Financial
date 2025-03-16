@@ -42,7 +42,8 @@
         SetPageTitle("Reports");
 
         // Load all transactions from the database
-        var allFromDb = await TransactionHelper.GetTransactionsAsync();
+        int userId = 1; // Hardcoded for now.
+        var allFromDb = await TransactionHelper.GetTransactionsAsync(userId);
         transactions = allFromDb.ToList();
 
         // By default, show all transactions
@@ -102,7 +103,7 @@
 
         // Filter transactions by categories and date range
         filteredTransactions = transactions
-            .Where(t => selectedCategories.Contains("All") || selectedCategories.Contains(t.Category))
+            .Where(t => selectedCategories.Contains("All") || selectedCategories.Contains(t.CategoryID.ToString()))
             .Where(t => t.Date >= fromDate && t.Date <= toDate)
             .ToList();
 
@@ -562,7 +563,7 @@
                                 {
                                     <tr>
                                         <td>@t.Description</td>
-                                        <td>@t.Category</td>
+                                        <td>@t.CategoryID</td>
                                         <td>@t.Date.ToString("dd MMM yyyy")</td>
                                         <td class="@(t.Debit > 0 ? "negative" : "")">
                                             @(t.Debit != 0 ? t.Debit.ToString("C") : "")

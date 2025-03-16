@@ -2,19 +2,32 @@
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Models
 
-
 <h3>Manage Categories</h3>
 
+<!-- Add Category Section -->
 <div class="category-container">
     <input class="category-input" @bind="NewCategoryName" placeholder="Enter category name..." />
+    <select @bind="NewCategoryTransactionType">
+        <option value="e">Expense</option>
+        <option value="i">Income</option>
+    </select>
+    <input type="color" @bind="NewCategoryColor" />
+    <select @bind="NewCategoryParentID">
+        <option value="">Select Parent Category (Optional)</option>
+        @foreach (var category in Categories)
+        {
+            <option value="@category.CategoryID">@category.Name</option>
+        }
+    </select>
     <button class="category-add-btn" @onclick="AddCategory">Add</button>
 </div>
 
+<!-- Category List -->
 <ul class="category-list">
     @foreach (var category in Categories)
     {
         <li class="category-item">
-            <span>@category.Name</span>
+            <span>@category.Name (@(category.TransactionType == "e" ? "Expense" : "Income")) - Color: <span style="color: @category.Color">@category.Color</span></span>
             <div>
                 <button class="edit-btn" @onclick="() => EditCategory(category.CategoryID)">Edit</button>
                 <button class="delete-btn" @onclick="() => DeleteCategory(category.CategoryID)">Delete</button>
@@ -23,10 +36,23 @@
     }
 </ul>
 
+<!-- Edit Category Section -->
 @if (EditingCategoryID > 0)
 {
     <div class="edit-container">
         <input class="category-input" @bind="EditingCategoryName" placeholder="Edit category name..." />
+        <select @bind="EditingCategoryTransactionType">
+            <option value="e">Expense</option>
+            <option value="i">Income</option>
+        </select>
+        <input type="color" @bind="EditingCategoryColor" />
+        <select @bind="EditingCategoryParentID">
+            <option value="">Select Parent Category (Optional)</option>
+            @foreach (var category in Categories)
+            {
+                <option value="@category.CategoryID">@category.Name</option>
+            }
+        </select>
         <button class="save-btn" @onclick="SaveEditedCategory">Save</button>
         <button class="cancel-btn" @onclick="CancelEdit">Cancel</button>
     </div>
@@ -35,11 +61,18 @@
 @code {
     private List<Category> Categories = new();
     private string NewCategoryName = "";
+    private string NewCategoryTransactionType = "e"; // Default to Expense
+    private string NewCategoryColor = "#000000"; // Default color
+    private int? NewCategoryParentID = null; // Optional parent category
+
     private int EditingCategoryID = 0;
     private string EditingCategoryName = "";
+    private string EditingCategoryTransactionType = "e";
+    private string EditingCategoryColor = "#000000";
+    private int? EditingCategoryParentID = null;
 
-    //user retrieval
-    private int UserID = 1; 
+    // User retrieval (hardcoded for now)
+    private int UserID = 1;
 
     protected override void OnInitialized()
     {
@@ -48,16 +81,18 @@
 
     private void LoadCategories()
     {
-        var categoryData = DatabaseHelper.GetCategories(UserID);
-        Categories = categoryData.Select(c => new Category { CategoryID = c.CategoryID, Name = c.Name }).ToList();
+        Categories = DatabaseHelper.GetCategories(UserID).ToList();
     }
 
     private void AddCategory()
     {
         if (!string.IsNullOrWhiteSpace(NewCategoryName))
         {
-            DatabaseHelper.AddCategory(UserID, NewCategoryName);
+            DatabaseHelper.InsertCategory(UserID, NewCategoryName, NewCategoryColor, NewCategoryTransactionType, NewCategoryParentID);
             NewCategoryName = "";
+            NewCategoryTransactionType = "e";
+            NewCategoryColor = "#000000";
+            NewCategoryParentID = null;
             LoadCategories();
         }
     }
@@ -69,6 +104,9 @@
         {
             EditingCategoryID = category.CategoryID;
             EditingCategoryName = category.Name;
+            EditingCategoryTransactionType = category.TransactionType;
+            EditingCategoryColor = category.Color;
+            EditingCategoryParentID = category.ParentCategoryID;
         }
     }
 
@@ -76,9 +114,12 @@
     {
         if (EditingCategoryID > 0 && !string.IsNullOrWhiteSpace(EditingCategoryName))
         {
-            DatabaseHelper.UpdateCategory(UserID, EditingCategoryID, EditingCategoryName);
+            DatabaseHelper.UpdateCategory(UserID, EditingCategoryID, EditingCategoryName, EditingCategoryColor, EditingCategoryTransactionType);
             EditingCategoryID = 0;
             EditingCategoryName = "";
+            EditingCategoryTransactionType = "e";
+            EditingCategoryColor = "#000000";
+            EditingCategoryParentID = null;
             LoadCategories();
         }
     }
@@ -93,5 +134,8 @@
     {
         EditingCategoryID = 0;
         EditingCategoryName = "";
+        EditingCategoryTransactionType = "e";
+        EditingCategoryColor = "#000000";
+        EditingCategoryParentID = null;
     }
 }

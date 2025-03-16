@@ -15,7 +15,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (Transaction.HasReceipt == 1)
+        if (Transaction.HasReceipt == true)
         {
             Console.WriteLine("Transaction has receipt " + Transaction.HasReceipt);
             await GetReceipt();
@@ -35,7 +35,7 @@
         {
             Console.WriteLine("Saving receipt...");
             // Implement the logic to save the receipt
-            Transaction.HasReceipt = 1;
+            Transaction.HasReceipt = true;
             if (await TransactionManager.UpdateReceiptAsync(Transaction, uploadedFile))
             {
                 await GetReceipt();
@@ -80,10 +80,10 @@
             <h3>Receipt Details</h3>
             <p><strong>Description:</strong> @Transaction.Description</p>
             <p><strong>Transaction ID:</strong> @Transaction.TransactionID</p>
-            <p><strong>Category:</strong> @Transaction.Category</p>
+            <p><strong>Category:</strong> @Transaction.CategoryID</p>
             <p><strong>Date:</strong> @Transaction.Date.ToString("dd MMM, hh:mm tt")</p>
             <p><strong>Amount:</strong> @((Transaction.Debit > 0 ? Transaction.Debit : Transaction.Credit).ToString("C"))</p>
-            @if (Transaction.HasReceipt == 1)
+            @if (Transaction.HasReceipt == true)
             {
                 <p>Receipt is available.</p>
                 @if (receiptPreviewUrl != null)

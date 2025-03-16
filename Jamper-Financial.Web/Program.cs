@@ -87,11 +87,12 @@ app.MapGet("/export/csv", async (HttpContext context) =>
         .Select(c => c.Trim())
         .ToList();
 
-    var allTransactions = await TransactionHelper.GetTransactionsAsync();
+    int userId = 1;
+    var allTransactions = await TransactionHelper.GetTransactionsAsync(userId);
 
     // Filter
     var filtered = allTransactions
-        .Where(t => catList.Contains("All") || catList.Contains(t.Category))
+        .Where(t => catList.Contains("All") || catList.Contains(t.CategoryID.ToString()))
         .Where(t => t.Date >= fromDate && t.Date <= toDate)
         .ToList();
 
@@ -113,7 +114,7 @@ app.MapGet("/export/csv", async (HttpContext context) =>
     {
         var debitStr = t.Debit != 0 ? t.Debit.ToString("C") : "";
         var creditStr = t.Credit != 0 ? t.Credit.ToString("C") : "";
-        csv.AppendLine($"\"{t.Description}\",\"{t.Category}\",\"{t.Date:yyyy-MM-dd}\",\"{debitStr}\",\"{creditStr}\"");
+        csv.AppendLine($"\"{t.Description}\",\"{t.CategoryID}\",\"{t.Date:yyyy-MM-dd}\",\"{debitStr}\",\"{creditStr}\"");
     }
 
     // Totals row (3 empty columns, then total Debit, total Credit)
@@ -145,10 +146,11 @@ app.MapGet("/export/pdf", async (HttpContext context) =>
         .Select(c => c.Trim())
         .ToList();
 
-    var allTransactions = await TransactionHelper.GetTransactionsAsync();
+    int userId = 1;
+    var allTransactions = await TransactionHelper.GetTransactionsAsync(userId);
 
     var filtered = allTransactions
-        .Where(t => catList.Contains("All") || catList.Contains(t.Category))
+        .Where(t => catList.Contains("All") || catList.Contains(t.CategoryID.ToString()))
         .Where(t => t.Date >= fromDate && t.Date <= toDate)
         .ToList();
 
@@ -215,7 +217,7 @@ app.MapGet("/export/pdf", async (HttpContext context) =>
                     foreach (var t in filtered)
                     {
                         table.Cell().Element(CellStyleData).Text(t.Description);
-                        table.Cell().Element(CellStyleData).Text(t.Category);
+                        table.Cell().Element(CellStyleData).Text(t.CategoryID);
                         table.Cell().Element(CellStyleData).Text($"{t.Date:yyyy-MM-dd}");
 
                         // Debit

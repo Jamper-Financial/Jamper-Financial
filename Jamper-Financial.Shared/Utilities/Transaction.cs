@@ -7,29 +7,29 @@ namespace Jamper_Financial.Shared.Utilities
     public class Transaction
     {
         public int TransactionID { get; set; }
+        public int UserID { get; set; } 
         public DateTime Date { get; set; }
-        public string Description { get; set; }
-        public decimal Amount { get; set; }
-        public decimal Debit { get; set; }
-        public decimal Credit { get; set; }
-        public string Category { get; set; }
-        public string Color { get; set; }
-        public string Frequency { get; set; }
+        public string Description { get; set; } = string.Empty;
+        public decimal Amount { get; set; } = 0;
+        public decimal Debit { get; set; } = 0;
+        public decimal Credit { get; set; } = 0;
+        public int CategoryID { get; set; }  
+        public string TransactionType { get; set; } = "e"; // Expense by default
+        public bool HasReceipt { get; set; } = false;
+        public string Frequency { get; set; } = "None";
         public DateTime? EndDate { get; set; }
-        public int CategoryID { get; set; } = 0;
-        public int HasReceipt { get; set; } = 0;
     }
 
     public static class TransactionManager
     {
-        public static async Task<List<Transaction>> LoadTransactionsAsync()
+        public static async Task<List<Transaction>> LoadTransactionsAsync(int userId)
         {
-            return (await TransactionHelper.GetTransactionsAsync()).ToList();
+            return (await TransactionHelper.GetTransactionsAsync(userId)).ToList();
         }
 
         public static async Task AddOrUpdateTransactionAsync(Transaction transaction, bool isEditMode)
         {
-            if (transaction.Category == "Expenses" || transaction.Category == "Debts & Loans" || transaction.Category == "Subscriptions & Memberships")
+            if (transaction.TransactionType == "e")
             {
                 transaction.Debit = transaction.Amount;
                 transaction.Credit = 0;
@@ -40,11 +40,6 @@ namespace Jamper_Financial.Shared.Utilities
                 transaction.Credit = transaction.Amount;
             }
 
-            if (transaction.Frequency == "None")
-            {
-                transaction.Frequency = null;
-                transaction.EndDate = null;
-            }
 
             if (isEditMode)
             {
@@ -80,11 +75,10 @@ namespace Jamper_Financial.Shared.Utilities
 
         public static async Task DeleteRecurringTransactionsAsync(Transaction transaction)
         {
-            var transactions = await TransactionHelper.GetTransactionsAsync();
+            var transactions = await TransactionHelper.GetTransactionsAsync(transaction.UserID);
             var recurringTransactions = transactions
                 .Where(t => t.Description == transaction.Description &&
-                            t.Category == transaction.Category &&
-                            t.Color == transaction.Color &&
+                            t.CategoryID == transaction.CategoryID &&
                             t.Frequency == transaction.Frequency)
                 .ToList();
 
@@ -96,10 +90,9 @@ namespace Jamper_Financial.Shared.Utilities
 
         private static void EditRecurringTransactions(Transaction transaction)
         {
-            var recurringTransactions = TransactionHelper.GetTransactionsAsync().Result
+            var recurringTransactions = TransactionHelper.GetTransactionsAsync(transaction.UserID).Result
                 .Where(t => t.Description == transaction.Description &&
-                            t.Category == transaction.Category &&
-                            t.Color == transaction.Color &&
+                            t.CategoryID == transaction.CategoryID &&
                             t.Frequency == transaction.Frequency &&
                             t.Date > transaction.Date)
                 .ToList();
@@ -110,8 +103,7 @@ namespace Jamper_Financial.Shared.Utilities
                 recurringTransaction.Amount = transaction.Amount;
                 recurringTransaction.Debit = transaction.Debit;
                 recurringTransaction.Credit = transaction.Credit;
-                recurringTransaction.Category = transaction.Category;
-                recurringTransaction.Color = transaction.Color;
+                recurringTransaction.CategoryID = transaction.CategoryID;
                 recurringTransaction.Frequency = transaction.Frequency;
                 recurringTransaction.EndDate = transaction.EndDate;
 
@@ -136,8 +128,8 @@ namespace Jamper_Financial.Shared.Utilities
                     break;
                 }
 
-                var existingTransaction = TransactionHelper.GetTransactionsAsync().Result
-                    .FirstOrDefault(t => t.Date == nextDate && t.Description == transaction.Description && t.Category == transaction.Category);
+                var existingTransaction = TransactionHelper.GetTransactionsAsync(transaction.UserID).Result
+                    .FirstOrDefault(t => t.Date == nextDate && t.Description == transaction.Description && t.CategoryID == transaction.CategoryID);
 
                 if (existingTransaction == null)
                 {
@@ -148,8 +140,7 @@ namespace Jamper_Financial.Shared.Utilities
                         Amount = transaction.Amount,
                         Debit = transaction.Debit,
                         Credit = transaction.Credit,
-                        Category = transaction.Category,
-                        Color = transaction.Color,
+                        CategoryID = transaction.CategoryID,
                         Frequency = transaction.Frequency,
                         EndDate = transaction.EndDate
                     };
@@ -162,8 +153,7 @@ namespace Jamper_Financial.Shared.Utilities
                     existingTransaction.Amount = transaction.Amount;
                     existingTransaction.Debit = transaction.Debit;
                     existingTransaction.Credit = transaction.Credit;
-                    existingTransaction.Category = transaction.Category;
-                    existingTransaction.Color = transaction.Color;
+                    existingTransaction.CategoryID = transaction.CategoryID;
                     existingTransaction.Frequency = transaction.Frequency;
                     existingTransaction.EndDate = transaction.EndDate;
 
@@ -191,7 +181,7 @@ namespace Jamper_Financial.Shared.Utilities
             }
 
             // Update the transaction's receipt status in the database
-            transaction.HasReceipt = 1;
+                transaction.HasReceipt = true;
 
             // Update the transaction in the database
             await TransactionHelper.UpdateTransactionAsync(transaction);

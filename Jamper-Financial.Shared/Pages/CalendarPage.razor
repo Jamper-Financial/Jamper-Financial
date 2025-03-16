@@ -2,6 +2,7 @@
 @using System.Globalization
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Utilities
+@using Jamper_Financial.Shared.Models
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -39,11 +40,10 @@
                         <label for="filterCategory">Category:</label>
                         <select id="filterCategory" @bind="TempFilterCategory">
                             <option value="">All</option>
-                            <option value="Expenses">Expenses</option>
-                            <option value="Income">Income</option>
-                            <option value="Debts & Loans">Debts & Loans</option>
-                            <option value="Savings & Investments">Savings & Investments</option>
-                            <option value="Subscriptions & Memberships">Subscriptions & Memberships</option>
+                            @foreach (var category in Categories)
+                            {
+                                <option value="@category.CategoryID">@category.Name</option>
+                            }
                         </select>
                     </div>
                     <div class="form-group amount-filter">
@@ -95,7 +95,7 @@
                 @foreach (var date in GetCalendarDates())
                 {
                     <div class="day-box @(date.Month != SelectedMonth ? "greyed-out" : "") @(SelectedDate == date.Day && date.Month == SelectedMonth ? "selected" : "")"
-                    @onclick="() => SelectDate(date)">
+                         @onclick="() => SelectDate(date)">
                         <span class="day">@date.Day</span>
                         @if (HasTransactions(date))
                         {
@@ -103,7 +103,7 @@
                                 @foreach (var transaction in GetTransactions(date))
                                 {
                                     <div class="transaction-dot-container">
-                                        <span class="transaction-dot" style="background-color: @transaction.Color;"></span>
+                                        <span class="transaction-dot" style="background-color: @(Categories.FirstOrDefault(c => c.CategoryID == transaction.CategoryID)?.Color ?? "#000000");"></span>
                                         @* <span class="transaction-description">@transaction.Description</span> *@
                                     </div>
                                 }
@@ -129,8 +129,11 @@
                 @foreach (var transaction in FilteredTransactionsForSelectedMonth)
                 {
                     <div class="transaction-item @(transaction.Date.Day == SelectedDate ? "selected-transaction" : "")" @onclick="() => ShowEditTransactionModal(transaction)">
-                        <h4 class="description" style="color: @transaction.Color;">@transaction.Description</h4>
-                        <p>@transaction.Category</p>
+                        <h4 class="description" style="color: @(Categories.FirstOrDefault(c => c.CategoryID == transaction.CategoryID)?.Color ?? "#000000");">
+                            @transaction.Description
+                        </h4>
+                        <p>@(Categories.FirstOrDefault(c => c.CategoryID == transaction.CategoryID)?.Name ?? "Unknown")</p>
+
                         <p class="@(transaction.Debit > 0 ? "negative-amount" : "positive-amount")">
                             @(transaction.Debit > 0 ? "-" : "+")@((transaction.Debit > 0 ? transaction.Debit : transaction.Credit).ToString("C"))
                         </p>
@@ -190,12 +193,12 @@
                         </div>
                         <div class="form-group">
                             <label for="category">Category:</label>
-                            <select id="category" @onchange="HandleCategoryChange" required>
-                                <option value="Expenses">Expenses</option>
-                                <option value="Income">Income</option>
-                                <option value="Debts & Loans">Debts & Loans</option>
-                                <option value="Savings & Investments">Savings & Investments</option>
-                                <option value="Subscriptions & Memberships">Subscriptions & Memberships</option>
+                            <select id="category" @bind="NewTransaction.CategoryID" required>
+                                <option value="">Select Category</option>
+                                @foreach (var category in Categories)
+                                {
+                                    <option value="@category.CategoryID">@category.Name</option>
+                                }
                             </select>
                         </div>
                         <div class="form-group">
@@ -219,13 +222,6 @@
                             <div class="form-group">
                                 <label for="endDate">End Date:</label>
                                 <input id="endDate" type="date" @bind="NewTransaction.EndDate" required />
-                            </div>
-                        }
-                        @if (NewTransaction.Category == "Subscriptions & Memberships")
-                        {
-                            <div class="form-group">
-                                <label for="color">Color:</label>
-                                <input id="color" type="color" @bind="NewTransaction.Color" />
                             </div>
                         }
                         <div class="form-group button-group">
@@ -254,6 +250,9 @@
     public List<Transaction> TransactionsForSelectedMonth { get; set; } = new();
     public List<Transaction> FilteredTransactionsForSelectedMonth { get; set; } = new();
 
+    // Categories State
+    public List<Category> Categories { get; set; } = new();
+
     // Search and Filter State
     public string FilterCategory { get; set; } = string.Empty;
     public double? MinAmount { get; set; } = null;
@@ -270,10 +269,14 @@
     public Transaction NewTransaction { get; set; } = new Transaction();
     public decimal Amount { get; set; } = 0;
 
+    // User ID (hardcoded for now)
+    private int UserID = 1;
+
     // Load Transactions Data
     protected override async Task OnInitializedAsync()
     {
-        Transactions = await TransactionManager.LoadTransactionsAsync();
+        Transactions = (await TransactionManager.LoadTransactionsAsync(UserID)).ToList();
+        Categories = (await DatabaseHelper.LoadUserCategoriesAsync(UserID)).ToList();
         UpdateTransactionsForSelectedMonth();
         SortTransactions("Date", true); // Ensure default sort is by Date ascending
     }
@@ -369,7 +372,7 @@
     private bool HasTransactions(DateTime date) =>
         GetFilteredTransactions(date).Any();
 
-    private List<Transaction> GetTransactions(DateTime date) => 
+    private List<Transaction> GetTransactions(DateTime date) =>
         GetFilteredTransactions(date);
 
     private List<Transaction> GetFilteredTransactions(DateTime date) =>
@@ -461,16 +464,16 @@
     private void OpenAddTransactionModal()
     {
         NewTransaction = new Transaction
-        {
-            Date = SelectedDate != 0 ? new DateTime(SelectedYear, SelectedMonth, SelectedDate) : DateTime.Now,
-            Description = string.Empty,
-            Category = "Expenses",
-            Debit = 0,
-            Credit = 0,
-            Color = GetColorForCategory("Expenses"),
-            Frequency = "None",
-            EndDate = SelectedDate != 0 ? new DateTime(SelectedYear, SelectedMonth, SelectedDate) : DateTime.Now
-        };
+            {
+                Date = SelectedDate != 0 ? new DateTime(SelectedYear, SelectedMonth, SelectedDate) : DateTime.Now,
+                Description = string.Empty,
+                CategoryID = 0,
+                Debit = 0,
+                Credit = 0,
+                Frequency = "None",
+                EndDate = SelectedDate != 0 ? new DateTime(SelectedYear, SelectedMonth, SelectedDate) : DateTime.Now,
+                UserID = UserID
+            };
         Amount = 0;
         IsEditMode = false;
         ShowDeleteConfirmation = false;
@@ -499,7 +502,7 @@
     {
         NewTransaction.Amount = Amount;
         await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
-        Transactions = await TransactionManager.LoadTransactionsAsync();
+        Transactions = (await TransactionManager.LoadTransactionsAsync(UserID)).ToList();
         CloseAddTransactionModal();
         UpdateTransactionsForSelectedMonth();
         ReapplySort();
@@ -521,8 +524,7 @@
         {
             await TransactionManager.DeleteRecurringTransactionsAsync(NewTransaction);
             Transactions.RemoveAll(t => t.Description == NewTransaction.Description &&
-                                        t.Category == NewTransaction.Category &&
-                                        t.Color == NewTransaction.Color &&
+                                        t.CategoryID == NewTransaction.CategoryID &&
                                         t.Frequency == NewTransaction.Frequency &&
                                         t.Date > NewTransaction.Date);
         }
@@ -533,42 +535,5 @@
         }
         CloseAddTransactionModal();
         UpdateTransactionsForSelectedMonth();
-    }
-
-    private void HandleCategoryChange(ChangeEventArgs e)
-    {
-        var selectedCategory = e.Value.ToString();
-        NewTransaction.Category = selectedCategory;
-        if (selectedCategory == "Subscriptions & Memberships")
-        {
-            // Do not change the color if it is already set (i.e., user selected a custom color)
-            if (string.IsNullOrEmpty(NewTransaction.Color))
-            {
-                NewTransaction.Color = GetRandomColor();
-            }
-        }
-        else
-        {
-            NewTransaction.Color = GetColorForCategory(selectedCategory);
-        }
-    }
-
-    private string GetColorForCategory(string category)
-    {
-        return category switch
-        {
-            "Expenses" => "#FF0000", // Red
-            "Income" => "#00FF00", // Green
-            "Debts & Loans" => "#FFA500", // Orange
-            "Savings & Investments" => "#005AFF", // Blue
-            "Subscriptions & Memberships" => GetRandomColor(), // Random color for subscriptions
-            _ => "#000000" // Default color
-        };
-    }
-
-    private string GetRandomColor()
-    {
-        var random = new Random();
-        return $"#{random.Next(0x1000000):X6}";
     }
 }
