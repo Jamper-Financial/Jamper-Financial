@@ -22,21 +22,22 @@
                                 <h3>@goal.Name</h3>
                                 <p>Type: @goal.Type</p>
                                 <p>Amount: $@goal.Amount</p>
-                                <p>Date: @goal.Date.ToShortDateString()</p>
+                                <p>Start Date: @goal.StartDate.ToShortDateString()</p>
+                                <p>End Date: @goal.EndDate.ToShortDateString()</p>
                             }
                             else if (goal.IsRetirementGoal)
                             {
-                                <h3>@goal.Name</h3>
+                                <h3>Retirement Goal</h3>
                                 <p>Target Amount: $@goal.Amount</p>
                                 <p>Retirement Date: @goal.EndDate.ToShortDateString()</p>
                                 @if (goal.ShowDescription)
                                 {
-                                    <p>Current Savings: $@goal.Description.Split(',')[0].Split(':')[1].Trim()</p>
-                                    <p>Monthly Contribution: $@goal.Description.Split(',')[1].Split(':')[1].Trim()</p>
-                                    <p>Investment Growth Rate: @goal.Description.Split(',')[2].Split(':')[1].Trim()</p>
-                                    <p>Inflation Rate: @goal.Description.Split(',')[3].Split(':')[1].Trim()</p>
-                                    <p>Retirement Income Needs: $@goal.Description.Split(',')[4].Split(':')[1].Trim()</p>
-                                    <p>Other Income Sources: $@goal.Description.Split(',')[5].Split(':')[1].Trim()</p>
+                                    var parts = goal.Description.Split(',');
+                                    if (parts.Length >= 2)
+                                    {
+                                        <p>Current Savings: $@parts[0].Split(':')[1].Trim()</p>
+                                        <p>Monthly Contribution: $@parts[1].Split(':')[1].Trim()</p>
+                                    }
                                 }
                             }
                             else if (goal.IsEmergencyFundGoal)
@@ -46,10 +47,13 @@
                                 <p>Target Date: @goal.EndDate.ToShortDateString()</p>
                                 @if (goal.ShowDescription)
                                 {
-                                    <p>Current Savings: $@goal.Description.Split(',')[0].Split(':')[1].Trim()</p>
-                                    <p>Monthly Contribution: $@goal.Description.Split(',')[1].Split(':')[1].Trim()</p>
-                                    <p>Description: @goal.Description.Split(',')[2].Split(':')[1].Trim()</p>
-
+                                    var parts = goal.Description.Split(',');
+                                    if (parts.Length >= 3)
+                                    {
+                                        <p>Current Savings: $@parts[0].Split(':')[1].Trim()</p>
+                                        <p>Monthly Contribution: $@parts[1].Split(':')[1].Trim()</p>
+                                        <p>Description: $@parts[2].Split(':')[1].Trim()</p>
+                                    }
                                 }
                             }
                             else if (goal.IsTravelGoal)
@@ -60,30 +64,31 @@
                                 <p>Travel Dates: @goal.StartDate.ToShortDateString() - @goal.EndDate.ToShortDateString()</p>
                                 @if (goal.ShowDescription)
                                 {
-                                    <p>Current Savings: $@goal.Description.Split(',')[0].Split(':')[1].Trim()</p>
-                                    <p>Monthly Contribution: $@goal.Description.Split(',')[1].Split(':')[1].Trim()</p>
-                                    <p>Accommodation Costs: $@goal.Description.Split(',')[2].Split(':')[1].Trim()</p>
-                                    <p>Transportation Costs: $@goal.Description.Split(',')[3].Split(':')[1].Trim()</p>
-                                    <p>Food and Entertainment Costs: $@goal.Description.Split(',')[4].Split(':')[1].Trim()</p>
-                                    <p>Travel Category: @goal.Description.Split(',')[5].Split(':')[1].Trim()</p>
-                                    <p>Description: @goal.Description.Split(',')[6].Split(':')[1].Trim()</p>
+                                    var parts = goal.Description.Split(',');
+                                    if (parts.Length >= 2)
+                                    {
+                                        <p>Current Savings: $@parts[0].Split(':')[1].Trim()</p>
+                                        <p>Monthly Contribution: $@parts[1].Split(':')[1].Trim()</p>
+                                        if (parts.Length > 6)
+                                        {
+                                            <p>Description: $@parts[6].Split(':')[1].Trim()</p>
+                                        }
+                                    }
                                 }
                             }
                             else if (goal.IsHomeGoal)
                             {
                                 <h3>@goal.Name</h3>
-                                <p>Down Payment: $@goal.Amount</p>
                                 <p>Target Purchase Date: @goal.EndDate.ToShortDateString()</p>
                                 @if (goal.ShowDescription)
                                 {
-                                    <p>Home Price: $@goal.Description.Split(',')[0].Split(':')[1].Trim()</p>
-                                    <p>Current Savings: $@goal.Description.Split(',')[1].Split(':')[1].Trim()</p>
-                                    <p>Monthly Savings: $@goal.Description.Split(',')[2].Split(':')[1].Trim()</p>
-                                    <p>Loan Interest Rate: @goal.Description.Split(',')[3].Split(':')[1].Trim()</p>
-                                    <p>Loan Term: @goal.Description.Split(',')[4].Split(':')[1].Trim()</p>
-                                    <p>Property Taxes: $@goal.Description.Split(',')[5].Split(':')[1].Trim()</p>
-                                    <p>Home Insurance: $@goal.Description.Split(',')[6].Split(':')[1].Trim()</p>
-                                    <p>Other Costs: $@goal.Description.Split(',')[7].Split(':')[1].Trim()</p>
+                                    var parts = goal.Description.Split(',');
+                                    if (parts.Length >= 3)
+                                    {
+                                        <p>Home Price: $@parts[0].Split(':')[1].Trim()</p>
+                                        <p>Current Savings: $@parts[1].Split(':')[1].Trim()</p>
+                                        <p>Monthly Savings: $@parts[2].Split(':')[1].Trim()</p>
+                                    }
                                 }
                             }
                             else
@@ -103,15 +108,14 @@
                         </div>
                         <div class="button-container">
                             <button class="see-more-btn" @onclick="() => ToggleDescription(goal)">...</button>
-                            <button class="delete-btn" @onclick="() => ConfirmDeleteGoal(goal)">
+                            <button class="delete-btn" @onclick="async () => await ConfirmDeleteGoal(goal)">
                                 <img src="images/bin.png" alt="Delete" />
                             </button>
-                            <button class="check-off-btn" @onclick="() => ConfirmCheckOffGoal(goal)">
+                            <button class="check-off-btn" @onclick="async () => await ConfirmCheckOffGoal(goal)">
                                 <img src="images/check.png" alt="Check Off" />
                             </button>
                         </div>
                     </div>
-
                 </li>
             }
         </ul>
@@ -157,7 +161,7 @@
 
             Console.WriteLine($"Goal with ID: {goal.GoalId} deleted from the database.");
 
-       
+
             goals.Remove(goal);
 
             // Reload goals from database to ensure consistency
