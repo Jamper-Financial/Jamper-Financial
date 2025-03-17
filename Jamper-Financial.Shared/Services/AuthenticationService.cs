@@ -1,12 +1,26 @@
 ﻿using Jamper_Financial.Shared.Data;
+using Jamper_Financial.Shared.Models;
 using Microsoft.Data.Sqlite;
+using Microsoft.JSInterop;
 using System.Security.Cryptography;
 using System.Text;
+using Microsoft.AspNetCore.Components;
+using static Jamper_Financial.Shared.Pages.LoginPage;
+using Jamper_Financial.Shared.Services;
 
 namespace Jamper_Financial.Shared.Services
 {
-    public static class AuthenticationService
+    public class AuthenticationService
     {
+        private readonly NavigationManager _navigationManager;
+        private readonly UserStateService _userStateService;
+
+        //public AuthenticationService(NavigationManager navigationManager, UserStateService userStateService)
+        //{
+        //    _navigationManager = navigationManager;
+        //    _userStateService = userStateService;
+        //}
+
         public static string HashPassword(string password)
         {
             using (var sha256 = SHA256.Create())
@@ -26,6 +40,7 @@ namespace Jamper_Financial.Shared.Services
             string hashedInputPassword = HashPassword(password);
             return hashedInputPassword == hashedPassword;
         }
+
 
         public static bool ValidateUserCredentials(string identifier, string password)
         {
@@ -54,15 +69,17 @@ namespace Jamper_Financial.Shared.Services
             }
         }
 
-        public static void CreateUserAccount(string firstName, string lastName, string username,  string email, string password)
+        public void CreateUserAccount(User user, UserProfile userProfile)
         {
-            string hashedPassword = HashPassword(password);
-            DatabaseHelper.InsertUser(username, email, hashedPassword);
+            string hashedPassword = HashPassword(userProfile.Password);
+            user.Password = hashedPassword;
+            DatabaseHelper.InsertUser(user);
 
-            int userId = DatabaseHelper.GetUserIdByUsername(username);
-            DatabaseHelper.InsertProfile(userId, firstName, lastName);
+            int userId = DatabaseHelper.GetUserIdByUsername(userProfile.Username);
+            DatabaseHelper.InsertProfile(userId, userProfile.FirstName, userProfile.LastName);
             int adminRoleId = DatabaseHelper.GetRoleIdByName("Admin");
             DatabaseHelper.AssignRoleToUser(userId, adminRoleId);
         }
     }
 }
+

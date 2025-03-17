@@ -47,8 +47,9 @@ namespace Jamper_Financial.Shared.Data
                         UserId INTEGER PRIMARY KEY AUTOINCREMENT,
                         Username TEXT NOT NULL UNIQUE,
                         Email TEXT NOT NULL UNIQUE,
-                        Password TEXT NOT NULL,
-                        GoogleLogin INTEGER DEFAULT (0));
+                        Password TEXT,
+                        IsGoogleSignin INTEGER DEFAULT (0),
+                        CHECK (IsGoogleSignin = 1 OR Password IS NOT NULL)
                     );
                 ");
 
@@ -502,23 +503,24 @@ namespace Jamper_Financial.Shared.Data
         }
 
         // This method is used to insert a new user into the database
-        public static void InsertUser(string username, string email, string password)
+        public static void InsertUser(User user)
         {
             using (var connection = GetConnection())
             {
                 connection.Open();
 
                 string insertQuery = @"
-                    INSERT INTO Users (Username, Email, Password)
-                    VALUES (@Username, @Email, @Password);
+                    INSERT INTO Users (Username, Email, Password, IsGoogleSignin)
+                    VALUES (@Username, @Email, @Password, @IsGoogleSignin);
                 ";
 
                 using (var command = new SqliteCommand(insertQuery, connection))
                 {
 
-                    command.Parameters.AddWithValue("@Username", username);
-                    command.Parameters.AddWithValue("@Email", email);
-                    command.Parameters.AddWithValue("@Password", password);
+                    command.Parameters.AddWithValue("@Username", user.Username);
+                    command.Parameters.AddWithValue("@Email", user.Email);
+                    command.Parameters.AddWithValue("@Password", user.IsGoogleSignIn == 1 ? (object)DBNull.Value : user.Password);
+                    command.Parameters.AddWithValue("@IsGoogleSignin", user.IsGoogleSignIn);
 
                     command.ExecuteNonQuery();
                 }
