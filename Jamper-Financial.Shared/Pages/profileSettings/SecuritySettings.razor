@@ -1,6 +1,86 @@
+@page "/security-settings"
 @namespace Jamper_Financial.Shared.Pages.profileSettings
+@inject IJSRuntime JS
 
 <div class="security-settings">
     <h3>Security Settings</h3>
-    <!-- Add your account management content here -->
+    <h4>Two-factor Authentication</h4>
+    <div class="2FA flex-item">
+        <label class="switch">
+            <input type="checkbox" id="toggleBudget" @bind="enable2FA" onclick="Edit2FA" />
+            <span class="slider round"></span>
+        </label>
+        <label for="toggleBudget">Enable or disable two-factor authentication</label>
+    </div>
+    <h4>Change Password</h4>
+    <div class="password-row">
+        <label for="currentPassword">Current Password</label>
+        <input type="password" id="currentPassword" @bind="currentPassword" placeholder="enter password" />
+        <div class="svg-container">
+            <svg @onclick="ToggleCurrentPasswordVisibility" class="lucide lucide-eye-off">
+                @if (isCurrentPasswordVisible)
+                {
+                    <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-5.52 0-10-3.58-11.94-8.5a10.96 10.96 0 0 1 5.27-6.16M1 1l22 22" />
+                    <path d="M9.88 9.88A3 3 0 0 0 12 15a3 3 0 0 0 2.12-.88" />
+                    <path d="M14.12 14.12A3 3 0 0 0 12 9a3 3 0 0 0-2.12.88" />
+                }
+                else
+                {
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                }
+            </svg>
+        </div>
+    </div>
+    <div class="password-row">
+        <label for="newPassword">New Password</label>
+        <input type="password" id="newPassword" @bind="newPassword" placeholder="enter password" />
+        <div class="svg-container">
+            <svg @onclick="ToggleNewPasswordVisibility" class="lucide lucide-eye-off">
+                @if (isNewPasswordVisible)
+                {
+                    <path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-5.52 0-10-3.58-11.94-8.5a10.96 10.96 0 0 1 5.27-6.16M1 1l22 22" />
+                    <path d="M9.88 9.88A3 3 0 0 0 12 15a3 3 0 0 0 2.12-.88" />
+                    <path d="M14.12 14.12A3 3 0 0 0 12 9a3 3 0 0 0-2.12.88" />
+                }
+                else
+                {
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                }
+            </svg>
+        </div>
+    </div>
 </div>
+
+@code {
+    private string currentPassword = string.Empty;
+    private string newPassword = string.Empty;
+    private bool isCurrentPasswordVisible = false;
+    private bool isNewPasswordVisible = false;
+
+    private async Task ToggleCurrentPasswordVisibility()
+    {
+        isCurrentPasswordVisible = !isCurrentPasswordVisible;
+        await JS.InvokeVoidAsync("togglePasswordVisibility", "currentPassword");
+    }
+
+    private async Task ToggleNewPasswordVisibility()
+    {
+        isNewPasswordVisible = !isNewPasswordVisible;
+        await JS.InvokeVoidAsync("togglePasswordVisibility", "newPassword");
+    }
+
+    private bool enable2FA = false;
+    private void Edit2FA()
+    {
+        if (enable2FA)
+        {
+            Console.Write("Enable 2FA");
+        }
+        else
+        {
+            Console.Write("Disable 2FA");
+        }
+    }
+}

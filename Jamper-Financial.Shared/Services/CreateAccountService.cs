@@ -94,7 +94,7 @@ namespace Jamper_Financial.Shared.Services
             
             // Get the user ID after inserting the user
             int userId = DatabaseHelper.GetUserIdByUsername(Username);
-            DatabaseHelper.InsertProfile(userId, FirstName, LastName, BirthDate.ToString("yyyy-MM-dd"));
+            DatabaseHelper.InsertProfile(userId, FirstName, LastName);
             
             // For Debugging
             Console.WriteLine("Account created successfully!");

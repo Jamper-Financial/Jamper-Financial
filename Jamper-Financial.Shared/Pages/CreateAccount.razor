@@ -3,6 +3,8 @@
 @using Jamper_Financial.Shared.Services
 @inject NavigationManager Navigation
 
+@* MGE 03/13/2025 Remove Birth Date as per review*@
+
 <div class="registration-container">
     <div class="registration-left">
         <h1>Welcome! Let's get started</h1>
@@ -65,7 +67,7 @@
     private string FirstName { get; set; } = string.Empty;
     private string LastName { get; set; } = string.Empty;
     private string Username { get; set; } = string.Empty;
-    private DateTime BirthDate { get; set; } = DateTime.Now;
+    // private DateTime BirthDate { get; set; } = DateTime.Now;
     private string Email { get; set; } = string.Empty;
     private string Password { get; set; } = string.Empty;
     private string ConfirmPassword { get; set; } = string.Empty;
@@ -132,7 +134,7 @@
             return;
         }
 
-        AuthenticationService.CreateUserAccount(FirstName, LastName, Username, BirthDate, Email, Password);
+        AuthenticationService.CreateUserAccount(FirstName, LastName, Username, Email, Password);
 
         // Show success message
         AccountCreated = true;
