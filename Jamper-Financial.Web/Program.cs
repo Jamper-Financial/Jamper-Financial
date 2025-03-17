@@ -77,20 +77,12 @@ app.UseAntiforgery();
 // --------------------------------------------------
 app.MapGet("/export/csv", async (HttpContext context) =>
 {
-<<<<<<< Updated upstream
-    var reportName    = context.Request.Query["reportName"];
-    var description   = context.Request.Query["description"];
-    var fromDateStr   = context.Request.Query["fromDate"];
-    var toDateStr     = context.Request.Query["toDate"];
-    var categoriesStr = context.Request.Query["categories"];
-=======
     // Parse query parameters
     var reportName   = context.Request.Query["reportName"];
     var description  = context.Request.Query["description"];
     var fromDateStr  = context.Request.Query["fromDate"];
     var toDateStr    = context.Request.Query["toDate"];
     var categoriesStr= context.Request.Query["categories"];
->>>>>>> Stashed changes
 
     // Convert string to DateTime
     DateTime fromDate = DateTime.Now.AddMonths(-6);
@@ -158,20 +150,12 @@ app.MapGet("/export/csv", async (HttpContext context) =>
 // --------------------------------------------------
 app.MapGet("/export/pdf", async (HttpContext context) =>
 {
-<<<<<<< Updated upstream
-    var reportName    = context.Request.Query["reportName"];
-    var description   = context.Request.Query["description"];
-    var fromDateStr   = context.Request.Query["fromDate"];
-    var toDateStr     = context.Request.Query["toDate"];
-    var categoriesStr = context.Request.Query["categories"];
-=======
     // 1) Parse query parameters
     var reportName   = context.Request.Query["reportName"];
     var description  = context.Request.Query["description"];
     var fromDateStr  = context.Request.Query["fromDate"];
     var toDateStr    = context.Request.Query["toDate"];
     var categoriesStr= context.Request.Query["categories"];
->>>>>>> Stashed changes
 
     // Convert string to DateTime
     DateTime fromDate = DateTime.Now.AddMonths(-6);
