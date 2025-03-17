@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Qfb5NwbR5E4=",
+  "dgSpecHash": "4VgHhY3UDmM=",
   "success": true,
-  "projectFilePath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
+  "projectFilePath": "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\paolo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\blazor.bootstrap.3.3.1.nupkg.sha512",
     "C:\\Users\\paolo\\.nuget\\packages\\blazorise\\1.7.5\\blazorise.1.7.5.nupkg.sha512",
@@ -172,6 +172,12 @@
     "C:\\Users\\paolo\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.54\\microsoft.windows.sdk.net.ref.10.0.19041.54.nupkg.sha512"
   ],
   "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problem reading the cache file C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    },
     {
       "code": "NU1604",
       "level": "Warning",

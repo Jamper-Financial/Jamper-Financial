@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nBqKOcrUiqo=",
+  "dgSpecHash": "fJuGk3D/rfo=",
   "success": true,
-  "projectFilePath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+  "projectFilePath": "C:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\paolo\\.nuget\\packages\\blazor.bootstrap\\3.3.1\\blazor.bootstrap.3.3.1.nupkg.sha512",
     "C:\\Users\\paolo\\.nuget\\packages\\blazorise\\1.7.5\\blazorise.1.7.5.nupkg.sha512",
