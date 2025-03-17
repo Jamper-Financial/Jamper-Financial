@@ -13,6 +13,7 @@ using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 using QuestPDF.Helpers;
 using Blazorise;
+using Microsoft.JSInterop;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,6 +34,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
 builder.Services.AddSingleton<LoginStateService>();
+builder.Services.AddSingleton<AuthenticationService>();
 
 builder.Services.AddScoped<IUserService, UserService>(sp => new UserService(connectionString));
 builder.Services.AddScoped<IBudgetInsightsService, BudgetInsightsService>(sp => new BudgetInsightsService(connectionString));

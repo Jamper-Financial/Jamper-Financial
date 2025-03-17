@@ -1,17 +1,15 @@
-<script type="module" src="/js/firebase-auth.js"></script>
-
 @page "/login"
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Services
+@using Jamper_Financial.Shared.Models
 @inject LoginStateService LoginState
 @inject UserStateService UserStateService
-@using Jamper_Financial.Shared.Models
+@inject AuthenticationService AuthenticationService
 
 <div class="login-container">
     <div class="login-left">
         <h1>Stay in charge of your finances!</h1>
         <div class="login-form">
-            
             <h2>JAMPER Finance</h2>
             <form @onsubmit="HandleLoginAsync">
                 <label for="email">Username or Email</label>
@@ -26,7 +24,6 @@
                 </div>
 
                 <button type="submit" class="login-button">🔒 Log in</button>
-
                 @* display error message if any *@
                 @if (!string.IsNullOrWhiteSpace(ErrorMessage))
                 {
@@ -54,16 +51,13 @@
 </div>
 
 @code {
-    // Inject NavigationManager
     [Inject]
-    private NavigationManager Navigation { get; set; }
+    private NavigationManager Navigation { get; set; } = default!;
     [Inject]
-    private IJSRuntime JSRuntime { get; set; }
+    private IJSRuntime JSRuntime { get; set; } = default!;
 
-    // To determine if it is a google login or not
+    private UserProfile userProfile = new UserProfile();
     private bool IsGoogleLogin { get; set; } = false;
-
-    // Properties
     private string Identifier { get; set; } = string.Empty;
     private string Password { get; set; } = string.Empty;
     private string ErrorMessage { get; set; } = string.Empty;
@@ -72,6 +66,8 @@
     private string UserName { get; set; } = string.Empty;
 
     private string FilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "credentials.txt");
+
+    private DotNetObjectReference<LoginPage>? _objectReference;
 
     protected override void OnInitialized()
     {
@@ -87,36 +83,92 @@
         }
     }
 
-    // Navigate to create account page
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _objectReference = DotNetObjectReference.Create(this);
+        }
+    }
+
     private void NavigateToCreateAccount()
     {
         Navigation.NavigateTo("/create-account");
     }
 
-    // Navigate to banner page
     private void NavigateToBannerPage()
     {
         Navigation.NavigateTo("/");
     }
 
-    // Google login
     private async Task SignInWithGoogle()
     {
         try
         {
-            await JSRuntime.InvokeVoidAsync("signInWithGoogle");
-            LoginState.IsGoogleLogin = true; // Set flag for Google Login
+            await JSRuntime.InvokeVoidAsync("signInWithGoogle", _objectReference);
+            Console.WriteLine("Google sign-in successful, should redirect");
         }
         catch (Exception ex)
         {
-            ErrorMessage = $"Error during Google login: {ex.Message}";
+            ErrorMessage = $"Google sign-in failed: {ex.Message}";
         }
     }
 
-    // Handle login process
+    [JSInvokable]
+    public async Task OnGoogleLoginSuccess(UserInfo userInfo)
+    {
+        Console.WriteLine("Google login successful");
+        var displayName = userInfo.DisplayName ?? string.Empty;
+        var email = userInfo.Email ?? string.Empty;
+        var photoURL = userInfo.PhotoURL ?? string.Empty;
+        var uid = userInfo.Uid ?? string.Empty;
+
+        Console.WriteLine($"Google login successful: {displayName}, {email}, {photoURL}, {uid}");
+
+        var userExists = DatabaseHelper.IsUsernameTaken(displayName) || DatabaseHelper.IsEmailTaken(email);
+
+        if (!userExists)
+        {
+            var user = new User
+                {
+                    Username = displayName,
+                    Email = email,
+                    Password = string.Empty,
+                    IsGoogleSignIn = 1
+                };
+
+            var userProfile = new UserProfile
+                {
+                    FirstName = displayName.Split(' ')[0],
+                    LastName = displayName.Split(' ').Length > 1 ? displayName.Split(' ')[1] : string.Empty,
+                    Email = email,
+                    Username = displayName
+                };
+
+            AuthenticationService.CreateUserAccount(user, userProfile);
+
+            UserStateService.SetUser(userProfile.UserId, userProfile.Username ?? string.Empty, userProfile.Email ?? string.Empty);
+        }
+        else
+        {
+            var details = DatabaseHelper.GetUserDetails(email);
+            UserStateService.SetUser(details.Userid, details.Username ?? string.Empty, details.Email ?? string.Empty);
+        }
+
+        Console.WriteLine($"User exists: {userExists}");
+        Navigation.NavigateTo("/dashboard-page");
+
+        await Task.CompletedTask;
+    }
+
+    [JSInvokable("OnGoogleLoginFailure")]
+    public async Task OnGoogleLoginFailure(string errorMessage)
+    {
+        Console.WriteLine($"Google login failed: {errorMessage}");
+    }
+
     private async Task HandleLoginAsync()
     {
-        // Simulate login process
         if (string.IsNullOrWhiteSpace(Identifier) || string.IsNullOrWhiteSpace(Password))
         {
             ErrorMessage = "Please enter your email/username and password.";
@@ -126,40 +178,35 @@
         var isValid = await Task.Run(() => AuthenticationService.ValidateUserCredentials(Identifier, Password));
         if (isValid)
         {
-            var (userid, username, email) = DatabaseHelper.GetUserDetails(Identifier);
-        
+            var (userid, username, email) = await Task.Run(() => DatabaseHelper.GetUserDetails(Identifier));
+
             if (username != null && email != null)
             {
                 UserStateService.LoggedInUser.UserName = username;
                 UserStateService.LoggedInUser.Email = email;
-                
+
                 Console.WriteLine($"Logged in as: {username} with email: {email}");
             }
         }
 
         if (isValid)
         {
-            LoginState.IsGoogleLogin = false; // Set flag for normal login
+            LoginState.IsGoogleLogin = false;
             ErrorMessage = string.Empty;
             Console.WriteLine("Login successful");
 
-            // Get the user ID by username
-            var details = DatabaseHelper.GetUserDetails(Identifier);
-
-            // Set the logged-in user's information in the UserStateService
+            var details = await Task.Run(() => DatabaseHelper.GetUserDetails(Identifier));
             UserStateService.SetUser(details.Userid, Identifier, details.Email);
 
             if (RememberMe)
             {
-                // Save the credentials if "Remember Me" is checked
-                File.WriteAllLines(FilePath, new[] { Identifier, Password });
+                await Task.Run(() => File.WriteAllLines(FilePath, new[] { Identifier, Password }));
             }
             else
             {
-                // Delete the credentials file if "Remember Me" is unchecked
                 if (File.Exists(FilePath))
                 {
-                    File.Delete(FilePath);
+                    await Task.Run(() => File.Delete(FilePath));
                 }
             }
 

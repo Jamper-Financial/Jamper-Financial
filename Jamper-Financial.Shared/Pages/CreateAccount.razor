@@ -1,7 +1,9 @@
 @page "/create-account"
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Services
+@using Jamper_Financial.Shared.Models
 @inject NavigationManager Navigation
+@inject AuthenticationService AuthenticationService
 
 @* MGE 03/13/2025 Remove Birth Date as per review*@
 
@@ -12,22 +14,22 @@
             <h2>Please enter your details below</h2>
             <form>
                 <label for="first-name">First name <span class="required">*</span></label>
-                <input id="first-name" type="text" placeholder="Enter your first name" @bind="FirstName" />
+                <input id="first-name" type="text" placeholder="Enter your first name" @bind="userProfile.FirstName" />
 
                 <label for="last-name">Last name <span class="required">*</span></label>
-                <input id="last-name" type="text" placeholder="Enter your last name" @bind="LastName" />
+                <input id="last-name" type="text" placeholder="Enter your last name" @bind="userProfile.LastName" />
 
                 <label for="username">Username <span class="required">*</span></label>
-                <input id="username" type="text" placeholder="Enter your username" @bind="Username" />
+                <input id="username" type="text" placeholder="Enter your username" @bind="userProfile.Username" />
 
                 @* <label for="birthdate">Birth date (yyyy-mm-dd) <span class="required">*</span></label> *@
                 @* <input id="birthdate" type="date" placeholder="YYYY-MM-DD" @bind="BirthDate" /> *@
 
                 <label for="email">Email <span class="required">*</span></label>
-                <input id="email" type="email" placeholder="Enter your email" @bind="Email" />
+                <input id="email" type="email" placeholder="Enter your email" @bind="userProfile.Email" />
 
                 <label for="password">Password <span class="required">*</span></label>
-                <input id="password" type="password" placeholder="Create your password" @bind="Password" />
+                <input id="password" type="password" placeholder="Create your password" @bind="userProfile.Password" />
 
                 <label for="confirm-password">Confirm Password <span class="required">*</span></label>
                 <input id="confirm-password" type="password" placeholder="Confirm your password" @bind="ConfirmPassword" />
@@ -64,12 +66,7 @@
 }
 
 @code {
-    private string FirstName { get; set; } = string.Empty;
-    private string LastName { get; set; } = string.Empty;
-    private string Username { get; set; } = string.Empty;
-    // private DateTime BirthDate { get; set; } = DateTime.Now;
-    private string Email { get; set; } = string.Empty;
-    private string Password { get; set; } = string.Empty;
+    private UserProfile userProfile = new UserProfile();
     private string ConfirmPassword { get; set; } = string.Empty;
     private string ErrorMessage { get; set; } = string.Empty;
     private bool AccountCreated { get; set; } = false;
@@ -81,33 +78,33 @@
 
     private bool ValidateForm()
     {
-        if (string.IsNullOrWhiteSpace(FirstName) || string.IsNullOrWhiteSpace(LastName) ||
-            string.IsNullOrWhiteSpace(Username) || string.IsNullOrWhiteSpace(Email) ||
-            string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(ConfirmPassword))
+        if (string.IsNullOrWhiteSpace(userProfile.FirstName) || string.IsNullOrWhiteSpace(userProfile.LastName) ||
+            string.IsNullOrWhiteSpace(userProfile.Username) || string.IsNullOrWhiteSpace(userProfile.Email) ||
+            string.IsNullOrWhiteSpace(userProfile.Password) || string.IsNullOrWhiteSpace(ConfirmPassword))
         {
             ErrorMessage = "Please fill in all fields.";
             return false;
         }
 
-        if (Password != ConfirmPassword)
+        if (userProfile.Password != ConfirmPassword)
         {
             ErrorMessage = "Passwords do not match.";
             return false;
         }
 
-        if (!IsPasswordStrong(Password))
+        if (!IsPasswordStrong(userProfile.Password))
         {
             ErrorMessage = "Password must be at least 8 characters long, include uppercase and lowercase letters, a digit, and a special character.";
             return false;
         }
 
-        if (DatabaseHelper.IsUsernameTaken(Username))
+        if (DatabaseHelper.IsUsernameTaken(userProfile.Username))
         {
             ErrorMessage = "Username is already taken. Please choose another.";
             return false;
         }
 
-        if (DatabaseHelper.IsEmailTaken(Email))
+        if (DatabaseHelper.IsEmailTaken(userProfile.Email))
         {
             ErrorMessage = "You already have an account with this email. Please log in.";
             return false;
@@ -126,7 +123,7 @@
             password.Any(ch => "!@#$%^&*()_+-=[]{}|;:',.<>?/".Contains(ch));
     }
 
-    private void CreateUserAccount()
+    private async Task CreateUserAccount()
     {
         if (!ValidateForm())
         {
@@ -134,7 +131,15 @@
             return;
         }
 
-        AuthenticationService.CreateUserAccount(FirstName, LastName, Username, Email, Password);
+        var user = new User
+            {
+                Username = userProfile.Username,
+                Email = userProfile.Email,
+                Password = userProfile.Password,
+                IsGoogleSignIn = 0 // Assuming this is a normal sign-in
+            };
+
+        AuthenticationService.CreateUserAccount(user, userProfile);
 
         // Show success message
         AccountCreated = true;
@@ -142,5 +147,5 @@
         // Redirect to login page after a short delay
         Task.Delay(2000).ContinueWith(_ => NavigateToLoginPage());
     }
-
 }
+

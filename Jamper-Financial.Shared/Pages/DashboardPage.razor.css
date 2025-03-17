@@ -1,0 +1,85 @@
+.dashboard-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.dashboard-header {
+    align-self: flex-start;
+    width: 100%;
+    max-width: 1200px;
+    padding-left: 20px;
+    color: #2d3436;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.carousel {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.card {
+    flex: 0 0 50%;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 25px;
+    margin: 10px;
+    min-width: 450px;
+    height: 250px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+}
+
+.carousel-button {
+    position: absolute;
+    right: 10px;
+    background-color: rgba(40, 167, 69, 0.8);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 18px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+    .carousel-button:hover {
+        background-color: rgba(33, 136, 56, 0.8);
+    }
+
+.weekly-activity {
+    margin-top: 20px;
+    width: 100%;
+}
+
+    .weekly-activity .card {
+        width: 100%;
+        height: 300px;
+        padding: 20px;
+    }
+
+h3, h4 {
+    color: #2d3436;
+}
+
+.manage-saving-goals-header {
+    color: green;
+    text-decoration: underline;
+    cursor: pointer; /* Make the header clickable */
+}
+
+    .manage-saving-goals-header:hover {
+        color: darkgreen; /* Darker green on hover */
+    }

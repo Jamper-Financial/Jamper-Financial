@@ -10,12 +10,11 @@ namespace Jamper_Financial.Shared.Services
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
         public string Username { get; set; } = string.Empty;
-        public DateTime BirthDate { get; set; } = DateTime.Now;
         public string Email { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public string ConfirmPassword { get; set; } = string.Empty;
         public string ErrorMessage { get; set; } = string.Empty;
-        public bool AccountCreated { get; set; } = false;
+
 
         // Inject NavigationManager
         [Inject]
@@ -77,37 +76,38 @@ namespace Jamper_Financial.Shared.Services
                    password.Any(ch => "!@#$%^&*()_+-=[]{}|;:',.<>?/".Contains(ch));
         }
 
+        // Removedn unused method
         // Create user account
-        public void CreateUserAccount()
-        {
-            if (!ValidateForm())
-            {
-                Console.WriteLine($"Validation failed: {ErrorMessage}");
-                return;
-            }
+        //public void CreateUserAccount()
+        //{
+        //    if (!ValidateForm())
+        //    {
+        //        Console.WriteLine($"Validation failed: {ErrorMessage}");
+        //        return;
+        //    }
 
-            // Hash the password before storing it
-            string hashedPassword = AuthenticationService.HashPassword(Password);
+        //    // Hash the password before storing it
+        //    string hashedPassword = AuthenticationService.HashPassword(Password);
 
-            // Insert the user into the database with the hashed password
-            DatabaseHelper.InsertUser(Username, Email, hashedPassword);
+        //    // Insert the user into the database with the hashed password
+        //    DatabaseHelper.InsertUser(Username, Email, hashedPassword);
             
-            // Get the user ID after inserting the user
-            int userId = DatabaseHelper.GetUserIdByUsername(Username);
-            DatabaseHelper.InsertProfile(userId, FirstName, LastName);
+        //    // Get the user ID after inserting the user
+        //    int userId = DatabaseHelper.GetUserIdByUsername(Username);
+        //    DatabaseHelper.InsertProfile(userId, FirstName, LastName);
             
-            // For Debugging
-            Console.WriteLine("Account created successfully!");
+        //    // For Debugging
+        //    Console.WriteLine("Account created successfully!");
 
-            // Assign Admin role to the user
-            int adminRoleId = DatabaseHelper.GetRoleIdByName("Admin");
-            DatabaseHelper.AssignRoleToUser(userId, adminRoleId);
+        //    // Assign Admin role to the user
+        //    int adminRoleId = DatabaseHelper.GetRoleIdByName("Admin");
+        //    DatabaseHelper.AssignRoleToUser(userId, adminRoleId);
 
-            // Show success message
-            AccountCreated = true;
+        //    // Show success message
+        //    AccountCreated = true;
 
-            // Redirect to login page after a short delay
-            Task.Delay(2000).ContinueWith(_ => NavigateToLoginPage());
-        }
+        //    // Redirect to login page after a short delay
+        //    Task.Delay(2000).ContinueWith(_ => NavigateToLoginPage());
+        //}
     }
 }
