@@ -12,6 +12,9 @@
     private IBrowserFile? uploadedFile;
     private string? receiptPreviewUrl;
 
+    private string toasterMessage = string.Empty;
+    private string toasterClass = string.Empty;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -34,15 +37,21 @@
         if (Transaction != null && uploadedFile != null)
         {
             Console.WriteLine("Saving receipt...");
+
             // Implement the logic to save the receipt
             Transaction.HasReceipt = 1;
             if (await TransactionManager.UpdateReceiptAsync(Transaction, uploadedFile))
             {
+                toasterMessage = "Receipt added successfully!";
+                toasterClass = "success";
                 await GetReceipt();
             }
             else
             {
                 Console.WriteLine("Failed to save receipt");
+                toasterMessage = "Failed to add account.";
+                toasterClass = "error";
+                await GetReceipt();
             }
         }
     }
@@ -70,6 +79,12 @@
     {
         uploadedFile = e.File;
         return Task.CompletedTask;
+    }
+
+    private void ClearToaster()
+    {
+        toasterMessage = string.Empty;
+        toasterClass = string.Empty;
     }
 }
 
@@ -101,5 +116,13 @@
                 </div>
             }
         </div>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(toasterMessage))
+{
+    <div class="toaster @toasterClass">
+        <span>@toasterMessage</span>
+        <button class="close-toaster" @onclick="ClearToaster">×</button>
     </div>
 }

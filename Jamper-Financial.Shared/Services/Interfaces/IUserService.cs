@@ -8,5 +8,8 @@ namespace Jamper_Financial.Shared.Services
         Task<UserProfile> GetUserProfileByIdAsync(int userId);
         Task<bool> UpdateUserProfileAsync(UserProfile userProfile);
         Task<bool> DeleteUserProfileAsync(int userId);
+
+        Task<UserSettings> GetUserSettingsByIdAsync(int userId);
+            Task<bool> UpdateUserSettingsAsync(UserSettings userSettings);
     }
 }

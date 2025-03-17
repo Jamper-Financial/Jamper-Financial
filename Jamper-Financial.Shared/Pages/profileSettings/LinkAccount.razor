@@ -1,7 +1,387 @@
+@page "/link-account"
+
+@using Jamper_Financial.Shared.Data
+@using Jamper_Financial.Shared.Services
+@using Jamper_Financial.Shared.Models
+@inject NavigationManager Navigation
+@inject IUserService UserService
+@inject UserStateService UserStateService
+
 @namespace Jamper_Financial.Shared.Pages.profileSettings
 
-
 <div class="link-account">
-    <h3>Link Account</h3>
-    <!-- Add your account management content here -->
+    <h3>Account Management</h3>
+
+    <div class="manual-accounts">
+        <h4>Bank Accounts</h4>
+        @if (bankAccounts != null && bankAccounts.Any())
+        {
+            <table class="table-striped">
+                <thead>
+                    <tr>
+                        <th>Name/Description</th>
+                        <th>Amount</th>
+                        <th>Account Type</th>
+                        <th>Account or Card Number</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var account in bankAccounts)
+                    {
+                        <tr>
+                            <td>
+                                @if (editAccountId == account.AccountId)
+                                {
+                                    <input type="text" @bind="account.AccountName" />
+                                }
+                                else
+                                {
+                                    @account.AccountName
+                                }
+                            </td>
+                            <td>
+                                @if (editAccountId == account.AccountId)
+                                {
+                                    <input type="number" @bind="account.Balance" />
+                                }
+                                else
+                                {
+                                    @account.Balance
+                                }
+                            </td>
+                            <td>
+                                @if (editAccountId == account.AccountId)
+                                {
+                                    <select @bind="account.AccountType">
+                                        <option value="Checking">Checking</option>
+                                        <option value="Savings">Savings</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                }
+                                else
+                                {
+                                    @account.AccountType
+                                }
+                            </td>
+                            <td>
+                                @if (editAccountId == account.AccountId)
+                                {
+                                    <input type="text" @bind="account.AccountNumber" />
+                                }
+                                else
+                                {
+                                    @account.AccountNumber
+                                }
+                            </td>
+                            <td>
+                                <div class="kebab-menu">
+                                    <button class="kebab-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                             class="lucide lucide-ellipsis-vertical h-4 w-4">
+                                            <circle cx="12" cy="12" r="1"></circle>
+                                            <circle cx="12" cy="5" r="1"></circle>
+                                            <circle cx="12" cy="19" r="1"></circle>
+                                        </svg>
+                                    </button>
+                                    @if (editAccountId == account.AccountId)
+                                    {
+                                        <div class="kebab-menu-options">
+                                            <button class="menu-item save" @onclick="() => SaveAccount(account)">Save</button>
+                                            <button class="menu-item cancel" @onclick="CancelEdit">Cancel</button>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="kebab-menu-options">
+                                            <button class="menu-item" @onclick="() => EditAccount(account.AccountId)">Edit</button>
+                                            <button class="menu-item" @onclick="() => DeleteAccount(account.AccountId)">Delete</button>
+                                        </div>
+                                    }
+                                </div>
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        <button class="btn-addAccount" @onclick="ShowAddAccountModal">Add Account</button>
+    </div>
+
+    <div class="invite-household">
+        <h4>Invite Household Member</h4>
+        <div class="manual-account-input">
+            <label for="inviteEmail">Email(s):</label>
+            <input type="text" id="inviteEmail" @bind="inviteEmails" placeholder="e.g., john.doe@example.com, jane.doe@example.com" />
+        </div>
+        @if (existingHouseholdMembers != null && existingHouseholdMembers.Any())
+        {
+            <p>Existing Household Members:</p>
+            <ul>
+                @foreach (var member in existingHouseholdMembers)
+                {
+                    <li>@member</li>
+                }
+            </ul>
+        }
+        <button @onclick="InviteHousehold">Send Invite(s)</button>
+    </div>
+
+    <div class="integrate-plaid">
+        <h4>Integrate Plaid</h4>
+        <label class="switch">
+            <input type="checkbox" id="plaidIntegration" @bind="usePlaid" onclick="EditPlaid" />
+            <span class="slider round"></span>
+        </label>
+        <label for="plaidIntegration">Connect with Plaid</label>
+    </div>
 </div>
+
+@if (showAddAccountModal)
+{
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <h3 class="modal-header">Add Bank Account</h3>
+            <div class="modal-body">
+                <div class="manual-account-input">
+                    <label for="bankName">Name/Description:</label>
+                    <input type="text" id="bankName" @bind="newAccount.AccountName" placeholder="e.g., Checking Account" />
+                </div>
+                <div class="manual-account-input">
+                    <label for="accountAmount">Amount:</label>
+                    <input type="number" id="accountAmount" @bind="newAccount.Balance" placeholder="e.g., 1000" />
+                </div>
+                <div class="manual-account-input">
+                    <label for="accountType">Account Type:</label>
+                    <select @bind="newAccount.AccountType">
+                        <option value="Checking">Checking</option>
+                        <option value="Savings">Savings</option>
+                        <option value="Credit">Credit Card</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="manual-account-input">
+                    <label for="accountNumber">Account or Card Number:</label>
+                    <input type="text" id="accountNumber" @bind="newAccount.AccountNumber" @oninput="ValidateAccountNumber" maxlength="4" placeholder="Enter only last 4 digits (optional)" />
+                    @if (!string.IsNullOrEmpty(accountNumberError))
+                    {
+                        <div class="error-message">@accountNumberError</div>
+                    }                    <div class="button-container">
+                        <button class="save" @onclick="AddManualAccount">Add Account</button>
+                        <button class="cancel" @onclick="CloseAddAccountModal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(toasterMessage))
+{
+    <div class="toaster @toasterClass">
+        <span>@toasterMessage</span>
+        <button class="close-toaster" @onclick="ClearToaster">×</button>
+    </div>
+}
+
+@code {
+    [Parameter] public bool showAddAccountModal { get; set; }
+    [Parameter] public EventCallback<bool> showAddAccountModalChanged { get; set; }
+
+    private UserProfile userProfile = new UserProfile();
+    private string inviteEmails = string.Empty;
+    private bool usePlaid = false;
+    private List<string> existingHouseholdMembers = new List<string>();
+    private List<BankAccount> bankAccounts = new List<BankAccount>();
+    private BankAccount newAccount = new BankAccount();
+    private int editAccountId = 0;
+
+    // Toaster variables
+    private string toasterMessage = string.Empty;
+    private string toasterClass = string.Empty;
+    private System.Threading.Timer toasterTimer;
+
+    private string accountNumberError = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        int userId = UserStateService.UserId;
+
+        if (userId <= 0)
+        {
+            Navigation.NavigateTo("/login");
+        }
+        else
+        {
+            userProfile = await UserService.GetUserProfileByIdAsync(userId);
+            //Simulate getting existing household members. Replace with actual logic
+            existingHouseholdMembers = new List<string>() { "user1@example.com", "user2@example.com" };
+            //Simulate getting existing bank accounts ;
+            //TODO: Update to get actual bank accounts from the backend
+            bankAccounts = new List<BankAccount>()
+    {
+    new BankAccount { AccountId = 1, AccountName = "TD Checking", Balance = 1000, AccountType = "Checking", AccountNumber = "**** 7890" },
+    new BankAccount { AccountId = 2, AccountName = "CIBC Savings", Balance = 5000, AccountType = "Savings", AccountNumber = "**** 4321" } ,
+    new BankAccount { AccountId = 2, AccountName = "Scotia Platinum", Balance = 5000, AccountType = "Savings", AccountNumber = "**** 4321" } ,
+    };
+        }
+    }
+
+    private void ShowAddAccountModal()
+    {
+        showAddAccountModal = true;
+        newAccount = new BankAccount(); // Reset newAccount
+    }
+
+    private async Task CloseAddAccountModal()
+    {
+        showAddAccountModal = false;
+    }
+
+    private async Task AddManualAccount()
+    {
+        // Simulate adding to backend. Add your actual backend logic here.
+        newAccount.AccountId = bankAccounts.Count + 1; // Assign a new ID
+        bankAccounts.Add(newAccount);
+
+        bool success = true; // or false based on your result.
+
+        if (success)
+        {
+            toasterMessage = "Account added successfully!";
+            toasterClass = "success";
+            //reset account data
+            newAccount = new BankAccount();
+            await CloseAddAccountModal();
+        }
+        else
+        {
+            toasterMessage = "Failed to add account.";
+            toasterClass = "error";
+        }
+
+        // Start the timer to auto-close the toaster
+        toasterTimer?.Dispose(); // Dispose of any existing timer
+        toasterTimer = new System.Threading.Timer(AutoCloseToaster, null, 5000, Timeout.Infinite);
+    }
+
+        private void ValidateAccountNumber(ChangeEventArgs e)
+    {
+        var input = e.Value?.ToString();
+        if (input != null && input.Length > 4)
+        {
+            accountNumberError = "Please enter only the last 4 digits.";
+        }
+        else
+        {
+            accountNumberError = string.Empty;
+        }
+    }
+
+    private void AutoCloseToaster(object state)
+    {
+        InvokeAsync(() =>
+        {
+            ClearToaster();
+            StateHasChanged(); // Update the UI
+        });
+    }
+
+    private void ClearToaster()
+    {
+        toasterMessage = string.Empty;
+        toasterClass = string.Empty;
+    }
+
+    protected void InviteHousehold()
+    {
+        var emails = inviteEmails.Split(',').Select(e => e.Trim()).ToList();
+        foreach (var email in emails)
+        {
+            Console.WriteLine($"Inviting household member: {email}");
+            // Here you would send the invite email to your backend
+        }
+        Console.WriteLine("Invite(s) sent (check console)");
+        inviteEmails = string.Empty;
+    }
+
+    // This will enable the inputs for editing the account
+    protected async Task EditAccount(int id)
+    {
+        editAccountId = id;
+    }
+
+    // this will save the account after editing
+    protected void SaveAccount(BankAccount account)
+    {
+        editAccountId = 0;
+        // Simulate saving to backend. Add your actual backend logic here.
+        bool success = true; // or false based on your result.
+
+        if (success)
+        {
+            toasterMessage = "Account edit successfully!";
+            toasterClass = "success";
+            //reset account data
+            newAccount = new BankAccount();
+        }
+        else
+        {
+            toasterMessage = "Failed to edit account.";
+            toasterClass = "error";
+        }
+
+        // Start the timer to auto-close the toaster
+        toasterTimer?.Dispose(); // Dispose of any existing timer
+        toasterTimer = new System.Threading.Timer(AutoCloseToaster, null, 5000, Timeout.Infinite);
+
+    }
+
+    // this will cancel the edit and revert the changes
+    protected void CancelEdit()
+    {
+        editAccountId = 0;
+    }
+
+    // this will delete the account
+    protected void DeleteAccount(int id)
+    {
+        // Simulate deleting from backend. Add your actual backend logic here.
+        bankAccounts.RemoveAll(a => a.AccountId == id);
+
+        bool success = true; // or false based on your result.
+
+        if (success)
+        {
+            toasterMessage = "Account delete successfully!";
+            toasterClass = "success";
+            //reset account data
+            newAccount = new BankAccount();
+        }
+        else
+        {
+            toasterMessage = "Failed to delete account.";
+            toasterClass = "error";
+        }
+
+        // Start the timer to auto-close the toaster
+        toasterTimer?.Dispose(); // Dispose of any existing timer
+        toasterTimer = new System.Threading.Timer(AutoCloseToaster, null, 5000, Timeout.Infinite);
+
+    }
+
+    protected void EditPlaid()
+    {
+        //Integrate with plaid here and set the usePlaid value
+        if (usePlaid)
+        {
+            Console.Write("Integrate SDK and connect to account");
+        }
+        else
+        {
+            Console.Write("Disconnect account from Plaid");
+        }
+    }
+}

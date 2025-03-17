@@ -1,0 +1,254 @@
+h4 {
+    margin-top: 1em;
+    font-size: 1em;
+    font-weight: bold;
+    font-style: italic;
+    color: #28a745;
+}
+
+.link-account {
+    width: 100%;
+    padding: 20px;
+    border: none;
+    border-radius: 5px;
+    font-family: sans-serif;
+}
+
+    .link-account button {
+        display: block;
+        padding: 10px;
+        border: none;
+        border-radius: 3px;
+        background-color: var(--background-color);
+        color: white;
+        cursor: pointer;
+    }
+
+        .link-account button:hover {
+            background-color: var(--secondary-color);
+        }
+
+    .link-account .manual-accounts, .link-account .invite-household, .link-account .integrate-plaid {
+        margin-bottom: 15px;
+    }
+
+input, select {
+    border: 1px solid var(--primary-color);
+}
+
+.manual-account-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+    .manual-account-input input {
+        padding: 5px;
+        margin-top: 5px;
+    }
+
+    .manual-account-input .button-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+        .manual-account-input .button-container button {
+            flex: 1;
+        }
+
+            .manual-account-input .button-container button.save {
+                background-color: var(--background-color);
+                color: white;
+                border: none;
+            }
+
+                .manual-account-input .button-container button.save:hover {
+                    background-color: var(--background-color-hover);
+                    color: white;
+                }
+
+            .manual-account-input .button-container button.cancel {
+                background-color: #db4437;
+                color: white;
+                border: none;
+            }
+
+                .manual-account-input .button-container button.cancel:hover {
+                    background-color: #c33c2f;
+                }
+
+
+/* Modal */
+.modal-dialog {
+    display: flex;
+    position: fixed;
+    top: 50%; /* Position the top edge in the vertical center */
+    left: 50%; /* Position the left edge in the horizontal center */
+    transform: translate(-50%, -50%); /* Shift the element back by half its width and height */
+    height: auto; /* Allow content to determine height */
+    width: auto; /* Allow content to determine width */
+    z-index: 1000; /* Ensure the modal is on top of other elements */
+}
+
+.modal-content {
+    background-color: white; /* Or your desired background */
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15); /* Optional: Add a subtle shadow */
+}
+
+.modal-header {
+    color: var(--primary-color);
+    width: 100%;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.modal-body {
+    margin: 20px 0;
+}
+
+    .modal-body p {
+        font-size: 14px;
+        color: #17a2b8;
+    }
+
+    .modal-body .success-text {
+        font-weight: bold;
+        color: var(--tertiary-color);
+        font-size: 16px;
+    }
+
+/* Table Style here*/
+table {
+    width: 100%;
+    border: 2px solid #ffffff;
+    border-collapse: collapse;
+    margin-bottom: 1em;
+}
+
+table, tr, th, td {
+    border-color: var(--secondary-color);
+    text-align: left;
+    padding: 10px;
+}
+
+th {
+    background-color: none;
+    padding: 4px 2px;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: transparent;
+    color: var(--primary-color);
+}
+
+.table-striped tbody tr:nth-of-type(even) {
+    background-color: var(--table-secondary);
+    color: white;
+}
+
+.table-striped thead {
+    font-weight: bold;
+    border-bottom-style: solid;
+    background-color: var(--primary-color);
+}
+
+
+/*  Style buttons here */
+.button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+    .button-container button {
+        flex: 1;
+    }
+
+/* Kebab Menu Styles */
+.table-striped tbody tr:nth-of-type(odd) .kebab-icon {
+    background-color: transparent;
+    color: var(--primary-color);
+}
+
+.table-striped tbody tr:nth-of-type(even) .kebab-icon {
+    background-color: var(--table-secondary);
+    color: white;
+}
+
+.kebab-menu {
+    position: relative;
+    display: inline-block;
+}
+
+.kebab-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+    position: relative;
+}
+
+    .kebab-icon:hover {
+        background-color: white;
+    }
+
+    .kebab-icon svg {
+        display: block;
+        vertical-align: middle;
+    }
+
+.kebab-menu-options {
+    display: none;
+    position: absolute;
+    right: 0px;
+    top: 50%; /* Position below icon with spacing */
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border-radius: 6px;
+    min-width: 120px;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.kebab-menu:hover .kebab-menu-options {
+    display: block;
+}
+
+/* Menu Items */
+.menu-item {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    color: #333;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+    .menu-item:hover {
+        background-color: #f8f9fa;
+    }
+
+    .menu-item:not(:last-child) {
+        border-bottom: 1px solid #eee;
+    }
+
+/* Optional dropdown arrow */
+.kebab-menu-options::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    right: 10px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent white transparent;
+}

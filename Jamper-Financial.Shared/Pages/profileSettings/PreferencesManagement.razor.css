@@ -1,0 +1,21 @@
+h4 {
+    margin-top: 1em;
+    font-size: 1em;
+    font-weight: bold;
+    font-style: italic;
+    color: #28a745;
+}
+
+.notification, .localization {
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Adjust the gap as needed */
+    align-items: flex-start; /* Align items to the left */
+}
+
+/* Optional: Add some margin to the flex-items */
+.flex-item {
+    margin-right: 10px;
+    padding-left: 10px;
+    text-align: left;
+}
