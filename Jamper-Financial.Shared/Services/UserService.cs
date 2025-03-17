@@ -89,7 +89,7 @@ namespace Jamper_Financial.Shared.Services
                                     UserId = reader.GetInt32(0),
                                     Username = reader.GetString(1),
                                     Email = reader.GetString(2),
-                                    Password = reader.GetString(3)
+                                    Password = reader.IsDBNull(3) ? null : reader.GetString(3)
                                 };
                             }
                         }
@@ -130,7 +130,7 @@ namespace Jamper_Financial.Shared.Services
                                     UserId = reader.GetInt32(reader.GetOrdinal("UserId")),
                                     FirstName = reader.IsDBNull(reader.GetOrdinal("FirstName")) ? null : reader.GetString(reader.GetOrdinal("FirstName")),
                                     LastName = reader.IsDBNull(reader.GetOrdinal("LastName")) ? null : reader.GetString(reader.GetOrdinal("LastName")),
-                                    Password = reader.GetString(reader.GetOrdinal("Password")),
+                                    Password = reader.IsDBNull(reader.GetOrdinal("Password")) ? null : reader.GetString(reader.GetOrdinal("Password")),
                                     Email = reader.GetString(reader.GetOrdinal("Email")),
                                     PhoneNumber = reader.IsDBNull(reader.GetOrdinal("PhoneNumber")) ? null : reader.GetString(reader.GetOrdinal("PhoneNumber")),
                                     EmailConfirmed = reader.IsDBNull(reader.GetOrdinal("EmailConfirmed")) ? (bool?)null : reader.GetBoolean(reader.GetOrdinal("EmailConfirmed")),
