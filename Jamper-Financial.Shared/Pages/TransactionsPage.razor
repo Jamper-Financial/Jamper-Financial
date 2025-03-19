@@ -4,6 +4,8 @@
 @using Jamper_Financial.Shared.Data;
 @using Jamper_Financial.Shared.Utilities;
 @using Jamper_Financial.Shared.Pages.Components;
+@using Jamper_Financial.Shared.Services;
+@inject SearchService SearchService
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -57,7 +59,7 @@
                 <tbody>
                     @if (transactions != null)
                     {
-                        @foreach (var transaction in transactions)
+                        @foreach (var transaction in filteredTransactions)
                         {
                             <tr class="transaction-item" @onclick="() => ShowEditTransactionModal(transaction)" style="cursor: pointer;">
                                 <td>@transaction.Description</td>
@@ -175,6 +177,7 @@
 
 @code {
     private List<Transaction> transactions;
+    private List<Transaction> filteredTransactions;
     public bool ShowAddTransactionModal { get; set; } = false;
     public bool ShowReceiptModal { get; set; } = false;
     public bool IsEditMode { get; set; } = false;
@@ -186,6 +189,28 @@
     protected override async Task OnInitializedAsync()
     {
         transactions = await TransactionManager.LoadTransactionsAsync();
+        filteredTransactions = transactions;
+        SearchService.OnSearchQueryChanged += FilterTransactions;
+    }
+
+    private void FilterTransactions()
+    {
+        if (string.IsNullOrEmpty(SearchService.SearchQuery))
+        {
+            filteredTransactions = transactions;
+        }
+        else
+        {
+            filteredTransactions = transactions
+                .Where(t => t.Description.Contains(SearchService.SearchQuery, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        SearchService.OnSearchQueryChanged -= FilterTransactions;
     }
 
     private void OpenReceiptModal(Transaction transaction)
@@ -244,7 +269,7 @@
         NewTransaction.Amount = Amount;
         await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
         CloseAddTransactionModal();
-        transactions = await TransactionManager.LoadTransactionsAsync();
+        filteredTransactions = await TransactionManager.LoadTransactionsAsync();
     }
 
     private void ShowDeleteConfirmationForm()
@@ -274,7 +299,7 @@
             transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
         }
         CloseAddTransactionModal();
-        transactions = await TransactionManager.LoadTransactionsAsync();
+        filteredTransactions = await TransactionManager.LoadTransactionsAsync();
     }
 
     private void HandleCategoryChange(ChangeEventArgs e)

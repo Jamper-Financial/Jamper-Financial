@@ -275,11 +275,7 @@
 }
 
     .transaction-item:hover {
-        background-color: rgba(98, 173, 65, 0.3); /* Darker background with 30% transparency */
-    }
-
-    .transaction-item.selected-transaction {
-        background-color: #ffe194; /* Highlight color for selected date transactions */
+        background-color: #ffe194; /* Darker background with 30% transparency */
     }
 
     .transaction-item h4 {

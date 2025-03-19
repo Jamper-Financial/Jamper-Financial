@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager Navigation
+@using Jamper_Financial.Shared.Services;
 
 @code {
     [CascadingParameter] private Action<bool>? LoadBlazoriseScripts { get; set; }
