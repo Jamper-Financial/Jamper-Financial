@@ -6,8 +6,7 @@
 @inject IJSRuntime JSRuntime
 @inject DatabaseHelperFactory DatabaseHelper
 
-
-<style> 
+<style>
     .modify-btn {
         border: none;
         border-radius: 1rem;
@@ -24,8 +23,8 @@
         height: 20px;
     }
 
-    .update-goal-btn { 
-        background-color: #28a745; 
+    .update-goal-btn {
+        background-color: #28a745;
         color: #fff;
         padding: 8px 16px;
         border: none;
@@ -33,19 +32,19 @@
         cursor: pointer;
         margin-right: 5px;
     }
-    .update-goal-btn:hover { 
+    .update-goal-btn:hover {
         background-color: #218838;
     }
 
-    .cancel-btn { 
-        background-color: #fff; 
+    .cancel-btn {
+        background-color: #fff;
         color: #28a745;
         padding: 8px 16px;
         border: 1px solid #28a745;
         border-radius: 4px;
         cursor: pointer;
     }
-    .cancel-btn:hover { 
+    .cancel-btn:hover {
         background-color: #88db9b;
         color:#fff;
     }
@@ -71,7 +70,6 @@
 
                     @if (!goal.IsEditing)
                     {
-                        
                         <div class="goal-details">
                             <div class="goal-info">
                                 @if (goal.IsQuickGoal)
@@ -116,7 +114,7 @@
                                         var descriptionParts = goal.Description.Split(',');
                                         <p>Current Savings: $@(descriptionParts.Length > 0 ? descriptionParts[0].Split(':')[1].Trim() : "N/A")</p>
                                         <p>Monthly Contribution: $@(descriptionParts.Length > 1 ? descriptionParts[1].Split(':')[1].Trim() : "N/A")</p>
-                                        <p>Description: @(descriptionParts.Length > 6 ? descriptionParts[6].Split(':')[1].Trim() : "N/A")</p>
+                                        <p>Description: @(descriptionParts.Length > 2 ? descriptionParts[2].Split(':')[1].Trim() : "N/A")</p>
                                     }
                                 }
                                 else if (goal.IsHomeGoal)
@@ -147,7 +145,7 @@
                             </div>
                             <div class="button-container">
                                 <button class="see-more-btn" @onclick="() => ToggleDescription(goal)">...</button>
-                                <button class="modify-btn" @onclick="() => StartEditing(goal)"> 
+                                <button class="modify-btn" @onclick="() => StartEditing(goal)">
                                     <img src="images/edit.png" alt="Edit" />
                                 </button>
                                 <button class="delete-btn" @onclick="() => ConfirmDeleteGoal(goal)">
@@ -156,16 +154,13 @@
                                 <button class="check-off-btn" @onclick="() => ConfirmCheckOffGoal(goal)">
                                     <img src="images/check.png" alt="Check Off" />
                                 </button>
-                                
-                                
                             </div>
                         </div>
                     }
-                    else 
+                    else
                     {
-                        
-                        <div class="edit-goal-form"> 
-                            @if (goal.IsQuickGoal) 
+                        <div class="edit-goal-form">
+                            @if (goal.IsQuickGoal)
                             {
                                 <h3>Editing Quick Goal</h3>
                                 <div class="form-group">
@@ -192,10 +187,7 @@
                             else if (goal.IsRetirementGoal)
                             {
                                 <h3>Editing Retirement Goal</h3>
-                                <div class="form-group">
-                                    <label>Name of goal</label>
-                                    <input type="text" @bind="goal.Name" />
-                                </div>
+                                <!-- ADDED: Removed extra fields to match new "Save for Retirement" -->
                                 <div class="form-group">
                                     <label>Target Amount</label>
                                     <input type="number" step="0.01" @bind="goal.Amount" />
@@ -209,24 +201,8 @@
                                     <input type="number" step="0.01" @bind="retMonthlyContribution" />
                                 </div>
                                 <div class="form-group">
-                                    <label>Retirement Date</label>
+                                    <label>Goal Retirement Date</label>
                                     <input type="date" @bind="goal.EndDate" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Investment Growth Rate (%)</label>
-                                    <input type="number" step="0.01" @bind="retInvestmentGrowthRate" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Inflation Rate (%)</label>
-                                    <input type="number" step="0.01" @bind="retInflationRate" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Retirement Income Needs</label>
-                                    <input type="number" step="0.01" @bind="retIncomeNeeds" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Other Sources of Income</label>
-                                    <input type="number" step="0.01" @bind="retOtherIncomeSources" />
                                 </div>
                             }
                             else if (goal.IsEmergencyFundGoal)
@@ -256,6 +232,7 @@
                             else if (goal.IsTravelGoal)
                             {
                                 <h3>Editing Travel Goal</h3>
+                                <!-- ADDED: Removed extra fields to match new "Save for Traveling" -->
                                 <div class="form-group">
                                     <label>Destination</label>
                                     <input type="text" @bind="travelDestination" />
@@ -281,36 +258,17 @@
                                     <input type="number" step="0.01" @bind="travelMonthlyContribution" />
                                 </div>
                                 <div class="form-group">
-                                    <label>Travel Category</label>
-                                    <input type="text" @bind="travelCategory" />
-                                </div>
-                                <div class="form-group">
                                     <label>Description</label>
                                     <textarea @bind="travelDescription"></textarea>
-                                </div>
-                                <div class="form-group">
-                                    <label>Accommodation Costs</label>
-                                    <input type="number" step="0.01" @bind="travelAccommodationCosts" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Transportation Costs</label>
-                                    <input type="number" step="0.01" @bind="travelTransportationCosts" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Food and Entertainment Costs</label>
-                                    <input type="number" step="0.01" @bind="travelFoodEntertainmentCosts" />
                                 </div>
                             }
                             else if (goal.IsHomeGoal)
                             {
                                 <h3>Editing Home Goal</h3>
+                                <!-- ADDED: Removed extra fields to match new "Save to Buy a Home" -->
                                 <div class="form-group">
                                     <label>Home Price</label>
                                     <input type="number" step="0.01" @bind="homePrice" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Down Payment</label>
-                                    <input type="number" step="0.01" @bind="goal.Amount" />
                                 </div>
                                 <div class="form-group">
                                     <label>Current Savings</label>
@@ -324,46 +282,35 @@
                                     <label>Target Purchase Date</label>
                                     <input type="date" @bind="goal.EndDate" />
                                 </div>
-                                <div class="form-group">
-                                    <label>Loan Interest Rate (%)</label>
-                                    <input type="number" step="0.01" @bind="homeLoanInterestRate" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Loan Term (years)</label>
-                                    <input type="number" @bind="homeLoanTerm" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Property Taxes</label>
-                                    <input type="number" step="0.01" @bind="homePropertyTaxes" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Home Insurance</label>
-                                    <input type="number" step="0.01" @bind="homeInsurance" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Other Costs</label>
-                                    <input type="number" step="0.01" @bind="homeOtherCosts" />
-                                </div>
                             }
                             else
                             {
-                                
                                 <h3>Editing Custom Goal</h3>
+                                <!-- ADDED: Updated to match "Add a Saving Goal" fields -->
                                 <div class="form-group">
-                                    <label>Name</label>
+                                    <label>Name of goal</label>
                                     <input type="text" @bind="goal.Name" />
                                 </div>
                                 <div class="form-group">
-                                    <label>Goal Type</label>
-                                    <input type="text" @bind="goal.GoalType" />
+                                    <label>Choose an Account</label>
+                                    <select @bind="goal.GoalType">
+                                        <option value="">Select an Account</option>
+                                        <option value="Savings Account 1">Savings Account 1</option>
+                                        <option value="Savings Account 2">Savings Account 2</option>
+                                        <option value="Savings Account 3">Savings Account 3</option>
+                                        <option value="Checking Account 1">Checking Account 1</option>
+                                        <option value="Checking Account 2">Checking Account 2</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Category</label>
-                                    <input type="text" @bind="goal.Category" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Amount</label>
-                                    <input type="number" step="0.01" @bind="goal.Amount" />
+                                    <select @bind="goal.Category">
+                                        <option value="">Select a Category</option>
+                                        <option value="Entertainment">Entertainment</option>
+                                        <option value="Debt & Loans">Debt & Loans</option>
+                                        <option value="Subscriptions & Memberships">Subscriptions & Memberships</option>
+                                        <option value="Savings & Investments">Savings & Investments</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Start Date</label>
@@ -373,12 +320,29 @@
                                     <label>End Date</label>
                                     <input type="date" @bind="goal.EndDate" />
                                 </div>
+                                <div class="form-group">
+                                    <label>Amount</label>
+                                    <input type="number" step="0.01" @bind="goal.Amount" />
+                                </div>
+                                <div class="form-group">
+                                    <label>Frequency</label>
+                                    <select @bind="goal.Frequency">
+                                        <option value="">Select Frequency</option>
+                                        <option value="Daily">Daily</option>
+                                        <option value="Every 2 Weeks">Every 2 Weeks</option>
+                                        <option value="Monthly">Monthly</option>
+                                        <option value="Annually">Annually</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <textarea @bind="goal.Description"></textarea>
+                                </div>
                             }
 
-                            
-                            <button class="update-goal-btn" @onclick="() => SaveGoal(goal)">Save</button> <!-- ADDED -->
-                            <button class="cancel-btn" @onclick="() => CancelEdit(goal)">Cancel</button> <!-- ADDED -->
-                        </div> 
+                            <button class="update-goal-btn" @onclick="() => SaveGoal(goal)">Save</button>
+                            <button class="cancel-btn" @onclick="() => CancelEdit(goal)">Cancel</button>
+                        </div>
                     }
                 </li>
             }
@@ -391,12 +355,10 @@
     private List<Goal> goals = new List<Goal>();
 
     //local fields for Retirement
-    private decimal retCurrentSavings;        
-    private decimal retMonthlyContribution;
-    private decimal retInvestmentGrowthRate;
-    private decimal retInflationRate;
-    private decimal retIncomeNeeds;
-    private decimal retOtherIncomeSources;
+    private decimal retCurrentSavings;         // ADDED: We'll keep these for new retirement fields
+    private decimal retMonthlyContribution;    // ADDED
+
+    // Removed old retirement fields (investmentGrowthRate, inflationRate, etc.) // ADDED
 
     // local fields for Emergency
     private decimal emCurrentSavings;
@@ -407,21 +369,16 @@
     private string travelDestination;
     private decimal travelCurrentSavings;
     private decimal travelMonthlyContribution;
-    private string travelCategory;
-    private string travelDescription;
-    private decimal travelAccommodationCosts;
-    private decimal travelTransportationCosts;
-    private decimal travelFoodEntertainmentCosts;
+    private string travelDescription;  // ADDED: We'll store only a single description now
+
+    // Removed travelCategory, travelAccommodationCosts, travelTransportationCosts, travelFoodEntertainmentCosts // ADDED
 
     //  local fields for Home
     private decimal homePrice;
     private decimal homeCurrentSavings;
     private decimal homeMonthlySavings;
-    private decimal homeLoanInterestRate;
-    private int homeLoanTerm;
-    private decimal homePropertyTaxes;
-    private decimal homeInsurance;
-    private decimal homeOtherCosts;
+
+    // Removed loanInterestRate, loanTerm, propertyTaxes, insurance, otherCosts // ADDED
 
     protected override void OnInitialized()
     {
@@ -508,12 +465,11 @@
         Navigation.NavigateTo("/saving-goals-page");
     }
 
-    
-    private void StartEditing(Goal goal) 
+    private void StartEditing(Goal goal)
     {
-        goal.IsEditing = true; 
+        goal.IsEditing = true;
 
-        // If Retirement, parse
+        // Save for retirement
         if (goal.IsRetirementGoal && !string.IsNullOrEmpty(goal.Description))
         {
             try
@@ -521,10 +477,6 @@
                 var parts = goal.Description.Split(',');
                 retCurrentSavings = decimal.Parse(parts[0].Split(':')[1].Trim());
                 retMonthlyContribution = decimal.Parse(parts[1].Split(':')[1].Trim());
-                retInvestmentGrowthRate = decimal.Parse(parts[2].Split(':')[1].Trim().TrimEnd('%'));
-                retInflationRate = decimal.Parse(parts[3].Split(':')[1].Trim().TrimEnd('%'));
-                retIncomeNeeds = decimal.Parse(parts[4].Split(':')[1].Trim());
-                retOtherIncomeSources = decimal.Parse(parts[5].Split(':')[1].Trim());
             }
             catch (Exception ex)
             {
@@ -532,7 +484,7 @@
             }
         }
 
-        // If Emergency, parse
+        // Save for Emergency find
         if (goal.IsEmergencyFundGoal && !string.IsNullOrEmpty(goal.Description))
         {
             try
@@ -548,7 +500,7 @@
             }
         }
 
-        // If Travel, parse
+        // Save for Traveling
         if (goal.IsTravelGoal && !string.IsNullOrEmpty(goal.Description))
         {
             try
@@ -556,16 +508,11 @@
                 var parts = goal.Description.Split(',');
                 travelCurrentSavings = decimal.Parse(parts[0].Split(':')[1].Trim());
                 travelMonthlyContribution = decimal.Parse(parts[1].Split(':')[1].Trim());
-                travelAccommodationCosts = decimal.Parse(parts[2].Split(':')[1].Trim());
-                travelTransportationCosts = decimal.Parse(parts[3].Split(':')[1].Trim());
-                travelFoodEntertainmentCosts = decimal.Parse(parts[4].Split(':')[1].Trim());
-                travelCategory = parts[5].Split(':')[1].Trim();
-                travelDescription = parts[6].Split(':')[1].Trim();
+                travelDescription = parts[2].Split(':')[1].Trim();
 
-                
-                if (goal.Name.StartsWith("Travel to ")) 
+                if (goal.Name.StartsWith("Travel to "))
                 {
-                    travelDestination = goal.Name.Substring("Travel to ".Length).Trim(); 
+                    travelDestination = goal.Name.Substring("Travel to ".Length).Trim();
                 }
             }
             catch (Exception ex)
@@ -574,7 +521,7 @@
             }
         }
 
-        // If Home, parse
+        // Saving for a Home
         if (goal.IsHomeGoal && !string.IsNullOrEmpty(goal.Description))
         {
             try
@@ -583,11 +530,6 @@
                 homePrice = decimal.Parse(parts[0].Split(':')[1].Trim());
                 homeCurrentSavings = decimal.Parse(parts[1].Split(':')[1].Trim());
                 homeMonthlySavings = decimal.Parse(parts[2].Split(':')[1].Trim());
-                homeLoanInterestRate = decimal.Parse(parts[3].Split(':')[1].Trim().TrimEnd('%'));
-                homeLoanTerm = int.Parse(parts[4].Split(':')[1].Trim().Replace("years",""));
-                homePropertyTaxes = decimal.Parse(parts[5].Split(':')[1].Trim());
-                homeInsurance = decimal.Parse(parts[6].Split(':')[1].Trim());
-                homeOtherCosts = decimal.Parse(parts[7].Split(':')[1].Trim());
             }
             catch (Exception ex)
             {
@@ -596,17 +538,14 @@
         }
     }
 
-    
-    private void SaveGoal(Goal goal) // ADDED
+    private void SaveGoal(Goal goal)
     {
         try
         {
-            
+            // Retirement
             if (goal.IsRetirementGoal)
             {
-                goal.Description = $"Current Savings: {retCurrentSavings}, Monthly Contribution: {retMonthlyContribution}, " +
-                                   $"Investment Growth Rate: {retInvestmentGrowthRate}%, Inflation Rate: {retInflationRate}%, " +
-                                   $"Retirement Income Needs: {retIncomeNeeds}, Other Income Sources: {retOtherIncomeSources}";
+                goal.Description = $"Current Savings: {retCurrentSavings}, Monthly Contribution: {retMonthlyContribution}";
             }
             else if (goal.IsEmergencyFundGoal)
             {
@@ -614,38 +553,34 @@
             }
             else if (goal.IsTravelGoal)
             {
-                
-                goal.Name = $"Travel to {travelDestination}"; 
-
-                goal.Description = $"Current Savings: {travelCurrentSavings}, Monthly Contribution: {travelMonthlyContribution}, " +
-                                   $"Accommodation Costs: {travelAccommodationCosts}, Transportation Costs: {travelTransportationCosts}, " +
-                                   $"Food and Entertainment Costs: {travelFoodEntertainmentCosts}, Travel Category: {travelCategory}, " +
-                                   $"Description: {travelDescription}";
+                // rename the goal to "Travel to X"
+                goal.Name = $"Travel to {travelDestination}";
+                goal.Description = $"Current Savings: {travelCurrentSavings}, Monthly Contribution: {travelMonthlyContribution}, Description: {travelDescription}";
             }
             else if (goal.IsHomeGoal)
             {
-                goal.Description = $"Home Price: {homePrice}, Current Savings: {homeCurrentSavings}, Monthly Savings: {homeMonthlySavings}, " +
-                                   $"Loan Interest Rate: {homeLoanInterestRate}%, Loan Term: {homeLoanTerm} years, Property Taxes: {homePropertyTaxes}, " +
-                                   $"Home Insurance: {homeInsurance}, Other Costs: {homeOtherCosts}";
+                // store only homePrice, homeCurrentSavings, homeMonthlySavings
+                goal.Description = $"Home Price: {homePrice}, Current Savings: {homeCurrentSavings}, Monthly Savings: {homeMonthlySavings}";
             }
-            
 
-            DatabaseHelper.UpdateGoal(goal); 
-            goals = DatabaseHelper.GetGoals(); 
-            goal.IsEditing = false;           
-            StateHasChanged();                
+            // Update the database
+            DatabaseHelper.UpdateGoal(goal);
+
+            // Reload from DB
+            goals = DatabaseHelper.GetGoals();
+
+            // End editing
+            goal.IsEditing = false;
+            StateHasChanged();
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error in SaveGoal: {ex.Message}"); 
+            Console.WriteLine($"Error in SaveGoal: {ex.Message}");
         }
     }
 
-    
-    private void CancelEdit(Goal goal) 
+    private void CancelEdit(Goal goal)
     {
         goal.IsEditing = false;
     }
 }
-
-
