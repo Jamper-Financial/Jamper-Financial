@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {}
+    "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {}
   },
   "projects": {
-    "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+    "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+        "projectUniqueName": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
         "projectName": "Jamper-Financial.Shared",
-        "projectPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
-        "packagesPath": "C:\\Users\\paolo\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
+        "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+        "packagesPath": "C:\\Users\\Marian Estrada\\.nuget\\packages\\",
+        "outputPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\paolo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Marian Estrada\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -43,7 +43,7 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
         "SdkAnalysisLevel": "9.0.100"
       },
@@ -69,7 +69,7 @@
             },
             "Microsoft.AspNetCore.Components.Web": {
               "target": "Package",
-              "version": "[9.0.2, )"
+              "version": "[9.0.3, )"
             },
             "Microsoft.Data.Sqlite.Core": {
               "target": "Package",
@@ -104,24 +104,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.103/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {
+    "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
+        "projectUniqueName": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
         "projectName": "Jamper-Financial.Web",
-        "projectPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
-        "packagesPath": "C:\\Users\\paolo\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Web\\obj\\",
+        "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
+        "packagesPath": "C:\\Users\\Marian Estrada\\.nuget\\packages\\",
+        "outputPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Web\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\paolo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Marian Estrada\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -137,8 +137,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-                "projectPath": "c:\\Users\\paolo\\Desktop\\Capstone\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+              "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+                "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
               }
             }
           }
@@ -151,7 +151,7 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "all"
+          "auditMode": "direct"
         },
         "SdkAnalysisLevel": "9.0.100"
       },
@@ -199,7 +199,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.103/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

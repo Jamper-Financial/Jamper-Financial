@@ -83,3 +83,144 @@ window.initializePieChart = function (canvasId, chartData) {
         console.error(`Canvas element with id '${canvasId}' not found for Pie Chart.`);
     }
 };
+
+window.initializeBarChart = function (canvasId, chartData, indAxis = 'x') {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
+
+    if (ctx) {
+        let existingChart = Chart.getChart(canvasId);
+        if (existingChart) {
+            existingChart.destroy();
+        }
+
+        const myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: chartData,
+            options: {
+                indexAxis: indAxis,
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: { display: true },
+                    datalabels: {
+                        anchor: 'bottom',
+                        align: 'top',
+                        font: {
+                            size: 14,
+                            family: 'Arial',
+                            weight: 'bold'
+                        },
+                        formatter: (value) => {
+                            return value;
+                        }
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+    } else {
+        console.error(`Canvas element with id '${canvasId}' not found for Bar Chart.`);
+    }
+};
+
+window.initializeLineChart = function (canvasId, chartData, indAxis = 'x') {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
+
+    if (ctx) {
+        let existingChart = Chart.getChart(canvasId);
+        if (existingChart) {
+            existingChart.destroy();
+        }
+
+        const myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: chartData,
+            options: {
+                indexAxis: indAxis,
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: { display: true },
+                    datalabels: {
+                        anchor: 'bottom',
+                        align: 'top',
+                        font: {
+                            size: 14,
+                            family: 'Arial',
+                            weight: 'bold'
+                        },
+                        formatter: (value) => {
+                            return value;
+                        }
+                    },
+                    //filler: {
+                    //    propagate: true
+                    //}
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+    } else {
+        console.error(`Canvas element with id '${canvasId}' not found for Bar Chart.`);
+    }
+};
+
+//window.initializePolarChart = function (canvasId, chartData, indAxis = 'x') {
+//    const canvas = document.getElementById(canvasId);
+//    const ctx = canvas.getContext('2d');
+
+//    if (ctx) {
+//        let existingChart = Chart.getChart(canvasId);
+//        if (existingChart) {
+//            existingChart.destroy();
+//        }
+
+//        const myPolarChart = new Chart(ctx, {
+//            type: 'line',
+//            data: chartData,
+//            options: {
+//                indexAxis: indAxis,
+//                responsive: true,
+//                maintainAspectRatio: false,
+//                scales: {
+//                    y: {
+//                        beginAtZero: true
+//                    }
+//                },
+//                plugins: {
+//                    legend: { display: true },
+//                    datalabels: {
+//                        anchor: 'bottom',
+//                        align: 'top',
+//                        font: {
+//                            size: 14,
+//                            family: 'Arial',
+//                            weight: 'bold'
+//                        },
+//                        formatter: (value) => {
+//                            return value;
+//                        }
+//                    },
+//                    filler: {
+//                        propagate: true
+//                    }
+//                }
+//            },
+//            plugins: [ChartDataLabels]
+//        });
+//    } else {
+//        console.error(`Canvas element with id '${canvasId}' not found for Bar Chart.`);
+//    }
+//};
