@@ -6,7 +6,6 @@
 @inject NavigationManager Navigation
 @inject IUserService UserService
 @inject UserStateService UserStateService
-<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
 
 @namespace Jamper_Financial.Shared.Pages.profileSettings
 @code {
@@ -70,155 +69,127 @@
 
 }
 
-<EditForm Model="userProfile" OnValidSubmit="SaveProfile">
-    <DataAnnotationsValidator />
+<div>
+    <div>
+        <h3>Profile Details</h3>
+    </div>
+    <div>
+        <EditForm Model="userProfile" OnValidSubmit="SaveProfile">
+            <DataAnnotationsValidator />
     @* <ValidationSummary /> *@
 
-    @if (userProfile != null)
-    {
-        <div class="content-container" @onclick="HandleClickOutsideModal">
-            <div class="profile-management">
-                <div class="profile-management-column">
-                    <div class="profile-picture">
-                        <img src="./images/placeholder.png" />
-                    </div>
-                    <div class="edit-icon">
-                        <div class="absolute">
-                            <button class="space-x-1 inline-flex items-center justify-center whitespace-nowrap text-sm ring-offset-background transition-all select-none touch-none focus:outline-none disabled:bg-none disabled:pointer-events-none disabled:text-foreground text-primary-foreground hover:brightness-90 bg-muted disabled:bg-muted size-10 rounded-full [&amp;_path]:fill-[#2BA8FC]">
-                                <span class="flex items-center gap-1">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none">
-                                        <path fill="url(#pencil-gradient-school_svg__a)" d="M4.167 15.833h1.187L13.5 7.688 12.313 6.5l-8.146 8.146zM3.333 17.5a.8.8 0 0 1-.593-.24.8.8 0 0 1-.24-.593v-2.021a1.65 1.65 0 0 1 .48-1.167L13.5 2.98q.25-.229.553-.354.302-.125.634-.125.333 0 .646.125.315.125.542.375l1.146 1.167q.25.229.364.541t.115.625q0 .334-.115.636a1.6 1.6 0 0 1-.364.552l-10.5 10.5q-.23.229-.532.354a1.65 1.65 0 0 1-.635.125zm9.563-10.396-.584-.604L13.5 7.688z">
+            @if (userProfile != null)
+            {
+                <div class="content-container" @onclick="HandleClickOutsideModal">
+                    <div class="profile-management">
+                        <div class="profile-management-column">
+                            <div class="profile-picture">
+                                <img src="./images/placeholder.png" />
+                            </div>
+                            <div class="edit-icon">
+                                <div class="absolute">
+                                    <button class="space-x-1 inline-flex items-center justify-center whitespace-nowrap text-sm ring-offset-background transition-all select-none touch-none focus:outline-none disabled:bg-none disabled:pointer-events-none disabled:text-foreground text-primary-foreground hover:brightness-90 bg-muted disabled:bg-muted size-10 rounded-full [&amp;_path]:fill-[#2BA8FC]">
+                                        <span class="flex items-center gap-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none">
+                                                <path fill="url(#pencil-gradient-school_svg__a)" d="M4.167 15.833h1.187L13.5 7.688 12.313 6.5l-8.146 8.146zM3.333 17.5a.8.8 0 0 1-.593-.24.8.8 0 0 1-.24-.593v-2.021a1.65 1.65 0 0 1 .48-1.167L13.5 2.98q.25-.229.553-.354.302-.125.634-.125.333 0 .646.125.315.125.542.375l1.146 1.167q.25.229.364.541t.115.625q0 .334-.115.636a1.6 1.6 0 0 1-.364.552l-10.5 10.5q-.23.229-.532.354a1.65 1.65 0 0 1-.635.125zm9.563-10.396-.584-.604L13.5 7.688z">
 
-                                        </path>
-                                        <defs>
-                                            <linearGradient id="pencil-gradient-school_svg__a" x1="1.328" x2="22.308" y1="1.295" y2="10.476" gradientUnits="userSpaceOnUse">
-                                                <stop stop-color="#2BA8FC"></stop>
-                                                <stop offset="1" stop-color="#5F57FF"></stop>
-                                            </linearGradient>
-                                        </defs>
-                                    </svg>
-                                </span>
-                            </button>
-                        </div>
-                        <input accept="image/*" id="avatar-upload" class="visually-hidden" type="file">
-                    </div>
-                    <div class="username">
-                        <label>@userProfile.Username</label>
-                    </div>
-                </div>
-                <div class="profile-management-column">
-                    <div class="your-name">
-                        <label class="text">First Name</label>
-                        <div class="box">
-                            <InputText class="sub-text input-style" @bind-Value="userProfile.FirstName" placeholder="First Name" />
-                            <ValidationMessage For="@(() => userProfile.FirstName)" />
-                        </div>
-                    </div>
-                    <div class="email">
-                        <label class="text">Email</label>
-                        <div class="box">
-                            <InputText type="email" class="sub-text input-style" @bind-Value="userProfile.Email" placeholder="Email address" />
-                            <ValidationMessage For="@(() => userProfile.Email)" />
-                        </div>
-                    </div>
-                    <div class="present-address">
-                        <label class="text">Present Address</label>
-                        <div class="box">
-                            <InputText class="sub-text input-style" @bind-Value="userProfile.Address" placeholder="Present Address" />
-                            <ValidationMessage For="@(() => userProfile.Address)" />
-                        </div>
-                    </div>
-                    <div class="postal-code">
-                        <label class="text">Postal Code</label>
-                        <div class="box">
-                            <InputText class="sub-text input-style" @bind-Value="userProfile.PostalCode" placeholder="Postal Code" />
-                            <ValidationMessage For="@(() => userProfile.PostalCode)" />
-                        </div>
-                    </div>
-                </div>
-                <div class="profile-management-column">
-                    <div class="last-name">
-                        <label class="text">Last Name</label>
-                        <div class="box">
-                            <InputText class="sub-text input-style" @bind-Value="userProfile.LastName" placeholder="Last Name" />
-                            <ValidationMessage For="@(() => userProfile.LastName)" />
-                        </div>
-                    </div>
-                    <div class="date-of-birth">
-                        <label class="text">Date of Birth</label>
-                        <div class="box">
-                            <InputDate class="sub-text input-style" @bind-Value="userProfile.Birthday" />
-                            <ValidationMessage For="@(() => userProfile.Birthday)" />
-                        </div>
-                    </div>
-                    <div class="city">
-                        <label class="text">City</label>
-                        <div class="box">
-                            <InputText class="sub-text input-style" @bind-Value="userProfile.City" />
-                            <ValidationMessage For="@(() => userProfile.City)" />
-                        </div>
-                    </div>
-                    <div class="country">
-                        <label class="text">Country</label>
-                        <div class="box">
-                            <InputText class="sub-text input-style" @bind-Value="userProfile.Country" />
-                            <ValidationMessage For="@(() => userProfile.Country)" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Delete Button -->
-            <div class="profile-button-container">
-                <div class="delete-button-container">
-                    <button @onclick="DeleteProfile" class="delete-button">
-                        Delete Profile
-                    </button>
-                </div>
-                <div class="save-button-container">
-                    <button type="submit" class="save-button">
-                        Save Profile
-                    </button>
-                </div>
-            </div>
-
-            <!-- Status Message -->
-            @if (showStatusMessage)
-                @if (updateStatus)
-                {
-                    <div class="modal fade show" id="settingsSavedModal" tabindex="-1" role="dialog" @onclick="CloseModal">
-                        <div class="modal-dialog align-content-center border-success shadow-sm p-3" role="document" @onclick:stopPropagation>
-                            <div class="modal-content align-content-center align-items-center">
-                                <div class="modal-header">
-                                    <h3 class="modal-title">Edit Profile</h3>
+                                                </path>
+                                                <defs>
+                                                    <linearGradient id="pencil-gradient-school_svg__a" x1="1.328" x2="22.308" y1="1.295" y2="10.476" gradientUnits="userSpaceOnUse">
+                                                        <stop stop-color="#2BA8FC"></stop>
+                                                        <stop offset="1" stop-color="#5F57FF"></stop>
+                                                    </linearGradient>
+                                                </defs>
+                                            </svg>
+                                        </span>
+                                    </button>
                                 </div>
-                                <div class="modal-body">
-                                    <div class="icon">
-                                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <g clip-path="url(#clip0_491_1018)">
-                                                <path d="M12.1107 16.4322C11.558 15.8292 10.6032 15.7789 10.0002 16.3317C9.39718 16.8844 9.34687 17.8392 9.89964 18.4422L17.4876 26.6835C17.7891 26.985 18.1409 27.1859 18.5428 27.1859C18.5428 27.1859 18.5428 27.1859 18.5931 27.1859C18.9951 27.1859 19.3971 27.0352 19.6483 26.7337L38.8444 7.58795C39.4474 6.98497 39.4474 6.03015 38.8444 5.47738C38.2415 4.8744 37.2866 4.8744 36.7339 5.47738L18.6435 23.5176L12.1107 16.4322Z" fill="#78DB57" />
-                                                <path d="M38.4925 18.4925C37.6382 18.4925 36.985 19.1457 36.985 20C36.985 29.3467 29.3468 36.9849 20.0001 36.9849C10.6533 36.9849 3.01509 29.3468 3.01509 20.0001C3.01509 10.6534 10.6533 3.01509 20.0001 3.01509C20.8544 3.01509 21.5076 2.3618 21.5076 1.50759C21.5076 0.653379 20.8543 0 20.0001 0C8.99495 0 0 8.99495 0 20.0001C0 31.0052 8.99495 40.0001 20.0001 40.0001C31.0052 40.0001 40.0001 31.0052 40.0001 20.0001C40 19.1457 39.3468 18.4925 38.4925 18.4925Z" fill="#78DB57" />
-                                            </g>
-                                            <defs>
-                                                <clipPath id="clip0_491_1018">
-                                                    <rect width="40" height="40" fill="white" />
-                                                </clipPath>
-                                            </defs>
-                                        </svg>
-                                    </div>
-                                    <p class="success-text">Settings Successfully saved.</p>
-                                    <div class="flex flex-col items-center space-y-4">
-                                        <p class="text-center text-base text-green-400">Your information has been successfully updated. Thank you for keeping your details current!</p>
-                                    </div>
+                                <input accept="image/*" id="avatar-upload" class="visually-hidden" type="file">
+                            </div>
+                            <div class="username">
+                                <label>@userProfile.Username</label>
+                            </div>
+                        </div>
+                        <div class="profile-management-column">
+                            <div class="your-name">
+                                <label class="text">First Name</label>
+                                <div class="box">
+                                    <InputText class="sub-text input-style" @bind-Value="userProfile.FirstName" placeholder="First Name" />
+                                    <ValidationMessage For="@(() => userProfile.FirstName)" />
+                                </div>
+                            </div>
+                            <div class="email">
+                                <label class="text">Email</label>
+                                <div class="box">
+                                    <InputText type="email" class="sub-text input-style" @bind-Value="userProfile.Email" placeholder="Email address" />
+                                    <ValidationMessage For="@(() => userProfile.Email)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-management-column">
+                            <div class="last-name">
+                                <label class="text">Last Name</label>
+                                <div class="box">
+                                    <InputText class="sub-text input-style" @bind-Value="userProfile.LastName" placeholder="Last Name" />
+                                    <ValidationMessage For="@(() => userProfile.LastName)" />
                                 </div>
                             </div>
                         </div>
                     </div>
-                }
-        </div>
-    }
-    else
-    {
-        <p>Loading...</p>
-    }
-</EditForm>
+
+                    <!-- Delete Button -->
+                    <div class="profile-button-container">
+                        <div class="delete-button-container">
+                            <button @onclick="DeleteProfile" class="delete-button">
+                                Delete Profile
+                            </button>
+                        </div>
+                        <div class="save-button-container">
+                            <button type="submit" class="save-button">
+                                Save Profile
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Status Message -->
+                    @if (showStatusMessage)
+                        @if (updateStatus)
+                        {
+                            <div class="modal fade show" id="settingsSavedModal" tabindex="-1" role="dialog" @onclick="CloseModal">
+                                <div class="modal-dialog align-content-center border-success shadow-sm p-3" role="document" @onclick:stopPropagation>
+                                    <div class="modal-content align-content-center align-items-center">
+                                        <div class="modal-header">
+                                            <h3 class="modal-title">Edit Profile</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="icon">
+                                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_491_1018)">
+                                                        <path d="M12.1107 16.4322C11.558 15.8292 10.6032 15.7789 10.0002 16.3317C9.39718 16.8844 9.34687 17.8392 9.89964 18.4422L17.4876 26.6835C17.7891 26.985 18.1409 27.1859 18.5428 27.1859C18.5428 27.1859 18.5428 27.1859 18.5931 27.1859C18.9951 27.1859 19.3971 27.0352 19.6483 26.7337L38.8444 7.58795C39.4474 6.98497 39.4474 6.03015 38.8444 5.47738C38.2415 4.8744 37.2866 4.8744 36.7339 5.47738L18.6435 23.5176L12.1107 16.4322Z" fill="#78DB57" />
+                                                        <path d="M38.4925 18.4925C37.6382 18.4925 36.985 19.1457 36.985 20C36.985 29.3467 29.3468 36.9849 20.0001 36.9849C10.6533 36.9849 3.01509 29.3468 3.01509 20.0001C3.01509 10.6534 10.6533 3.01509 20.0001 3.01509C20.8544 3.01509 21.5076 2.3618 21.5076 1.50759C21.5076 0.653379 20.8543 0 20.0001 0C8.99495 0 0 8.99495 0 20.0001C0 31.0052 8.99495 40.0001 20.0001 40.0001C31.0052 40.0001 40.0001 31.0052 40.0001 20.0001C40 19.1457 39.3468 18.4925 38.4925 18.4925Z" fill="#78DB57" />
+                                                    </g>
+                                                    <defs>
+                                                        <clipPath id="clip0_491_1018">
+                                                            <rect width="40" height="40" fill="white" />
+                                                        </clipPath>
+                                                    </defs>
+                                                </svg>
+                                            </div>
+                                            <p class="success-text">Settings Successfully saved.</p>
+                                            <div class="flex flex-col items-center space-y-4">
+                                                <p class="text-center text-base text-green-400">Your information has been successfully updated. Thank you for keeping your details current!</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                </div>
+            }
+            else
+            {
+                <p>Loading...</p>
+            }
+        </EditForm>
+    </div>
+</div>

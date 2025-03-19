@@ -20,7 +20,8 @@ namespace Jamper_Financial.Shared.Data
             {
                 await connection.OpenAsync();
 
-                string query = "SELECT TransactionID, Date, Description, Debit, Credit, Category, Color, Frequency, EndDate, CategoryID, HasReceipt FROM Transactions";
+                string query = "SELECT TransactionID, Date, Description, Debit, Credit, c.Name AS Category, Color, Frequency, EndDate, HasReceipt FROM Transactions t " +
+                    "JOIN Categories c ON c.CategoryID = t.CategoryID; ";
                 using (var command = new SqliteCommand(query, connection))
                 {
                     using (var reader = await command.ExecuteReaderAsync())
@@ -29,23 +30,22 @@ namespace Jamper_Financial.Shared.Data
                         {
                             transactions.Add(new Transaction
                             {
-                                TransactionID = reader.GetInt32(0),
-                                Date = DateTime.Parse(reader.GetString(1)),
-                                Description = reader.GetString(2),
-                                Debit = reader.GetDecimal(3),
-                                Credit = reader.GetDecimal(4),
-                                Category = reader.GetString(5),
-                                Color = reader.GetString(6),
-                                Frequency = reader.IsDBNull(7) ? null : reader.GetString(7),
-                                EndDate = reader.IsDBNull(8) ? (DateTime?)null : DateTime.Parse(reader.GetString(8)),
-                                CategoryID = reader.IsDBNull(9) ? 0 : reader.GetInt32(9),
-                                HasReceipt = reader.IsDBNull(10) ? 0 : reader.GetInt32(10)
+                                TransactionID = reader.GetInt32(reader.GetOrdinal("TransactionID")),
+                                Date = DateTime.Parse(reader.GetString(reader.GetOrdinal("Date"))),
+                                Description = reader.GetString(reader.GetOrdinal("Description")),
+                                Debit = reader.GetDecimal(reader.GetOrdinal("Debit")),
+                                Credit = reader.GetDecimal(reader.GetOrdinal("Credit")),
+                                Category = reader.GetString(reader.GetOrdinal("Category")),
+                                Color = reader.GetString(reader.GetOrdinal("Color")),
+                                Frequency = reader.IsDBNull(reader.GetOrdinal("Frequency")) ? null : reader.GetString(reader.GetOrdinal("Frequency")),
+                                EndDate = reader.IsDBNull(reader.GetOrdinal("EndDate")) ? (DateTime?)null : DateTime.Parse(reader.GetString(reader.GetOrdinal("EndDate"))),
+                                HasReceipt = reader.GetInt32(reader.GetOrdinal("HasReceipt")),
                             });
                         }
                     }
                 }
             }
-
+            Console.WriteLine(transactions.Count);
             return transactions;
         }
 

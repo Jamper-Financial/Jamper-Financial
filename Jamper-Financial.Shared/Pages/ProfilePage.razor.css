@@ -52,7 +52,12 @@
     }
 
 .profile-container {
+    margin: 30px auto;
+    padding: 20px;
     background-color: white;
-/*    border-radius: 20px;*/
-    height: 100%;
+    border-radius: 20px;
+    width: 90%;
+    position: relative;
+    align-items: center;
+    align-self: center;
 }

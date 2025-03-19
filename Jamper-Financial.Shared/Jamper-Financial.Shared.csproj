@@ -5,9 +5,6 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
     <ItemGroup>
-        <Content Remove="wwwroot\images\placeholder.png" />
-    </ItemGroup>
-    <ItemGroup>
         <None Include="wwwroot\images\budget-insights-icon.svg" />
         <None Include="wwwroot\images\calendar-icon.svg" />
         <None Include="wwwroot\images\dashboard-icon.svg" />
@@ -21,7 +18,7 @@
         <None Include="wwwroot\images\settings-icon.svg" />
         <None Include="wwwroot\images\settings.svg" />
         <None Include="wwwroot\images\transactions-icon.svg" />
-        <None Include="wwwroot\images\vector.svg" />
+        <None Include="wwwroot\images\reports-icon.svg" />
     </ItemGroup>
     <ItemGroup>
         <SupportedPlatform Include="browser" />
@@ -30,7 +27,7 @@
          <PackageReference Include="Blazor.Bootstrap" Version="3.3.1" />
          <PackageReference Include="Blazorise" Version="1.7.5" />
          <PackageReference Include="Blazorise.Bootstrap" Version="1.7.5" />
-         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.2" />
+         <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
         <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.2" />
         <PackageReference Include="QuestPDF" Version="2025.1.5" />
         <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
