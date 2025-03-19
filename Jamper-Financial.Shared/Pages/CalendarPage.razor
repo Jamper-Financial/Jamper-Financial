@@ -2,6 +2,8 @@
 @using System.Globalization
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Utilities
+@using Jamper_Financial.Shared.Services
+@inject SearchService SearchService
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -276,6 +278,29 @@
         Transactions = await TransactionManager.LoadTransactionsAsync();
         UpdateTransactionsForSelectedMonth();
         SortTransactions("Date", true); // Ensure default sort is by Date ascending
+        SearchService.OnSearchQueryChanged += FilterTransactions;
+    }
+
+    public void Dispose()
+    {
+        SearchService.OnSearchQueryChanged -= FilterTransactions; // Unsubscribe to avoid memory leaks
+    }
+
+    private void FilterTransactions()
+    {
+        if (string.IsNullOrEmpty(SearchService.SearchQuery))
+        {
+            // Reset to show all transactions if the search query is empty
+            UpdateFilteredTransactionsForSelectedMonth();
+        }
+        else
+        {
+            // Filter transactions based on the search query
+            FilteredTransactionsForSelectedMonth = TransactionsForSelectedMonth
+                .Where(t => t.Description.Contains(SearchService.SearchQuery, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+        StateHasChanged(); // Re-render the UI
     }
 
     private void ToggleFilterDropdown() => ShowFilterDropdown = !ShowFilterDropdown;
@@ -374,8 +399,22 @@
     private List<Transaction> GetTransactions(DateTime date) => 
         GetFilteredTransactions(date);
 
-    private List<Transaction> GetFilteredTransactions(DateTime date) =>
-        Filters.ApplyFilters(Transactions.Where(t => t.Date.Date == date.Date).ToList(), FilterCategory, MinAmount, MaxAmount);
+    private List<Transaction> GetFilteredTransactions(DateTime date)
+    {
+        // Apply search query and other filters to transactions for the date
+        var transactionsForDate = Transactions
+            .Where(t => t.Date.Date == date.Date)
+            .ToList();
+
+        if (!string.IsNullOrEmpty(SearchService.SearchQuery))
+        {
+            transactionsForDate = transactionsForDate
+                .Where(t => t.Description.Contains(SearchService.SearchQuery, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+
+        return Filters.ApplyFilters(transactionsForDate, FilterCategory, MinAmount, MaxAmount);
+    }
 
 
     private void UpdateTransactionsForSelectedMonth()
