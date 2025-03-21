@@ -38,6 +38,148 @@
         }
     }
 
+<<<<<<< Updated upstream
+=======
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await RenderHistoryChart();
+            await RenderSavingGoalsChart();
+            await RenderWeeklyChart();
+            isChartRendered = true;
+        }
+    }
+
+    private async Task RenderWeeklyChart()
+    {
+        var daysOfWeek = new[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+        var expenseData = new decimal[7];
+        var salaryData = new decimal[7];
+
+        foreach (var expense in weeklyExpenses)
+        {
+            var dayOfWeek = (int)expense.Date.DayOfWeek;
+            expenseData[dayOfWeek] += expense.ExpenseAmount;
+            salaryData[dayOfWeek] += expense.SalaryAmount;
+        }
+
+        var chartData = new
+        {
+            labels = daysOfWeek,
+            datasets = new[]
+            {
+                new
+                {
+                    label = "Expenses",
+                    data = expenseData,
+                    backgroundColor = "rgba(75, 192, 192, 0.2)",
+                    borderColor = "rgba(75, 192, 192, 1)",
+                    borderWidth = 1,
+                    borderRadius = 0
+                },
+                new
+                {
+                    label = "Salary",
+                    data = salaryData,
+                    backgroundColor = "rgba(153, 102, 255, 0.2)",
+                    borderColor = "rgba(153, 102, 255, 1)",
+                    borderWidth = 1 ,
+                    borderRadius = 10
+                }
+            }
+        };
+        await JS.InvokeVoidAsync("initializeBarChart", "weeklyActivityChart", chartData);
+    }
+
+    private async Task RenderHistoryChart()
+    {
+        var months = new[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+        var incomeData = new decimal[12];
+        var expenseData = new decimal[12];
+        var differenceData = new decimal[12];
+
+        foreach (var expense in monthlyExpenses)
+        {
+            var month = expense.Date.Month - 1; // Month is 1-based, array is 0-based
+            expenseData[month] += expense.ExpenseAmount;
+            incomeData[month] += expense.SalaryAmount;
+        }
+
+        for (int i = 0; i < 12; i++)
+        {
+            differenceData[i] = incomeData[i] - expenseData[i];
+        }
+
+        var chartData = new
+        {
+            labels = months,
+            datasets = new[]
+            {
+            new
+            {
+                label = "Total Income - Expenses",
+                data = differenceData,
+                backgroundColor = "rgba(75, 192, 192, 0.2)",
+                borderColor = "rgba(75, 192, 192, 1)",
+                // fill = "origin",
+                // borderWidth = 1,
+                // borderRadius = 0,
+                // fill = {
+                //     target: "origin",
+                //     above: "rgb(255, 0, 0)",   Area will be red above the origin
+                //     below: "rgb(0, 0, 255)"   And blue below the origin
+                //     },
+                // lineTension = 0.5
+            }
+        }
+        };
+        await JS.InvokeVoidAsync("initializeLineChart", "HistoryChart", chartData);
+    }
+
+
+    private async Task RenderSavingGoalsChart()
+    {
+        var daysOfWeek = new[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+        var expenseData = new decimal[7];
+        var salaryData = new decimal[7];
+
+        foreach (var expense in weeklyExpenses)
+        {
+            var dayOfWeek = (int)expense.Date.DayOfWeek;
+            expenseData[dayOfWeek] += expense.ExpenseAmount;
+            salaryData[dayOfWeek] += expense.SalaryAmount;
+        }
+
+        var chartData = new
+        {
+            labels = daysOfWeek,
+            datasets = new[]
+            {
+                new
+                {
+                    label = "Expenses",
+                    data = expenseData,
+                    backgroundColor = "rgba(75, 192, 192, 0.2)",
+                    borderColor = "rgba(75, 192, 192, 1)",
+                    borderWidth = 1,
+                    borderRadius = 0
+                },
+                new
+                {
+                    label = "Salary",
+                    data = salaryData,
+                    backgroundColor = "rgba(153, 102, 255, 0.2)",
+                    borderColor = "rgba(153, 102, 255, 1)",
+                    borderWidth = 1 ,
+                    borderRadius = 10
+                }
+            }
+        };
+        await JS.InvokeVoidAsync("initializeBarChart", "SavingsGoalsChart", chartData);
+    }
+
+>>>>>>> Stashed changes
     private void NextCard()
     {
         currentIndex = (currentIndex + 1) % cards.Count;

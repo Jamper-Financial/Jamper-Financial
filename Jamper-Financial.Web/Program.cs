@@ -42,10 +42,30 @@ builder.Services.AddScoped<IBudgetInsightsService, BudgetInsightsService>(sp => 
 builder.Services.AddSingleton<FirebaseService>();
 DatabaseHelper.InitializeDatabase();
 
-FirebaseApp.Create(new AppOptions
+// Uncomment to run locally
+//FirebaseApp.Create(new AppOptions
+//{
+//    Credential = GoogleCredential.FromFile("../Jamper-Financial.Shared/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json")
+//});
+
+// comment out to run in docker
+// Use environment variable to determine the path for the Firebase credentials file
+var firebaseCredentialsPath = Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS_PATH")
+                                ?? "/app/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json";
+
+if (File.Exists(firebaseCredentialsPath))
 {
-    Credential = GoogleCredential.FromFile("../Jamper-Financial.Shared/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json")
-});
+    FirebaseApp.Create(new AppOptions
+    {
+        Credential = GoogleCredential.FromFile(firebaseCredentialsPath)
+    });
+}
+else
+{
+    Console.WriteLine($"Error: Firebase credentials file not found at {firebaseCredentialsPath}");
+    // Handle the error appropriately, e.g., throw an exception or log a message.
+    throw new FileNotFoundException("Firebase credentials file not found.", firebaseCredentialsPath);
+}
 
 var app = builder.Build();
 
@@ -58,11 +78,20 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+//uncommment this for local run
+// Make the Shared project's wwwroot available
+//app.UseStaticFiles(new StaticFileOptions
+//{
+//    FileProvider = new PhysicalFileProvider(
+//        Path.Combine(Directory.GetCurrentDirectory(), @"../Jamper-Financial.Shared/wwwroot")),
+//    RequestPath = new PathString("")
+//});
+
+// uncomment this for docker run
 // Make the Shared project's wwwroot available
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider(
-        Path.Combine(Directory.GetCurrentDirectory(), @"../Jamper-Financial.Shared/wwwroot")),
+    FileProvider = new PhysicalFileProvider("/app/wwwroot"),
     RequestPath = new PathString("")
 });
 

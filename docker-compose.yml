@@ -1,0 +1,10 @@
+version: latest
+
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - FIREBASE_CREDENTIALS_PATH=/app/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json
