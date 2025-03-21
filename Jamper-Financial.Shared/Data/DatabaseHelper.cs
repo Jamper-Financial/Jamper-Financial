@@ -132,13 +132,17 @@ namespace Jamper_Financial.Shared.Data
                         Description TEXT NOT NULL,
                         Debit REAL NOT NULL,
                         Credit REAL NOT NULL,
-                        Category TEXT NOT NULL,
+                        Category TEXT,
                         Color TEXT NOT NULL,
                         Frequency TEXT,
                         EndDate TEXT,
 	                    CategoryID INTEGER,
                         HasReceipt INTEGER,
+                        UserID INTEGER,
+                        AccountID INTEGER,
 	                    CONSTRAINT Transactions_Categories_FK FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID) ON UPDATE CASCADE
+                        CONSTRAINT Transactions_Users_FK FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+                        CONSTRAINT Transactions_Accounts_FK FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID) ON DELETE CASCADE
                     );
                 ");
 

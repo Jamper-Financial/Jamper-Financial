@@ -70,10 +70,6 @@
         padding: 20px;
     }
 
-h3, h4 {
-    color: #2d3436;
-}
-
 .manage-saving-goals-header {
     color: green;
     text-decoration: underline;
@@ -83,3 +79,14 @@ h3, h4 {
     .manage-saving-goals-header:hover {
         color: darkgreen; /* Darker green on hover */
     }
+
+    /*.flex-column.flex {
+    position: absolute;
+    width: 100%;*/ /* Or a fixed width */
+    /*left: 0;
+    transition: transform 0.3s ease;*/ /* Add transition for smooth animation */
+/*}*/
+
+.flex-item {
+    text-align: left;
+}

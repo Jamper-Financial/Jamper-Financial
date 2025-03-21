@@ -38,6 +38,7 @@ builder.Services.AddSingleton<AuthenticationService>();
 
 builder.Services.AddScoped<IUserService, UserService>(sp => new UserService(connectionString));
 builder.Services.AddScoped<IBudgetInsightsService, BudgetInsightsService>(sp => new BudgetInsightsService(connectionString));
+builder.Services.AddScoped<IExpenseService, ExpenseService>(sp => new ExpenseService(connectionString)); // Register IExpenseService
 
 builder.Services.AddSingleton<FirebaseService>();
 DatabaseHelper.InitializeDatabase();
