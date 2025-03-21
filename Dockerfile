@@ -27,7 +27,7 @@ RUN ls -la /app/wwwroot
 RUN ls -la /app/wwwroot/credentials
 
 # Expose the port the app runs on
-EXPOSE 80
+EXPOSE 8080
 
 # Set the entry point for the container
 ENTRYPOINT ["dotnet", "Jamper-Financial.Web.dll"]

@@ -7,30 +7,44 @@
 @inject IUserService UserService
 @inject LoginStateService LoginState
 @inject UserStateService UserStateService
-
+@inject IExpenseService ExpenseService
+@inject IJSRuntime JS
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
 
     private UserProfile userProfile = new UserProfile();
     private int currentIndex = 0;
-    private List<string> cards = new List<string> { "History", "Recent Transactions", "Manage Saving Goals" };
+    private List<CardItem> cards = new List<CardItem>
+    {
+        new CardItem { Title = "History", Route = "/dashboard-page", ChartType = "HistoryChart" },
+        new CardItem { Title = "Recent Transactions", Route = "/transactions-page", ChartType = "SavingsGoalsChart" },
+        new CardItem { Title = "Manage Saving Goals", Route = "/view-goals-page", ChartType = "SavingsGoalsChart" },
+        // new CardItem { Title = "Budget vs Planned", Route = "/budget-Insights", ChartType = "BudgetInsigts" },
+        // new CardItem { Title = "Subscription Due", Route = "/calendar", ChartType = "UpcomingSubscriptions" },
+
+    };
+    private List<Expense> weeklyExpenses = new List<Expense>();
+    private List<Expense> monthlyExpenses = new List<Expense>();
+    private bool isChartRendered = false;
+    string username = "";
 
     protected override async Task OnInitializedAsync()
     {
         SetPageTitle("Dashboard");
 
-
-
         // Get the logged-in user's ID and username from the UserStateService
         int userId = UserStateService.UserId;
-        string username = UserStateService.Username;
+        username = UserStateService.Username;
 
-        Console.WriteLine(userId);
+        Console.WriteLine(username);
 
         if (userId > 0)
         {
             userProfile = await UserService.GetUserProfileByIdAsync(userId);
+            weeklyExpenses = await ExpenseService.GetExpensesAsync(userId, "weekly");
+            monthlyExpenses = await ExpenseService.GetExpensesAsync(userId, "monthly");
+            Console.WriteLine(weeklyExpenses.Count);
         }
         else
         {
@@ -38,8 +52,6 @@
         }
     }
 
-<<<<<<< Updated upstream
-=======
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -89,7 +101,7 @@
                 }
             }
         };
-        await JS.InvokeVoidAsync("initializeBarChart", "weeklyActivityChart", chartData);
+        await JS.InvokeVoidAsync("initializeBarChart", "weeklyActivityChart", chartData, "y");
     }
 
     private async Task RenderHistoryChart()
@@ -179,43 +191,50 @@
         await JS.InvokeVoidAsync("initializeBarChart", "SavingsGoalsChart", chartData);
     }
 
->>>>>>> Stashed changes
     private void NextCard()
     {
         currentIndex = (currentIndex + 1) % cards.Count;
     }
 
-    private void NavigateToSavingGoals()
+    private void NavigateToPage(string route)
     {
-        Navigation.NavigateTo("/view-goals-page");
+        Navigation.NavigateTo(route);
+    }
+
+    private class CardItem
+    {
+        public string Title { get; set; }
+        public string Route { get; set; }
+        public string ChartType { get; set; }
     }
 }
 
 <div class="dashboard-container">
     <div class="dashboard-header">
-        <h3>Welcome back to JAMPER Finance!</h3>
+        <h3>Welcome back <span>@username</span> to Finance!</h3>
     </div>
 
     <!-- Carousel Section -->
     <div class="carousel">
-        <div class="card">
-            <h3 class="@(cards[currentIndex] == "Manage Saving Goals" ? "manage-saving-goals-header" : "")" 
-                @onclick="@(() => { if (cards[currentIndex] == "Manage Saving Goals") NavigateToSavingGoals(); })">
-                @cards[currentIndex]
-            </h3>
-        </div>
-        <div class="card">
-            <h3 class="@(cards[(currentIndex + 1) % cards.Count] == "Manage Saving Goals" ? "manage-saving-goals-header" : "")" 
-                @onclick="@(() => { if (cards[(currentIndex + 1) % cards.Count] == "Manage Saving Goals") NavigateToSavingGoals(); })">
-                @cards[(currentIndex + 1) % cards.Count]
-            </h3>
-        </div>
+        @foreach (var card in cards)
+        {
+            <div class="flex-column flex">
+                <h3 class="card-title flex-item">
+                    @card.Title
+                </h3>
+                <div class="card flex-item" @onclick="@(() => NavigateToPage(card.Route))">
+                    <canvas id="@card.ChartType"></canvas>
+                </div>
+            </div>
+        }
         <button class="carousel-button" @onclick="NextCard">&#10095;</button>
     </div>
 
-    <!-- Weekly Activity Section -->
+    <!-- History Section -->
     <div class="weekly-activity">
-        <h4>Weekly Activity</h4>
-        <div class="card">Placeholder for weekly activities...</div>
+        <h3>Weekly Activity</h3>
+        <div class="card">
+            <canvas id="weeklyActivityChart"></canvas>
+        </div>
     </div>
 </div>
