@@ -7,7 +7,12 @@ namespace Jamper_Financial.Shared.Data
 {
     public static class DatabaseHelper
     {
+        // Use this for local run
         private static readonly string DbPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "AppDatabase.db");
+
+        // uncomment this for docker container
+        // private static readonly string DbPath = Path.Combine(AppContext.BaseDirectory, "AppDatabase.db");
+
         private static readonly string[] stringArray = ["LastName", "FirstName", "Birthday"];
 
         // This method is used to initialize the database

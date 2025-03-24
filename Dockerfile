@@ -13,18 +13,14 @@ RUN dotnet publish "Jamper-Financial.Shared/Jamper-Financial.Shared.csproj" -c R
 # Publish the web project
 RUN dotnet publish "Jamper-Financial.Web/Jamper-Financial.Web.csproj" -c Release -o /app/web
 
-# Debugging step: List contents of /app/shared
-RUN ls -la /app/shared
-
 # Use the official ASP.NET Core runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
 COPY --from=build /app/web .
 COPY --from=build /source/Jamper-Financial.Shared/wwwroot /app/wwwroot
 
-# Debugging step: List contents of /app/wwwroot
-RUN ls -la /app/wwwroot
-RUN ls -la /app/wwwroot/credentials
+# Copy the database file
+COPY --from=build /source/Jamper-Financial.Shared/AppDatabase.db /app/AppDatabase.db
 
 # Expose the port the app runs on
 EXPOSE 8080
