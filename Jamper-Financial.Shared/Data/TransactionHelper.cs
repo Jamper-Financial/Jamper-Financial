@@ -105,12 +105,7 @@ namespace Jamper_Financial.Shared.Data
             {
                 await connection.OpenAsync();
 
-                string deleteReceiptQuery = "DELETE FROM Receipts WHERE TransactionID = @TransactionID";
-                using (var deleteReceiptCommand = new SqliteCommand(deleteReceiptQuery, connection))
-                {
-                    deleteReceiptCommand.Parameters.AddWithValue("@TransactionID", transactionId);
-                    await deleteReceiptCommand.ExecuteNonQueryAsync();
-                }
+                await DeleteReceiptAsync(transactionId);
 
                 string query = "DELETE FROM Transactions WHERE TransactionID = @TransactionID";
                 using (var command = new SqliteCommand(query, connection))
@@ -149,6 +144,27 @@ namespace Jamper_Financial.Shared.Data
                 await command.ExecuteNonQueryAsync();
             }
 
+        }
+
+        // This method deletes a receipt for the specific transaction
+        public static async Task DeleteReceiptAsync(int transactionId)
+        {
+            using var connection = GetConnection();
+            await connection.OpenAsync();
+
+            string deleteReceiptQuery = "DELETE FROM Receipts WHERE TransactionID = @TransactionID";
+            using (var deleteReceiptCommand = new SqliteCommand(deleteReceiptQuery, connection))
+            {
+                deleteReceiptCommand.Parameters.AddWithValue("@TransactionID", transactionId);
+                await deleteReceiptCommand.ExecuteNonQueryAsync();
+            }
+
+            string updateTransactionQuery = "UPDATE Transactions SET HasReceipt = 0 WHERE TransactionID = @TransactionID";
+            using (var updateTransactionCommand = new SqliteCommand(updateTransactionQuery, connection))
+            {
+                updateTransactionCommand.Parameters.AddWithValue("@TransactionID", transactionId);
+                await updateTransactionCommand.ExecuteNonQueryAsync();
+            }
         }
         // This method is used to get the connection to the database
 
