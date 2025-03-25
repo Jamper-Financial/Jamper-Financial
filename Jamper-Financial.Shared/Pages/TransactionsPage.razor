@@ -1,5 +1,6 @@
 ﻿@page "/Transactions-Page"
 @inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
 
 @using Jamper_Financial.Shared.Data;
 @using Jamper_Financial.Shared.Utilities;
@@ -13,7 +14,6 @@
     {
         SetPageTitle("Transactions");
     }
-
 }
 
 <div class="transactions-page">
@@ -40,7 +40,10 @@
     <div class="transactions-section">
         <div class="transactions-header">
             <h3 class="section-title">Recent Transactions</h3>
-            <button class="add-transaction" @onclick="OpenAddTransactionModal">+ Add Transaction</button>
+            <div style="display: flex; gap: 10px;">
+                <button class="add-transaction" @onclick="OpenAddTransactionModal">+ Add Transaction</button>
+                <button class="manage-categories-btn" @onclick="NavigateToManageCategories">Manage Categories</button>
+            </div>
         </div>
         <div class="transactions-table scrollable-table">
             <table>
@@ -160,11 +163,9 @@
 }
 
 @* Receipt Modal *@
-
 @if (ShowReceiptModal)
 {
     <ReceiptModal IsVisible="ShowReceiptModal" Transaction="SelectedTransaction" OnClose="CloseReceiptModal" />
-
 }
 
 @code {
@@ -178,13 +179,17 @@
     public Transaction SelectedTransaction { get; set; } = new Transaction();
     public decimal Amount { get; set; } = 0;
 
-    // User ID (hardcoded for now)
     private int UserID = 1;
 
     protected override async Task OnInitializedAsync()
     {
         transactions = (await TransactionManager.LoadTransactionsAsync(UserID)).ToList();
         Categories = (await DatabaseHelper.LoadUserCategoriesAsync(UserID)).ToList();
+    }
+
+    private void NavigateToManageCategories()
+    {
+        NavigationManager.NavigateTo("/manage-categories");
     }
 
     private void OpenReceiptModal(Transaction transaction)
@@ -237,10 +242,21 @@
 
     private async Task HandleAddOrEditTransaction()
     {
-        NewTransaction.Amount = Amount;
-        await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
-        CloseAddTransactionModal();
-        transactions = (await TransactionManager.LoadTransactionsAsync(UserID)).ToList();
+        try
+        {
+            NewTransaction.Amount = Amount;
+            await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
+            transactions = (await TransactionManager.LoadTransactionsAsync(UserID)).ToList();
+        }
+        catch
+        {
+            // Handle any errors if needed
+            throw;
+        }
+        finally
+        {
+            CloseAddTransactionModal();
+        }
     }
 
     private void ShowDeleteConfirmationForm()
@@ -259,9 +275,9 @@
         {
             await TransactionManager.DeleteRecurringTransactionsAsync(NewTransaction);
             transactions.RemoveAll(t => t.Description == NewTransaction.Description &&
-                                        t.CategoryID == NewTransaction.CategoryID &&
-                                        t.Frequency == NewTransaction.Frequency &&
-                                        t.Date > NewTransaction.Date);
+                                    t.CategoryID == NewTransaction.CategoryID &&
+                                    t.Frequency == NewTransaction.Frequency &&
+                                    t.Date > NewTransaction.Date);
         }
         else
         {

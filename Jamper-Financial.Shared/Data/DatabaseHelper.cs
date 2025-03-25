@@ -474,19 +474,30 @@ namespace Jamper_Financial.Shared.Data
 
 
         // Update Categories
-        public static void UpdateCategory(int userId, int categoryId, string newName, string newColor, string newTransactionType)
+        public static void UpdateCategory(int userId, int categoryId, string newName, string newColor, string newTransactionType, int? parentCategoryId)
         {
             using (var connection = GetConnection())
             {
                 connection.Open();
-                string updateQuery = "UPDATE Categories SET Name = @NewName, Color = @NewColor, TransactionType = @TransactionType WHERE CategoryID = @CategoryID AND UserID = @UserID;";
+                string updateQuery = @"
+                    UPDATE Categories 
+                    SET 
+                        Name = @NewName, 
+                        Color = @NewColor, 
+                        TransactionType = @TransactionType,
+                        ParentCategoryID = @ParentCategoryID
+                    WHERE 
+                        CategoryID = @CategoryID 
+                        AND UserID = @UserID;";
                 using (var command = new SqliteCommand(updateQuery, connection))
                 {
                     command.Parameters.AddWithValue("@NewName", newName);
                     command.Parameters.AddWithValue("@NewColor", newColor);
                     command.Parameters.AddWithValue("@TransactionType", newTransactionType);
+                    command.Parameters.AddWithValue("@ParentCategoryID", parentCategoryId ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@CategoryID", categoryId);
                     command.Parameters.AddWithValue("@UserID", userId);
+
                     command.ExecuteNonQuery();
                 }
             }
