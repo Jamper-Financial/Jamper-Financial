@@ -1,4 +1,4 @@
-﻿@page "/reports-page"
+@page "/reports-page"
 @using Jamper_Financial.Shared.Utilities
 @using Jamper_Financial.Shared.Data
 @using System.Text
@@ -283,6 +283,41 @@
     padding: 20px !important;
     position: relative !important;
 }
+
+/* Make typed text in input/textarea black */
+.reports-page .create-report-modal .modal-content input,
+.reports-page .create-report-modal .modal-content textarea {
+    color: #000 !important;
+}
+
+/* Make only the placeholder text grey */
+.reports-page .create-report-modal .modal-content input::placeholder,
+.reports-page .create-report-modal .modal-content textarea::placeholder {
+    color: #888 !important; /* Choose your preferred grey tone */
+    opacity: 1 !important;
+}
+
+/* Keep the 'View Report' button style as before */
+.reports-page .reports-custom-btn {
+    padding: 12px 24px !important;
+    background-color: white !important;
+    color: #62AD41 !important;
+    font-size: 18px !important;
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    margin-top: 20px !important;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    transition: background-color 0.2s, color 0.2s !important;
+}
+.reports-page .reports-custom-btn:hover {
+    background-color: #62AD41 !important;
+    color: #e3f2dc !important;
+}
+
+
 
 .reports-page .close {
     color: #aaa !important;
