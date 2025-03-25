@@ -105,6 +105,13 @@ namespace Jamper_Financial.Shared.Data
             {
                 await connection.OpenAsync();
 
+                string deleteReceiptQuery = "DELETE FROM Receipts WHERE TransactionID = @TransactionID";
+                using (var deleteReceiptCommand = new SqliteCommand(deleteReceiptQuery, connection))
+                {
+                    deleteReceiptCommand.Parameters.AddWithValue("@TransactionID", transactionId);
+                    await deleteReceiptCommand.ExecuteNonQueryAsync();
+                }
+
                 string query = "DELETE FROM Transactions WHERE TransactionID = @TransactionID";
                 using (var command = new SqliteCommand(query, connection))
                 {
