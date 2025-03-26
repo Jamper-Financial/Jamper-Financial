@@ -152,7 +152,13 @@ window.initializeLineChart = function (canvasId, chartData, indAxis = 'x') {
                     }
                 },
                 plugins: {
-                    legend: { display: true },
+                    legend: {
+                        display: true,
+                        labels: {
+                            usePointStyle: true, // Use point style for legend
+                            pointStyle: 'line'  // Set point style to 'line' or 'circle'
+                        }
+                    },
                     datalabels: {
                         anchor: 'bottom',
                         align: 'top',
@@ -164,10 +170,7 @@ window.initializeLineChart = function (canvasId, chartData, indAxis = 'x') {
                         formatter: (value) => {
                             return value;
                         }
-                    },
-                    //filler: {
-                    //    propagate: true
-                    //}
+                    }
                 }
             },
             plugins: [ChartDataLabels]

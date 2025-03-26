@@ -2,7 +2,7 @@
     --primary-color: #62AD41;
     --primary-color-hover: #417828;
     --secondary-color: #417828;
-    --tertiary-color: #28a745
+    --tertiary-color: #28a745;
     --table-primary: #96ED9A;
     --table-secondary: #ABDCA7;
     --background-color: #62AD41;
@@ -19,9 +19,16 @@ a, .btn-link {
 }
 
 h3 {
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--secondary-color);
+    text-align: left;
+}
+
+h4 {
     font-size: 22px;
     font-weight: bold;
-    color: #417828;
+    color: var(--secondary-color);
     text-align: left;
 }
 
