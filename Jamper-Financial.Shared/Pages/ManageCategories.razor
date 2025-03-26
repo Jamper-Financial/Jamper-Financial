@@ -1,64 +1,183 @@
 ﻿@page "/manage-categories"
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Models
+@using Jamper_Financial.Shared.Services
+@inject UserStateService UserStateService
 
-
-<h3>Manage Categories</h3>
-
-<div class="category-container">
-    <input class="category-input" @bind="NewCategoryName" placeholder="Enter category name..." />
-    <button class="category-add-btn" @onclick="AddCategory">Add</button>
-</div>
-
-<ul class="category-list">
-    @foreach (var category in Categories)
-    {
-        <li class="category-item">
-            <span>@category.Name</span>
-            <div>
-                <button class="edit-btn" @onclick="() => EditCategory(category.CategoryID)">Edit</button>
-                <button class="delete-btn" @onclick="() => DeleteCategory(category.CategoryID)">Delete</button>
-            </div>
-        </li>
-    }
-</ul>
-
-@if (EditingCategoryID > 0)
-{
-    <div class="edit-container">
-        <input class="category-input" @bind="EditingCategoryName" placeholder="Edit category name..." />
-        <button class="save-btn" @onclick="SaveEditedCategory">Save</button>
-        <button class="cancel-btn" @onclick="CancelEdit">Cancel</button>
+<div class="manage-categories-page">
+    <div class="category-header">
+        <h3 class="section-title">Manage Categories</h3>
     </div>
-}
+
+    <!-- Add Category Section -->
+    <div class="category-container">
+        <input class="category-input" @bind="NewCategoryName" placeholder="Enter category name..." />
+        <select @bind="NewCategoryTransactionType">
+            <option value="e">Expense</option>
+            <option value="i">Income</option>
+        </select>
+        <input type="color" @bind="NewCategoryColor" />
+        <select @bind="NewCategoryParentID">
+            <option value="">Select Parent Category</option>
+            @foreach (var category in AvailableParentCategories.Where(c => c.ParentCategoryID == null))
+            {
+                <option value="@category.CategoryID">@category.Name</option>
+            }
+        </select>
+        <button class="category-add-btn" @onclick="AddCategory">Add</button>
+    </div>
+
+    <!-- Category List -->
+    <ul class="category-list">
+        @foreach (var category in AvailableParentCategories)
+        {
+            var subcategories = GetSubcategories(category.CategoryID);
+            var hasSubcategories = subcategories.Any();
+
+            <li class="category-item @(hasSubcategories ? "has-subcategories" : "")">
+                <div class="category-item-header">
+                    <div class="category-item-main">
+                        <span>@category.Name</span>
+                        <span class="category-type-badge @(category.TransactionType == "e" ? "expense-badge" : "income-badge")">
+                            @(category.TransactionType == "e" ? "Expense" : "Income")
+                        </span>
+                        <span class="category-color-indicator" style="background-color: @(category.Color ?? "#000000")"></span>
+                        @if (hasSubcategories)
+                        {
+                            <span class="subcategory-count">(@subcategories.Count)</span>
+                        }
+                    </div>
+                    <div class="category-actions">
+                        <button class="edit-btn" @onclick="() => EditCategory(category.CategoryID)">Edit</button>
+                        <button class="delete-btn" @onclick="() => DeleteCategory(category.CategoryID)">Delete</button>
+                    </div>
+                </div>
+
+                @if (hasSubcategories)
+                {
+                    <ul class="subcategory-list">
+                        @foreach (var subcategory in subcategories)
+                        {
+                            <li class="subcategory-item">
+                                <div>
+                                    <span>@subcategory.Name</span>
+                                    <span class="category-type-badge @(subcategory.TransactionType == "e" ? "expense-badge" : "income-badge")">
+                                        @(subcategory.TransactionType == "e" ? "Expense" : "Income")
+                                    </span>
+                                    <span class="category-color-indicator" style="background-color: @(subcategory.Color ?? "#000000")"></span>
+                                </div>
+                                <div class="category-actions">
+                                    <button class="edit-btn" @onclick="() => EditCategory(subcategory.CategoryID)">Edit</button>
+                                    <button class="delete-btn" @onclick="() => DeleteCategory(subcategory.CategoryID)">Delete</button>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+            </li>
+        }
+    </ul>
+
+    <!-- Edit Category Section -->
+    @if (EditingCategoryID > 0)
+    {
+        <div class="edit-container">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                <div>
+                    <label>Category Name</label>
+                    <input class="category-input" @bind="EditingCategoryName" />
+                </div>
+                <div>
+                    <label>Type</label>
+                    <select @bind="EditingCategoryTransactionType">
+                        <option value="e">Expense</option>
+                        <option value="i">Income</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Color</label>
+                    <input type="color" @bind="EditingCategoryColor" />
+                </div>
+                <div>
+                    <label>Parent Category</label>
+                    <select @bind="EditingCategoryParentID">
+                        <option value="">None (Top Level)</option>
+                        @foreach (var category in AvailableParentCategories.Where(c => c.CategoryID != EditingCategoryID))
+                        {
+                            <option value="@category.CategoryID">@category.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                <button class="cancel-btn" @onclick="CancelEdit">Cancel</button>
+                <button class="save-btn" @onclick="SaveEditedCategory">Save</button>
+            </div>
+        </div>
+    }
+</div>
 
 @code {
     private List<Category> Categories = new();
     private string NewCategoryName = "";
+    private string NewCategoryTransactionType = "e";
+    private string NewCategoryColor = "#000000";
+    private int? NewCategoryParentID = null;
+
     private int EditingCategoryID = 0;
     private string EditingCategoryName = "";
+    private string EditingCategoryTransactionType = "e";
+    private string EditingCategoryColor = "#000000";
+    private int? EditingCategoryParentID = null;
+    private HashSet<int> expandedCategories = new HashSet<int>();
 
-    //user retrieval
-    private int UserID = 1; 
 
-    protected override void OnInitialized()
+    private List<Category> AvailableParentCategories =>
+        Categories.Where(c => c.ParentCategoryID == null).ToList();
+
+    private List<Category> GetSubcategories(int parentId) =>
+        Categories.Where(c => c.ParentCategoryID == parentId).ToList();
+
+    protected override async Task OnInitializedAsync()
     {
-        LoadCategories();
+        await LoadCategories();
     }
 
-    private void LoadCategories()
+    private async Task LoadCategories()
     {
-        var categoryData = DatabaseHelper.GetCategories(UserID);
-        Categories = categoryData.Select(c => new Category { CategoryID = c.CategoryID, Name = c.Name }).ToList();
+        Categories = await DatabaseHelper.LoadUserCategoriesAsync(UserStateService.UserId);
+        StateHasChanged();
     }
 
-    private void AddCategory()
+    private async Task AddCategory()
     {
         if (!string.IsNullOrWhiteSpace(NewCategoryName))
         {
-            DatabaseHelper.AddCategory(UserID, NewCategoryName);
+            DatabaseHelper.InsertCategory(
+                UserStateService.UserId,
+                NewCategoryName,
+                NewCategoryColor,
+                NewCategoryTransactionType,
+                NewCategoryParentID
+            );
+
             NewCategoryName = "";
-            LoadCategories();
+            NewCategoryTransactionType = "e";
+            NewCategoryColor = "#000000";
+            NewCategoryParentID = null;
+            await LoadCategories();
+        }
+    }
+
+    private void ToggleCategory(int categoryId)
+    {
+        if (expandedCategories.Contains(categoryId))
+        {
+            expandedCategories.Remove(categoryId);
+        }
+        else
+        {
+            expandedCategories.Add(categoryId);
         }
     }
 
@@ -69,29 +188,44 @@
         {
             EditingCategoryID = category.CategoryID;
             EditingCategoryName = category.Name;
+            EditingCategoryTransactionType = category.TransactionType ?? "e";
+            EditingCategoryColor = category.Color ?? "#000000";
+            EditingCategoryParentID = category.ParentCategoryID;
         }
     }
 
-    private void SaveEditedCategory()
+    private async Task SaveEditedCategory()
     {
         if (EditingCategoryID > 0 && !string.IsNullOrWhiteSpace(EditingCategoryName))
         {
-            DatabaseHelper.UpdateCategory(UserID, EditingCategoryID, EditingCategoryName);
+            if (EditingCategoryParentID == EditingCategoryID)
+            {
+                // Show error to user
+                return;
+            }
+
+            DatabaseHelper.UpdateCategory(
+                UserStateService.UserId,
+                EditingCategoryID,
+                EditingCategoryName,
+                EditingCategoryColor,
+                EditingCategoryTransactionType,
+                EditingCategoryParentID
+            );
+
             EditingCategoryID = 0;
-            EditingCategoryName = "";
-            LoadCategories();
+            await LoadCategories();
         }
     }
 
-    private void DeleteCategory(int categoryID)
+    private async Task DeleteCategory(int categoryID)
     {
-        DatabaseHelper.DeleteCategory(UserID, categoryID);
-        LoadCategories();
+        DatabaseHelper.DeleteCategory(UserStateService.UserId, categoryID);
+        await LoadCategories();
     }
 
     private void CancelEdit()
     {
         EditingCategoryID = 0;
-        EditingCategoryName = "";
     }
 }

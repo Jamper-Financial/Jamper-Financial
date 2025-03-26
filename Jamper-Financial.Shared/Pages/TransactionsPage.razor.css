@@ -296,3 +296,18 @@
         .modal-content .form-group button.delete:hover {
             background-color: #c33c2f;
         }
+
+.manage-categories-btn {
+    background-color: #ffc107;
+    color: white;
+    border: none;
+    padding: 0.625rem 0.9375rem;
+    border-radius: 0.625rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    margin-right: 10px;
+}
+
+    .manage-categories-btn:hover {
+        background-color: #e0a800;
+    }

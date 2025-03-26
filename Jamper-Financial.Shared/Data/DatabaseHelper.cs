@@ -128,21 +128,19 @@ namespace Jamper_Financial.Shared.Data
                 CreateTableIfNotExists(connection, "Transactions", @"
                     CREATE TABLE IF NOT EXISTS Transactions (
                         TransactionID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        Date TEXT NOT NULL,
+                        UserID INTEGER NOT NULL,
+                        Date TEXT NOT NULL, 
                         Description TEXT NOT NULL,
-                        Debit REAL NOT NULL,
-                        Credit REAL NOT NULL,
-                        Category TEXT,
-                        Color TEXT NOT NULL,
-                        Frequency TEXT,
+                        Amount DECIMAL(10, 2) NOT NULL,  -- Re-added Amount
+                        Debit DECIMAL(10, 2) DEFAULT 0,  
+                        Credit DECIMAL(10, 2) DEFAULT 0, 
+                        CategoryID INTEGER NOT NULL,  
+                        TransactionType TEXT CHECK(TransactionType IN ('e', 'i')) NOT NULL,
+                        HasReceipt INTEGER DEFAULT 0,
+                        Frequency TEXT DEFAULT 'None',
                         EndDate TEXT,
-	                    CategoryID INTEGER,
-                        HasReceipt INTEGER,
-                        UserID INTEGER,
-                        AccountID INTEGER,
-	                    CONSTRAINT Transactions_Categories_FK FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID) ON UPDATE CASCADE
-                        CONSTRAINT Transactions_Users_FK FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
-                        CONSTRAINT Transactions_Accounts_FK FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID) ON DELETE CASCADE
+                        FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
+                        FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID) ON DELETE CASCADE
                     );
                 ");
 
@@ -151,9 +149,12 @@ namespace Jamper_Financial.Shared.Data
                     CREATE TABLE IF NOT EXISTS Categories (
                         CategoryID INTEGER PRIMARY KEY AUTOINCREMENT,
                         UserID INTEGER NOT NULL,
-                        TransactionType INTEGER NOT NULL CHECK (TransactionType IN (0, 1)),
-                        Name TEXT NOT NULL UNIQUE,
-                        FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+                        Name TEXT NOT NULL,
+                        Color TEXT NOT NULL,
+                        TransactionType TEXT CHECK(TransactionType IN ('e', 'i')) NOT NULL,
+                        ParentCategoryID INTEGER,
+                        FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
+                        FOREIGN KEY (ParentCategoryID) REFERENCES Categories(CategoryID) ON DELETE SET NULL
                         
                     );
 
@@ -385,37 +386,59 @@ namespace Jamper_Financial.Shared.Data
         }
 
         // Add categories 
-        public static void AddCategory(int userId, string name)
+        public static void InsertCategory(int userId, string name, string color, string transactionType, int? parentCategoryId)
         {
-            using (var connection = new SqliteConnection($"Data Source={DbPath}"))
+            using (var connection = GetConnection())
             {
                 connection.Open();
-                string insertQuery = "INSERT INTO Categories (UserID, Name) VALUES (@UserID, @Name);";
+                string insertQuery = @"
+            INSERT INTO Categories (UserID, Name, Color, TransactionType, ParentCategoryID)
+            VALUES (@UserID, @Name, @Color, @TransactionType, @ParentCategoryID);
+        ";
+
                 using (var command = new SqliteCommand(insertQuery, connection))
                 {
                     command.Parameters.AddWithValue("@UserID", userId);
                     command.Parameters.AddWithValue("@Name", name);
+                    command.Parameters.AddWithValue("@Color", color);
+                    command.Parameters.AddWithValue("@TransactionType", transactionType);
+                    command.Parameters.AddWithValue("@ParentCategoryID", parentCategoryId ?? (object)DBNull.Value);
                     command.ExecuteNonQuery();
                 }
             }
         }
 
+
         // Update Categories
-        public static void UpdateCategory(int userId, int categoryId, string newName)
+        public static void UpdateCategory(int userId, int categoryId, string newName, string newColor, string newTransactionType, int? parentCategoryId)
         {
-            using (var connection = new SqliteConnection($"Data Source={DbPath}"))
+            using (var connection = GetConnection())
             {
                 connection.Open();
-                string updateQuery = "UPDATE Categories SET Name = @NewName WHERE CategoryID = @CategoryID AND UserID = @UserID;";
+                string updateQuery = @"
+                    UPDATE Categories 
+                    SET 
+                        Name = @NewName, 
+                        Color = @NewColor, 
+                        TransactionType = @TransactionType,
+                        ParentCategoryID = @ParentCategoryID
+                    WHERE 
+                        CategoryID = @CategoryID 
+                        AND UserID = @UserID;";
                 using (var command = new SqliteCommand(updateQuery, connection))
                 {
                     command.Parameters.AddWithValue("@NewName", newName);
+                    command.Parameters.AddWithValue("@NewColor", newColor);
+                    command.Parameters.AddWithValue("@TransactionType", newTransactionType);
+                    command.Parameters.AddWithValue("@ParentCategoryID", parentCategoryId ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@CategoryID", categoryId);
                     command.Parameters.AddWithValue("@UserID", userId);
+
                     command.ExecuteNonQuery();
                 }
             }
         }
+
 
         // Delete Categories
         public static void DeleteCategory(int userId, int categoryId)
@@ -459,6 +482,43 @@ namespace Jamper_Financial.Shared.Data
             }
             return categories;
         }
+
+        public static async Task<List<Category>> LoadUserCategoriesAsync(int userId)
+        {
+            var categories = new List<Category>();
+
+            using (var connection = GetConnection())
+            {
+                await connection.OpenAsync();
+
+                string query = @"
+            SELECT CategoryID, UserID, Name, Color, TransactionType
+            FROM Categories
+            WHERE UserID = @UserID";
+
+                using (var command = new SqliteCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@UserID", userId);
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            categories.Add(new Category
+                            {
+                                CategoryID = reader.GetInt32(0),
+                                UserID = reader.GetInt32(1),
+                                Name = reader.GetString(2),
+                                Color = reader.GetString(3),
+                                TransactionType = reader.GetString(4)
+                            });
+                        }
+                    }
+                }
+            }
+
+            return categories;
+        }
+
 
 
         // Insert Set Categories

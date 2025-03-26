@@ -1,9 +1,14 @@
 ﻿@page "/Transactions-Page"
 @inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
 
 @using Jamper_Financial.Shared.Data;
 @using Jamper_Financial.Shared.Utilities;
 @using Jamper_Financial.Shared.Pages.Components;
+@using Jamper_Financial.Shared.Models;
+@using Jamper_Financial.Shared.Services;
+@inject UserStateService UserStateService
+
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -12,7 +17,6 @@
     {
         SetPageTitle("Transactions");
     }
-
 }
 
 <div class="transactions-page">
@@ -39,7 +43,10 @@
     <div class="transactions-section">
         <div class="transactions-header">
             <h3 class="section-title">Recent Transactions</h3>
-            <button class="add-transaction" @onclick="OpenAddTransactionModal">+ Add Transaction</button>
+            <div style="display: flex; gap: 10px;">
+                <button class="add-transaction" @onclick="OpenAddTransactionModal">+ Add Transaction</button>
+                <button class="manage-categories-btn" @onclick="NavigateToManageCategories">Manage Categories</button>
+            </div>
         </div>
         <div class="transactions-table scrollable-table">
             <table>
@@ -62,7 +69,7 @@
                             <tr class="transaction-item" @onclick="() => ShowEditTransactionModal(transaction)" style="cursor: pointer;">
                                 <td>@transaction.Description</td>
                                 <td>@transaction.TransactionID</td>
-                                <td>@transaction.Category</td>
+                                <td>@(transaction.TransactionType == "e" ? "Expense" : "Income")</td>
                                 <td>1234 ****</td>
                                 <td>@transaction.Date.ToString("dd MMM, hh:mm tt")</td>
                                 <td class="@(transaction.Debit > 0 ? "negative" : "positive")">@((transaction.Debit > 0 ? transaction.Debit : transaction.Credit).ToString("C"))</td>
@@ -113,12 +120,12 @@
                     </div>
                     <div class="form-group">
                         <label for="category">Category:</label>
-                        <select id="category" @onchange="HandleCategoryChange" required>
-                            <option value="Expenses">Expenses</option>
-                            <option value="Income">Income</option>
-                            <option value="Debts & Loans">Debts & Loans</option>
-                            <option value="Savings & Investments">Savings & Investments</option>
-                            <option value="Subscriptions & Memberships">Subscriptions & Memberships</option>
+                        <select id="category" @bind="NewTransaction.CategoryID" required>
+                            <option value="">Select Category</option>
+                            @foreach (var category in Categories)
+                            {
+                                <option value="@category.CategoryID">@category.Name</option>
+                            }
                         </select>
                     </div>
                     <div class="form-group">
@@ -144,13 +151,6 @@
                             <input id="endDate" type="date" @bind="NewTransaction.EndDate" required />
                         </div>
                     }
-                    @if (NewTransaction.Category == "Subscriptions & Memberships")
-                    {
-                        <div class="form-group">
-                            <label for="color">Color:</label>
-                            <input id="color" type="color" @bind="NewTransaction.Color" />
-                        </div>
-                    }
                     <div class="form-group button-group">
                         @if (IsEditMode)
                         {
@@ -166,15 +166,14 @@
 }
 
 @* Receipt Modal *@
-
 @if (ShowReceiptModal)
 {
     <ReceiptModal IsVisible="ShowReceiptModal" Transaction="SelectedTransaction" OnClose="CloseReceiptModal" />
-
 }
 
 @code {
     private List<Transaction> transactions;
+    private List<Category> Categories = new();
     public bool ShowAddTransactionModal { get; set; } = false;
     public bool ShowReceiptModal { get; set; } = false;
     public bool IsEditMode { get; set; } = false;
@@ -183,17 +182,21 @@
     public Transaction SelectedTransaction { get; set; } = new Transaction();
     public decimal Amount { get; set; } = 0;
 
+
     protected override async Task OnInitializedAsync()
     {
-        transactions = await TransactionManager.LoadTransactionsAsync();
+        transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
+        Categories = (await DatabaseHelper.LoadUserCategoriesAsync(UserStateService.UserId)).ToList();
+    }
+
+    private void NavigateToManageCategories()
+    {
+        NavigationManager.NavigateTo("/manage-categories");
     }
 
     private void OpenReceiptModal(Transaction transaction)
     {
-        Console.Write("Trying to open receipt modal");
-
         SelectedTransaction = transaction;
-        Console.WriteLine(transaction);
         ShowReceiptModal = true;
     }
 
@@ -208,12 +211,12 @@
             {
                 Date = DateTime.Now,
                 Description = string.Empty,
-                Category = "Expenses",
+                CategoryID = 0,
                 Debit = 0,
                 Credit = 0,
-                Color = GetColorForCategory("Expenses"),
                 Frequency = "None",
-                EndDate = DateTime.Now
+                EndDate = DateTime.Now,
+                UserID = UserStateService.UserId
             };
         Amount = 0;
         IsEditMode = false;
@@ -241,10 +244,21 @@
 
     private async Task HandleAddOrEditTransaction()
     {
-        NewTransaction.Amount = Amount;
-        await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
-        CloseAddTransactionModal();
-        transactions = await TransactionManager.LoadTransactionsAsync();
+        try
+        {
+            NewTransaction.Amount = Amount;
+            await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
+            transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
+        }
+        catch
+        {
+            // Handle any errors if needed
+            throw;
+        }
+        finally
+        {
+            CloseAddTransactionModal();
+        }
     }
 
     private void ShowDeleteConfirmationForm()
@@ -263,10 +277,9 @@
         {
             await TransactionManager.DeleteRecurringTransactionsAsync(NewTransaction);
             transactions.RemoveAll(t => t.Description == NewTransaction.Description &&
-                                        t.Category == NewTransaction.Category &&
-                                        t.Color == NewTransaction.Color &&
-                                        t.Frequency == NewTransaction.Frequency &&
-                                        t.Date > NewTransaction.Date);
+                                    t.CategoryID == NewTransaction.CategoryID &&
+                                    t.Frequency == NewTransaction.Frequency &&
+                                    t.Date > NewTransaction.Date);
         }
         else
         {
@@ -274,43 +287,6 @@
             transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
         }
         CloseAddTransactionModal();
-        transactions = await TransactionManager.LoadTransactionsAsync();
-    }
-
-    private void HandleCategoryChange(ChangeEventArgs e)
-    {
-        var selectedCategory = e.Value.ToString();
-        NewTransaction.Category = selectedCategory;
-        if (selectedCategory == "Subscriptions & Memberships")
-        {
-            // Do not change the color if it is already set (i.e., user selected a custom color)
-            if (string.IsNullOrEmpty(NewTransaction.Color))
-            {
-                NewTransaction.Color = GetRandomColor();
-            }
-        }
-        else
-        {
-            NewTransaction.Color = GetColorForCategory(selectedCategory);
-        }
-    }
-
-    private string GetColorForCategory(string category)
-    {
-        return category switch
-        {
-            "Expenses" => "#FF0000", // Red
-            "Income" => "#00FF00", // Green
-            "Debts & Loans" => "#FFA500", // Orange
-            "Savings & Investments" => "#005AFF", // Blue
-            "Subscriptions & Memberships" => GetRandomColor(), // Random color for subscriptions
-            _ => "#000000" // Default color
-        };
-    }
-
-    private string GetRandomColor()
-    {
-        var random = new Random();
-        return $"#{random.Next(0x1000000):X6}";
+        transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
     }
 }
