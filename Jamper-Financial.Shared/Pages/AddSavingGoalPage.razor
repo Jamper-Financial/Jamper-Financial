@@ -19,11 +19,16 @@
             }
         </div>
         <div class="form-group">
-            <label>Goal Type</label>
-            <div>
-                <button class="account-button @(goalType == "Savings" ? "selected-button" : "")" @onclick='() => SetGoalType("Savings")'>Savings Account</button>
-                <button class="account-button @(goalType == "Checking" ? "selected-button" : "")" @onclick='() => SetGoalType("Checking")'>Checking Account</button>
-            </div>
+            <label for="goalType">Choose an Account</label>
+            <select id="goalType" @bind="goalType">
+                <option value="">Select an Account</option>
+                <option value="Savings Account 1">Savings Account 1</option>
+                <option value="Savings Account 2">Savings Account 2</option>
+                <option value="Savings Account 3">Savings Account 3</option>
+                <option value="Checking Account 1">Checking Account 1</option>
+                <option value="Checking Account 2">Checking Account 2</option>
+            </select>
+
             @if (string.IsNullOrEmpty(goalType))
             {
                 <span class="error">Goal Type is required!</span>
@@ -82,11 +87,11 @@
     private decimal amount;
     private string frequency;
     private string description;
-
     private void SetGoalType(string type)
     {
         goalType = type;
     }
+
 
     private void SetCategory(string selectedCategory)
     {

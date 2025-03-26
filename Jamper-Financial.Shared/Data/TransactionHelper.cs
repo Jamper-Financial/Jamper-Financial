@@ -52,7 +52,7 @@ namespace Jamper_Financial.Shared.Data
                     }
                 }
             }
-
+            Console.WriteLine(transactions.Count);
             return transactions;
         }
 

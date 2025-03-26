@@ -11,10 +11,10 @@
 }
 
 .top-right-button {
-    position: absolute;
-    top: 55%; /* Center vertically */
-    left: 15%; /* Position the button closer to the left */
-    transform: translateY(-50%); /* Proper vertical alignment */
+    position: fixed;
+    top: 50%; /* Center vertically */
+    left: 27%; /* Position the button closer to the left */    
+    transform: translateY(-30%); /* Proper vertical alignment */
 }
 
     .top-right-button button {
@@ -33,5 +33,6 @@
         .top-right-button button:hover {
             background: #218838;
             transform: scale(1.1); /* Slightly enlarge on hover */
+            text-decoration: double;
         }
 

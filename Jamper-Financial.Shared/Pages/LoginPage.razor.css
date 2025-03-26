@@ -7,16 +7,23 @@
 
 .login-container {
     display: flex;
-    height: 100%;
+    height: 90.7vh;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    
 }
+
+
 
 .login-left {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center; /* Ensures content inside is centered */
     padding: 40px;
     background-color: #f5f5f5;
+    height: 100%; /* Ensures it fills its parent */
 }
 
 h1 {
@@ -24,22 +31,34 @@ h1 {
     font-size: 26px;
     margin-bottom: 20px;
     text-align: center;
-    width: 100%;
-    /* Ensure it spans the header width */
+    width: 100%; /* Ensure it spans the header width */
 }
 
+
 .login-form {
+    font-family: 'Arial', sans-serif;
     background-color: #D0E8C5;
     border: 1px solid #d4e8b6;
-    border-radius: 20px;
-    padding: 30px;
+    border-radius: 15px; /* Reduce border radius for a smaller look */
+    padding: 20px; /* Reduce padding */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    min-height: 500px;
-    /* Matches the height of the logo */
+    min-height: auto; /* Remove fixed min-height */
+    width: 350px; /* Reduce form width */
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
 }
+
+    /* Reduce input field width */
+    .login-form input[type="text"],
+    .login-form input[type="password"] {
+        width: 90%;
+        padding: 8px;
+        font-size: 14px;
+    }
+
+
 
 h2 {
     color: #62ad41;
@@ -170,6 +189,7 @@ button {
     display: flex;
     justify-content: center;
     align-items: center;
+
 }
 
     .login-right img {

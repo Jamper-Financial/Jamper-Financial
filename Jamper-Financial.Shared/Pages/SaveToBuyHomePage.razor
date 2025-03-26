@@ -19,14 +19,6 @@
             }
         </div>
         <div class="form-group">
-            <label for="downPayment">Down Payment</label>
-            <input type="number" id="downPayment" step="0.01" @bind="downPayment" />
-            @if (downPayment <= 0)
-            {
-                <span class="error">Down Payment must be greater than zero!</span>
-            }
-        </div>
-        <div class="form-group">
             <label for="currentSavings">Current Savings</label>
             <input type="number" id="currentSavings" step="0.01" @bind="currentSavings" />
         </div>
@@ -38,30 +30,6 @@
             <label for="targetPurchaseDate">Target Purchase Date</label>
             <input type="date" id="targetPurchaseDate" @bind="targetPurchaseDate" min="@DateTime.Today.ToString("yyyy-MM-dd")" />
         </div>
-        <div class="form-group">
-            <label for="loanInterestRate">Loan Interest Rate (%)</label>
-            <input type="number" id="loanInterestRate" step="0.01" @bind="loanInterestRate" />
-        </div>
-        <div class="form-group">
-            <label for="loanTerm">Loan Term (years)</label>
-            <input type="number" id="loanTerm" step="1" @bind="loanTerm" />
-        </div>
-        <div class="form-group">
-            <label for="propertyTaxes">Property Taxes</label>
-            <input type="number" id="propertyTaxes" step="0.01" @bind="propertyTaxes" />
-        </div>
-        <div class="form-group">
-            <label for="homeInsurance">Home Insurance</label>
-            <input type="number" id="homeInsurance" step="0.01" @bind="homeInsurance" />
-        </div>
-        <div class="form-group">
-            <label for="otherCosts">Other Costs</label>
-            <input type="number" id="otherCosts" step="0.01" @bind="otherCosts" />
-        </div>
-        <label for="predictedDate">Predicted Date to Reach Goal</label>
-        <input type="text" id="predictedDate" value="@predictedDate.ToShortDateString()" readonly />
-        <button class="submit-button" @onclick="CalculatePredictedDate">Calculate Predicted Date</button>
-
         <button class="submit-button" @onclick="SubmitHomeGoal">Submit</button>
         <button class="back-button" @onclick="GoBack">Back</button>
 
@@ -70,30 +38,21 @@
 
 @code {
     private decimal homePrice;
-    private decimal downPayment;
     private decimal currentSavings;
     private decimal monthlySavings;
     private DateTime targetPurchaseDate = DateTime.Today;
-    private decimal loanInterestRate;
-    private int loanTerm;
-    private decimal propertyTaxes;
-    private decimal homeInsurance;
-    private decimal otherCosts;
-    private DateTime predictedDate;
 
     private void SubmitHomeGoal()
     {
-        if (homePrice > 0 && downPayment > 0)
+        if (homePrice > 0)
         {
             var homeGoal = new Goal
                 {
                     Name = "Save to Buy a Home",
-                    Amount = downPayment,
                     StartDate = DateTime.Now,
                     EndDate = targetPurchaseDate,
-                    Description = $"Home Price: {homePrice}, Current Savings: {currentSavings}, Monthly Savings: {monthlySavings}, " +
-                                      $"Loan Interest Rate: {loanInterestRate}%, Loan Term: {loanTerm} years, Property Taxes: {propertyTaxes}, " +
-                                      $"Home Insurance: {homeInsurance}, Other Costs: {otherCosts}",
+                    Description = $"Home Price: {homePrice}, Current Savings: {currentSavings}, Monthly Savings: {monthlySavings}, ",
+                                
                     Category = "Home",
                     GoalType = "Savings",
                     Frequency = "Monthly",
@@ -109,21 +68,6 @@
     private void GoBack()
     {
         Navigation.NavigateTo("/saving-goals-page");
-    }
-
-    // It does not account for potential changes in income or expenses
-    private void CalculatePredictedDate()
-    {
-        decimal totalSavingsNeeded = downPayment - currentSavings;
-        if (monthlySavings > 0)
-        {
-            int monthsNeeded = (int)Math.Ceiling(totalSavingsNeeded / monthlySavings);
-            predictedDate = DateTime.Now.AddMonths(monthsNeeded);
-        }
-        else
-        {
-            predictedDate = DateTime.MaxValue; // Indicate that the goal cannot be reached with current savings rate
-        }
     }
 }
 

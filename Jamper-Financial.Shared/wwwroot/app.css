@@ -1,3 +1,15 @@
+:root {
+    --primary-color: #62AD41;
+    --primary-color-hover: #417828;
+    --secondary-color: #417828;
+    --tertiary-color: #28a745
+    --table-primary: #96ED9A;
+    --table-secondary: #ABDCA7;
+    --background-color: #62AD41;
+    --background-color-hover: #519a37;
+    --text-color: #333;
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -148,3 +160,96 @@ canvas {
         background-color: #417828;
     }
 
+/*Toaster Style*/
+.toaster {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+    .toaster.success {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .toaster.error {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+.close-toaster {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    margin-left: 10px;
+    cursor: pointer;
+}
+/* Style for the toggle */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 45px; /* Define the width of the switch container */
+    height: 25px; /* Define the height of the switch container */
+}
+
+    /* Hide default HTML checkbox */
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+/* The slider */
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-radius: 34px; /* Move border-radius here */
+}
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+        border-radius: 50%; /* Move border-radius here */
+    }
+
+input:checked + .slider {
+    background-color: var(--primary-color);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px var(--secondary-color);
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(20px);
+    -ms-transform: translateX(20px);
+    transform: translateX(20px);
+}
+
+/* Add padding to switch, and set slider width */
+.switch {
+    padding: 3px;
+}
+
+.slider {
+    width: calc(100%); /* subtract padding from width */
+}
