@@ -6,6 +6,9 @@
 @using Jamper_Financial.Shared.Utilities;
 @using Jamper_Financial.Shared.Pages.Components;
 @using Jamper_Financial.Shared.Models;
+@using Jamper_Financial.Shared.Services;
+@inject UserStateService UserStateService
+
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -179,12 +182,11 @@
     public Transaction SelectedTransaction { get; set; } = new Transaction();
     public decimal Amount { get; set; } = 0;
 
-    private int UserID = 1;
 
     protected override async Task OnInitializedAsync()
     {
-        transactions = (await TransactionManager.LoadTransactionsAsync(UserID)).ToList();
-        Categories = (await DatabaseHelper.LoadUserCategoriesAsync(UserID)).ToList();
+        transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
+        Categories = (await DatabaseHelper.LoadUserCategoriesAsync(UserStateService.UserId)).ToList();
     }
 
     private void NavigateToManageCategories()
@@ -214,7 +216,7 @@
                 Credit = 0,
                 Frequency = "None",
                 EndDate = DateTime.Now,
-                UserID = UserID
+                UserID = UserStateService.UserId
             };
         Amount = 0;
         IsEditMode = false;
@@ -246,7 +248,7 @@
         {
             NewTransaction.Amount = Amount;
             await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
-            transactions = (await TransactionManager.LoadTransactionsAsync(UserID)).ToList();
+            transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
         }
         catch
         {
@@ -285,6 +287,6 @@
             transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
         }
         CloseAddTransactionModal();
-        transactions = (await TransactionManager.LoadTransactionsAsync(UserID)).ToList();
+        transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
     }
 }

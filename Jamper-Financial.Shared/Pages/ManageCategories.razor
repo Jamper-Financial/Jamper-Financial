@@ -1,6 +1,8 @@
 ﻿@page "/manage-categories"
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Models
+@using Jamper_Financial.Shared.Services
+@inject UserStateService UserStateService
 
 <div class="manage-categories-page">
     <div class="category-header">
@@ -129,7 +131,6 @@
     private int? EditingCategoryParentID = null;
     private HashSet<int> expandedCategories = new HashSet<int>();
 
-    private int UserID = 1; 
 
     private List<Category> AvailableParentCategories =>
         Categories.Where(c => c.ParentCategoryID == null).ToList();
@@ -144,7 +145,7 @@
 
     private async Task LoadCategories()
     {
-        Categories = await DatabaseHelper.LoadUserCategoriesAsync(UserID);
+        Categories = await DatabaseHelper.LoadUserCategoriesAsync(UserStateService.UserId);
         StateHasChanged();
     }
 
@@ -153,7 +154,7 @@
         if (!string.IsNullOrWhiteSpace(NewCategoryName))
         {
             DatabaseHelper.InsertCategory(
-                UserID,
+                UserStateService.UserId,
                 NewCategoryName,
                 NewCategoryColor,
                 NewCategoryTransactionType,
@@ -204,7 +205,7 @@
             }
 
             DatabaseHelper.UpdateCategory(
-                UserID,
+                UserStateService.UserId,
                 EditingCategoryID,
                 EditingCategoryName,
                 EditingCategoryColor,
@@ -219,7 +220,7 @@
 
     private async Task DeleteCategory(int categoryID)
     {
-        DatabaseHelper.DeleteCategory(UserID, categoryID);
+        DatabaseHelper.DeleteCategory(UserStateService.UserId, categoryID);
         await LoadCategories();
     }
 
