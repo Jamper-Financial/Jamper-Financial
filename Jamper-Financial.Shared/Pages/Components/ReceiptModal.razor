@@ -11,10 +11,8 @@
     [Parameter] public Transaction Transaction { get; set; }
     private IBrowserFile? uploadedFile;
     private string? receiptPreviewUrl;
-
-    private string toasterMessage = string.Empty;
-    private string toasterClass = string.Empty;
-
+    private bool showDeleteConfirmation = false;
+    private string? errorMessage;
 
     protected override async Task OnInitializedAsync()
     {
@@ -34,6 +32,12 @@
     // This method is called when the Save button is clicked
     private async Task SaveReceipt()
     {
+        if (uploadedFile == null)
+        {
+            errorMessage = "Please select a file before saving.";
+            return;
+        }
+
         if (Transaction != null && uploadedFile != null)
         {
             Console.WriteLine("Saving receipt...");
@@ -45,13 +49,11 @@
                 toasterMessage = "Receipt added successfully!";
                 toasterClass = "success";
                 await GetReceipt();
+                errorMessage = null;
             }
             else
             {
-                Console.WriteLine("Failed to save receipt");
-                toasterMessage = "Failed to add account.";
-                toasterClass = "error";
-                await GetReceipt();
+                errorMessage = "Failed to save receipt.";
             }
         }
     }
@@ -78,13 +80,31 @@
     private Task HandleFileSelected(InputFileChangeEventArgs e)
     {
         uploadedFile = e.File;
+        errorMessage = null;
         return Task.CompletedTask;
     }
 
-    private void ClearToaster()
+    private void ShowDeleteConfirmation()
     {
-        toasterMessage = string.Empty;
-        toasterClass = string.Empty;
+        showDeleteConfirmation = true;
+    }
+
+    private void HideDeleteConfirmation()
+    {
+        showDeleteConfirmation = false;
+    }
+
+    private async Task DeleteReceipt()
+    {
+        if (Transaction != null)
+        {
+            Console.WriteLine("Deleting receipt...");
+            await TransactionHelper.DeleteReceiptAsync(Transaction.TransactionID);
+            Transaction.HasReceipt = false;
+            receiptPreviewUrl = null;
+            uploadedFile = null;
+            showDeleteConfirmation = false;
+        }
     }
 }
 
@@ -105,11 +125,19 @@
                 {
                     <img src="@receiptPreviewUrl" alt="Receipt" style="max-width: 100%;" @onclick="OpenReceiptInNewTab" />
                 }
+                <div class="button-container">
+                    <button class="delete-button" @onclick="ShowDeleteConfirmation">Delete Receipt</button>
+                </div>
             }
             else
             {
                 <p>No receipt available.</p>
                 <InputFile OnChange="HandleFileSelected" />
+                @if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <p></p>
+                    <p class="error-message">@errorMessage</p>
+                }
                 <div class="button-container">
                     <button class="save-button" @onclick=" SaveReceipt">Save</button>
                     <button class="delete-button" @onclick="CloseModal">Cancel</button>
@@ -119,10 +147,15 @@
     </div>
 }
 
-@if (!string.IsNullOrEmpty(toasterMessage))
+@if (showDeleteConfirmation)
 {
-    <div class="toaster @toasterClass">
-        <span>@toasterMessage</span>
-        <button class="close-toaster" @onclick="ClearToaster">×</button>
-    </div>
+    <div class="modal" @onclick="HideDeleteConfirmation">
+        <div class="modal-content" @onclick:stopPropagation="true">
+            <h3>Confirm Delete</h3>
+            <p>Are you sure you want to delete this receipt?</p>
+            <div class="button-container">
+                <button class="save-button" @onclick="DeleteReceipt">Yes</button>
+                <button class="delete-button" @onclick="HideDeleteConfirmation">No</button>
+            </div>
+        </div>
 }
