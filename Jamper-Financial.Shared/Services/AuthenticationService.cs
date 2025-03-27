@@ -10,7 +10,7 @@ using Jamper_Financial.Shared.Services;
 
 namespace Jamper_Financial.Shared.Services
 {
-    public class AuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly NavigationManager _navigationManager;
         private readonly UserStateService _userStateService;
@@ -80,6 +80,7 @@ namespace Jamper_Financial.Shared.Services
             int adminRoleId = DatabaseHelper.GetRoleIdByName("Admin");
             DatabaseHelper.AssignRoleToUser(userId, adminRoleId);
         }
+
     }
 }
 

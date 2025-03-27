@@ -1,4 +1,4 @@
-﻿using Jamper_Financial.Shared.Models;
+﻿﻿using Jamper_Financial.Shared.Models;
 using Microsoft.Data.Sqlite;
 
 namespace Jamper_Financial.Shared.Services
@@ -24,9 +24,10 @@ namespace Jamper_Financial.Shared.Services
                 using var connection = new SqliteConnection(_connectionString);
                 await connection.OpenAsync();
                 string query = @"
-                    SELECT sum(e.Debit) As ExpenseAmount, 
-                           sum(e.Credit) As SalaryAmount,
-                           e.Date
+                    SELECT 
+                        SUM(CASE WHEN e.TransactionType = 'e' THEN e.Amount ELSE 0 END) AS ExpenseAmount, 
+                        SUM(CASE WHEN e.TransactionType = 'i' THEN e.Amount ELSE 0 END) AS SalaryAmount,
+                        e.Date
                     FROM Transactions e
                     JOIN Categories c ON e.CategoryID = c.CategoryID
                     WHERE e.UserID = @UserID
@@ -90,7 +91,5 @@ namespace Jamper_Financial.Shared.Services
             }
             return expenses;
         }
-
-
     }
 }

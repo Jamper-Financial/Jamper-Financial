@@ -180,50 +180,50 @@ window.initializeLineChart = function (canvasId, chartData, indAxis = 'x') {
     }
 };
 
-//window.initializePolarChart = function (canvasId, chartData, indAxis = 'x') {
-//    const canvas = document.getElementById(canvasId);
-//    const ctx = canvas.getContext('2d');
+window.initializePolarChart = function (canvasId, chartData, indAxis = 'x') {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
 
-//    if (ctx) {
-//        let existingChart = Chart.getChart(canvasId);
-//        if (existingChart) {
-//            existingChart.destroy();
-//        }
+    if (ctx) {
+        let existingChart = Chart.getChart(canvasId);
+        if (existingChart) {
+            existingChart.destroy();
+        }
 
-//        const myPolarChart = new Chart(ctx, {
-//            type: 'line',
-//            data: chartData,
-//            options: {
-//                indexAxis: indAxis,
-//                responsive: true,
-//                maintainAspectRatio: false,
-//                scales: {
-//                    y: {
-//                        beginAtZero: true
-//                    }
-//                },
-//                plugins: {
-//                    legend: { display: true },
-//                    datalabels: {
-//                        anchor: 'bottom',
-//                        align: 'top',
-//                        font: {
-//                            size: 14,
-//                            family: 'Arial',
-//                            weight: 'bold'
-//                        },
-//                        formatter: (value) => {
-//                            return value;
-//                        }
-//                    },
-//                    filler: {
-//                        propagate: true
-//                    }
-//                }
-//            },
-//            plugins: [ChartDataLabels]
-//        });
-//    } else {
-//        console.error(`Canvas element with id '${canvasId}' not found for Bar Chart.`);
-//    }
-//};
+        const myPolarChart = new Chart(ctx, {
+            type: 'polar',
+            data: chartData,
+            options: {
+                indexAxis: indAxis,
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: { display: true },
+                    datalabels: {
+                        anchor: 'bottom',
+                        align: 'top',
+                        font: {
+                            size: 14,
+                            family: 'Arial',
+                            weight: 'bold'
+                        },
+                        formatter: (value) => {
+                            return value;
+                        }
+                    },
+                    filler: {
+                        propagate: true
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+    } else {
+        console.error(`Canvas element with id '${canvasId}' not found for Bar Chart.`);
+    }
+};

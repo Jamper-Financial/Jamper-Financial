@@ -14,7 +14,7 @@ namespace Jamper_Financial.Shared.Utilities
             {
                 "Date" => ascending ? transactions.OrderBy(t => t.Date).ToList() : transactions.OrderByDescending(t => t.Date).ToList(),
                 "CategoryID" => ascending ? transactions.OrderBy(t => t.CategoryID).ToList() : transactions.OrderByDescending(t => t.CategoryID).ToList(),
-                "Amount" => ascending ? transactions.OrderBy(t => t.Debit > 0 ? -t.Debit : t.Credit).ToList() : transactions.OrderByDescending(t => t.Debit > 0 ? -t.Debit : t.Credit).ToList(),
+                "Amount" => ascending ? transactions.OrderBy(t => t.Amount > 0 ? -t.Amount : t.Amount).ToList() : transactions.OrderByDescending(t => t.Amount > 0 ? -t.Amount : t.Amount).ToList(),
                 "Description" => ascending ? transactions.OrderBy(t => t.Description).ToList() : transactions.OrderByDescending(t => t.Description).ToList(),
                 _ => transactions
             };

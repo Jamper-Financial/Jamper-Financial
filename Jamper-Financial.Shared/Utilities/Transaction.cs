@@ -11,13 +11,12 @@ namespace Jamper_Financial.Shared.Utilities
         public DateTime Date { get; set; }
         public string Description { get; set; } = string.Empty;
         public decimal Amount { get; set; } = 0;
-        public decimal Debit { get; set; } = 0;
-        public decimal Credit { get; set; } = 0;
         public int CategoryID { get; set; }  
         public string TransactionType { get; set; } = "e"; // Expense by default
         public bool HasReceipt { get; set; } = false;
         public string Frequency { get; set; } = "None";
         public DateTime? EndDate { get; set; }
+        public int AccountID { get; set; } 
     }
 
     public static class TransactionManager
@@ -29,16 +28,17 @@ namespace Jamper_Financial.Shared.Utilities
 
         public static async Task AddOrUpdateTransactionAsync(Transaction transaction, bool isEditMode)
         {
-            if (transaction.TransactionType == "e")
-            {
-                transaction.Debit = transaction.Amount;
-                transaction.Credit = 0;
-            }
-            else
-            {
-                transaction.Debit = 0;
-                transaction.Credit = transaction.Amount;
-            }
+            //remove debit or credit as there is amount column
+            //if (transaction.TransactionType == "e")
+            //{
+            //    transaction.Debit = transaction.Amount;
+            //    transaction.Credit = 0;
+            //}
+            //else
+            //{
+            //    transaction.Debit = 0;
+            //    transaction.Credit = transaction.Amount;
+            //}
 
 
             if (isEditMode)
@@ -61,7 +61,7 @@ namespace Jamper_Financial.Shared.Utilities
             else
             {
                 await TransactionHelper.AddTransactionAsync(transaction);
-                if (transaction.Frequency != null && transaction.EndDate.HasValue)
+                if (transaction.Frequency != "None" && transaction.EndDate.HasValue)
                 {
                     AddRecurringTransactions(transaction, false);
                 }
@@ -101,11 +101,12 @@ namespace Jamper_Financial.Shared.Utilities
             {
                 recurringTransaction.Description = transaction.Description;
                 recurringTransaction.Amount = transaction.Amount;
-                recurringTransaction.Debit = transaction.Debit;
-                recurringTransaction.Credit = transaction.Credit;
+                //recurringTransaction.Debit = transaction.Debit;
+                //recurringTransaction.Credit = transaction.Credit;
                 recurringTransaction.CategoryID = transaction.CategoryID;
                 recurringTransaction.Frequency = transaction.Frequency;
                 recurringTransaction.EndDate = transaction.EndDate;
+                recurringTransaction.AccountID = transaction.AccountID;
 
                 TransactionHelper.UpdateTransactionAsync(recurringTransaction).Wait();
             }
@@ -138,11 +139,12 @@ namespace Jamper_Financial.Shared.Utilities
                         Date = nextDate,
                         Description = transaction.Description,
                         Amount = transaction.Amount,
-                        Debit = transaction.Debit,
-                        Credit = transaction.Credit,
+                        //Debit = transaction.Debit,
+                        //Credit = transaction.Credit,
                         CategoryID = transaction.CategoryID,
                         Frequency = transaction.Frequency,
-                        EndDate = transaction.EndDate
+                        EndDate = transaction.EndDate,
+                        AccountID = transaction.AccountID
                     };
 
                     TransactionHelper.AddTransactionAsync(newTransaction).Wait();
@@ -151,11 +153,12 @@ namespace Jamper_Financial.Shared.Utilities
                 {
                     existingTransaction.Description = transaction.Description;
                     existingTransaction.Amount = transaction.Amount;
-                    existingTransaction.Debit = transaction.Debit;
-                    existingTransaction.Credit = transaction.Credit;
+                    //existingTransaction.Debit = transaction.Debit;
+                    //existingTransaction.Credit = transaction.Credit;
                     existingTransaction.CategoryID = transaction.CategoryID;
                     existingTransaction.Frequency = transaction.Frequency;
                     existingTransaction.EndDate = transaction.EndDate;
+                    existingTransaction.AccountID = transaction.AccountID;
 
                     TransactionHelper.UpdateTransactionAsync(existingTransaction).Wait();
                 }

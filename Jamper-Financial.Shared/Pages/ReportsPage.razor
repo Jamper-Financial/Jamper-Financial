@@ -33,8 +33,9 @@
     private string reportDescription = string.Empty;
 
     // Totals for Debit/Credit
-    private decimal totalDebit => filteredTransactions.Sum(t => t.Debit);
-    private decimal totalCredit => filteredTransactions.Sum(t => t.Credit);
+    private decimal totalDebit => filteredTransactions.Where(t => t.TransactionType == "e").Sum(t => t.Amount);
+    private decimal totalCredit => filteredTransactions.Where(t => t.TransactionType == "i").Sum(t => t.Amount);
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -568,11 +569,11 @@
                                         <td>@t.Description</td>
                                         <td>@t.CategoryID</td>
                                         <td>@t.Date.ToString("dd MMM yyyy")</td>
-                                        <td class="@(t.Debit > 0 ? "negative" : "")">
-                                            @(t.Debit != 0 ? t.Debit.ToString("C") : "")
+                                        <td class="@(t.TransactionType == "e" ? "negative" : "")">
+                                            @(t.Amount != 0 ? t.Amount.ToString("C") : "")
                                         </td>
-                                        <td class="@(t.Credit > 0 ? "positive" : "")">
-                                            @(t.Credit != 0 ? t.Credit.ToString("C") : "")
+                                        <td class="@(t.TransactionType == "i" ? "positive" : "")">
+                                            @(t.Amount != 0 ? t.Amount.ToString("C") : "")
                                         </td>
                                         <td>@(string.IsNullOrEmpty(t.Frequency) ? "" : t.Frequency)</td>
                                         <td>@(t.EndDate.HasValue ? t.EndDate.Value.ToString("dd MMM yyyy") : "")</td>

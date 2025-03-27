@@ -1,4 +1,4 @@
-﻿﻿using Jamper_Financial.Shared.Models;
+﻿using Jamper_Financial.Shared.Models;
 
 namespace Jamper_Financial.Shared.Services
 {
@@ -10,6 +10,6 @@ namespace Jamper_Financial.Shared.Services
         Task<bool> DeleteUserProfileAsync(int userId);
 
         Task<UserSettings> GetUserSettingsByIdAsync(int userId);
-            Task<bool> UpdateUserSettingsAsync(UserSettings userSettings);
+        Task<bool> UpdateUserSettingsAsync(UserSettings userSettings);
     }
 }
