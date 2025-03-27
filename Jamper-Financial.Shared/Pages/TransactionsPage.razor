@@ -7,9 +7,10 @@
 @using Jamper_Financial.Shared.Pages.Components;
 @using Jamper_Financial.Shared.Models;
 @using Jamper_Financial.Shared.Services;
+                                                                                                                 
+@inject SearchService SearchService
 @inject UserStateService UserStateService
 @inject IAccountService AccountService
-
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -65,7 +66,7 @@
                 <tbody>
                     @if (transactions != null)
                     {
-                        @foreach (var transaction in transactions)
+                        @foreach (var transaction in filteredTransactions)
                         {
                             <tr class="transaction-item" @onclick="() => ShowEditTransactionModal(transaction)" style="cursor: pointer;">
                                 <td>@transaction.Description</td>
@@ -184,6 +185,7 @@
 
 @code {
     private List<Transaction> transactions;
+    private List<Transaction> filteredTransactions;
     private List<Category> Categories = new();
     private List<BankAccount> accounts = new();
     public bool ShowAddTransactionModal { get; set; } = false;
@@ -200,6 +202,28 @@
         transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
         Categories = (await DatabaseHelper.LoadUserCategoriesAsync(UserStateService.UserId)).ToList();
         accounts = await AccountService.GetBankAccounts(UserStateService.UserId);
+        filteredTransactions = transactions;
+        SearchService.OnSearchQueryChanged += FilterTransactions;
+    }
+
+    private void FilterTransactions()
+    {
+        if (string.IsNullOrEmpty(SearchService.SearchQuery))
+        {
+            filteredTransactions = transactions;
+        }
+        else
+        {
+            filteredTransactions = transactions
+                .Where(t => t.Description.Contains(SearchService.SearchQuery, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        SearchService.OnSearchQueryChanged -= FilterTransactions;
     }
 
     private void NavigateToManageCategories()
@@ -262,6 +286,7 @@
             NewTransaction.Amount = Amount;
             await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
             transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
+            filteredTransactions = transactions;                                                                                                    
         }
         catch
         {
@@ -301,5 +326,6 @@
         }
         CloseAddTransactionModal();
         transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
+        filteredTransactions = transactions;
     }
 }
