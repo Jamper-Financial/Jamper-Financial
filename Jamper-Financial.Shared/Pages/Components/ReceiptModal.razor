@@ -11,6 +11,8 @@
     [Parameter] public Transaction Transaction { get; set; }
     private IBrowserFile? uploadedFile;
     private string? receiptPreviewUrl;
+    private string toasterMessage = string.Empty;
+    private string toasterClass = string.Empty;
     private bool showDeleteConfirmation = false;
     private string? errorMessage;
 
@@ -54,8 +56,18 @@
             else
             {
                 errorMessage = "Failed to save receipt.";
+                Console.WriteLine(errorMessage);
+                toasterMessage = errorMessage;
+                toasterClass = "error";
+                await GetReceipt();
             }
         }
+    }
+
+    private void ClearToaster()
+    {
+        toasterMessage = string.Empty;
+        toasterClass = string.Empty;
     }
 
     private async Task GetReceipt()
@@ -158,4 +170,13 @@
                 <button class="delete-button" @onclick="HideDeleteConfirmation">No</button>
             </div>
         </div>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(toasterMessage))
+{
+    <div class="toaster @toasterClass">
+        <span>@toasterMessage</span>
+        <button class="close-toaster" @onclick="ClearToaster">×</button>
+    </div>
 }
