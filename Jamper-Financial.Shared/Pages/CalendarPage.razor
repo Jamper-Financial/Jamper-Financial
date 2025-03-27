@@ -141,8 +141,8 @@
                         </h4>
                         <p>@(Categories.FirstOrDefault(c => c.CategoryID == transaction.CategoryID)?.Name ?? "Unknown")</p>
 
-                        <p class="@(transaction.Debit > 0 ? "negative-amount" : "positive-amount")">
-                            @(transaction.Debit > 0 ? "-" : "+")@((transaction.Debit > 0 ? transaction.Debit : transaction.Credit).ToString("C"))
+                        <p class="@(transaction.TransactionType == "e" ? "negative-amount" : "positive-amount")">
+                            @(transaction.Amount > 0 ? "-" : "+")@((transaction.Amount > 0 ? transaction.Amount : transaction.Amount).ToString("C"))
                         </p>
                         <p>@transaction.Date.ToString("d")</p>
                         <p>Frequency: @(string.IsNullOrEmpty(transaction.Frequency) ? "None" : transaction.Frequency)</p>
@@ -478,13 +478,11 @@
                 Date = SelectedDate != 0 ? new DateTime(SelectedYear, SelectedMonth, SelectedDate) : DateTime.Now,
                 Description = string.Empty,
                 CategoryID = 0,
-                Debit = 0,
-                Credit = 0,
+                Amount = 0,
                 Frequency = "None",
                 EndDate = SelectedDate != 0 ? new DateTime(SelectedYear, SelectedMonth, SelectedDate) : DateTime.Now,
                 UserID = UserStateService.UserId
             };
-        Amount = 0;
         IsEditMode = false;
         ShowDeleteConfirmation = false;
         ShowAddTransactionModal = true;
@@ -493,7 +491,7 @@
     private void ShowEditTransactionModal(Transaction transaction)
     {
         NewTransaction = transaction;
-        Amount = transaction.Debit > 0 ? transaction.Debit : transaction.Credit;
+        Amount = transaction.Amount > 0 ? transaction.Amount : transaction.Amount;
         IsEditMode = true;
         ShowDeleteConfirmation = false;
         ShowAddTransactionModal = true;

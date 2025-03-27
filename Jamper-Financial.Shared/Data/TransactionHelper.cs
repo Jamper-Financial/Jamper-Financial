@@ -3,6 +3,7 @@ using Jamper_Financial.Shared.Utilities;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Data.Sqlite;
 using System.Data;
+using System.Linq.Expressions;
 using System.Reflection.Metadata;
 
 namespace Jamper_Financial.Shared.Data
@@ -20,33 +21,46 @@ namespace Jamper_Financial.Shared.Data
             {
                 await connection.OpenAsync();
 
+                // Note: we need to filter out subscriptions that are not yet actual expenses
                 string query = @"
-                    SELECT t.TransactionID, t.Date, t.Description, t.Amount, t.Debit, t.Credit, t.CategoryID, c.Color, c.TransactionType, t.HasReceipt, t.Frequency, t.EndDate
+                    SELECT t.TransactionID, t.[Date], t.Description, t.Amount, t.CategoryID, c.Color, c.TransactionType, t.HasReceipt, t.Frequency, t.EndDate, a.AccountID
                     FROM Transactions t
                     JOIN Categories c ON t.CategoryID = c.CategoryID
+                    JOIN Accounts a ON t.AccountID = a.AccountID
                     WHERE t.UserID = @UserID
-                    ORDER BY t.Date DESC";
+                    ORDER BY t.[Date] DESC";
 
                 using (var command = new SqliteCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@UserID", userId);
                     using (var reader = await command.ExecuteReaderAsync())
                     {
+                        // Get ordinals
+                        int transactionIdOrdinal = reader.GetOrdinal("TransactionID");
+                        int dateOrdinal = reader.GetOrdinal("Date");
+                        int descriptionOrdinal = reader.GetOrdinal("Description");
+                        int amountOrdinal = reader.GetOrdinal("Amount");
+                        int categoryIdOrdinal = reader.GetOrdinal("CategoryID");
+                        int transactionTypeOrdinal = reader.GetOrdinal("TransactionType");
+                        int hasReceiptOrdinal = reader.GetOrdinal("HasReceipt");
+                        int frequencyOrdinal = reader.GetOrdinal("Frequency");
+                        int endDateOrdinal = reader.GetOrdinal("EndDate");
+                        int accountIdOrdinal = reader.GetOrdinal("AccountID");
+
                         while (await reader.ReadAsync())
                         {
                             transactions.Add(new Transaction
                             {
-                                TransactionID = reader.GetInt32(0),
-                                Date = DateTime.Parse(reader.GetString(1)),
-                                Description = reader.GetString(2),
-                                Amount = reader.GetDecimal(3), // Fetch Amount
-                                Debit = reader.GetDecimal(4),
-                                Credit = reader.GetDecimal(5),
-                                CategoryID = reader.GetInt32(6),
-                                TransactionType = reader.GetString(8),
-                                HasReceipt = reader.GetInt32(9) == 1,
-                                Frequency = reader.GetString(10),
-                                EndDate = reader.IsDBNull(11) ? (DateTime?)null : DateTime.Parse(reader.GetString(11))
+                                TransactionID = reader.GetInt32(transactionIdOrdinal),
+                                Date = DateTime.Parse(reader.GetString(dateOrdinal)),
+                                Description = reader.GetString(descriptionOrdinal),
+                                Amount = reader.GetDecimal(amountOrdinal),
+                                CategoryID = reader.GetInt32(categoryIdOrdinal),
+                                TransactionType = reader.GetString(transactionTypeOrdinal),
+                                HasReceipt = reader.GetInt32(hasReceiptOrdinal) == 1,
+                                Frequency = reader.GetString(frequencyOrdinal),
+                                EndDate = reader.IsDBNull(endDateOrdinal) ? (DateTime?)null : DateTime.Parse(reader.GetString(endDateOrdinal)),
+                                AccountID = reader.GetInt32(accountIdOrdinal),
                             });
                         }
                     }
@@ -56,58 +70,63 @@ namespace Jamper_Financial.Shared.Data
             return transactions;
         }
 
-
-
         // This method inserts a new transaction into the database
         public static async Task AddTransactionAsync(Transaction transaction)
         {
-            using (var connection = GetConnection())
+            try
             {
-                await connection.OpenAsync();
-
-
-                string categoryQuery = "SELECT TransactionType FROM Categories WHERE CategoryID = @CategoryID AND UserID = @UserID;";
-                using (var categoryCommand = new SqliteCommand(categoryQuery, connection))
+                using (var connection = GetConnection())
                 {
-                    categoryCommand.Parameters.AddWithValue("@CategoryID", transaction.CategoryID);
-                    categoryCommand.Parameters.AddWithValue("@UserID", transaction.UserID);
-                    var result = await categoryCommand.ExecuteScalarAsync();
-                    transaction.TransactionType = result?.ToString() ?? "e"; // Default to expense
-                }
+                    await connection.OpenAsync();
 
-                
-                if (transaction.TransactionType == "e")
-                {
-                    transaction.Debit = transaction.Amount;
-                    transaction.Credit = 0;
-                }
-                else
-                {
-                    transaction.Debit = 0;
-                    transaction.Credit = transaction.Amount;
-                }
 
-                string query = @"
-                    INSERT INTO Transactions (UserID, Date, Description, Amount, Debit, Credit, CategoryID, TransactionType, HasReceipt, Frequency, EndDate)
-                    VALUES (@UserID, @Date, @Description, @Amount, @Debit, @Credit, @CategoryID, @TransactionType, @HasReceipt, @Frequency, @EndDate);
+                    string categoryQuery = "SELECT TransactionType FROM Categories WHERE CategoryID = @CategoryID AND UserID = @UserID;";
+                    using (var categoryCommand = new SqliteCommand(categoryQuery, connection))
+                    {
+                        categoryCommand.Parameters.AddWithValue("@CategoryID", transaction.CategoryID);
+                        categoryCommand.Parameters.AddWithValue("@UserID", transaction.UserID);
+                        var result = await categoryCommand.ExecuteScalarAsync();
+                        transaction.TransactionType = result?.ToString() ?? "e"; // Default to expense
+                    }
+
+                    //remove the debit and credit and use amount column only
+                    //if (transaction.TransactionType == "e")
+                    //{
+                    //    transaction.Debit = transaction.Amount;
+                    //    transaction.Credit = 0;
+                    //}
+                    //else
+                    //{
+                    //    transaction.Debit = 0;
+                    //    transaction.Credit = transaction.Amount;
+                    //}
+
+                    string query = @"
+                    INSERT INTO Transactions (UserID, Date, Description, Amount, CategoryID, TransactionType, HasReceipt, Frequency, EndDate, AccountID)
+                    VALUES (@UserID, @Date, @Description, @Amount, @CategoryID, @TransactionType, @HasReceipt, @Frequency, @EndDate, @AccountID);
                     ";
 
-                using (var command = new SqliteCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@UserID", transaction.UserID);
-                    command.Parameters.AddWithValue("@Date", transaction.Date.ToString("yyyy-MM-dd"));
-                    command.Parameters.AddWithValue("@Description", transaction.Description);
-                    command.Parameters.AddWithValue("@Amount", transaction.Amount);
-                    command.Parameters.AddWithValue("@Debit", transaction.Debit);
-                    command.Parameters.AddWithValue("@Credit", transaction.Credit);
-                    command.Parameters.AddWithValue("@CategoryID", transaction.CategoryID);
-                    command.Parameters.AddWithValue("@TransactionType", transaction.TransactionType);
-                    command.Parameters.AddWithValue("@HasReceipt", transaction.HasReceipt ? 1 : 0);
-                    command.Parameters.AddWithValue("@Frequency", transaction.Frequency);
-                    command.Parameters.AddWithValue("@EndDate", transaction.EndDate?.ToString("yyyy-MM-dd") ?? (object)DBNull.Value);
-                    await command.ExecuteNonQueryAsync();
+                    using (var command = new SqliteCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@UserID", transaction.UserID);
+                        command.Parameters.AddWithValue("@Date", transaction.Date.ToString("yyyy-MM-dd"));
+                        command.Parameters.AddWithValue("@Description", transaction.Description);
+                        command.Parameters.AddWithValue("@Amount", transaction.Amount);
+                        command.Parameters.AddWithValue("@CategoryID", transaction.CategoryID);
+                        command.Parameters.AddWithValue("@TransactionType", transaction.TransactionType);
+                        command.Parameters.AddWithValue("@HasReceipt", transaction.HasReceipt ? 1 : 0);
+                        command.Parameters.AddWithValue("@Frequency", transaction.Frequency);
+                        command.Parameters.AddWithValue("@EndDate", transaction.EndDate?.ToString("yyyy-MM-dd") ?? (object)DBNull.Value);
+                        command.Parameters.AddWithValue("@AccountID", transaction.AccountID);
+                        await command.ExecuteNonQueryAsync();
+                    }
                 }
             }
+            catch (Exception e)
+            {
+                Console.Write("Error: " + e.Message);
+            }
+
         }
 
 
@@ -119,18 +138,17 @@ namespace Jamper_Financial.Shared.Data
             {
                 await connection.OpenAsync();
 
-                string query = "UPDATE Transactions SET Date = @Date, Description = @Description, Amount = @Amount, Debit = @Debit, Credit = @Credit, CategoryID = @CategoryID, TransactionType = @TransactionType, Frequency = @Frequency, EndDate = @EndDate WHERE TransactionID = @TransactionID";
+                string query = "UPDATE Transactions SET Date = @Date, Description = @Description, Amount = @Amount, CategoryID = @CategoryID, TransactionType = @TransactionType, Frequency = @Frequency, EndDate = @EndDate, AccountId = @AccountId WHERE TransactionID = @TransactionID";
                 using (var command = new SqliteCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Date", transaction.Date.ToString("yyyy-MM-dd"));
                     command.Parameters.AddWithValue("@Description", transaction.Description ?? string.Empty);
                     command.Parameters.AddWithValue("@Amount", transaction.Amount);
-                    command.Parameters.AddWithValue("@Debit", transaction.Debit);
-                    command.Parameters.AddWithValue("@Credit", transaction.Credit);
                     command.Parameters.AddWithValue("@CategoryID", transaction.CategoryID);
                     command.Parameters.AddWithValue("@TransactionType", transaction.TransactionType);
                     command.Parameters.AddWithValue("@Frequency", transaction.Frequency ?? string.Empty);
                     command.Parameters.AddWithValue("@EndDate", transaction.EndDate.HasValue ? transaction.EndDate.Value.ToString("yyyy-MM-dd") : (object)DBNull.Value);
+                    command.Parameters.AddWithValue("@AccountId", transaction.AccountID);
                     command.Parameters.AddWithValue("@TransactionID", transaction.TransactionID);
 
                     await command.ExecuteNonQueryAsync();
@@ -193,10 +211,10 @@ namespace Jamper_Financial.Shared.Data
                 using var connection = GetConnection();
                 await connection.OpenAsync();
                 string query = @"
-            SELECT ReceiptID, Description, ReceiptData, TransactionID 
-            FROM Receipts 
-            WHERE TransactionID = @TransactionID
-        ";
+                    SELECT ReceiptID, Description, ReceiptData, TransactionID 
+                    FROM Receipts 
+                    WHERE TransactionID = @TransactionID
+                ";
 
                 using (var command = new SqliteCommand(query, connection))
                 {

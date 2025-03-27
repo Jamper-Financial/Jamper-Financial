@@ -59,7 +59,7 @@
     private async Task GetReceipt()
     {
         Console.WriteLine("Displaying receipt");
-        var receiptData = await TransactionHelper.GetReceiptAsync(Transaction.TransactionID);
+        var receiptData = await TransactionManager.GetReceiptAsync(Transaction);
         if (receiptData != null)
         {
             receiptPreviewUrl = $"data:image/png;base64,{Convert.ToBase64String(receiptData.ReceiptFileData)}";
@@ -97,7 +97,7 @@
             <p><strong>Transaction ID:</strong> @Transaction.TransactionID</p>
             <p><strong>Category:</strong> @Transaction.CategoryID</p>
             <p><strong>Date:</strong> @Transaction.Date.ToString("dd MMM, hh:mm tt")</p>
-            <p><strong>Amount:</strong> @((Transaction.Debit > 0 ? Transaction.Debit : Transaction.Credit).ToString("C"))</p>
+            <p><strong>Amount:</strong> @((Transaction.Amount > 0 ? Transaction.Amount : Transaction.Amount).ToString("C"))</p>
             @if (Transaction.HasReceipt == true)
             {
                 <p>Receipt is available.</p>

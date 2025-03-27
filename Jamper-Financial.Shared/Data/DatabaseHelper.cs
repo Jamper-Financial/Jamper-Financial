@@ -37,7 +37,9 @@ namespace Jamper_Financial.Shared.Data
                     Description TEXT,
                     ShowDescription INTEGER,
                     Frequency TEXT,
-                    IsFadingOut INTEGER
+                    IsFadingOut INTEGER,
+                    UserID INTEGER NOT NULL,
+                    CONSTRAINT Goals_Users_FK  FOREIGN KEY (UserID) REFERENCES Users(UserID)
                 );
         ");
 
@@ -79,14 +81,13 @@ namespace Jamper_Financial.Shared.Data
                 // Create Accounts Table
                 CreateTableIfNotExists(connection, "Accounts", @"
                     CREATE TABLE Accounts (
-	                    AccountID INTEGER NOT NULL,
+	                    AccountID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	                    AccountTypeID INTEGER NOT NULL,
-	                    ""Account Name"" TEXT,
+	                    AccountName TEXT NOT NULL ,
                         Balance REAL,
                         AccountNumber INTEGER,
                         UserID INTEGER,
                         CONSTRAINT Accounts_Users_FK  FOREIGN KEY (UserID) REFERENCES Users(UserID)
-	                    CONSTRAINT Accounts_PK PRIMARY KEY (AccountID),
 	                    CONSTRAINT Accounts_AccountType_FK FOREIGN KEY (AccountTypeID) REFERENCES AccountType(AccountTypeId)
                     );
                 ");
@@ -125,22 +126,23 @@ namespace Jamper_Financial.Shared.Data
                 ");
 
                 // Create Transactions Table
+                // MGE 03/26 Remove the debit and credit columns since we have the amount column and transaction type column
                 CreateTableIfNotExists(connection, "Transactions", @"
                     CREATE TABLE IF NOT EXISTS Transactions (
                         TransactionID INTEGER PRIMARY KEY AUTOINCREMENT,
                         UserID INTEGER NOT NULL,
+                        AccountID INTEGER NOT NULL,
                         Date TEXT NOT NULL, 
                         Description TEXT NOT NULL,
                         Amount DECIMAL(10, 2) NOT NULL,  -- Re-added Amount
-                        Debit DECIMAL(10, 2) DEFAULT 0,  
-                        Credit DECIMAL(10, 2) DEFAULT 0, 
                         CategoryID INTEGER NOT NULL,  
                         TransactionType TEXT CHECK(TransactionType IN ('e', 'i')) NOT NULL,
                         HasReceipt INTEGER DEFAULT 0,
                         Frequency TEXT DEFAULT 'None',
                         EndDate TEXT,
-                        FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
-                        FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID) ON DELETE CASCADE
+                        CONSTRAINT Transactions_Users_FK FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
+                        CONSTRAINT Transactions_Categories_FK FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID) ON DELETE CASCADE
+	                    CONSTRAINT Transactions_Accounts_FK FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID)
                     );
                 ");
 
@@ -183,8 +185,8 @@ namespace Jamper_Financial.Shared.Data
                     );
                 ");
 
-                // Insert initial roles
-                InsertInitialRoles(connection);
+                // Insert initial data
+                InitiateData(connection);
 
             }
         }
@@ -253,8 +255,8 @@ namespace Jamper_Financial.Shared.Data
                 {
                     connection.Open();
                     string insertQuery = @"
-                    INSERT INTO Goals (Type, Name, Amount, Date, GoalType, IsQuickGoal, IsRetirementGoal, IsEmergencyFundGoal, IsTravelGoal, IsHomeGoal, Category, StartDate, EndDate, Description, ShowDescription, Frequency, IsFadingOut)
-                    VALUES (@Type, @Name, @Amount, @Date, @GoalType, @IsQuickGoal, @IsRetirementGoal, @IsEmergencyFundGoal, @IsTravelGoal, @IsHomeGoal, @Category, @StartDate, @EndDate, @Description, @ShowDescription, @Frequency, @IsFadingOut);
+                    INSERT INTO Goals (Type, Name, Amount, Date, GoalType, IsQuickGoal, IsRetirementGoal, IsEmergencyFundGoal, IsTravelGoal, IsHomeGoal, Category, StartDate, EndDate, Description, ShowDescription, Frequency, IsFadingOut, UserID)
+                    VALUES (@Type, @Name, @Amount, @Date, @GoalType, @IsQuickGoal, @IsRetirementGoal, @IsEmergencyFundGoal, @IsTravelGoal, @IsHomeGoal, @Category, @StartDate, @EndDate, @Description, @ShowDescription, @Frequency, @IsFadingOut, @UserID);
                 ";
                     using (var command = new SqliteCommand(insertQuery, connection))
                     {
@@ -275,11 +277,12 @@ namespace Jamper_Financial.Shared.Data
                         command.Parameters.AddWithValue("@ShowDescription", goal.ShowDescription);
                         command.Parameters.AddWithValue("@Frequency", goal.Frequency ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@IsFadingOut", goal.IsFadingOut);
+                        command.Parameters.AddWithValue("@UserID", goal.UserID);
                         command.ExecuteNonQuery();
 
                         command.CommandText = "SELECT last_insert_rowid();"; // ADDED
                         long newId = (long)command.ExecuteScalar();         // ADDED
-                        goal.GoalId = (int)newId; 
+                        goal.GoalId = (int)newId;
                     }
                 }
             }
@@ -369,7 +372,7 @@ namespace Jamper_Financial.Shared.Data
             }
             catch (Exception ex)
             {
-            
+
             }
         }
 
@@ -546,25 +549,62 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
-        private static void InsertInitialRoles(SqliteConnection connection)
+                private static void InitiateData(SqliteConnection connection)
         {
-            string[] roles = { "Admin", "User" };
-
-            foreach (var role in roles)
+            // check if role table is empty
+            string checkRoleQuery = "SELECT COUNT(*) FROM Roles;";
+            using (var command = new SqliteCommand(checkRoleQuery, connection))
             {
-                string insertRoleQuery = @"
+                var result = command.ExecuteScalar();
+                if (Convert.ToInt32(result) == 0)
+                {
+                    // Insert default roles
+                    string[] roles = { "Admin", "User" };
+
+                    foreach (var role in roles)
+                    {
+                        string insertRoleQuery = @"
                     INSERT INTO Roles (RoleName)
                     SELECT @RoleName
                     WHERE NOT EXISTS (SELECT 1 FROM Roles WHERE RoleName = @RoleName);
                 ";
 
-                using (var command = new SqliteCommand(insertRoleQuery, connection))
+                        using (var roleCommand = new SqliteCommand(insertRoleQuery, connection))
+                        {
+                            roleCommand.Parameters.AddWithValue("@RoleName", role);
+                            roleCommand.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+
+
+            // check if account type table is empty
+            string checkAccountTypeQuery = "SELECT COUNT(*) FROM AccountType;";
+            using (var command = new SqliteCommand(checkAccountTypeQuery, connection))
+            {
+                var result = command.ExecuteScalar();
+                if (Convert.ToInt32(result) == 0)
                 {
-                    command.Parameters.AddWithValue("@RoleName", role);
-                    command.ExecuteNonQuery();
+                    // Insert default account types
+                    string[] accountTypes = { "Checking", "Savings", "Credit Card", "Cash" };
+                    foreach (var accountType in accountTypes)
+                    {
+                        string insertAccountTypeQuery = @"
+                    INSERT INTO AccountType (Description)
+                    SELECT @AccountTypeName
+                    WHERE NOT EXISTS (SELECT 1 FROM AccountType WHERE Description = @AccountTypeName);
+                ";
+                        using (var accountTypeCommand = new SqliteCommand(insertAccountTypeQuery, connection))
+                        {
+                            accountTypeCommand.Parameters.AddWithValue("@AccountTypeName", accountType);
+                            accountTypeCommand.ExecuteNonQuery();
+                        }
+                    }
                 }
             }
         }
+
 
         // This method is used to insert a new user into the database
         public static void InsertUser(User user)
@@ -733,7 +773,7 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
- 
+
         public static (int UserId, int ProfileId, string Role)? GetUserDetailsByUsernameOrEmail(string usernameOrEmail)
         {
             try

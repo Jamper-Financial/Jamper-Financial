@@ -1,36 +1,54 @@
 ﻿@page "/dashboard-page"
+
 @inherits LayoutComponentBase
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Services
 @using Jamper_Financial.Shared.Models
+@using Jamper_Financial.Shared.Utilities
 @inject NavigationManager Navigation
 @inject IUserService UserService
 @inject LoginStateService LoginState
 @inject UserStateService UserStateService
-
+@inject IExpenseService ExpenseService
+@inject IJSRuntime JS
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
 
     private UserProfile userProfile = new UserProfile();
     private int currentIndex = 0;
-    private List<string> cards = new List<string> { "History", "Recent Transactions", "Manage Saving Goals" };
+    private bool chartsNeedInitialization = false;
+
+    private List<CardItem> cards = new List<CardItem>
+    {
+        new CardItem { Title = "History", Route = "/dashboard-page", ChartType = "HistoryChart" },
+        new CardItem { Title = "Recent Transactions", Route = "/transactions-page", ChartType = "" },
+        new CardItem { Title = "Manage Saving Goals", Route = "/view-goals-page", ChartType = "SavingsGoalsChart" },
+        new CardItem { Title = "Subscription Due", Route = "/calendar", ChartType = "" },
+    };
+    private List<Expense> weeklyExpenses = new List<Expense>();
+    private List<Transaction> transactions;
+    private List<Expense> monthlyExpenses = new List<Expense>();
+    private bool isChartRendered = false;
+    string username = "";
 
     protected override async Task OnInitializedAsync()
     {
         SetPageTitle("Dashboard");
 
-
-
         // Get the logged-in user's ID and username from the UserStateService
         int userId = UserStateService.UserId;
-        string username = UserStateService.Username;
+        username = UserStateService.Username;
 
-        Console.WriteLine(userId);
+        Console.WriteLine(username);
 
         if (userId > 0)
         {
             userProfile = await UserService.GetUserProfileByIdAsync(userId);
+            transactions = await TransactionManager.LoadTransactionsAsync(userId);
+            weeklyExpenses = await ExpenseService.GetExpensesAsync(userId, "weekly");
+            monthlyExpenses = await ExpenseService.GetExpensesAsync(userId, "monthly");
+            Console.WriteLine(weeklyExpenses.Count);
         }
         else
         {
@@ -38,42 +56,277 @@
         }
     }
 
-    private void NextCard()
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        currentIndex = (currentIndex + 1) % cards.Count;
+        if (firstRender)
+        {
+            await RenderWeeklyActivityChart();
+            await InitializeVisibleCharts();
+        }
+        else if (chartsNeedInitialization)
+        {
+            chartsNeedInitialization = false;
+            await InitializeVisibleCharts();
+        }
     }
 
-    private void NavigateToSavingGoals()
+    private async Task InitializeVisibleCharts()
     {
-        Navigation.NavigateTo("/view-goals-page");
+        var visibleCards = GetVisibleCards(); // Get wrapped cards
+        foreach (var card in visibleCards)
+        {
+            if (!string.IsNullOrEmpty(card.ChartType))
+            {
+                await InitializeChart(card.ChartType);
+            }
+        }
+    }
+
+    private async Task InitializeChart(string chartType)
+    {
+        switch (chartType)
+        {
+            case "HistoryChart":
+                await RenderBalanceHistoryChart();
+                break;
+            case "SavingsGoalsChart":
+                await RenderSavingGoalsChart();
+                break;
+        }
+    }
+
+    private async Task RenderRecentTransactions()
+    {
+
+    }
+
+    private async Task RenderUpcomingSubscriptions()
+    {
+
+    }
+
+    private async Task RenderWeeklyActivityChart()
+    {
+        var daysOfWeek = new[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+        var expenseData = new decimal[7];
+        var salaryData = new decimal[7];
+
+        foreach (var expense in weeklyExpenses)
+        {
+            var dayOfWeek = (int)expense.Date.DayOfWeek;
+            expenseData[dayOfWeek] += expense.ExpenseAmount;
+            salaryData[dayOfWeek] += expense.SalaryAmount;
+        }
+
+        var chartData = new
+        {
+            labels = daysOfWeek,
+            datasets = new[]
+            {
+                new
+                {
+                    label = "Expenses",
+                    data = expenseData,
+                    backgroundColor = "rgba(75, 192, 192, 0.2)",
+                    borderColor = "rgba(75, 192, 192, 1)",
+                    borderWidth = 1,
+                    borderRadius = 0
+                },
+                new
+                {
+                    label = "Salary",
+                    data = salaryData,
+                    backgroundColor = "rgba(153, 102, 255, 0.2)",
+                    borderColor = "rgba(153, 102, 255, 1)",
+                    borderWidth = 1,
+                    borderRadius = 10
+                }
+            }
+        };
+        await JS.InvokeVoidAsync("initializeBarChart", "weeklyActivityChart", chartData, "y");
+    }
+
+    private async Task RenderBalanceHistoryChart()
+    {
+        var months = new[] { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+        var incomeData = new decimal[12];
+        var expenseData = new decimal[12];
+        var differenceData = new decimal[12];
+
+        foreach (var expense in monthlyExpenses)
+        {
+            var month = expense.Date.Month - 1; // Month is 1-based, array is 0-based
+            expenseData[month] += expense.ExpenseAmount;
+            incomeData[month] += expense.SalaryAmount;
+        }
+
+        for (int i = 0; i < 12; i++)
+        {
+            differenceData[i] = incomeData[i] - expenseData[i];
+        }
+
+        var chartData = new
+        {
+            labels = months,
+            datasets = new[]
+            {
+                new
+                {
+                    label = "Total Income - Expenses",
+                    data = differenceData,
+                    backgroundColor = "rgba(75, 192, 192, 0.2)",
+                    borderColor = "rgba(75, 192, 192, 1)",
+                    tension = 0.4, // This makes the line smooth
+                    fill = true
+                }
+            }
+        };
+        await JS.InvokeVoidAsync("initializeLineChart", "HistoryChart", chartData);
+    }
+
+    private async Task RenderSavingGoalsChart()
+    {
+        var daysOfWeek = new[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
+        var expenseData = new decimal[7];
+        var salaryData = new decimal[7];
+
+        foreach (var expense in weeklyExpenses)
+        {
+            var dayOfWeek = (int)expense.Date.DayOfWeek;
+            expenseData[dayOfWeek] += expense.ExpenseAmount;
+            salaryData[dayOfWeek] += expense.SalaryAmount;
+        }
+
+        var chartData = new
+        {
+            labels = daysOfWeek,
+            datasets = new[]
+            {
+                new
+                {
+                    label = "Expenses",
+                    data = expenseData,
+                    backgroundColor = "rgba(75, 192, 192, 0.2)",
+                    borderColor = "rgba(75, 192, 192, 1)",
+                    borderWidth = 1,
+                    borderRadius = 0
+                },
+                new
+                {
+                    label = "Salary",
+                    data = salaryData,
+                    backgroundColor = "rgba(153, 102, 255, 0.2)",
+                    borderColor = "rgba(153, 102, 255, 1)",
+                    borderWidth = 1,
+                    borderRadius = 10
+                }
+            }
+        };
+        await JS.InvokeVoidAsync("initializeBarChart", "SavingsGoalsChart", chartData);
+    }
+
+    private async Task NextCard()
+    {
+        currentIndex = (currentIndex + 1) % cards.Count;
+        chartsNeedInitialization = true;
+        await InvokeAsync(StateHasChanged); // Force render
+        UpdateCarousel();
+    }
+
+    private async Task PreviousCard()
+    {
+        currentIndex = (currentIndex - 1 + cards.Count) % cards.Count;
+        chartsNeedInitialization = true;
+        await InvokeAsync(StateHasChanged); // Force render
+        UpdateCarousel();
+    }
+
+    private void UpdateCarousel()
+    {
+        var offset = -currentIndex;
+        JS.InvokeVoidAsync("updateCarousel", offset);
+    }
+
+    private void NavigateToPage(string route)
+    {
+        Navigation.NavigateTo(route);
+    }
+
+    private IEnumerable<CardItem> GetVisibleCards()
+    {
+        // Always return 3 cards for seamless wrapping
+        return cards.Skip(currentIndex)
+                    .Concat(cards.Take(currentIndex))  // Wrap around
+                    .Take(3);  // Always show 3 cards
+    }
+
+    private class CardItem
+    {
+        public string Title { get; set; }
+        public string Route { get; set; }
+        public string ChartType { get; set; }
     }
 }
 
 <div class="dashboard-container">
     <div class="dashboard-header">
-        <h3>Welcome back to JAMPER Finance!</h3>
+        <h3>Welcome back <span>@username</span> to Finance!</h3>
     </div>
 
     <!-- Carousel Section -->
     <div class="carousel">
-        <div class="card">
-            <h3 class="@(cards[currentIndex] == "Manage Saving Goals" ? "manage-saving-goals-header" : "")" 
-                @onclick="@(() => { if (cards[currentIndex] == "Manage Saving Goals") NavigateToSavingGoals(); })">
-                @cards[currentIndex]
-            </h3>
-        </div>
-        <div class="card">
-            <h3 class="@(cards[(currentIndex + 1) % cards.Count] == "Manage Saving Goals" ? "manage-saving-goals-header" : "")" 
-                @onclick="@(() => { if (cards[(currentIndex + 1) % cards.Count] == "Manage Saving Goals") NavigateToSavingGoals(); })">
-                @cards[(currentIndex + 1) % cards.Count]
-            </h3>
-        </div>
-        <button class="carousel-button" @onclick="NextCard">&#10095;</button>
+        <button class="carousel-button left" @onclick="PreviousCard">&#10094;</button>
+        @foreach (var card in GetVisibleCards())
+        {
+            <div class="flex-column flex-item">
+                <h4 class="card-title flex-item">
+                    @card.Title
+                </h4>
+                <div class="card flex-item" @onclick="@(() => NavigateToPage(card.Route))">
+                    @if (card.ChartType != "")
+                    {
+                        <canvas id="@card.ChartType"></canvas>
+                    }
+                    @if (card.Title == "Recent Transactions")
+                    {
+                        @foreach (var transaction in transactions.Take(3))
+                        {
+                            <li class="transaction-item">
+                                <div class="transaction-title">@transaction.Description</div>
+                                <div class="transaction-date">@transaction.Amount</div>
+                                <div class="transaction-amount">@transaction.Date</div>
+                            </li>
+                        }
+                    }
+                    @if (card.Title == "Subscription Due")
+                    {
+                        <p>Sample</p>
+                    }
+                </div>
+            </div>
+        }
+        <button class="carousel-button right" @onclick="NextCard">&#10095;</button>
     </div>
 
-    <!-- Weekly Activity Section -->
+    <!-- Horizontal Bar -->
+    <hr class="section-divider" />
+
+    <!-- History Section -->
     <div class="weekly-activity">
         <h4>Weekly Activity</h4>
-        <div class="card">Placeholder for weekly activities...</div>
+        <div class="card-full">
+            <canvas id="weeklyActivityChart"></canvas>
+        </div>
     </div>
 </div>
+
+@* Add the following script to handle carousel functionality *@
+<script>
+    function updateCarousel() {
+        const carousel = document.querySelector('.carousel');
+        const cardWidth = carousel.offsetWidth / 3; // 3 cards visible at once
+        const translateValue = -currentIndex * cardWidth;
+        carousel.style.transform = `translateX(${translateValue}px)`;
+    }
+</script>

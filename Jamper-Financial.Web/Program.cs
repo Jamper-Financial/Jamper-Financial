@@ -26,6 +26,7 @@ var connectionString = $"Data Source={dbPath}";
 // Add states
 builder.Services.AddSingleton<GoalState>();
 builder.Services.AddSingleton<UserStateService>();
+builder.Services.AddSingleton<LoginStateService>();
 
 // Add services
 builder.Services.AddSingleton<DatabaseHelperFactory>();
@@ -33,11 +34,12 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
-builder.Services.AddSingleton<LoginStateService>();
 builder.Services.AddSingleton<AuthenticationService>();
 
 builder.Services.AddScoped<IUserService, UserService>(sp => new UserService(connectionString));
+builder.Services.AddScoped<IAccountService, AccountService>(sp => new AccountService(connectionString));
 builder.Services.AddScoped<IBudgetInsightsService, BudgetInsightsService>(sp => new BudgetInsightsService(connectionString));
+builder.Services.AddScoped<IExpenseService, ExpenseService>(sp => new ExpenseService(connectionString)); // Register IExpenseService
 
 builder.Services.AddSingleton<FirebaseService>();
 DatabaseHelper.InitializeDatabase();
@@ -74,15 +76,15 @@ app.UseAntiforgery();
 app.MapGet("/export/csv", async (HttpContext context) =>
 {
     // Parse query parameters
-    var reportName   = context.Request.Query["reportName"];
-    var description  = context.Request.Query["description"];
-    var fromDateStr  = context.Request.Query["fromDate"];
-    var toDateStr    = context.Request.Query["toDate"];
-    var categoriesStr= context.Request.Query["categories"];
+    var reportName = context.Request.Query["reportName"];
+    var description = context.Request.Query["description"];
+    var fromDateStr = context.Request.Query["fromDate"];
+    var toDateStr = context.Request.Query["toDate"];
+    var categoriesStr = context.Request.Query["categories"];
 
     // Convert string to DateTime
     DateTime fromDate = DateTime.Now.AddMonths(-6);
-    DateTime toDate   = DateTime.Now;
+    DateTime toDate = DateTime.Now;
     DateTime.TryParse(fromDateStr, out fromDate);
     DateTime.TryParse(toDateStr, out toDate);
 
@@ -101,8 +103,8 @@ app.MapGet("/export/csv", async (HttpContext context) =>
         .ToList();
 
     // Calculate totals
-    decimal totalDebit  = filtered.Sum(t => t.Debit);
-    decimal totalCredit = filtered.Sum(t => t.Credit);
+    decimal totalDebit = filtered.Where(t => t.TransactionType == "e").Sum(t => t.Amount);
+    decimal totalCredit = filtered.Where(t => t.TransactionType == "i").Sum(t => t.Amount);
 
     // Build CSV
     //    Now 7 columns: Description,Category,Date,Debit,Credit,Frequency,EndDate
@@ -119,10 +121,10 @@ app.MapGet("/export/csv", async (HttpContext context) =>
 
     foreach (var t in filtered)
     {
-        var debitStr  = (t.Debit  != 0) ? t.Debit.ToString("C")  : "";
-        var creditStr = (t.Credit != 0) ? t.Credit.ToString("C") : "";
-        var freq      = string.IsNullOrEmpty(t.Frequency) ? "" : t.Frequency;
-        var endDate   = t.EndDate.HasValue ? t.EndDate.Value.ToString("yyyy-MM-dd") : "";
+        var debitStr = (t.TransactionType == "e" && t.Amount != 0) ? t.Amount.ToString("C") : "";
+        var creditStr = (t.TransactionType == "i" && t.Amount != 0) ? t.Amount.ToString("C") : "";
+        var freq = string.IsNullOrEmpty(t.Frequency) ? "" : t.Frequency;
+        var endDate = t.EndDate.HasValue ? t.EndDate.Value.ToString("yyyy-MM-dd") : "";
 
         csv.AppendLine($"\"{t.Description}\"," +
                        $"\"{t.CategoryID}\"," +
@@ -133,7 +135,7 @@ app.MapGet("/export/csv", async (HttpContext context) =>
                        $"\"{endDate}\"");
     }
 
-    
+
     csv.AppendLine($",,,\"{totalDebit:C}\",\"{totalCredit:C}\",,");
 
     var csvBytes = Encoding.UTF8.GetBytes(csv.ToString());
@@ -147,15 +149,15 @@ app.MapGet("/export/csv", async (HttpContext context) =>
 app.MapGet("/export/pdf", async (HttpContext context) =>
 {
     // 1) Parse query parameters
-    var reportName   = context.Request.Query["reportName"];
-    var description  = context.Request.Query["description"];
-    var fromDateStr  = context.Request.Query["fromDate"];
-    var toDateStr    = context.Request.Query["toDate"];
-    var categoriesStr= context.Request.Query["categories"];
+    var reportName = context.Request.Query["reportName"];
+    var description = context.Request.Query["description"];
+    var fromDateStr = context.Request.Query["fromDate"];
+    var toDateStr = context.Request.Query["toDate"];
+    var categoriesStr = context.Request.Query["categories"];
 
     // Convert string to DateTime
     DateTime fromDate = DateTime.Now.AddMonths(-6);
-    DateTime toDate   = DateTime.Now;
+    DateTime toDate = DateTime.Now;
     DateTime.TryParse(fromDateStr, out fromDate);
     DateTime.TryParse(toDateStr, out toDate);
 
@@ -174,8 +176,8 @@ app.MapGet("/export/pdf", async (HttpContext context) =>
         .ToList();
 
     // Totals
-    decimal totalDebit  = filtered.Sum(t => t.Debit);
-    decimal totalCredit = filtered.Sum(t => t.Credit);
+    decimal totalDebit = filtered.Where(t => t.TransactionType == "e").Sum(t => t.Amount);
+    decimal totalCredit = filtered.Where(t => t.TransactionType == "i").Sum(t => t.Amount);
 
     // Build PDF with 7 columns
     var doc = Document.Create(document =>
@@ -195,7 +197,7 @@ app.MapGet("/export/pdf", async (HttpContext context) =>
                 headerCol.Item().AlignCenter().Text("Jamper Financial Report")
                     .FontSize(24)
                     .SemiBold()
-                    .FontColor("#62AD41"); 
+                    .FontColor("#62AD41");
 
                 // Sub-title: "Report Name: ____"
                 headerCol.Item().AlignLeft().Text($"Report Name: {reportName}")
@@ -240,10 +242,10 @@ app.MapGet("/export/pdf", async (HttpContext context) =>
                     // Rows
                     foreach (var t in filtered)
                     {
-                        var debitStr  = (t.Debit  != 0) ? t.Debit.ToString("C")  : "";
-                        var creditStr = (t.Credit != 0) ? t.Credit.ToString("C") : "";
-                        var freq      = string.IsNullOrEmpty(t.Frequency) ? "" : t.Frequency;
-                        var endDate   = t.EndDate.HasValue ? t.EndDate.Value.ToString("yyyy-MM-dd") : "";
+                        var debitStr = (t.TransactionType == "e" && t.Amount != 0) ? t.Amount.ToString("C") : "";
+                        var creditStr = (t.TransactionType == "i" && t.Amount != 0) ? t.Amount.ToString("C") : "";
+                        var freq = string.IsNullOrEmpty(t.Frequency) ? "" : t.Frequency;
+                        var endDate = t.EndDate.HasValue ? t.EndDate.Value.ToString("yyyy-MM-dd") : "";
 
                         table.Cell().Element(CellStyleData).Text(t.Description);
                         table.Cell().Element(CellStyleData).Text(t.CategoryID);

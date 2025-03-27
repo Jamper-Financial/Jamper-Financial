@@ -4,7 +4,7 @@ namespace Jamper_Financial.Shared.Services
 {
     public class UserStateService
     {
-        public int UserId { get; private set; }
+        public int UserId { get; private set; } = 0;
         public string Username { get; set; } = string.Empty;
         public LoggedInUser LoggedInUser { get; private set; } = new LoggedInUser();
 

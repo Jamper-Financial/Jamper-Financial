@@ -76,38 +76,5 @@ namespace Jamper_Financial.Shared.Services
                    password.Any(ch => "!@#$%^&*()_+-=[]{}|;:',.<>?/".Contains(ch));
         }
 
-        // Removedn unused method
-        // Create user account
-        //public void CreateUserAccount()
-        //{
-        //    if (!ValidateForm())
-        //    {
-        //        Console.WriteLine($"Validation failed: {ErrorMessage}");
-        //        return;
-        //    }
-
-        //    // Hash the password before storing it
-        //    string hashedPassword = AuthenticationService.HashPassword(Password);
-
-        //    // Insert the user into the database with the hashed password
-        //    DatabaseHelper.InsertUser(Username, Email, hashedPassword);
-            
-        //    // Get the user ID after inserting the user
-        //    int userId = DatabaseHelper.GetUserIdByUsername(Username);
-        //    DatabaseHelper.InsertProfile(userId, FirstName, LastName);
-            
-        //    // For Debugging
-        //    Console.WriteLine("Account created successfully!");
-
-        //    // Assign Admin role to the user
-        //    int adminRoleId = DatabaseHelper.GetRoleIdByName("Admin");
-        //    DatabaseHelper.AssignRoleToUser(userId, adminRoleId);
-
-        //    // Show success message
-        //    AccountCreated = true;
-
-        //    // Redirect to login page after a short delay
-        //    Task.Delay(2000).ContinueWith(_ => NavigateToLoginPage());
-        //}
     }
 }

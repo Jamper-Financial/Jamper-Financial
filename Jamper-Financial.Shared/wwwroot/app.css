@@ -2,7 +2,7 @@
     --primary-color: #62AD41;
     --primary-color-hover: #417828;
     --secondary-color: #417828;
-    --tertiary-color: #28a745
+    --tertiary-color: #28a745;
     --table-primary: #96ED9A;
     --table-secondary: #ABDCA7;
     --background-color: #62AD41;
@@ -19,9 +19,16 @@ a, .btn-link {
 }
 
 h3 {
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--secondary-color);
+    text-align: left;
+}
+
+h4 {
     font-size: 22px;
     font-weight: bold;
-    color: #417828;
+    color: var(--secondary-color);
     text-align: left;
 }
 
@@ -31,6 +38,7 @@ h3 {
     gap: 1rem;
     max-width: 400px;
 }
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
@@ -38,7 +46,7 @@ h3 {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 .content {
@@ -103,31 +111,31 @@ canvas {
 
 
 /* Common styles */
- .header {
+.header {
     font-size: 24px;
     font-weight: bold;
     color: #417828;
     text-align: center;
 }
 
- .content-container {
+.content-container {
     margin-top: -10px;
     padding-bottom: 10px 20px;
 }
 
- .form-group {
+.form-group {
     margin-bottom: 6px;
 }
 
-     .form-group label {
+    .form-group label {
         display: block;
         font-weight: bold;
         margin-bottom: 5px;
     }
 
-     .form-group input,
-     .form-group select,
-     .form-group textarea {
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
         width: 100%;
         padding: 5px;
         border: 1px solid #ced4da;
@@ -135,13 +143,13 @@ canvas {
         color: #B1BCC4;
     }
 
-     .form-group .error {
+    .form-group .error {
         color: #dc3545;
         font-size: 14px;
         margin-top: 5px;
     }
 
- .submit-button {
+.submit-button {
     display: inline-block;
     padding: 10px 20px;
     margin: 1px;
@@ -153,10 +161,10 @@ canvas {
     cursor: pointer;
     text-align: center;
     width: 100%;
-/*    margin-top: 10px;*/
+    /*    margin-top: 10px;*/
 }
 
-     .submit-button:hover {
+    .submit-button:hover {
         background-color: #417828;
     }
 

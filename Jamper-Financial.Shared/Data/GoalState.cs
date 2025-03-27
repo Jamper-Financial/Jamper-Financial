@@ -34,5 +34,6 @@ namespace Jamper_Financial.Shared.Data
         public string Frequency { get; set; }
         public bool IsFadingOut { get; set; }
         public bool IsEditing { get; set; }
+        public int UserID { get; set; }
     }
 }
