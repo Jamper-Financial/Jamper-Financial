@@ -28,6 +28,7 @@ builder.Services.AddSingleton<GoalState>();
 builder.Services.AddSingleton<UserStateService>();
 
 // Add services
+builder.Services.AddScoped<SearchService>();
 builder.Services.AddSingleton<DatabaseHelperFactory>();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
