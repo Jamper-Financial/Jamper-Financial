@@ -6,121 +6,495 @@
 @inject IJSRuntime JSRuntime
 @inject DatabaseHelperFactory DatabaseHelper
 
-<div class="header-container">
-    <h3 class="header">Goals</h3>
-</div>
+<style>
+    .transactions-page {
+        padding: 20px;
+    }
+
+    .transactions-section {
+        margin-top: 20px;
+    }
+
+    .transactions-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .add-transaction {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+        .add-transaction:hover {
+            background-color: #218838;
+        }
+
+    .scrollable-table {
+        max-height: 500px;
+        overflow-y: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    .goal-item:hover {
+        background-color: #f5f5f5;
+    }
+
+    .modify-btn, .delete-btn, .check-off-btn, .see-more-btn {
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+
+        .modify-btn img, .delete-btn img, .check-off-btn img {
+            width: 20px;
+            height: 20px;
+        }
+
+    .goal-details {
+        padding: 10px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+    .back-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0,0,0);
+        background-color: rgba(0,0,0,0.4);
+        padding-top: 60px;
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+    }
+
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .edit-goal-form {
+        padding: 20px;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin-top: 10px;
+    }
+
+        .edit-goal-form h3 {
+            margin-bottom: 20px;
+        }
+
+        .edit-goal-form .form-group {
+            margin-bottom: 15px;
+        }
+
+        .edit-goal-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .edit-goal-form input,
+        .edit-goal-form select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .edit-goal-form .button-group {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .edit-goal-form .update-goal-btn,
+        .edit-goal-form .cancel-btn {
+            background-color: #62AD41;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .edit-goal-form .cancel-btn {
+            background-color: #dc3545;
+        }
+
+        .edit-goal-form .update-goal-btn:hover {
+            background-color: #417828;
+        }
+
+        .edit-goal-form .cancel-btn:hover {
+            background-color: #c82333;
+        }
+</style>
+
 <div class="content-container">
-    <div class="view-goals-page">
-        <ul>
-            @foreach (var goal in goals)
-            {
-                <li class="goal-item @(goal.IsFadingOut ? "fade-out" : "")">
-                    <div class="goal-details">
-                        <div class="goal-info">
-                            @if (goal.IsQuickGoal)
+    <div class="transactions-page">
+        <div class="transactions-section">
+            <div class="transactions-header">
+                <h3 class="section-title">Goals</h3>
+            </div>
+            <div class="scrollable-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (goals != null)
+                        {
+                            @foreach (var goal in goals)
                             {
-                                <h3>@goal.Name</h3>
-                                <p>Type: @goal.Type</p>
-                                <p>Amount: $@goal.Amount</p>
-                                <p>Date: @goal.Date.ToShortDateString()</p>
-                            }
-                            else if (goal.IsRetirementGoal)
-                            {
-                                <h3>@goal.Name</h3>
-                                <p>Target Amount: $@goal.Amount</p>
-                                <p>Retirement Date: @goal.EndDate.ToShortDateString()</p>
-                                @if (goal.ShowDescription)
+                                <tr class="goal-item @(goal.IsFadingOut ? "fade-out" : "")">
+                                    <td>@goal.Name</td>
+                                    <td>@goal.Amount.ToString("C")</td>
+                                    <td>@goal.StartDate.ToShortDateString()</td>
+                                    <td>@goal.EndDate.ToShortDateString()</td>
+                                    <td>
+                                        <button class="see-more-btn" @onclick="() => ToggleDescription(goal)">...</button>
+                                        <button class="modify-btn" @onclick="() => StartEditing(goal)">
+                                            <img src="images/edit.png" alt="Edit" />
+                                        </button>
+                                        <button class="delete-btn" @onclick="() => ConfirmDeleteGoal(goal)">
+                                            <img src="images/bin.png" alt="Delete" />
+                                        </button>
+                                        <button class="check-off-btn" @onclick="() => ConfirmDeleteGoal(goal)">
+                                            <img src="images/check.png" alt="Check Off" />
+                                        </button>
+                                    </td>
+                                </tr>
+                                @if (goal.IsEditing)
                                 {
-                                    <p>Current Savings: $@goal.Description.Split(',')[0].Split(':')[1].Trim()</p>
-                                    <p>Monthly Contribution: $@goal.Description.Split(',')[1].Split(':')[1].Trim()</p>
-                                    <p>Investment Growth Rate: @goal.Description.Split(',')[2].Split(':')[1].Trim()</p>
-                                    <p>Inflation Rate: @goal.Description.Split(',')[3].Split(':')[1].Trim()</p>
-                                    <p>Retirement Income Needs: $@goal.Description.Split(',')[4].Split(':')[1].Trim()</p>
-                                    <p>Other Income Sources: $@goal.Description.Split(',')[5].Split(':')[1].Trim()</p>
+                                    <tr>
+                                        <td colspan="5">
+                                            <div class="edit-goal-form">
+                                                <h3>Edit Goal</h3>
+                                                <form @onsubmit="async (e) => SaveGoal(goal)">
+                                                    @if (goal.IsQuickGoal)
+                                                    {
+                                                        <div class="form-group">
+                                                            <label for="name">Name:</label>
+                                                            <input id="name" @bind="goal.Name" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="type">Type:</label>
+                                                            <input id="type" @bind="goal.Type" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="amount">Amount:</label>
+                                                            <input id="amount" type="number" step="0.01" @bind="goal.Amount" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="startDate">Start Date:</label>
+                                                            <input id="startDate" type="date" @bind="goal.StartDate" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="endDate">End Date:</label>
+                                                            <input id="endDate" type="date" @bind="goal.EndDate" required />
+                                                        </div>
+                                                    }
+                                                    else if (goal.IsRetirementGoal)
+                                                    {
+                                                        <div class="form-group">
+                                                            <label for="amount">Target Amount:</label>
+                                                            <input id="amount" type="number" step="0.01" @bind="goal.Amount" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="retCurrentSavings">Current Savings:</label>
+                                                            <input id="retCurrentSavings" type="number" step="0.01" @bind="retCurrentSavings" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="retMonthlyContribution">Monthly Contribution:</label>
+                                                            <input id="retMonthlyContribution" type="number" step="0.01" @bind="retMonthlyContribution" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="endDate">End Date:</label>
+                                                            <input id="endDate" type="date" @bind="goal.EndDate" required />
+                                                        </div>
+                                                    }
+                                                    else if (goal.IsEmergencyFundGoal)
+                                                    {
+                                                        <div class="form-group">
+                                                            <label for="amount">Target Amount:</label>
+                                                            <input id="amount" type="number" step="0.01" @bind="goal.Amount" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="emCurrentSavings">Current Savings:</label>
+                                                            <input id="emCurrentSavings" type="number" step="0.01" @bind="emCurrentSavings" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="emMonthlyContribution">Monthly Contribution:</label>
+                                                            <input id="emMonthlyContribution" type="number" step="0.01" @bind="emMonthlyContribution" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="endDate">Target Date:</label>
+                                                            <input id="endDate" type="date" @bind="goal.EndDate" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="emDescription">Description:</label>
+                                                            <input id="emDescription" @bind="emDescription" required />
+                                                        </div>
+                                                    }
+                                                    else if (goal.IsTravelGoal)
+                                                    {
+                                                        <div class="form-group">
+                                                            <label for="travelDestination">Destination:</label>
+                                                            <input id="travelDestination" @bind="travelDestination" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="startDate">Start Date:</label>
+                                                            <input id="startDate" type="date" @bind="goal.StartDate" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="endDate">End Date:</label>
+                                                            <input id="endDate" type="date" @bind="goal.EndDate" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="amount">Estimated Cost:</label>
+                                                            <input id="amount" type="number" step="0.01" @bind="goal.Amount" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="travelCurrentSavings">Current Savings:</label>
+                                                            <input id="travelCurrentSavings" type="number" step="0.01" @bind="travelCurrentSavings" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="travelMonthlyContribution">Monthly Contribution:</label>
+                                                            <input id="travelMonthlyContribution" type="number" step="0.01" @bind="travelMonthlyContribution" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="travelDescription">Description:</label>
+                                                            <input id="travelDescription" @bind="travelDescription" required />
+                                                        </div>
+                                                    }
+                                                    else if (goal.IsHomeGoal)
+                                                    {
+                                                        <div class="form-group">
+                                                            <label for="homePrice">Home Price:</label>
+                                                            <input id="homePrice" type="number" step="0.01" @bind="homePrice" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="homeCurrentSavings">Current Savings:</label>
+                                                            <input id="homeCurrentSavings" type="number" step="0.01" @bind="homeCurrentSavings" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="homeMonthlySavings">Monthly Savings:</label>
+                                                            <input id="homeMonthlySavings" type="number" step="0.01" @bind="homeMonthlySavings" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="endDate">Target Purchase Date:</label>
+                                                            <input id="endDate" type="date" @bind="goal.EndDate" required />
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="form-group">
+                                                            <label for="name">Name:</label>
+                                                            <input id="name" @bind="goal.Name" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="startDate">Start Date:</label>
+                                                            <input id="startDate" type="date" @bind="goal.StartDate" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="endDate">End Date:</label>
+                                                            <input id="endDate" type="date" @bind="goal.EndDate" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="amount">Amount:</label>
+                                                            <input id="amount" type="number" step="0.01" @bind="goal.Amount" required />
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="frequency">Frequency:</label>
+                                                            <select id="frequency" @bind="goal.Frequency" required>
+                                                                <option value="Daily">Daily</option>
+                                                                <option value="Every two Weeks">Every two Weeks</option>
+                                                                <option value="Monthly">Monthly</option>
+                                                                <option value="Annually">Annually</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="description">Description:</label>
+                                                            <input id="description" @bind="goal.Description" required />
+                                                        </div>
+                                                    }
+                                                    <div class="form-group button-group">
+                                                        <button type="submit" class="update-goal-btn">Save</button>
+                                                        <button type="button" class="cancel-btn" @onclick="() => CancelEdit(goal)">Cancel</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
                                 }
                             }
-                            else if (goal.IsEmergencyFundGoal)
-                            {
-                                <h3>@goal.Name</h3>
-                                <p>Target Amount: $@goal.Amount</p>
-                                <p>Target Date: @goal.EndDate.ToShortDateString()</p>
-                                @if (goal.ShowDescription)
-                                {
-                                    <p>Current Savings: $@goal.Description.Split(',')[0].Split(':')[1].Trim()</p>
-                                    <p>Monthly Contribution: $@goal.Description.Split(',')[1].Split(':')[1].Trim()</p>
-                                    <p>Description: @goal.Description.Split(',')[2].Split(':')[1].Trim()</p>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
-                                }
-                            }
-                            else if (goal.IsTravelGoal)
-                            {
-                                <h3>@goal.Name</h3>
-                                <p>Destination: @goal.Name.Split(' ')[2]</p>
-                                <p>Estimated Cost: $@goal.Amount</p>
-                                <p>Travel Dates: @goal.StartDate.ToShortDateString() - @goal.EndDate.ToShortDateString()</p>
-                                @if (goal.ShowDescription)
-                                {
-                                    <p>Current Savings: $@goal.Description.Split(',')[0].Split(':')[1].Trim()</p>
-                                    <p>Monthly Contribution: $@goal.Description.Split(',')[1].Split(':')[1].Trim()</p>
-                                    <p>Accommodation Costs: $@goal.Description.Split(',')[2].Split(':')[1].Trim()</p>
-                                    <p>Transportation Costs: $@goal.Description.Split(',')[3].Split(':')[1].Trim()</p>
-                                    <p>Food and Entertainment Costs: $@goal.Description.Split(',')[4].Split(':')[1].Trim()</p>
-                                    <p>Travel Category: @goal.Description.Split(',')[5].Split(':')[1].Trim()</p>
-                                    <p>Description: @goal.Description.Split(',')[6].Split(':')[1].Trim()</p>
-                                }
-                            }
-                            else if (goal.IsHomeGoal)
-                            {
-                                <h3>@goal.Name</h3>
-                                <p>Down Payment: $@goal.Amount</p>
-                                <p>Target Purchase Date: @goal.EndDate.ToShortDateString()</p>
-                                @if (goal.ShowDescription)
-                                {
-                                    <p>Home Price: $@goal.Description.Split(',')[0].Split(':')[1].Trim()</p>
-                                    <p>Current Savings: $@goal.Description.Split(',')[1].Split(':')[1].Trim()</p>
-                                    <p>Monthly Savings: $@goal.Description.Split(',')[2].Split(':')[1].Trim()</p>
-                                    <p>Loan Interest Rate: @goal.Description.Split(',')[3].Split(':')[1].Trim()</p>
-                                    <p>Loan Term: @goal.Description.Split(',')[4].Split(':')[1].Trim()</p>
-                                    <p>Property Taxes: $@goal.Description.Split(',')[5].Split(':')[1].Trim()</p>
-                                    <p>Home Insurance: $@goal.Description.Split(',')[6].Split(':')[1].Trim()</p>
-                                    <p>Other Costs: $@goal.Description.Split(',')[7].Split(':')[1].Trim()</p>
-                                }
-                            }
-                            else
-                            {
-                                <h3>@goal.Name</h3>
-                                <p>Account Type: @goal.GoalType</p>
-                                <p>Category: @goal.Category</p>
-                                <p>Start Date: @goal.StartDate.ToShortDateString()</p>
-                                <p>End Date: @goal.EndDate.ToShortDateString()</p>
-                                <p>Amount: $@goal.Amount</p>
-                                @if (goal.ShowDescription)
-                                {
-                                    <p>Frequency: @goal.Frequency</p>
-                                    <p>Description: @goal.Description</p>
-                                }
-                            }
-                        </div>
-                        <div class="button-container">
-                            <button class="see-more-btn" @onclick="() => ToggleDescription(goal)">...</button>
-                            <button class="delete-btn" @onclick="() => ConfirmDeleteGoal(goal)">
-                                <img src="images/bin.png" alt="Delete" />
-                            </button>
-                            <button class="check-off-btn" @onclick="() => ConfirmCheckOffGoal(goal)">
-                                <img src="images/check.png" alt="Check Off" />
-                            </button>
-                        </div>
-                    </div>
-
-                </li>
-            }
-        </ul>
-        <button class="back-button" @onclick="GoBack">Back</button>
+<div id="goalModal" class="modal" style="@(showModal ? "display:block;" : "display:none;")">
+    <div class="modal-content">
+        <span class="close" @onclick="CloseModal">&times;</span>
+        @if (selectedGoal != null)
+        {
+            <div class="goal-details">
+                <h3>Goal Details</h3>
+                @if (selectedGoal.IsQuickGoal)
+                {
+                    <p><strong>Name:</strong> @selectedGoal.Name</p>
+                    <p><strong>Type:</strong> @selectedGoal.Type</p>
+                    <p><strong>Amount:</strong> @selectedGoal.Amount.ToString("C")</p>
+                    <p><strong>Start Date:</strong> @selectedGoal.StartDate.ToShortDateString()</p>
+                    <p><strong>End Date:</strong> @selectedGoal.EndDate.ToShortDateString()</p>
+                }
+                else if (selectedGoal.IsRetirementGoal)
+                {
+                    var parts = selectedGoal.Description.Split(',');
+                    <p><strong>Name:</strong>Retirement</p>
+                    <p><strong>Amount:</strong> @selectedGoal.Amount.ToString("C")</p>
+                    <p><strong>Current Savings:</strong> $@(parts.Length > 0 ? parts[0].Split(':')[1].Trim() : "N/A")</p>
+                    <p><strong>Monthly Contribution:</strong> $@(parts.Length > 1 ? parts[1].Split(':')[1].Trim() : "N/A")</p>
+                    <p><strong>Retirement Date:</strong> @selectedGoal.EndDate.ToShortDateString()</p>
+                }
+                else if (selectedGoal.IsEmergencyFundGoal)
+                {
+                    var parts = selectedGoal.Description.Split(',');
+                    <p><strong>Amount:</strong> @selectedGoal.Amount.ToString("C")</p>
+                    <p><strong>Current Savings:</strong> $@(parts.Length > 0 ? parts[0].Split(':')[1].Trim() : "N/A")</p>
+                    <p><strong>Monthly Contribution:</strong> $@(parts.Length > 1 ? parts[1].Split(':')[1].Trim() : "N/A")</p>
+                    <p><strong>Target Date:</strong> @selectedGoal.EndDate.ToShortDateString()</p>
+                    <p><strong>Description:</strong> @(parts.Length > 2 ? parts[2].Split(':')[1].Trim() : "N/A")</p>
+                }
+                else if (selectedGoal.IsTravelGoal)
+                {
+                    var parts = selectedGoal.Description.Split(',');
+                    <p><strong>Name:</strong> @selectedGoal.Name</p>
+                    <p><strong>Start Date:</strong> @selectedGoal.StartDate.ToShortDateString()</p>
+                    <p><strong>End Date:</strong> @selectedGoal.EndDate.ToShortDateString()</p>
+                    <p><strong>Estimated Cost:</strong> $@(parts.Length > 0 ? parts[0].Split(':')[1].Trim() : "N/A")</p>
+                    <p><strong>Current Savings:</strong> $@(parts.Length > 0 ? parts[0].Split(':')[1].Trim() : "N/A")</p>
+                    <p><strong>Monthly Contribution:</strong> $@(parts.Length > 1 ? parts[1].Split(':')[1].Trim() : "N/A")</p>
+                    <p><strong>Description:</strong> @(parts.Length > 2 ? parts[2].Split(':')[1].Trim() : "N/A")</p>
+                }
+                else if (selectedGoal.IsHomeGoal)
+                {
+                    var parts = selectedGoal.Description.Split(',');
+                    <p><strong>Home Price:</strong> $@(parts.Length > 0 ? parts[0].Split(':')[1].Trim() : "N/A")</p>
+                    <p><strong>Amount:</strong> @selectedGoal.Amount.ToString("C")</p>
+                    <p><strong>Current Savings:</strong> $@(parts.Length > 1 ? parts[1].Split(':')[1].Trim() : "N/A")</p>
+                    <p><strong>Monthly Savings:</strong> $@(parts.Length > 2 ? parts[2].Split(':')[1].Trim() : "N/A")</p>
+                    <p><strong>Target Purchase Date:</strong> @selectedGoal.EndDate.ToShortDateString()</p>
+                }
+                else
+                {
+                    <p><strong>Name of goal:</strong> @selectedGoal.Name</p>
+                    <p><strong>Account:</strong> @selectedGoal.Type</p>
+                    <p><strong>Category:</strong> @selectedGoal.Category</p>
+                    <p><strong>Start Date:</strong> @selectedGoal.StartDate.ToShortDateString()</p>
+                    <p><strong>End Date:</strong> @selectedGoal.EndDate.ToShortDateString()</p>
+                    <p><strong>Amount:</strong> @selectedGoal.Amount.ToString("C")</p>
+                    <p><strong>Frequency:</strong> @selectedGoal.Frequency</p>
+                    <p><strong>Description:</strong> @selectedGoal.Description</p>
+                }
+            </div>
+        }
     </div>
 </div>
 
 @code {
     private List<Goal> goals = new List<Goal>();
+    private Goal selectedGoal;
+    private bool showModal = false;
+
+    // Local fields for Retirement
+    private decimal retCurrentSavings;
+    private decimal retMonthlyContribution;
+
+    // Local fields for Emergency
+    private decimal emCurrentSavings;
+    private decimal emMonthlyContribution;
+    private string emDescription;
+
+    // Local fields for Travel
+    private string travelDestination;
+    private decimal travelCurrentSavings;
+    private decimal travelMonthlyContribution;
+    private string travelDescription;
+
+    // Local fields for Home
+    private decimal homePrice;
+    private decimal homeCurrentSavings;
+    private decimal homeMonthlySavings;
 
     protected override void OnInitialized()
     {
@@ -129,8 +503,16 @@
 
     private void ToggleDescription(Goal goal)
     {
-        goal.ShowDescription = !goal.ShowDescription;
+        selectedGoal = goal;
+        showModal = true;
     }
+
+    private void CloseModal()
+    {
+        showModal = false;
+        selectedGoal = null;
+    }
+
     private async Task DeleteGoal(Goal goal)
     {
         try
@@ -139,31 +521,20 @@
 
             // Trigger the fade-out animation
             goal.IsFadingOut = true;
-            StateHasChanged(); // Force UI update
+            StateHasChanged();
 
-            await Task.Delay(500); // Wait for animation to complete
+            await Task.Delay(500);
 
-            // Remove from database and check if deletion was successful
             DatabaseHelper.DeleteGoal(goal.GoalId);
-            await Task.Delay(100); // Give database time to process
+            await Task.Delay(100);
 
-            // Verify that the goal no longer exists
             var updatedGoals = DatabaseHelper.GetGoals();
             if (updatedGoals.Any(g => g.GoalId == goal.GoalId))
             {
-                Console.WriteLine($"Failed to delete goal with ID: {goal.GoalId} from the database.");
-                return; // Stop further UI updates if DB deletion failed
+                return;
             }
-
-            Console.WriteLine($"Goal with ID: {goal.GoalId} deleted from the database.");
-
-       
             goals.Remove(goal);
-
-            // Reload goals from database to ensure consistency
             goals = DatabaseHelper.GetGoals();
-            Console.WriteLine($"Reloaded goals from database. Total goals: {goals.Count}");
-
             StateHasChanged();
         }
         catch (Exception ex)
@@ -172,44 +543,129 @@
         }
     }
 
-
     private async Task ConfirmDeleteGoal(Goal goal)
     {
-        // Show a confirmation dialog
-        bool isConfirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete the goal '{goal.Name}'?");
-
+        bool isConfirmed = await JSRuntime.InvokeAsync<bool>("confirm", $" {goal.Name} will permanently be gone, are you sure!");
         if (isConfirmed)
         {
-            // If confirmed, delete the goal
             await DeleteGoal(goal);
-        }
-    }
-
-    private async Task CheckOffGoal(Goal goal)
-    {
-        try
-        {
-            goal.IsFadingOut = true;
-            await Task.Delay(500);
-            goals.Remove(goal);
-            StateHasChanged();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error in CheckOffGoal: {ex.Message}"); // Log any errors
-        }
-    }
-
-    private async Task ConfirmCheckOffGoal(Goal goal)
-    {
-        if (await JSRuntime.InvokeAsync<bool>("confirm", new object[] { $"Are you sure you want to check off the goal '{goal.Name}'?" }))
-        {
-            await CheckOffGoal(goal);
         }
     }
 
     private void GoBack()
     {
         Navigation.NavigateTo("/saving-goals-page");
+    }
+
+    private void StartEditing(Goal goal)
+    {
+        goal.IsEditing = true;
+
+        // Save for retirement
+        if (goal.IsRetirementGoal && !string.IsNullOrEmpty(goal.Description))
+        {
+            try
+            {
+                var parts = goal.Description.Split(',');
+                retCurrentSavings = decimal.Parse(parts[0].Split(':')[1].Trim());
+                retMonthlyContribution = decimal.Parse(parts[1].Split(':')[1].Trim());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error parsing retirement goal details: {ex.Message}");
+            }
+        }
+
+        // Save for Emergency fund
+        if (goal.IsEmergencyFundGoal && !string.IsNullOrEmpty(goal.Description))
+        {
+            try
+            {
+                var parts = goal.Description.Split(',');
+                emCurrentSavings = decimal.Parse(parts[0].Split(':')[1].Trim());
+                emMonthlyContribution = decimal.Parse(parts[1].Split(':')[1].Trim());
+                emDescription = parts[2].Split(':')[1].Trim();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error parsing emergency fund goal details: {ex.Message}");
+            }
+        }
+
+        // Save for Traveling
+        if (goal.IsTravelGoal && !string.IsNullOrEmpty(goal.Description))
+        {
+            try
+            {
+                var parts = goal.Description.Split(',');
+                travelCurrentSavings = decimal.Parse(parts[0].Split(':')[1].Trim());
+                travelMonthlyContribution = decimal.Parse(parts[1].Split(':')[1].Trim());
+                travelDescription = parts[2].Split(':')[1].Trim();
+
+                if (goal.Name.StartsWith("Travel to "))
+                {
+                    travelDestination = goal.Name.Substring("Travel to ".Length).Trim();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error parsing travel goal details: {ex.Message}");
+            }
+        }
+
+        // Saving for a Home
+        if (goal.IsHomeGoal && !string.IsNullOrEmpty(goal.Description))
+        {
+            try
+            {
+                var parts = goal.Description.Split(',');
+                homePrice = decimal.Parse(parts[0].Split(':')[1].Trim());
+                homeCurrentSavings = decimal.Parse(parts[1].Split(':')[1].Trim());
+                homeMonthlySavings = decimal.Parse(parts[2].Split(':')[1].Trim());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error parsing home goal details: {ex.Message}");
+            }
+        }
+    }
+
+    private void SaveGoal(Goal goal)
+    {
+        try
+        {
+            if (goal.IsRetirementGoal)
+            {
+                goal.Description = $"Current Savings: {retCurrentSavings}, Monthly Contribution: {retMonthlyContribution}";
+            }
+            else if (goal.IsEmergencyFundGoal)
+            {
+                goal.Description = $"Current Savings: {emCurrentSavings}, Monthly Contribution: {emMonthlyContribution}, Description: {emDescription}";
+            }
+            else if (goal.IsTravelGoal)
+            {
+                goal.Name = $"Travel to {travelDestination}";
+                goal.Description = $"Current Savings: {travelCurrentSavings}, Monthly Contribution: {travelMonthlyContribution}, Description: {travelDescription}";
+            }
+            else if (goal.IsHomeGoal)
+            {
+                goal.Description = $"Home Price: {homePrice}, Current Savings: {homeCurrentSavings}, Monthly Savings: {homeMonthlySavings}";
+            }
+
+            DatabaseHelper.UpdateGoal(goal);
+            goals = DatabaseHelper.GetGoals();
+            goal.IsEditing = false;
+            showModal = false;
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in SaveGoal: {ex.Message}");
+        }
+    }
+
+    private void CancelEdit(Goal goal)
+    {
+        goal.IsEditing = false;
     }
 }

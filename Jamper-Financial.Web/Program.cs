@@ -13,6 +13,7 @@ using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 using QuestPDF.Helpers;
 using Blazorise;
+using Microsoft.JSInterop;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
 builder.Services.AddSingleton<LoginStateService>();
+builder.Services.AddSingleton<AuthenticationService>();
 
 builder.Services.AddScoped<IUserService, UserService>(sp => new UserService(connectionString));
 builder.Services.AddScoped<IBudgetInsightsService, BudgetInsightsService>(sp => new BudgetInsightsService(connectionString));
@@ -72,53 +74,68 @@ app.UseAntiforgery();
 // --------------------------------------------------
 app.MapGet("/export/csv", async (HttpContext context) =>
 {
-    var reportName = context.Request.Query["reportName"];
-    var description = context.Request.Query["description"];
-    var fromDateStr = context.Request.Query["fromDate"];
-    var toDateStr = context.Request.Query["toDate"];
-    var categoriesStr = context.Request.Query["categories"];
+    // Parse query parameters
+    var reportName   = context.Request.Query["reportName"];
+    var description  = context.Request.Query["description"];
+    var fromDateStr  = context.Request.Query["fromDate"];
+    var toDateStr    = context.Request.Query["toDate"];
+    var categoriesStr= context.Request.Query["categories"];
 
+    // Convert string to DateTime
     DateTime fromDate = DateTime.Now.AddMonths(-6);
-    DateTime toDate = DateTime.Now;
+    DateTime toDate   = DateTime.Now;
     DateTime.TryParse(fromDateStr, out fromDate);
     DateTime.TryParse(toDateStr, out toDate);
 
+    // Parse categories
     var catList = (categoriesStr.ToString() ?? "")
         .Split(',', StringSplitOptions.RemoveEmptyEntries)
         .Select(c => c.Trim())
         .ToList();
 
-    var allTransactions = await TransactionHelper.GetTransactionsAsync();
+    int userId = 1;
+    var allTransactions = await TransactionHelper.GetTransactionsAsync(userId);
 
-    // Filter
     var filtered = allTransactions
-        .Where(t => catList.Contains("All") || catList.Contains(t.Category))
+        .Where(t => catList.Contains("All") || catList.Contains(t.CategoryID.ToString()))
         .Where(t => t.Date >= fromDate && t.Date <= toDate)
         .ToList();
 
     // Calculate totals
-    decimal totalDebit = filtered.Sum(t => t.Debit);
+    decimal totalDebit  = filtered.Sum(t => t.Debit);
     decimal totalCredit = filtered.Sum(t => t.Credit);
 
-    // Build CSV: 5 columns: Description, Category, Date, Debit, Credit
+    // Build CSV
+    //    Now 7 columns: Description,Category,Date,Debit,Credit,Frequency,EndDate
     var csv = new StringBuilder();
+    // Title & info lines
     csv.AppendLine("Jamper Financial Report");
     csv.AppendLine($"Report Name: {reportName}");
     csv.AppendLine($"Report from {fromDate:yyyy-MM-dd} to {toDate:yyyy-MM-dd}");
     csv.AppendLine($"Description: {description}");
     csv.AppendLine();
 
-    csv.AppendLine("Description,Category,Date,Debit,Credit");
+    // CSV header
+    csv.AppendLine("Description,Category,Date,Debit,Credit,Frequency,EndDate");
 
     foreach (var t in filtered)
     {
-        var debitStr = t.Debit != 0 ? t.Debit.ToString("C") : "";
-        var creditStr = t.Credit != 0 ? t.Credit.ToString("C") : "";
-        csv.AppendLine($"\"{t.Description}\",\"{t.Category}\",\"{t.Date:yyyy-MM-dd}\",\"{debitStr}\",\"{creditStr}\"");
+        var debitStr  = (t.Debit  != 0) ? t.Debit.ToString("C")  : "";
+        var creditStr = (t.Credit != 0) ? t.Credit.ToString("C") : "";
+        var freq      = string.IsNullOrEmpty(t.Frequency) ? "" : t.Frequency;
+        var endDate   = t.EndDate.HasValue ? t.EndDate.Value.ToString("yyyy-MM-dd") : "";
+
+        csv.AppendLine($"\"{t.Description}\"," +
+                       $"\"{t.CategoryID}\"," +
+                       $"\"{t.Date:yyyy-MM-dd}\"," +
+                       $"\"{debitStr}\"," +
+                       $"\"{creditStr}\"," +
+                       $"\"{freq}\"," +
+                       $"\"{endDate}\"");
     }
 
-    // Totals row (3 empty columns, then total Debit, total Credit)
-    csv.AppendLine($",,,\"{totalDebit:C}\",\"{totalCredit:C}\"");
+    
+    csv.AppendLine($",,,\"{totalDebit:C}\",\"{totalCredit:C}\",,");
 
     var csvBytes = Encoding.UTF8.GetBytes(csv.ToString());
     var fileName = $"Report_{DateTime.Now:yyyyMMddHHmmss}.csv";
@@ -130,33 +147,38 @@ app.MapGet("/export/csv", async (HttpContext context) =>
 // --------------------------------------------------
 app.MapGet("/export/pdf", async (HttpContext context) =>
 {
-    var reportName = context.Request.Query["reportName"];
-    var description = context.Request.Query["description"];
-    var fromDateStr = context.Request.Query["fromDate"];
-    var toDateStr = context.Request.Query["toDate"];
-    var categoriesStr = context.Request.Query["categories"];
+    // 1) Parse query parameters
+    var reportName   = context.Request.Query["reportName"];
+    var description  = context.Request.Query["description"];
+    var fromDateStr  = context.Request.Query["fromDate"];
+    var toDateStr    = context.Request.Query["toDate"];
+    var categoriesStr= context.Request.Query["categories"];
 
+    // Convert string to DateTime
     DateTime fromDate = DateTime.Now.AddMonths(-6);
-    DateTime toDate = DateTime.Now;
+    DateTime toDate   = DateTime.Now;
     DateTime.TryParse(fromDateStr, out fromDate);
     DateTime.TryParse(toDateStr, out toDate);
 
+    // Parse categories
     var catList = (categoriesStr.ToString() ?? "")
         .Split(',', StringSplitOptions.RemoveEmptyEntries)
         .Select(c => c.Trim())
         .ToList();
 
-    var allTransactions = await TransactionHelper.GetTransactionsAsync();
+    int userId = 1;
+    var allTransactions = await TransactionHelper.GetTransactionsAsync(userId);
 
     var filtered = allTransactions
-        .Where(t => catList.Contains("All") || catList.Contains(t.Category))
+        .Where(t => catList.Contains("All") || catList.Contains(t.CategoryID.ToString()))
         .Where(t => t.Date >= fromDate && t.Date <= toDate)
         .ToList();
 
     // Totals
-    decimal totalDebit = filtered.Sum(t => t.Debit);
+    decimal totalDebit  = filtered.Sum(t => t.Debit);
     decimal totalCredit = filtered.Sum(t => t.Credit);
 
+    // Build PDF with 7 columns
     var doc = Document.Create(document =>
     {
         document.Page(page =>
@@ -170,13 +192,13 @@ app.MapGet("/export/pdf", async (HttpContext context) =>
             {
                 headerCol.Spacing(10);
 
-                // Title
+                // Big green title
                 headerCol.Item().AlignCenter().Text("Jamper Financial Report")
                     .FontSize(24)
                     .SemiBold()
-                    .FontColor("#62AD41"); // brand color
+                    .FontColor("#62AD41"); 
 
-                // Sub-title
+                // Sub-title: "Report Name: ____"
                 headerCol.Item().AlignLeft().Text($"Report Name: {reportName}")
                     .FontSize(16)
                     .Bold();
@@ -187,19 +209,21 @@ app.MapGet("/export/pdf", async (HttpContext context) =>
             {
                 contentCol.Spacing(20);
 
-                // Date range
+                // Show date range
                 contentCol.Item().Text($"Report from {fromDate:yyyy-MM-dd} to {toDate:yyyy-MM-dd}");
 
-                // 5 columns: Description, Category, Date, Debit, Credit
+                // Table with 7 columns
                 contentCol.Item().Table(table =>
                 {
                     table.ColumnsDefinition(cols =>
                     {
-                        cols.RelativeColumn(); // Desc
-                        cols.RelativeColumn(); // Cat
+                        cols.RelativeColumn(); // Description
+                        cols.RelativeColumn(); // Category
                         cols.RelativeColumn(); // Date
                         cols.RelativeColumn(); // Debit
                         cols.RelativeColumn(); // Credit
+                        cols.RelativeColumn(); // Frequency
+                        cols.RelativeColumn(); // EndDate
                     });
 
                     // Header row
@@ -210,39 +234,44 @@ app.MapGet("/export/pdf", async (HttpContext context) =>
                         header.Cell().Element(CellStyleHeader).Text("Date");
                         header.Cell().Element(CellStyleHeader).Text("Debit");
                         header.Cell().Element(CellStyleHeader).Text("Credit");
+                        header.Cell().Element(CellStyleHeader).Text("Frequency");
+                        header.Cell().Element(CellStyleHeader).Text("End Date");
                     });
 
-                    // Data rows
+                    // Rows
                     foreach (var t in filtered)
                     {
+                        var debitStr  = (t.Debit  != 0) ? t.Debit.ToString("C")  : "";
+                        var creditStr = (t.Credit != 0) ? t.Credit.ToString("C") : "";
+                        var freq      = string.IsNullOrEmpty(t.Frequency) ? "" : t.Frequency;
+                        var endDate   = t.EndDate.HasValue ? t.EndDate.Value.ToString("yyyy-MM-dd") : "";
+
                         table.Cell().Element(CellStyleData).Text(t.Description);
-                        table.Cell().Element(CellStyleData).Text(t.Category);
+                        table.Cell().Element(CellStyleData).Text(t.CategoryID);
                         table.Cell().Element(CellStyleData).Text($"{t.Date:yyyy-MM-dd}");
-
-                        // Debit
-                        var debitStr = t.Debit != 0 ? t.Debit.ToString("C") : "";
                         table.Cell().Element(CellStyleData).Text(debitStr);
-
-                        // Credit
-                        var creditStr = t.Credit != 0 ? t.Credit.ToString("C") : "";
                         table.Cell().Element(CellStyleData).Text(creditStr);
+                        table.Cell().Element(CellStyleData).Text(freq);
+                        table.Cell().Element(CellStyleData).Text(endDate);
                     }
 
-                    // Totals row: 3 empty cells, then totalDebit, totalCredit
+                    // Totals row => 7 columns
                     table.Cell().Element(CellStyleTotals).Text("");
                     table.Cell().Element(CellStyleTotals).Text("");
                     table.Cell().Element(CellStyleTotals).Text("Totals:");
                     table.Cell().Element(CellStyleTotals).Text(totalDebit.ToString("C"));
                     table.Cell().Element(CellStyleTotals).Text(totalCredit.ToString("C"));
+                    table.Cell().Element(CellStyleTotals).Text("");
+                    table.Cell().Element(CellStyleTotals).Text("");
                 });
 
-                // Description
+                // Show the user-provided description under the table
                 contentCol.Item().Text($"Description: {description}")
                     .FontSize(12)
                     .Italic();
             });
 
-            // Footer
+            // Footer with page numbers
             page.Footer().AlignCenter().Text(footerTxt =>
             {
                 footerTxt.Span("Page ").FontSize(10);
@@ -258,31 +287,38 @@ app.MapGet("/export/pdf", async (HttpContext context) =>
     return Results.File(pdfBytes, "application/pdf", fileName);
 });
 
-// Table header styling
+// Table header style
 static IContainer CellStyleHeader(IContainer container)
 {
     return container
-        .Border(1).BorderColor(Colors.Grey.Lighten2)
+        .Border(1)
+        .BorderColor(Colors.Grey.Lighten2)
         .Background(Colors.Grey.Lighten3)
-        .Padding(5);
+        .Padding(5)
+        .DefaultTextStyle(x => x.SemiBold());
 }
 
-// Table data styling
+// Table data style
 static IContainer CellStyleData(IContainer container)
 {
     return container
-        .Border(1).BorderColor(Colors.Grey.Lighten2)
+        .Border(1)
+        .BorderColor(Colors.Grey.Lighten2)
         .Padding(5);
 }
 
-// Totals row styling
+// Totals row style
 static IContainer CellStyleTotals(IContainer container)
 {
     return container
-        .Border(1).BorderColor(Colors.Black)
+        .Border(1)
+        .BorderColor(Colors.Black)
         .Padding(5)
         .DefaultTextStyle(x => x.Bold());
 }
+
+// --------------------------------------------------
+
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode()

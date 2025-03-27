@@ -488,3 +488,18 @@
     z-index: 1000; /* Ensure the dropdown is on top */
     width: 100%; /* Ensure the dropdown takes the full width of the search container */
 }
+
+.manage-categories {
+    background-color: #ffc107;
+    color: white;
+    border: none;
+    padding: 0.625rem 0.9375rem;
+    border-radius: 0.625rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    margin-right: 10px;
+}
+
+    .manage-categories:hover {
+        background-color: #e0a800;
+    }

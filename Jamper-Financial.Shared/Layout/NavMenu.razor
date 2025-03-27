@@ -1,4 +1,7 @@
 ﻿@inherits LayoutComponentBase
+@using Jamper_Financial.Shared.Services
+@inject NavigationManager Navigation
+@inject UserStateService UserStateService
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
@@ -8,23 +11,24 @@
 
 @* <input type="checkbox" title="Navigation menu" class="navbar-toggler" /> *@
 
-<div class="" onclick="document.querySelector('.navbar-toggler').click()">
+@* <div class="" onclick="const toggler = document.querySelector('.navbar-toggler'); if (toggler) toggler.click();"> *@
+<div>
     <nav class="flex flex-col space-y-4">
         <div class="nav-item">
             <NavLink class="nav-link flex items-center space-x-2" href="dashboard-page">
-                <img src="images/dashboard-icon.svg" class="w-6 h-6 " style="padding-right: 6px" />
+                <img src="images/dashboard-icon.svg" class="w-6 h-6 nav-icon" style="padding-right: 6px" />
                 <div class="text-lg font-medium font-['Inter']">Dashboard</div>
             </NavLink>
         </div>
         <div class="nav-item">
             <NavLink class="nav-link flex items-center space-x-2" href="transactions-page">
-                <img src="images/transactions-icon.svg" class="w-6 h-6 " style="padding-right: 6px" />
+                <img src="images/transactions-icon.svg" class="w-6 h-6 nav-icon" style="padding-right: 6px" />
                 <div class=" text-lg font-medium font-['Inter']">Transactions</div>
             </NavLink>
         </div>
         <div class="nav-item">
             <NavLink class="nav-link flex items-center space-x-2" href="budget-insights-page">
-                <img src="images/budget-insights-icon.svg" class="w-6 h-6 " style="padding-right: 6px" />
+                <img src="images/budget-insights-icon.svg" class="w-6 h-6 nav-icon" style="padding-right: 6px" />
                 <div class=" text-lg font-medium font-['Inter']">Budget Insights</div>
             </NavLink>
         </div>
@@ -37,39 +41,49 @@
         @* </div> *@
         <div class="nav-item">
             <NavLink class="nav-link flex items-center space-x-2" href="saving-goals-page">
-                <img src="images/saving-goals-icon.svg" class="w-6 h-6 " style="padding-right: 6px" />
+                <img src="images/saving-goals-icon.svg" class="w-6 h-6 nav-icon" style="padding-right: 6px" />
                 <div class=" text-lg font-medium font-['Inter']">Saving Goals</div>
             </NavLink>
         </div>
-        <div class="nav-item">
-            <NavLink class="nav-link flex items-center space-x-2" href="debt-tracking-page">
-                <img src="images/debt-tracking-icon.svg" class="w-6 h-6 " style="padding-right: 6px" />
-                <div class=" text-lg font-medium font-['Inter']">Debt Tracking</div>
-            </NavLink>
-        </div>
+        @* <div class="nav-item"> *@
+        @*     <NavLink class="nav-link flex items-center space-x-2" href="debt-tracking-page"> *@
+        @*         <img src="images/debt-tracking-icon.svg" class="w-6 h-6 " style="padding-right: 6px" /> *@
+        @*         <div class=" text-lg font-medium font-['Inter']">Debt Tracking</div> *@
+        @*     </NavLink> *@
+        @* </div> *@
         <div class="nav-item">
             <NavLink class="nav-link flex items-center space-x-2" href="calendar-page">
-                <img src="images/calendar-icon.svg" class="w-6 h-6 " style="padding-right: 6px" />
+                <img src="images/calendar-icon.svg" class="w-6 h-6 nav-icon" style="padding-right: 6px" />
                 <div class="text-lg font-medium font-['Inter']">Calendar</div>
             </NavLink>
         </div>
         <div class="nav-item">
             <NavLink class="nav-link flex items-center space-x-2" href="reports-page">
-                <img src="images/vector.svg" class="w-6 h-6 " style="padding-right: 6px" />
+                <img src="images/reports-icon.svg" class="w-6 h-6 nav-icon" style="padding-right: 6px" />
                 <div class=" text-lg font-medium font-['Inter']">Reports</div>
             </NavLink>
         </div>
         <div class="nav-item">
-            <NavLink class="nav-link flex items-center space-x-2" href="login">
-                <svg class="logout-icon" width="83" height="48" viewBox="0 0 83 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="0.5" y="0.5" width="82" height="47" rx="4.5" fill="#065E00" />
-                    <rect x="0.5" y="0.5" width="82" height="47" rx="4.5" stroke="#065E00" />
-                    <path d="M16.4419 29V18.8182H17.6749V27.9062H22.4078V29H16.4419ZM27.2601 29.1591C26.5707 29.1591 25.9659 28.995 25.4455 28.6669C24.9284 28.3388 24.5241 27.8797 24.2324 27.2898C23.9441 26.6998 23.7999 26.0104 23.7999 25.2216C23.7999 24.4261 23.9441 23.7318 24.2324 23.1385C24.5241 22.5452 24.9284 22.0845 25.4455 21.7564C25.9659 21.4283 26.5707 21.2642 27.2601 21.2642C27.9495 21.2642 28.5527 21.4283 29.0698 21.7564C29.5901 22.0845 29.9945 22.5452 30.2828 23.1385C30.5745 23.7318 30.7203 24.4261 30.7203 25.2216C30.7203 26.0104 30.5745 26.6998 30.2828 27.2898C29.9945 27.8797 29.5901 28.3388 29.0698 28.6669C28.5527 28.995 27.9495 29.1591 27.2601 29.1591ZM27.2601 28.1051C27.7838 28.1051 28.2147 27.9709 28.5527 27.7024C28.8908 27.4339 29.141 27.081 29.3034 26.6435C29.4659 26.206 29.5471 25.732 29.5471 25.2216C29.5471 24.7112 29.4659 24.2356 29.3034 23.7947C29.141 23.3539 28.8908 22.9976 28.5527 22.7259C28.2147 22.4541 27.7838 22.3182 27.2601 22.3182C26.7364 22.3182 26.3056 22.4541 25.9675 22.7259C25.6294 22.9976 25.3792 23.3539 25.2168 23.7947C25.0544 24.2356 24.9732 24.7112 24.9732 25.2216C24.9732 25.732 25.0544 26.206 25.2168 26.6435C25.3792 27.081 25.6294 27.4339 25.9675 27.7024C26.3056 27.9709 26.7364 28.1051 27.2601 28.1051ZM35.5938 32.0227C35.027 32.0227 34.5398 31.9498 34.1321 31.804C33.7244 31.6615 33.3847 31.4725 33.1129 31.2372C32.8445 31.0052 32.6307 30.7566 32.4716 30.4915L33.4062 29.8352C33.5123 29.9744 33.6465 30.1335 33.8089 30.3125C33.9714 30.4948 34.1934 30.6522 34.4751 30.7848C34.7602 30.9207 35.133 30.9886 35.5938 30.9886C36.2102 30.9886 36.719 30.8395 37.12 30.5412C37.5211 30.2429 37.7216 29.7756 37.7216 29.1392V27.5881H37.6222C37.536 27.7273 37.4134 27.8996 37.2543 28.1051C37.0985 28.3073 36.8731 28.4879 36.5781 28.647C36.2865 28.8028 35.892 28.8807 35.3949 28.8807C34.7784 28.8807 34.2249 28.7348 33.7344 28.4432C33.2472 28.1515 32.861 27.7273 32.576 27.1705C32.2943 26.6136 32.1534 25.9375 32.1534 25.142C32.1534 24.3598 32.291 23.6787 32.5661 23.0987C32.8411 22.5154 33.224 22.0646 33.7145 21.7464C34.205 21.425 34.7718 21.2642 35.4148 21.2642C35.9119 21.2642 36.3063 21.3471 36.598 21.5128C36.893 21.6752 37.1184 21.8608 37.2741 22.0696C37.4332 22.2751 37.5559 22.4441 37.642 22.5767H37.7614V21.3636H38.8949V29.2188C38.8949 29.875 38.7457 30.4086 38.4474 30.8196C38.1525 31.2339 37.7547 31.5372 37.2543 31.7294C36.7571 31.925 36.2036 32.0227 35.5938 32.0227ZM35.554 27.8267C36.0246 27.8267 36.4223 27.719 36.7472 27.5036C37.072 27.2881 37.3189 26.9782 37.4879 26.5739C37.657 26.1695 37.7415 25.6856 37.7415 25.1222C37.7415 24.572 37.6586 24.0864 37.4929 23.6655C37.3272 23.2446 37.0819 22.9148 36.7571 22.6761C36.4323 22.4375 36.0313 22.3182 35.554 22.3182C35.0568 22.3182 34.6425 22.4441 34.3111 22.696C33.983 22.9479 33.736 23.286 33.5703 23.7102C33.4079 24.1345 33.3267 24.6051 33.3267 25.1222C33.3267 25.6525 33.4096 26.1214 33.5753 26.5291C33.7443 26.9335 33.9929 27.2517 34.321 27.4837C34.6525 27.7124 35.0634 27.8267 35.554 27.8267ZM53.7301 23.9091C53.7301 24.983 53.5362 25.911 53.1484 26.6932C52.7607 27.4754 52.2287 28.0786 51.5526 28.5028C50.8764 28.9271 50.1042 29.1392 49.2358 29.1392C48.3674 29.1392 47.5952 28.9271 46.919 28.5028C46.2429 28.0786 45.7109 27.4754 45.3232 26.6932C44.9354 25.911 44.7415 24.983 44.7415 23.9091C44.7415 22.8352 44.9354 21.9072 45.3232 21.125C45.7109 20.3428 46.2429 19.7396 46.919 19.3153C47.5952 18.8911 48.3674 18.679 49.2358 18.679C50.1042 18.679 50.8764 18.8911 51.5526 19.3153C52.2287 19.7396 52.7607 20.3428 53.1484 21.125C53.5362 21.9072 53.7301 22.8352 53.7301 23.9091ZM52.5369 23.9091C52.5369 23.0275 52.3894 22.2834 52.0945 21.6768C51.8028 21.0703 51.4067 20.6113 50.9062 20.2997C50.4091 19.9882 49.8523 19.8324 49.2358 19.8324C48.6193 19.8324 48.0608 19.9882 47.5604 20.2997C47.0632 20.6113 46.6671 21.0703 46.3722 21.6768C46.0805 22.2834 45.9347 23.0275 45.9347 23.9091C45.9347 24.7907 46.0805 25.5348 46.3722 26.1413C46.6671 26.7479 47.0632 27.2069 47.5604 27.5185C48.0608 27.83 48.6193 27.9858 49.2358 27.9858C49.8523 27.9858 50.4091 27.83 50.9062 27.5185C51.4067 27.2069 51.8028 26.7479 52.0945 26.1413C52.3894 25.5348 52.5369 24.7907 52.5369 23.9091ZM60.4567 25.8778V21.3636H61.63V29H60.4567V27.7074H60.3771C60.1982 28.0952 59.9197 28.425 59.5419 28.6967C59.1641 28.9652 58.6868 29.0994 58.1101 29.0994C57.6328 29.0994 57.2086 28.995 56.8374 28.7862C56.4661 28.5741 56.1745 28.2559 55.9624 27.8317C55.7502 27.4041 55.6442 26.8655 55.6442 26.2159V21.3636H56.8175V26.1364C56.8175 26.6932 56.9732 27.1373 57.2848 27.4688C57.5997 27.8002 58.0007 27.9659 58.4879 27.9659C58.7796 27.9659 59.0762 27.8913 59.3778 27.7422C59.6828 27.593 59.938 27.3643 60.1435 27.0561C60.3523 26.7479 60.4567 26.3551 60.4567 25.8778ZM67.1 21.3636V22.358H63.1426V21.3636H67.1ZM64.296 19.5341H65.4693V26.8125C65.4693 27.1439 65.5173 27.3925 65.6135 27.5582C65.7129 27.7206 65.8388 27.83 65.9913 27.8864C66.1471 27.9394 66.3111 27.9659 66.4835 27.9659C66.6127 27.9659 66.7188 27.9593 66.8017 27.946C66.8845 27.9295 66.9508 27.9162 67.0005 27.9062L67.2392 28.9602C67.1596 28.9901 67.0486 29.0199 66.9061 29.0497C66.7636 29.0829 66.5829 29.0994 66.3642 29.0994C66.0327 29.0994 65.7079 29.0282 65.3897 28.8857C65.0749 28.7431 64.813 28.526 64.6042 28.2344C64.3987 27.9427 64.296 27.5748 64.296 27.1307V19.5341Z" fill="white" />
-                </svg>
-                @* <div class=" text-lg font-medium font-['Inter']">Log Out</div> *@
-            </NavLink>
+            <div class="logout-container">
+                <button type="button" class="logout-button" @onclick="Logout">
+                    Logout
+                </button>
+            </div>
+            @* <div class=" text-lg font-medium font-['Inter']">Log Out</div> *@
         </div>
     </nav>
 </div>
+
+@code {
+    private void Logout()
+    {
+        // Clear user session state
+        UserStateService.ClearUser();
+
+        // Implement your logout logic here
+        // For example, redirect to the login page or clear authentication tokens
+        Navigation.NavigateTo("login");
+    }
+}
 
 

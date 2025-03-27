@@ -58,7 +58,7 @@
     }
 
     .nav-item ::deep .nav-link {
-        color: #B1B1B1;
+        color: #36454f;
         background: none;
         border: none;
         border-radius: 4px;
@@ -69,9 +69,8 @@
         width: 100%;
     }
 
-    .nav-item ::deep a {
-        background-color: none;
-        color: #B1B1B1;
+    .nav-item ::deep .nav-icon {
+        color: #36454f;
     }
 
 
@@ -120,14 +119,29 @@
     color: #62ad41;
 }
 
-.logout-icon {
+/*style the logout button*/
+.logout-container {
+    position: fixed;
+    bottom: 0;
+    text-align: center;
+    padding: 1rem;
+    position: relative;
+    -ms-align-content: center;
+    -webkit-align-content: center;
+    align-content: center;
+}
+
+.logout-button {
+    background-color: #62AD41;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 4px;
     position: relative;
 }
 
-.logout-icon:hover rect {
-    fill: #62ad41; /* Change the fill color on hover */
-}
-
-.logout-icon:hover path {
-    fill: #FFFFFF; /* Change the path fill color on hover */
-}
+    .logout-button:hover {
+        background-color: #417828;
+    }

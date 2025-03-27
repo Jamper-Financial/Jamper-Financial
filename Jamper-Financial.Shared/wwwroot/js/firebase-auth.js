@@ -15,14 +15,31 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-window.signInWithGoogle = async function () {
+window.signInWithGoogle = async function (dotNetObjectReference) {
     const provider = new GoogleAuthProvider();
+
     try {
         const result = await signInWithPopup(auth, provider);
         const user = result.user;
         console.log("Google user signed in:", user);
-        alert(`Welcome, ${user.displayName}`);
-        window.location.href = "/dashboard-page"; // Redirect after login
+        const userInfo = {
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            uid: user.uid
+        };
+
+        // Pass the user information to Blazor
+        try {
+            await dotNetObjectReference.invokeMethodAsync('OnGoogleLoginSuccess', userInfo);
+            console.log("OnGoogleLoginSuccess called successfully.");
+        } catch (error) {
+            console.error("Error calling OnGoogleLoginSuccess:", error);
+            alert("Error sending user information to the server."); // Inform user of error.
+        }
+
+        // alert(`Welcome, ${user.displayName}`);
+        // window.location.href = "/dashboard-page"; // Redirect after login
     } catch (error) {
         console.error("Google sign-in error:", error);
         alert("Google sign-in failed: " + error.message);

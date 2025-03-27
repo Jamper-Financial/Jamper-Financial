@@ -1,0 +1,89 @@
+h4 {
+    margin-top: 1em;
+    font-size: 1em;
+    font-weight: bold;
+    font-style: italic;
+    color: #28a745;
+}
+
+input {
+    border-radius: 10px;
+    border: solid thin gray; /* Shorthand for border */
+    padding: 5px;
+    transition: border-color 0.3s ease; /* Optional: Smooth transition */
+}
+
+    input:focus {
+        border-color: var(--primary-color);
+        outline: none; /* Recommended: Remove default focus outline */
+    }
+
+.flex-item {
+    flex: 1;
+    text-align: left;
+    margin-left: 10px;
+    -ms-align-content: center;
+    -webkit-align-content: center;
+    align-content: center;
+}
+
+/*Style for the hide/show password*/
+svg {
+    width: 30px;
+    height: 20px;
+    stroke: var(--primary-color);
+}
+
+    svg:hover {
+        cursor: pointer;
+    }
+
+.lucide-eye, .lucide-eye-off {
+    width: 25%;
+    height: 20px;
+    stroke: var(--primary-color);
+    fill: none;
+}
+
+    .lucide-eye:hover, .lucide-eye-off:hover {
+        cursor: pointer;
+    }
+
+/*Style for the password rows*/
+.password-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+    .password-row label {
+        flex: 1;
+    }
+
+    .password-row input {
+        flex: 1;
+    }
+
+    .password-row .svg-container { /*added container*/
+        flex: 1;
+        display: flex;
+        align-items: flex-start;
+        justify-content: left;
+        padding-left: 10px;
+        padding-top: 5px;
+        width: 30px; /*set a width*/
+        height: 30px; /*set a height*/
+    }
+
+    .password-row svg {
+        width: 25px;
+        height: 25px;
+        stroke: var(--primary-color);
+        cursor: pointer;
+    }
+
+        .password-row svg:hover {
+            stroke: var(--secondary-color);
+        }
+
