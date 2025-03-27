@@ -1,48 +1,69 @@
 .dashboard-container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
+    margin: 2rem;
+    padding: 2rem;
+    border-radius: 2rem;
+    position: center;
     align-items: center;
-    width: 100%;
+    align-self: center;
+    align-content: center
 }
 
 .dashboard-header {
     align-self: flex-start;
-    width: 100%;
-    max-width: 1200px;
-    padding-left: 20px;
-    color: #2d3436;
-    font-size: 24px;
     margin-bottom: 20px;
 }
 
+.section-divider {
+    border: none;
+    height: .1rem;
+    background: var(--primary-color);
+    margin: 20px 0; /* Adjust the spacing as needed */
+}
+
+
+.card-title {
+    text-align: left;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+.card, .card-full {
+    flex: 0 0 50%;
+    border: .1rem solid var(--primary-color);
+    border-radius: 1rem;
+    gap: 1.5rem;
+    min-width: 450px;
+    height: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+
 .carousel {
+    position: relative;
     display: flex;
     align-items: center;
     overflow: hidden;
-    width: 100%;
-    max-width: 1200px;
+    color: #2d3436;
+    font-size: 24px;
     margin-bottom: 20px;
-    position: relative;
+    column-gap: 1rem;
+    transition: transform 0.5s ease-in-out;
+    width: 100%
 }
 
-.card {
-    flex: 0 0 50%;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    padding: 25px;
-    margin: 10px;
-    min-width: 450px;
-    height: 250px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff;
-}
 
 .carousel-button {
     position: absolute;
-    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
     background-color: rgba(40, 167, 69, 0.8);
     color: white;
     border: none;
@@ -59,6 +80,14 @@
         background-color: rgba(33, 136, 56, 0.8);
     }
 
+    .carousel-button.left {
+        left: 10px;
+    }
+
+    .carousel-button.right {
+        right: 10px;
+    }
+
 .weekly-activity {
     margin-top: 20px;
     width: 100%;
@@ -70,10 +99,6 @@
         padding: 20px;
     }
 
-h3, h4 {
-    color: #2d3436;
-}
-
 .manage-saving-goals-header {
     color: green;
     text-decoration: underline;
@@ -83,3 +108,44 @@ h3, h4 {
     .manage-saving-goals-header:hover {
         color: darkgreen; /* Darker green on hover */
     }
+
+
+.transactions-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.transaction-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+    .transaction-item:last-child {
+        border-bottom: none;
+    }
+
+.transaction-title {
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 0.25rem;
+}
+
+.transaction-date {
+    color: #6c757d;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.transaction-amount {
+    float: right;
+    font-weight: 600;
+}
+
+.negative {
+    color: #dc3545;
+}
+
+.positive {
+    color: #28a745;
+}

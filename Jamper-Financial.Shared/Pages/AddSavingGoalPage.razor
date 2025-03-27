@@ -4,6 +4,7 @@
 @inject NavigationManager Navigation
 @inject GoalState GoalState
 @inject DatabaseHelperFactory DatabaseHelper
+@inject UserStateService UserStateService
 
 <div class="header-container">
     <h3 class="header">Add a Saving Goal</h3>
@@ -111,7 +112,8 @@
                     EndDate = endDate,
                     Amount = amount,
                     Frequency = frequency,
-                    Description = description
+                    Description = description,
+                    UserID = UserStateService.UserId
                 };
 
             GoalState.AddGoal(newGoal);

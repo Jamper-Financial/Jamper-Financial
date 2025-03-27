@@ -12,8 +12,8 @@ namespace Jamper_Financial.Shared.Utilities
         {
             return transactions
                 .Where(t => (string.IsNullOrEmpty(filterCategory) || t.CategoryID.ToString().Equals(filterCategory, StringComparison.OrdinalIgnoreCase)) &&
-                            (!minAmount.HasValue || (minAmount.Value >= 0 ? (t.Debit >= (decimal)minAmount || t.Credit >= (decimal)minAmount) : (t.Debit >= (decimal)minAmount || t.Credit >= (decimal)minAmount))) &&
-                            (!maxAmount.HasValue || (maxAmount.Value >= 0 ? (t.Debit <= (decimal)maxAmount || t.Credit <= (decimal)maxAmount) : (t.Debit <= (decimal)maxAmount || t.Credit <= (decimal)maxAmount))))
+                            (!minAmount.HasValue || (minAmount.Value >= 0 ? (t.Amount >= (decimal)minAmount || t.Amount >= (decimal)minAmount) : (t.Amount >= (decimal)minAmount || t.Amount >= (decimal)minAmount))) &&
+                            (!maxAmount.HasValue || (maxAmount.Value >= 0 ? (t.Amount <= (decimal)maxAmount || t.Amount <= (decimal)maxAmount) : (t.Amount <= (decimal)maxAmount || t.Amount <= (decimal)maxAmount))))
                 .ToList();
         }
     }

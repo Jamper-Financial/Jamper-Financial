@@ -11,6 +11,8 @@
     [Parameter] public Transaction Transaction { get; set; }
     private IBrowserFile? uploadedFile;
     private string? receiptPreviewUrl;
+    private string toasterMessage = string.Empty;
+    private string toasterClass = string.Empty;
     private bool showDeleteConfirmation = false;
     private string? errorMessage;
 
@@ -54,14 +56,24 @@
             else
             {
                 errorMessage = "Failed to save receipt.";
+                Console.WriteLine(errorMessage);
+                toasterMessage = errorMessage;
+                toasterClass = "error";
+                await GetReceipt();
             }
         }
+    }
+
+    private void ClearToaster()
+    {
+        toasterMessage = string.Empty;
+        toasterClass = string.Empty;
     }
 
     private async Task GetReceipt()
     {
         Console.WriteLine("Displaying receipt");
-        var receiptData = await TransactionHelper.GetReceiptAsync(Transaction.TransactionID);
+        var receiptData = await TransactionManager.GetReceiptAsync(Transaction);
         if (receiptData != null)
         {
             receiptPreviewUrl = $"data:image/png;base64,{Convert.ToBase64String(receiptData.ReceiptFileData)}";
@@ -117,7 +129,7 @@
             <p><strong>Transaction ID:</strong> @Transaction.TransactionID</p>
             <p><strong>Category:</strong> @Transaction.CategoryID</p>
             <p><strong>Date:</strong> @Transaction.Date.ToString("dd MMM, hh:mm tt")</p>
-            <p><strong>Amount:</strong> @((Transaction.Debit > 0 ? Transaction.Debit : Transaction.Credit).ToString("C"))</p>
+            <p><strong>Amount:</strong> @((Transaction.Amount > 0 ? Transaction.Amount : Transaction.Amount).ToString("C"))</p>
             @if (Transaction.HasReceipt == true)
             {
                 <p>Receipt is available.</p>
@@ -158,4 +170,13 @@
                 <button class="delete-button" @onclick="HideDeleteConfirmation">No</button>
             </div>
         </div>
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(toasterMessage))
+{
+    <div class="toaster @toasterClass">
+        <span>@toasterMessage</span>
+        <button class="close-toaster" @onclick="ClearToaster">×</button>
+    </div>
 }
