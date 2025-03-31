@@ -9,6 +9,7 @@
         SetPageTitle("Bulk Transactions");
     }
 }
+
 <div class="transactions-section">
     <div class="transactions-header">
         <h3 class="section-title">Recent Transactions</h3>
@@ -18,3 +19,40 @@
         </div>
     </div>
 </div>
+
+@code {
+    private bool isExcel = false;
+    private bool isOCR = false;
+
+    public void OpenExcelModal()
+    {
+        isExcel = true;
+        isOCR = false;
+        Console.WriteLine("Open Excel Modal");
+    }
+
+    public void OpenOCRModal()
+    {
+        isExcel = false;
+        isOCR = true;
+        Console.WriteLine("Open OCR Modal");
+    }
+
+    public void ExtractData()
+    {
+        //close modal
+
+        // extract data
+
+        // show data
+
+        // save data
+        Console.WriteLine("Extract Data");
+    }
+
+    public void CloseModal()
+    {
+        isExcel = false;
+        isOCR = false;
+    }
+}

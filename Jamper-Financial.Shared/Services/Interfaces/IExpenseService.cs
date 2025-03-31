@@ -6,7 +6,6 @@ namespace Jamper_Financial.Shared.Services
 {
     public interface IExpenseService
     {
-        Task<List<Expense>> GetExpensesAsync(int userId);
         Task<List<Expense>> GetExpensesAsync(int userId, string period);
     }
 }

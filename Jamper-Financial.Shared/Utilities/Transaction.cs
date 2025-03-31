@@ -14,10 +14,10 @@ namespace Jamper_Financial.Shared.Utilities
         public int CategoryID { get; set; }
         public string TransactionType { get; set; } = "e"; // Expense by default
         public bool HasReceipt { get; set; } = false;
-        public string Frequency { get; set; } = null;
+        public string? Frequency { get; set; } = null;
         public DateTime? EndDate { get; set; }
         public int AccountID { get; set; }
-        public bool IsPaid { get; set; } = false;
+        public bool IsPaid { get; set; } = true;
 
 
     }

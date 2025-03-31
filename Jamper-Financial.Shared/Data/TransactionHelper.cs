@@ -59,7 +59,7 @@ namespace Jamper_Financial.Shared.Data
                                 CategoryID = reader.GetInt32(categoryIdOrdinal),
                                 TransactionType = reader.GetString(transactionTypeOrdinal),
                                 HasReceipt = reader.GetInt32(hasReceiptOrdinal) == 1,
-                                Frequency = reader.GetString(frequencyOrdinal),
+                                Frequency = reader.IsDBNull(frequencyOrdinal) ? null : reader.GetString(frequencyOrdinal),
                                 EndDate = reader.IsDBNull(endDateOrdinal) ? (DateTime?)null : DateTime.Parse(reader.GetString(endDateOrdinal)),
                                 AccountID = reader.GetInt32(accountIdOrdinal),
                                 IsPaid = reader.GetInt32(isPaid) == 1,
@@ -105,7 +105,7 @@ namespace Jamper_Financial.Shared.Data
                         command.Parameters.AddWithValue("@CategoryID", transaction.CategoryID);
                         command.Parameters.AddWithValue("@TransactionType", transaction.TransactionType);
                         command.Parameters.AddWithValue("@HasReceipt", transaction.HasReceipt ? 1 : 0);
-                        command.Parameters.AddWithValue("@Frequency", transaction.Frequency);
+                        command.Parameters.AddWithValue("@Frequency", transaction.Frequency ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@EndDate", transaction.EndDate?.ToString("yyyy-MM-dd") ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@AccountID", transaction.AccountID);
                         command.Parameters.AddWithValue("@IsPaid", transaction.IsPaid ? 1 : 0);
