@@ -10,13 +10,8 @@ namespace Jamper_Financial.Shared.Services
         {
             _connectionString = connectionString;
         }
-        public async Task<List<Expense>> GetExpensesAsync(int userId)
-        {
-            // Default to "monthly" period if no period is specified
-            return await GetExpensesAsync(userId, "monthly");
-        }
 
-        public async Task<List<Expense>> GetExpensesAsync(int userId, string period)
+        public async Task<List<Expense>> GetExpensesAsync(int userId, string period = "monthly")
         {
             var expenses = new List<Expense>();
             try
@@ -36,7 +31,6 @@ namespace Jamper_Financial.Shared.Services
                     GROUP BY e.Date
                     ORDER BY e.Date DESC;
                 ";
-
                 using var command = new SqliteCommand(query, connection);
                 command.Parameters.AddWithValue("@UserID", userId);
 
@@ -50,8 +44,8 @@ namespace Jamper_Financial.Shared.Services
                 }
                 else if (period == "monthly")
                 {
-                    // Get the start of the month
-                    startDate = new DateTime(endDate.Year, endDate.Month, 1);
+                    // Get year to date
+                    startDate = new DateTime(endDate.Year, 1, 1);
                 }
                 else
                 {
@@ -67,9 +61,10 @@ namespace Jamper_Financial.Shared.Services
                 command.Parameters.AddWithValue("@StartDate", startDate.ToString("yyyy-MM-dd"));
                 command.Parameters.AddWithValue("@EndDate", endDate.ToString("yyyy-MM-dd"));
 
-                Console.WriteLine($"Query: {query}");
-                Console.WriteLine($"Start of the week: {startDate.ToString("yyyy-MM-dd")}");
-                Console.WriteLine($"End of the week: {endDate.ToString("yyyy-MM-dd")}");
+                // Uncomment these lines to see the query and the start/end dates
+                //Console.WriteLine($"Query: {query}");
+                //Console.WriteLine($"Start of the week: {startDate.ToString("yyyy-MM-dd")}");
+                //Console.WriteLine($"End of the week: {endDate.ToString("yyyy-MM-dd")}");
 
                 using var reader = await command.ExecuteReaderAsync();
                 while (await reader.ReadAsync())

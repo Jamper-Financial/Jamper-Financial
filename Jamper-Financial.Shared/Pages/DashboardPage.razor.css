@@ -116,32 +116,63 @@ canvas {
     margin: 0;
 }
 
-.transaction-item {
-    padding: 1rem 0;
-    border-bottom: 1px solid #e9ecef;
+.transaction-container {
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    padding: 1rem;
 }
 
+.transaction-item {
+    display: flex;
+    flex-direction: row;
+    padding-left: 0px;
+    list-style: none; /* Remove default list styling */
+    border-bottom: 1px solid #eee; /* Add a bottom border for separation */
+    padding: .5rem;
+    margin: 0;
+}
+
+
     .transaction-item:last-child {
-        border-bottom: none;
+        border-bottom: none; /* Remove border from the last item */
     }
 
+    .transaction-item .flex-item {
+        padding: 5px; /* Add padding for spacing within items */
+        font-size: 16px; /* Adjust font size as needed */
+    }
+
+.icon-image {
+    flex: 0 0 25px; /* Prevent icon from growing and set a fixed width */
+    text-align: center; /* Center the icon */
+}
+
+    .icon-image img {
+        max-width: 50px; /* Adjust image size */
+        max-height: 50px;
+    }
+
+.transaction-description {
+    flex: 2; /* Make the description take more space */
+    text-align: left;
+    margin-left: 5px;
+}
 .transaction-title {
-    font-weight: 600;
-    color: #2c3e50;
-    margin-bottom: 0.25rem;
+    font-weight: bold; /* Make the description bold */
 }
 
 .transaction-date {
-    color: #6c757d;
-    font-size: 0.875rem;
-    margin-bottom: 0.5rem;
+    flex: 1;
+    text-align: left; /* Align amount to the right */
+    color: gray;
+    font-weight: lighter;
 }
 
 .transaction-amount {
-    float: right;
-    font-weight: 600;
+    text-align: right; /* Align date to the right */
+    align-content: center;
 }
-
 .negative {
     color: #dc3545;
 }

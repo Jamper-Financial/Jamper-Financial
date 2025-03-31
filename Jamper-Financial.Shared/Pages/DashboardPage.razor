@@ -96,16 +96,6 @@
         }
     }
 
-    private async Task RenderRecentTransactions()
-    {
-
-    }
-
-    private async Task RenderUpcomingSubscriptions()
-    {
-
-    }
-
     private async Task RenderWeeklyActivityChart()
     {
         var daysOfWeek = new[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
@@ -154,6 +144,8 @@
         var expenseData = new decimal[12];
         var differenceData = new decimal[12];
 
+
+        Console.WriteLine("Monthly Expense Count: " + monthlyExpenses.Count);
         foreach (var expense in monthlyExpenses)
         {
             var month = expense.Date.Month - 1; // Month is 1-based, array is 0-based
@@ -290,18 +282,46 @@
                     }
                     @if (card.Title == "Recent Transactions")
                     {
-                        @foreach (var transaction in transactions.Take(3))
-                        {
-                            <li class="transaction-item">
-                                <div class="transaction-title">@transaction.Description</div>
-                                <div class="transaction-date">@transaction.Amount</div>
-                                <div class="transaction-amount">@transaction.Date</div>
-                            </li>
-                        }
+                        <div class="transaction-container flex flex-column">
+                            @foreach (var transaction in transactions.Where(t => t.IsPaid).OrderByDescending(t => t.Date).Take(3))
+                            {
+                                <ul class="transaction-item flex-row">
+                                    <li class="icon-image flex-item">
+                                        @if (transaction.TransactionType == "i")
+                                        {
+                                            <img src="images/income.svg" alt="Income Icon" />
+                                        }
+                                        else
+                                        {
+                                            <img src="images/expense.svg" alt="Expense Icon" />
+                                        }
+                                    </li>
+                                    <li class="flex-item transaction-description">
+                                        <div class="transaction-title">@transaction.Description</div>
+                                        <div class="transaction-date">@transaction.Date.ToString("MMM dd, yyyy")</div>
+                                    </li>
+                                    <li class="transaction-amount flex-item @(transaction.TransactionType == "e" ? "negative" : "positive" )">@((transaction.Amount > 0 ? transaction.Amount : transaction.Amount).ToString("C"))</li>
+                                </ul>
+                            }
+                        </div>
                     }
                     @if (card.Title == "Subscription Due")
                     {
-                        <p>Sample</p>
+                        <div class="transaction-container flex flex-column">
+                            @foreach (var transaction in transactions.Where(t => t.IsPaid == false).OrderBy(t => t.Date).Take(3))
+                            {
+                                <ul class="transaction-item flex-row">
+                                    <li class="icon-image flex-item">
+                                            <img src="images/expense.svg" alt="Expense Icon" />
+                                    </li>
+                                    <li class="flex-item transaction-description">
+                                        <div class="transaction-title">@transaction.Description</div>
+                                        <div class="transaction-date">@transaction.Date.ToString("MMM dd, yyyy")</div>
+                                    </li>
+                                    <li class="transaction-amount flex-item @(transaction.TransactionType == "e" ? "negative" : "positive" )">@((transaction.Amount > 0 ? transaction.Amount : transaction.Amount).ToString("C"))</li>
+                                </ul>
+                            }
+                        </div>
                     }
                 </div>
             </div>
@@ -320,13 +340,3 @@
         </div>
     </div>
 </div>
-
-@* Add the following script to handle carousel functionality *@
-<script>
-    function updateCarousel() {
-        const carousel = document.querySelector('.carousel');
-        const cardWidth = carousel.offsetWidth / 3; // 3 cards visible at once
-        const translateValue = -currentIndex * cardWidth;
-        carousel.style.transform = `translateX(${translateValue}px)`;
-    }
-</script>

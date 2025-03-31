@@ -124,20 +124,24 @@ input, select {
 /* Table Style here*/
 table {
     width: 100%;
-    border: 2px solid #ffffff;
-    border-collapse: collapse;
-    margin-bottom: 1em;
-}
-
-table, tr, th, td {
-    border-color: var(--secondary-color);
-    text-align: left;
+    height: 100%;
+    background: #fff;
+    color: #000;
+    border-radius: 10px;
     padding: 10px;
+    border-collapse: collapse; /* Ensure borders are collapsed */
+    margin: 1rem
 }
 
-th {
-    background-color: none;
-    padding: 4px 2px;
+thead {
+    background-color: #62ad41; /* Main green color for headers */
+    color: white;
+}
+
+thead, td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd; /* Add border to table cells */
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
@@ -149,13 +153,6 @@ th {
     background-color: var(--table-secondary);
     color: white;
 }
-
-.table-striped thead {
-    font-weight: bold;
-    border-bottom-style: solid;
-    background-color: var(--primary-color);
-}
-
 
 /*  Style buttons here */
 .button-container {

@@ -1,4 +1,4 @@
-﻿﻿namespace Jamper_Financial.Shared.Models
+namespace Jamper_Financial.Shared.Models
 {
     public class Expense
     {

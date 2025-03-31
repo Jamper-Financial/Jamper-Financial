@@ -84,7 +84,7 @@ window.initializePieChart = function (canvasId, chartData) {
     }
 };
 
-window.initializeBarChart = function (canvasId, chartData, indAxis = 'x') {
+window.initializeBarChart = function (canvasId, chartData, indAxis = 'x', labeldisplay = false) {
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext('2d');
 
@@ -93,6 +93,24 @@ window.initializeBarChart = function (canvasId, chartData, indAxis = 'x') {
         if (existingChart) {
             existingChart.destroy();
         }
+
+        const plugins = {
+            legend: { display: true },
+            datalabels: labeldisplay ? {
+                anchor: 'bottom',
+                align: 'top',
+                font: {
+                    size: 14,
+                    family: 'Arial',
+                    weight: 'bold'
+                },
+                formatter: (value) => {
+                    return value;
+                }
+            } : {
+                display: false
+            }
+        };
 
         const myBarChart = new Chart(ctx, {
             type: 'bar',
@@ -106,21 +124,7 @@ window.initializeBarChart = function (canvasId, chartData, indAxis = 'x') {
                         beginAtZero: true
                     }
                 },
-                plugins: {
-                    legend: { display: true },
-                    datalabels: {
-                        anchor: 'bottom',
-                        align: 'top',
-                        font: {
-                            size: 14,
-                            family: 'Arial',
-                            weight: 'bold'
-                        },
-                        formatter: (value) => {
-                            return value;
-                        }
-                    }
-                }
+                plugins: plugins
             },
             plugins: [ChartDataLabels]
         });
@@ -129,7 +133,7 @@ window.initializeBarChart = function (canvasId, chartData, indAxis = 'x') {
     }
 };
 
-window.initializeLineChart = function (canvasId, chartData, indAxis = 'x') {
+window.initializeLineChart = function (canvasId, chartData, indAxis = 'x', labeldisplay = false) {
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext('2d');
 
@@ -138,6 +142,30 @@ window.initializeLineChart = function (canvasId, chartData, indAxis = 'x') {
         if (existingChart) {
             existingChart.destroy();
         }
+
+        const plugins = {
+            legend: {
+                display: true,
+                labels: {
+                    usePointStyle: true, // Use point style for legend
+                    pointStyle: 'line'  // Set point style to 'line' or 'circle'
+                }
+            },
+            datalabels: labeldisplay ? {
+                anchor: 'bottom',
+                align: 'top',
+                font: {
+                    size: 14,
+                    family: 'Arial',
+                    weight: 'bold'
+                },
+                formatter: (value) => {
+                    return value;
+                }
+            } : {
+                display: false
+            }
+        };
 
         const myLineChart = new Chart(ctx, {
             type: 'line',
@@ -151,27 +179,7 @@ window.initializeLineChart = function (canvasId, chartData, indAxis = 'x') {
                         beginAtZero: true
                     }
                 },
-                plugins: {
-                    legend: {
-                        display: true,
-                        labels: {
-                            usePointStyle: true, // Use point style for legend
-                            pointStyle: 'line'  // Set point style to 'line' or 'circle'
-                        }
-                    },
-                    datalabels: {
-                        anchor: 'bottom',
-                        align: 'top',
-                        font: {
-                            size: 14,
-                            family: 'Arial',
-                            weight: 'bold'
-                        },
-                        formatter: (value) => {
-                            return value;
-                        }
-                    }
-                }
+                plugins: plugins
             },
             plugins: [ChartDataLabels]
         });
