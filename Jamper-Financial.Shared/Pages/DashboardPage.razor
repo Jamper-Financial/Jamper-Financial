@@ -302,16 +302,29 @@
                                     <li class="flex-item transaction-description">
                                         <div class="transaction-title">@transaction.Description</div>
                                         <div class="transaction-date">@transaction.Date.ToString("MMM dd, yyyy")</div>
-                                        </li>
+                                    </li>
                                     <li class="transaction-amount flex-item @(transaction.TransactionType == "e" ? "negative" : "positive" )">@((transaction.Amount > 0 ? transaction.Amount : transaction.Amount).ToString("C"))</li>
-                                    @* <li class="transaction-amount flex-item class=">@transaction.Date.ToString("MMM dd, yyyy")</li> *@
                                 </ul>
                             }
                         </div>
                     }
                     @if (card.Title == "Subscription Due")
                     {
-                        <p>Sample</p>
+                        <div class="transaction-container flex flex-column">
+                            @foreach (var transaction in transactions.Where(t => t.IsPaid == false).OrderByDescending(t => t.Date).Take(3))
+                            {
+                                <ul class="transaction-item flex-row">
+                                    <li class="icon-image flex-item">
+                                            <img src="images/expense.svg" alt="Expense Icon" />
+                                    </li>
+                                    <li class="flex-item transaction-description">
+                                        <div class="transaction-title">@transaction.Description</div>
+                                        <div class="transaction-date">@transaction.Date.ToString("MMM dd, yyyy")</div>
+                                    </li>
+                                    <li class="transaction-amount flex-item @(transaction.TransactionType == "e" ? "negative" : "positive" )">@((transaction.Amount > 0 ? transaction.Amount : transaction.Amount).ToString("C"))</li>
+=                                </ul>
+                            }
+                        </div>
                     }
                 </div>
             </div>
@@ -330,13 +343,3 @@
         </div>
     </div>
 </div>
-
-@* Add the following script to handle carousel functionality *@
-<script>
-    function updateCarousel() {
-        const carousel = document.querySelector('.carousel');
-        const cardWidth = carousel.offsetWidth / 3; // 3 cards visible at once
-        const translateValue = -currentIndex * cardWidth;
-        carousel.style.transform = `translateX(${translateValue}px)`;
-    }
-</script>

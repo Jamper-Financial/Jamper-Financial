@@ -1,0 +1,20 @@
+﻿@page "/bulk-transactions"
+@inherits LayoutComponentBase
+
+@code {
+    [CascadingParameter] private Action<string> SetPageTitle { get; set; }
+
+    protected override void OnInitialized()
+    {
+        SetPageTitle("Bulk Transactions");
+    }
+}
+<div class="transactions-section">
+    <div class="transactions-header">
+        <h3 class="section-title">Recent Transactions</h3>
+        <div style="display: flex; gap: 10px;">
+            <button class="add-viaCsv" @onclick="OpenExcelModal">Import via Excel</button>
+            <button class="add-viaReceipt" @onclick="OpenOCRModal">Import via Receipts</button>
+        </div>
+    </div>
+</div>
