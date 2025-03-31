@@ -1,6 +1,7 @@
 ﻿.home-container {
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    align-items: self-start;
     justify-content: center;
     height: 100%; /* Full height of the viewport */
     margin: 0;
@@ -8,13 +9,23 @@
     background-size: contain;
     background-color: #000;
     position: relative;
+    width: 100%;
+    padding: 1rem;
 }
 
+.flex-item {
+    flex: 1;
+    width: 100%;
+    justify-content: center; /* Center horizontally */
+    align-items: self-start; /* Center vertically */
+}
+
+
 .top-right-button {
-    position: absolute;
-    top: 55%; /* Center vertically */
-    left: 15%; /* Position the button closer to the left */
-    transform: translateY(-50%); /* Proper vertical alignment */
+    position: relative;
+    top: 50%;  Center vertically 
+    /*left: 50%;*/ /* Position the button closer to the left */
+    /*transform: translateY(-50%);*/ /* Proper vertical alignment */
 }
 
     .top-right-button button {
