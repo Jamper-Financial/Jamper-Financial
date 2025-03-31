@@ -138,8 +138,9 @@ namespace Jamper_Financial.Shared.Data
                         CategoryID INTEGER NOT NULL,  
                         TransactionType TEXT CHECK(TransactionType IN ('e', 'i')) NOT NULL,
                         HasReceipt INTEGER DEFAULT 0,
-                        Frequency TEXT DEFAULT 'None',
+                        Frequency TEXT,
                         EndDate TEXT,
+                        IsPaid INTEGER DEFAULT 1,
                         CONSTRAINT Transactions_Users_FK FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
                         CONSTRAINT Transactions_Categories_FK FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID) ON DELETE CASCADE
 	                    CONSTRAINT Transactions_Accounts_FK FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID)

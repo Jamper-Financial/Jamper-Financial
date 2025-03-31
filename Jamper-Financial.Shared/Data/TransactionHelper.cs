@@ -23,7 +23,7 @@ namespace Jamper_Financial.Shared.Data
 
                 // Note: we need to filter out subscriptions that are not yet actual expenses
                 string query = @"
-                    SELECT t.TransactionID, t.[Date], t.Description, t.Amount, t.CategoryID, c.Color, c.TransactionType, t.HasReceipt, t.Frequency, t.EndDate, a.AccountID
+                    SELECT t.TransactionID, t.[Date], t.Description, t.Amount, t.CategoryID, c.Color, c.TransactionType, t.HasReceipt, t.Frequency, t.EndDate, a.AccountID, t.IsPaid
                     FROM Transactions t
                     JOIN Categories c ON t.CategoryID = c.CategoryID
                     JOIN Accounts a ON t.AccountID = a.AccountID
@@ -46,6 +46,7 @@ namespace Jamper_Financial.Shared.Data
                         int frequencyOrdinal = reader.GetOrdinal("Frequency");
                         int endDateOrdinal = reader.GetOrdinal("EndDate");
                         int accountIdOrdinal = reader.GetOrdinal("AccountID");
+                        int isPaid = reader.GetOrdinal("IsPaid");
 
                         while (await reader.ReadAsync())
                         {
@@ -61,6 +62,7 @@ namespace Jamper_Financial.Shared.Data
                                 Frequency = reader.GetString(frequencyOrdinal),
                                 EndDate = reader.IsDBNull(endDateOrdinal) ? (DateTime?)null : DateTime.Parse(reader.GetString(endDateOrdinal)),
                                 AccountID = reader.GetInt32(accountIdOrdinal),
+                                IsPaid = reader.GetInt32(isPaid) == 1,
                             });
                         }
                     }
@@ -89,21 +91,9 @@ namespace Jamper_Financial.Shared.Data
                         transaction.TransactionType = result?.ToString() ?? "e"; // Default to expense
                     }
 
-                    //remove the debit and credit and use amount column only
-                    //if (transaction.TransactionType == "e")
-                    //{
-                    //    transaction.Debit = transaction.Amount;
-                    //    transaction.Credit = 0;
-                    //}
-                    //else
-                    //{
-                    //    transaction.Debit = 0;
-                    //    transaction.Credit = transaction.Amount;
-                    //}
-
                     string query = @"
-                    INSERT INTO Transactions (UserID, Date, Description, Amount, CategoryID, TransactionType, HasReceipt, Frequency, EndDate, AccountID)
-                    VALUES (@UserID, @Date, @Description, @Amount, @CategoryID, @TransactionType, @HasReceipt, @Frequency, @EndDate, @AccountID);
+                    INSERT INTO Transactions (UserID, Date, Description, Amount, CategoryID, TransactionType, HasReceipt, Frequency, EndDate, AccountID, IsPaid)
+                    VALUES (@UserID, @Date, @Description, @Amount, @CategoryID, @TransactionType, @HasReceipt, @Frequency, @EndDate, @AccountID, @IsPaid);
                     ";
 
                     using (var command = new SqliteCommand(query, connection))
@@ -118,6 +108,7 @@ namespace Jamper_Financial.Shared.Data
                         command.Parameters.AddWithValue("@Frequency", transaction.Frequency);
                         command.Parameters.AddWithValue("@EndDate", transaction.EndDate?.ToString("yyyy-MM-dd") ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@AccountID", transaction.AccountID);
+                        command.Parameters.AddWithValue("@IsPaid", transaction.IsPaid ? 1 : 0);
                         await command.ExecuteNonQueryAsync();
                     }
                 }
@@ -129,8 +120,6 @@ namespace Jamper_Financial.Shared.Data
 
         }
 
-
-
         // This method updates an existing transaction in the database
         public static async Task UpdateTransactionAsync(Transaction transaction)
         {
@@ -138,7 +127,7 @@ namespace Jamper_Financial.Shared.Data
             {
                 await connection.OpenAsync();
 
-                string query = "UPDATE Transactions SET Date = @Date, Description = @Description, Amount = @Amount, CategoryID = @CategoryID, TransactionType = @TransactionType, Frequency = @Frequency, EndDate = @EndDate, AccountId = @AccountId WHERE TransactionID = @TransactionID";
+                string query = "UPDATE Transactions SET Date = @Date, Description = @Description, Amount = @Amount, CategoryID = @CategoryID, TransactionType = @TransactionType, Frequency = @Frequency, EndDate = @EndDate, AccountId = @AccountId, IsPaid = @IsPaid WHERE TransactionID = @TransactionID";
                 using (var command = new SqliteCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@Date", transaction.Date.ToString("yyyy-MM-dd"));
@@ -150,6 +139,7 @@ namespace Jamper_Financial.Shared.Data
                     command.Parameters.AddWithValue("@EndDate", transaction.EndDate.HasValue ? transaction.EndDate.Value.ToString("yyyy-MM-dd") : (object)DBNull.Value);
                     command.Parameters.AddWithValue("@AccountId", transaction.AccountID);
                     command.Parameters.AddWithValue("@TransactionID", transaction.TransactionID);
+                    command.Parameters.AddWithValue("@IsPaid", transaction.IsPaid);
 
                     await command.ExecuteNonQueryAsync();
                 }
@@ -186,7 +176,8 @@ namespace Jamper_Financial.Shared.Data
                 command.Parameters.AddWithValue("@HasReceipt", 1);
                 command.Parameters.AddWithValue("@TransactionID", receiptData.TransactionID);
                 await command.ExecuteNonQueryAsync();
-            };
+            }
+            ;
 
             //insert the receipt file into the database
             string insertquery = @"

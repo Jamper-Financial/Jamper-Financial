@@ -96,11 +96,6 @@
         }
     }
 
-    private async Task RenderRecentTransactions()
-    {
-
-    }
-
     private async Task RenderUpcomingSubscriptions()
     {
 
@@ -290,14 +285,29 @@
                     }
                     @if (card.Title == "Recent Transactions")
                     {
-                        @foreach (var transaction in transactions.Take(3))
-                        {
-                            <li class="transaction-item">
-                                <div class="transaction-title">@transaction.Description</div>
-                                <div class="transaction-date">@transaction.Amount</div>
-                                <div class="transaction-amount">@transaction.Date</div>
-                            </li>
-                        }
+                        <div class="transaction-container flex flex-column">
+                            @foreach (var transaction in transactions.Where(t => t.IsPaid).OrderByDescending(t => t.Date).Take(3))
+                            {
+                                <ul class="transaction-item flex-row">
+                                    <li class="icon-image flex-item">
+                                        @if (transaction.TransactionType == "i")
+                                        {
+                                            <img src="images/income.svg" alt="Income Icon" />
+                                        }
+                                        else
+                                        {
+                                            <img src="images/expense.svg" alt="Expense Icon" />
+                                        }
+                                    </li>
+                                    <li class="flex-item transaction-description">
+                                        <div class="transaction-title">@transaction.Description</div>
+                                        <div class="transaction-date">@transaction.Date.ToString("MMM dd, yyyy")</div>
+                                        </li>
+                                    <li class="transaction-amount flex-item @(transaction.TransactionType == "e" ? "negative" : "positive" )">@((transaction.Amount > 0 ? transaction.Amount : transaction.Amount).ToString("C"))</li>
+                                    @* <li class="transaction-amount flex-item class=">@transaction.Date.ToString("MMM dd, yyyy")</li> *@
+                                </ul>
+                            }
+                        </div>
                     }
                     @if (card.Title == "Subscription Due")
                     {
