@@ -54,11 +54,11 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Description</th>
-                        <th>Account Name</th>
-                        <th>Type</th>
-                        <th>Card</th>
                         <th>Date</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Account Name</th>
+                        <th>Account Number</th>
                         <th>Amount</th>
                         <th>Receipt</th>
                     </tr>
@@ -69,11 +69,11 @@
                         @foreach (var transaction in filteredTransactions.OrderBy(t => t.Date))
                         {
                             <tr class="transaction-item" @onclick="() => ShowEditTransactionModal(transaction)" style="cursor: pointer;">
-                                <td>@transaction.Description</td>
-                                <td>@GetAccountName(transaction.AccountID)</td>
-                                <td>@(transaction.TransactionType == "e" ? "Expense" : "Income")</td>
-                                <td>@transaction.TransactionID</td>
                                 <td>@transaction.Date.ToString("dd MMM yyyy")</td>
+                                <td>@transaction.Description</td>
+                                <td>@GetCategoryName(transaction.CategoryID)</td>
+                                <td>@GetAccountName(transaction.AccountID)</td>
+                                <td>@GetAccountNumber(transaction.AccountID)</td>
                                 <td class="@(transaction.TransactionType == "e" ? "negative" : "positive")">@((transaction.Amount > 0 ? transaction.Amount : transaction.Amount).ToString("C"))</td>
                                 <td @onclick:stopPropagation="true"><button class="view-details" @onclick="() => OpenReceiptModal(transaction)">View Receipt</button></td>
                             </tr>
@@ -89,21 +89,21 @@
 @if (ShowAddTransactionModal)
 {
     <TransactionModal IsVisible="ShowAddTransactionModal"
-                  IsEditMode="IsEditMode" 
-                  NewTransaction="NewTransaction" 
-                  Categories="Categories" 
-                  Accounts="accounts" 
-                  OnClose="CloseAddTransactionModal" 
-                  OnSave="HandleAddOrEditTransaction" 
-                  OnDelete="ShowDeleteConfirmationForm" 
-                  OnConfirmDelete="ConfirmDeleteTransaction" />
+                      IsEditMode="IsEditMode"
+                      NewTransaction="NewTransaction"
+                      Categories="Categories"
+                      Accounts="accounts"
+                      OnClose="CloseAddTransactionModal"
+                      OnSave="HandleAddOrEditTransaction"
+                      OnDelete="ShowDeleteConfirmationForm"
+                      OnConfirmDelete="ConfirmDeleteTransaction" />
 }
 
 @* Receipt Modal *@
 @if (ShowReceiptModal)
 {
-    <ReceiptModal IsVisible="ShowReceiptModal" 
-                  Transaction="SelectedTransaction" 
+    <ReceiptModal IsVisible="ShowReceiptModal"
+                  Transaction="SelectedTransaction"
                   OnClose="CloseReceiptModal" />
 }
 
@@ -253,5 +253,17 @@
     {
         var account = accounts.FirstOrDefault(a => a.AccountId == accountId);
         return account != null ? account.AccountName : "Unknown Account";
+    }
+
+    private string GetCategoryName(int categoryId)
+    {
+        var category = Categories.FirstOrDefault(c => c.CategoryID == categoryId);
+        return category != null ? category.Name : "Unknown Category";
+    }
+
+    private string GetAccountNumber(int accountId)
+    {
+        var account = accounts.FirstOrDefault(a => a.AccountId == accountId);
+        return account != null ? account.AccountNumber : "Unknown Account Number";
     }
 }
