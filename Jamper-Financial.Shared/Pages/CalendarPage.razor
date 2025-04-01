@@ -337,7 +337,7 @@
 
     private void SortTransactions(string sortBy, bool ascending)
     {
-        FilteredTransactionsForSelectedMonth = Sort.ApplySort(FilteredTransactionsForSelectedMonth, sortBy, ascending);
+        FilteredTransactionsForSelectedMonth = Sort.ApplySort(FilteredTransactionsForSelectedMonth, sortBy, ascending, Categories, Accounts);
         StateHasChanged();
     }
 

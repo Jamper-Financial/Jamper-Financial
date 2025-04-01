@@ -54,12 +54,12 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Category</th>
-                        <th>Account Name</th>
-                        <th>Account Number</th>
-                        <th>Amount</th>
+                        <th @onclick='() => SortTransactions("Date")'>Date @GetSortIndicator("Date")</th>
+                        <th @onclick='() => SortTransactions("Description")'>Description @GetSortIndicator("Description")</th>
+                        <th @onclick='() => SortTransactions("CategoryName")'>Category @GetSortIndicator("CategoryName")</th>
+                        <th @onclick='() => SortTransactions("AccountName")'>Account Name @GetSortIndicator("AccountName")</th>
+                        <th @onclick='() => SortTransactions("AccountNumber")'>Account Number @GetSortIndicator("AccountNumber")</th>
+                        <th @onclick='() => SortTransactions("Amount")'>Amount @GetSortIndicator("Amount")</th>
                         <th>Receipt</th>
                     </tr>
                 </thead>
@@ -118,6 +118,8 @@
     public bool ShowDeleteConfirmation { get; set; } = false;
     public Transaction NewTransaction { get; set; } = new Transaction();
     public Transaction SelectedTransaction { get; set; } = new Transaction();
+    private string currentSortColumn = string.Empty;
+    private bool isAscending = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -265,5 +267,44 @@
     {
         var account = accounts.FirstOrDefault(a => a.AccountId == accountId);
         return account != null ? account.AccountNumber : "Unknown Account Number";
+    }
+
+    private void SortTransactions(string column)
+    {
+        if (currentSortColumn == column)
+        {
+            if (isAscending)
+            {
+                isAscending = false;
+            }
+            else
+            {
+                currentSortColumn = string.Empty;
+                isAscending = true;
+            }
+        }
+        else
+        {
+            currentSortColumn = column;
+            isAscending = true;
+        }
+
+        if (string.IsNullOrEmpty(currentSortColumn))
+        {
+            filteredTransactions = transactions;
+        }
+        else
+        {
+            filteredTransactions = Sort.ApplySort(transactions, currentSortColumn, isAscending, Categories, accounts);
+        }
+    }
+
+    private string GetSortIndicator(string column)
+    {
+        if (currentSortColumn == column)
+        {
+            return isAscending ? "↑" : "↓";
+        }
+        return string.Empty;
     }
 }
