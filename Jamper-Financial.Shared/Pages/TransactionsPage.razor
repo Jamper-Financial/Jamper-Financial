@@ -88,105 +88,23 @@
 @* Add/Edit Transaction Modal *@
 @if (ShowAddTransactionModal)
 {
-    <div class="modal">
-        <div class="modal-content">
-            @if (ShowDeleteConfirmation)
-            {
-                @if (NewTransaction.Frequency != null)
-                {
-                    <h3>Confirm Deletion</h3>
-                    <p>This transaction is recurring. Do you want to delete all occurrences or just this one?</p>
-                    <div class="form-group button-group">
-                        <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(true)">Delete All</button>
-                        <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(false)">Delete This One</button>
-                        <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
-                    </div>
-                }
-                else
-                {
-                    <h3>Confirm Deletion</h3>
-                    <p>Are you sure you want to delete this transaction?</p>
-                    <div class="form-group button-group">
-                        <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(false)">Confirm</button>
-                        <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
-                    </div>
-                }
-            }
-            else
-            {
-                <h3>@(IsEditMode ? "Edit Transaction" : "Add Transaction")</h3>
-                <form @onsubmit="HandleAddOrEditTransaction">
-                    <div class="form-group">
-                        <label for="description">Description:</label>
-                        <input id="description" @bind="NewTransaction.Description" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="accountname">Account:</label>
-                        <select id="accountname" @bind="NewTransaction.AccountID" required>
-                            <option value="">Select Account</option>
-                            @foreach (var account in accounts)
-                            {
-                                <option value="@account.AccountId"> @account.AccountName </option>
-                            }
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="category">Category:</label>
-                        <select id="category" @bind="NewTransaction.CategoryID" required>
-                            <option value=""> Select Category</option>
-                            @foreach (var category in Categories)
-                            {
-                                <option value="@category.CategoryID">@category.Name</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="amount">Amount:</label>
-                        <input id="amount" type="number" step="0.01" @bind="Amount" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="transactionDate">Transaction Date:</label>
-                        <input id="transactionDate" type="date" @bind="NewTransaction.Date" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="frequency">Frequency:</label>
-                        <select id="frequency" @bind="NewTransaction.Frequency" @bind:event="onchange" required>
-                            <option value=null>None</option>
-                            <option value="Monthly">Monthly</option>
-                            <option value="Yearly">Yearly</option>
-                        </select>
-                    </div>
-                    @if (IsEditMode)
-                    {
-                        Console.WriteLine(NewTransaction.IsPaid);
-                        <input type="checkbox" id="isPaid" class="isPaid" @bind="NewTransaction.IsPaid" @bind:event="onchange" />
-                        <label for="isPaid">Is Paid</label>
-                    }
-                    @if (NewTransaction.Frequency != null)
-                    {
-                        <div class="form-group">
-                            <label for="endDate">End Date:</label>
-                            <input id="endDate" type="date" @bind="NewTransaction.EndDate" required />
-                        </div>
-                    }
-                    <div class="form-group button-group">
-                        @if (IsEditMode)
-                        {
-                            <button type="button" class="delete" @onclick="ShowDeleteConfirmationForm">Delete</button>
-                        }
-                        <button type="button" class="cancel" @onclick="CloseAddTransactionModal">Cancel</button>
-                        <button type="submit" class="@(IsEditMode ? "Save" : "add")">@((IsEditMode ? "Save" : "Add"))</button>
-                    </div>
-                </form>
-            }
-        </div>
-    </div>
+    <TransactionModal IsVisible="ShowAddTransactionModal"
+                  IsEditMode="IsEditMode" 
+                  NewTransaction="NewTransaction" 
+                  Categories="Categories" 
+                  Accounts="accounts" 
+                  OnClose="CloseAddTransactionModal" 
+                  OnSave="HandleAddOrEditTransaction" 
+                  OnDelete="ShowDeleteConfirmationForm" 
+                  OnConfirmDelete="ConfirmDeleteTransaction" />
 }
 
 @* Receipt Modal *@
 @if (ShowReceiptModal)
 {
-    <ReceiptModal IsVisible="ShowReceiptModal" Transaction="SelectedTransaction" OnClose="CloseReceiptModal" />
+    <ReceiptModal IsVisible="ShowReceiptModal" 
+                  Transaction="SelectedTransaction" 
+                  OnClose="CloseReceiptModal" />
 }
 
 @code {
@@ -200,8 +118,6 @@
     public bool ShowDeleteConfirmation { get; set; } = false;
     public Transaction NewTransaction { get; set; } = new Transaction();
     public Transaction SelectedTransaction { get; set; } = new Transaction();
-    public decimal Amount { get; set; } = 0;
-
 
     protected override async Task OnInitializedAsync()
     {
@@ -269,10 +185,7 @@
 
     private void ShowEditTransactionModal(Transaction transaction)
     {
-        Console.WriteLine("Enter edit transaction");
-
         NewTransaction = transaction;
-        Amount = transaction.Amount > 0 ? transaction.Amount : transaction.Amount;
         IsEditMode = true;
         ShowDeleteConfirmation = false;
         ShowAddTransactionModal = true;
@@ -291,7 +204,6 @@
     {
         try
         {
-            NewTransaction.Amount = Amount;
             await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
             transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
             filteredTransactions = transactions;
