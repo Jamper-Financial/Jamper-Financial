@@ -1,59 +1,102 @@
 @page "/reports-page"
+@using Jamper_Financial.Shared.Services
 @using Jamper_Financial.Shared.Utilities
 @using Jamper_Financial.Shared.Data
+@using Jamper_Financial.Shared.Models  
 @using System.Text
+@using Microsoft.Data.Sqlite
 @inherits LayoutComponentBase
 
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JS   // ADDED: JS RUNTIME INJECTION FOR CHARTS
+@inject UserStateService UserStateService  // ADDED: FOR CURRENT USER FILTERING
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
 
-    // Toggles the "Create Custom Report" modal
+    // TOGGLES FOR MODALS
     private bool showCreateReportModal = false;
-    // Toggles the "Report Results" modal (for custom reports)
     private bool showResultsModal = false;
-    // ADDED: Toggles the "Current Month Expenses" modal
-    private bool showCurrentMonthExpensesModal = false;
-    // ADDED: Toggles the "Current Month Savings" modal
-    private bool showCurrentMonthSavingsModal = false;
+    private bool showCurrentMonthExpensesModal = false; // ADDED: For current month expenses modal
+    private bool showCurrentMonthSavingsModal = false;  // ADDED: For current month savings modal
 
-    // User-selected filters
+    // USER-SELECTED FILTERS
     private List<string> selectedCategories = new List<string>();
     private bool useLast6Months = true;
     private DateTime fromDate = DateTime.Now.AddMonths(-6);
     private DateTime toDate = DateTime.Now;
 
-    // Validation errors
+    // VALIDATION ERRORS
     private string categoryError = string.Empty;
     private string dateError = string.Empty;
 
-    // All DB transactions + the filtered subset
+    // TRANSACTIONS (FOR CURRENT USER)
     private List<Transaction> transactions = new List<Transaction>();
     private List<Transaction> filteredTransactions = new List<Transaction>();
 
-    // Additional report fields
+    // ADDED: USER LINKED ACCOUNTS (Using BankAccount model from LinkedAccount.razor)
+    private List<BankAccount> userAccounts = new List<BankAccount>(); // LOADED VIA LoadUserAccountsAsync()
+    // ADDED: USER CATEGORIES
+    private List<Category> userCategories = new List<Category>();      // LOADED VIA DatabaseHelper.GetCategories(userId)
+
+    // REPORT FIELDS
     private string reportName = string.Empty;
     private string reportDescription = string.Empty;
 
-    // Totals for Debit/Credit
+    // CALCULATED TOTALS
     private decimal totalDebit => filteredTransactions.Where(t => t.TransactionType == "e").Sum(t => t.Amount);
     private decimal totalCredit => filteredTransactions.Where(t => t.TransactionType == "i").Sum(t => t.Amount);
 
     protected override async Task OnInitializedAsync()
     {
-        // Set the page title
-        SetPageTitle("Reports");
+        int userId = UserStateService.UserId;
+        @* if (userId <= 0)
+        {
+            NavigationManager.NavigateTo("/login");
+            return;
+        }
+        SetPageTitle("Reports"); *@
 
-        // Load all transactions from the database
-        int userId = 1; // Hardcoded for now.
+        // LOAD TRANSACTIONS FOR CURRENT USER
         var allFromDb = await TransactionHelper.GetTransactionsAsync(userId);
-
         transactions = allFromDb.ToList();
+        filteredTransactions = transactions; // DEFAULT: SHOW ALL
 
-        // By default, show everything
-        filteredTransactions = transactions;
+        // ADDED: LOAD USER LINKED ACCOUNTS FROM DATABASE
+        await LoadUserAccountsAsync(userId);
+
+        // ADDED: LOAD USER CATEGORIES FROM DATABASE
+        userCategories = DatabaseHelper.GetCategories(userId);
+    }
+
+    // ADDED: METHOD TO LOAD USER ACCOUNTS FROM THE ACCOUNTS TABLE
+    private async Task LoadUserAccountsAsync(int userId)
+    {
+        var accounts = new List<BankAccount>();
+        using (var connection = DatabaseHelper.GetConnection())
+        {
+            await connection.OpenAsync();
+            string query = "SELECT AccountID, AccountName, AccountTypeID, Balance, AccountNumber FROM Accounts WHERE UserID = @UserID";
+            using (var command = new SqliteCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@UserID", userId);
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        accounts.Add(new BankAccount
+                        {
+                            AccountId = reader.GetInt32(reader.GetOrdinal("AccountID")),   // MATCHES model property
+                            AccountName = reader.GetString(reader.GetOrdinal("AccountName")),
+                            AccountTypeID = reader.GetInt32(reader.GetOrdinal("AccountTypeID")),
+                            Balance = (int)reader.GetDecimal(reader.GetOrdinal("Balance")),  // Explicitly cast Balance to int
+                            AccountNumber = reader.GetInt32(reader.GetOrdinal("AccountNumber")).ToString()  // Convert to string for display
+                        });
+                    }
+                }
+            }
+        }
+        userAccounts = accounts;
     }
 
     // -------------------------
@@ -65,24 +108,13 @@
         categoryError = string.Empty;
         dateError = string.Empty;
     }
-
-    private void CloseCreateReportModal()
-    {
-        showCreateReportModal = false;
-    }
+    private void CloseCreateReportModal() => showCreateReportModal = false;
 
     // -------------------------
     // Report Results Modal (Custom Report)
     // -------------------------
-    private void OpenResultsModal()
-    {
-        showResultsModal = true;
-    }
-
-    private void CloseResultsModal()
-    {
-        showResultsModal = false;
-    }
+    private void OpenResultsModal() => showResultsModal = true;
+    private void CloseResultsModal() => showResultsModal = false;
 
     // -------------------------
     // View Report (Custom Report)
@@ -92,29 +124,24 @@
         if (useLast6Months)
         {
             fromDate = DateTime.Now.AddMonths(-6);
-            toDate   = DateTime.Now;
+            toDate = DateTime.Now;
         }
-
-        // Validate categories + date
         if (!ValidateCategories() | !ValidateDates())
             return;
-
-        // Filter
+        // FILTER TRANSACTIONS BASED ON SELECTED CATEGORIES AND DATE RANGE
         filteredTransactions = transactions
             .Where(t => selectedCategories.Contains("All") || selectedCategories.Contains(t.CategoryID.ToString()))
             .Where(t => t.Date >= fromDate && t.Date <= toDate)
             .ToList();
-
         CloseCreateReportModal();
         OpenResultsModal();
     }
 
     // -------------------------
-    // ADDED: View Current Month Expenses Modal
+    // View Current Month Expenses Modal
     // -------------------------
     private void ViewCurrentMonthExpenses()
     {
-        // Filter transactions for the current month expenses (assumed type "e")
         var currentMonth = DateTime.Now.Month;
         var currentYear = DateTime.Now.Year;
         filteredTransactions = transactions
@@ -124,11 +151,10 @@
     }
 
     // -------------------------
-    // ADDED: View Current Month Savings Modal
+    // View Current Month Savings Modal
     // -------------------------
     private void ViewCurrentMonthSavings()
     {
-        // Filter transactions for the current month savings (assumed type "i")
         var currentMonth = DateTime.Now.Month;
         var currentYear = DateTime.Now.Year;
         filteredTransactions = transactions
@@ -137,7 +163,7 @@
         showCurrentMonthSavingsModal = true;
     }
 
-    // Must select at least one category
+    // VALIDATION METHODS
     private bool ValidateCategories()
     {
         if (selectedCategories.Count == 0)
@@ -148,8 +174,6 @@
         categoryError = string.Empty;
         return true;
     }
-
-    // 'To' date >= 'From' date
     private bool ValidateDates()
     {
         if (toDate < fromDate)
@@ -160,31 +184,28 @@
         dateError = string.Empty;
         return true;
     }
-
     private void OnFromDateChange(ChangeEventArgs e)
     {
         if (DateTime.TryParse(e.Value?.ToString(), out var newDate))
             fromDate = newDate;
         ValidateDates();
     }
-
     private void OnToDateChange(ChangeEventArgs e)
     {
         if (DateTime.TryParse(e.Value?.ToString(), out var newDate))
             toDate = newDate;
         ValidateDates();
     }
-
     private void OnCategoriesChange(ChangeEventArgs e)
     {
+        // UPDATE SELECTED CATEGORIES FROM DROPDOWN VALUE(S)
         var selectedOptions = (e.Value as IEnumerable<string>)?.ToList() ?? new List<string>();
         selectedCategories = selectedOptions;
         ValidateCategories();
     }
-
     private bool CanViewReport => string.IsNullOrEmpty(categoryError) && string.IsNullOrEmpty(dateError);
 
-    // Return from "Report Results" to "Create Custom Report"
+    // RETURN FROM "REPORT RESULTS" TO "CREATE CUSTOM REPORT"
     private void GoBackToFilters()
     {
         showResultsModal = false;
@@ -192,43 +213,40 @@
     }
 
     // -------------------------
-    // Export CSV/PDF (unchanged)
+    // EXPORT CSV/PDF (UNCHANGED)
     // -------------------------
     private void ExportToCsv()
     {
         if (useLast6Months)
         {
             fromDate = DateTime.Now.AddMonths(-6);
-            toDate   = DateTime.Now;
+            toDate = DateTime.Now;
         }
-
         var catParam = string.Join(",", selectedCategories);
         var url = $"/export/csv?reportName={Uri.EscapeDataString(reportName)}" +
                   $"&description={Uri.EscapeDataString(reportDescription)}" +
                   $"&fromDate={fromDate:o}&toDate={toDate:o}" +
                   $"&categories={Uri.EscapeDataString(catParam)}";
-
         NavigationManager.NavigateTo(url, forceLoad: true);
     }
-
     private void ExportToPdf()
     {
         if (useLast6Months)
         {
             fromDate = DateTime.Now.AddMonths(-6);
-            toDate   = DateTime.Now;
+            toDate = DateTime.Now;
         }
-
         var catParam = string.Join(",", selectedCategories);
         var url = $"/export/pdf?reportName={Uri.EscapeDataString(reportName)}" +
                   $"&description={Uri.EscapeDataString(reportDescription)}" +
                   $"&fromDate={fromDate:o}&toDate={toDate:o}" +
                   $"&categories={Uri.EscapeDataString(catParam)}";
-
         NavigationManager.NavigateTo(url, forceLoad: true);
     }
 
-    // ADDED: OVERRIDE ONAFTERRENDERASYNC TO RENDER CHARTS ON FIRST RENDER
+    // -------------------------
+    // RENDER CHARTS USING REAL DATA
+    // -------------------------
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -238,20 +256,28 @@
         }
     }
 
-    // ADDED: METHOD TO RENDER THE MONTHLY BUDGET CHART WITH DUMMY DATA
+    // RENDER MONTHLY EXPENSES CHART
     private async Task RenderMonthlyBudgetChart()
     {
-        // DEFINE MONTH NAMES
         var months = new[]
         {
             "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
         };
 
-        // DUMMY DATA FOR MONTHLY BUDGET REPORT (PLACEHOLDER VALUES)
-        var budgetData = new decimal[12] { 500, 450, 600, 520, 700, 550, 480, 530, 620, 580, 550, 600 };
+        // AGGREGATE EXPENSE DATA FROM REAL TRANSACTIONS
+        // CAPSLOCK COMMENT: SKIP TRANSACTIONS WITH A DATE IN THE FUTURE (NOT YET DONE)
+        var expenseData = new decimal[12];
+        foreach (var trans in transactions)
+        {
+            if (trans.Date > DateTime.Now) continue; // DO NOT INCLUDE FUTURE TRANSACTIONS
+            if (trans.TransactionType == "e")
+            {
+                int monthIndex = trans.Date.Month - 1;
+                expenseData[monthIndex] += trans.Amount;
+            }
+        }
 
-        // PREPARE CHART DATA OBJECT
         var chartData = new
         {
             labels = months,
@@ -259,8 +285,8 @@
             {
                 new
                 {
-                    label = "Monthly Budget",
-                    data = budgetData,
+                    label = "Monthly Expenses",
+                    data = expenseData,
                     backgroundColor = "rgba(75, 192, 192, 0.2)",
                     borderColor = "rgba(75, 192, 192, 1)",
                     borderWidth = 1,
@@ -269,24 +295,31 @@
             }
         };
 
-        // CALL JS FUNCTION TO INITIALIZE BAR CHART
         await JS.InvokeVoidAsync("initializeBarChart", "monthlyBudgetChart", chartData);
     }
 
-    // ADDED: METHOD TO RENDER THE MONTHLY SAVINGS CHART WITH DUMMY DATA
+    // RENDER MONTHLY SAVINGS CHART
     private async Task RenderMonthlySavingsChart()
     {
-        // DEFINE MONTH NAMES
         var months = new[]
         {
             "January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"
         };
 
-        // DUMMY DATA FOR MONTHLY SAVINGS REPORT (PLACEHOLDER VALUES)
-        var savingsData = new decimal[12] { 300, 350, 400, 380, 450, 420, 410, 460, 480, 500, 520, 550 };
+        // AGGREGATE INCOME DATA FROM REAL TRANSACTIONS
+        // SKIP FUTURE TRANSACTIONS FOR SAVINGS CHART
+        var incomeData = new decimal[12];
+        foreach (var trans in transactions)
+        {
+            if (trans.Date > DateTime.Now) continue; // DO NOT INCLUDE FUTURE TRANSACTIONS
+            if (trans.TransactionType == "i")
+            {
+                int monthIndex = trans.Date.Month - 1;
+                incomeData[monthIndex] += trans.Amount;
+            }
+        }
 
-        // PREPARE CHART DATA OBJECT
         var chartData = new
         {
             labels = months,
@@ -295,7 +328,7 @@
                 new
                 {
                     label = "Monthly Savings",
-                    data = savingsData,
+                    data = incomeData,
                     backgroundColor = "rgba(153, 102, 255, 0.2)",
                     borderColor = "rgba(153, 102, 255, 1)",
                     borderWidth = 1,
@@ -304,13 +337,12 @@
             }
         };
 
-        // CALL JS FUNCTION TO INITIALIZE BAR CHART
         await JS.InvokeVoidAsync("initializeBarChart", "monthlySavingsChart", chartData);
     }
 }
 
 <style>
-/* (KEEP YOUR EXISTING CSS AS-IS) */
+
 .reports-page {
     padding: 20px !important;
     font-family: Arial, sans-serif !important;
@@ -319,19 +351,16 @@
     align-items: center !important;
     width: 100% !important;
 }
-
 .reports-page .report-container {
     width: 100% !important;
     max-width: 1200px !important;
     margin-bottom: 20px !important;
 }
-
 .reports-page .export-buttons {
     display: flex !important;
     gap: 10px !important;
     margin: 10px 0 !important;
 }
-
 .reports-page .reports-btn {
     padding: 5px 10px !important;
     background-color: #62AD41 !important;
@@ -342,9 +371,8 @@
     transition: background-color 0.2s !important;
 }
 .reports-page .reports-btn:hover {
-    background-color: #58a93b !important; 
+    background-color: #58a93b !important;
 }
-
 .reports-page .reports-custom-btn {
     padding: 12px 24px !important;
     background-color: white !important;
@@ -363,7 +391,6 @@
     background-color: #62AD41 !important;
     color: #e3f2dc !important;
 }
-
 .reports-page .graph-card {
     border: 1px solid #e0e0e0 !important;
     border-radius: 12px !important;
@@ -374,45 +401,37 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
     background-color: #ffffff !important;
 }
-
 .reports-page .create-report-modal,
 .reports-page .results-modal {
     position: fixed !important;
-    top: 0 !important; 
+    top: 0 !important;
     left: 0 !important;
     width: 100% !important;
     height: 100% !important;
-    display: flex !important; 
-    justify-content: center !important; 
+    display: flex !important;
+    justify-content: center !important;
     align-items: center !important;
     background-color: rgba(0,0,0,0.5) !important;
     z-index: 9999 !important;
 }
-
-/* Widen the results modal so it fits 7 columns comfortably */
 .reports-page .modal-content {
     background-color: #fff !important;
     width: 90% !important;
-    max-width: 900px !important; /* increased from 500px */
+    max-width: 900px !important;
     border-radius: 10px !important;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
     padding: 20px !important;
     position: relative !important;
 }
-
-/* Make typed text in input/textarea black */
 .reports-page .create-report-modal .modal-content input,
 .reports-page .create-report-modal .modal-content textarea {
     color: #000 !important;
 }
-
-/* Make only the placeholder text grey */
 .reports-page .create-report-modal .modal-content input::placeholder,
 .reports-page .create-report-modal .modal-content textarea::placeholder {
     color: #888 !important;
     opacity: 1 !important;
 }
-
 .reports-page .close {
     color: #aaa !important;
     float: right !important;
@@ -423,21 +442,17 @@
 .reports-page .close:hover {
     color: #000 !important;
 }
-
 .reports-page .modal-body {
     margin-top: 20px !important;
 }
-
 .reports-page .form-group {
     margin-bottom: 15px !important;
 }
-
 .reports-page .form-group label {
     display: block !important;
     margin-bottom: 5px !important;
     font-weight: bold !important;
 }
-
 .reports-page .form-group input,
 .reports-page .form-group select,
 .reports-page .form-group textarea {
@@ -446,7 +461,16 @@
     border: 1px solid #ccc !important;
     border-radius: 4px !important;
 }
-
+/* ADDED: CUSTOM DROPDOWN STYLE */
+.reports-page .custom-dropdown {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('down-arrow-icon.png');
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+}
 .reports-page .form-group .multi-select {
     width: 100% !important;
     padding: 8px !important;
@@ -454,7 +478,6 @@
     border-radius: 4px !important;
     background-color: #fff !important;
 }
-
 .reports-page .form-group .date-range {
     display: flex !important;
     align-items: center !important;
@@ -476,19 +499,16 @@
 .reports-page .form-group .date-range .date-inputs input {
     flex: 1 !important;
 }
-
 .reports-page .error-message {
     color: red !important;
     font-size: 0.9em !important;
     margin-top: 5px !important;
 }
-
 .reports-page .report-results {
     margin-top: 20px !important;
     width: 100% !important;
     max-width: 1200px !important;
 }
-
 .reports-page .transactions-table {
     width: 100% !important;
     border-collapse: collapse !important;
@@ -502,7 +522,6 @@
 .reports-page .transactions-table th {
     background-color: #f5f5f5 !important;
 }
-
 .reports-page .negative {
     color: red !important;
 }
@@ -516,11 +535,9 @@
     <div class="report-container">
         <h3>Expenses Report Overview</h3>
         <div class="graph-card">
-            <!-- ADDED: CANVAS FOR MONTHLY BUDGET CHART -->
             <canvas id="monthlyBudgetChart"></canvas>
         </div>
         <div class="export-buttons">
-            <!-- UPDATED: BUTTON CALLS NEW METHOD -->
             <button class="reports-btn" @onclick="ViewCurrentMonthExpenses">View Current Month Expenses</button>
         </div>
     </div>
@@ -529,20 +546,17 @@
     <div class="report-container">
         <h3>Savings Report Overview</h3>
         <div class="graph-card">
-            <!-- ADDED: CANVAS FOR MONTHLY SAVINGS CHART -->
             <canvas id="monthlySavingsChart"></canvas>
         </div>
         <div class="export-buttons">
-            <!-- UPDATED: BUTTON CALLS NEW METHOD -->
             <button class="reports-btn" @onclick="ViewCurrentMonthSavings">View Current Month Savings</button>
         </div>
-
         <button class="reports-custom-btn" @onclick="OpenCreateReportModal">
             Create Custom Report
         </button>
     </div>
 
-    <!-- Create Custom Report Modal (UNCHANGED) -->
+    <!-- Create Custom Report Modal (UPDATED DROPDOWNS) -->
     @if (showCreateReportModal)
     {
         <div class="create-report-modal">
@@ -554,33 +568,32 @@
                         <label>Enter the name of the report:</label>
                         <input type="text" @bind="reportName" placeholder="Report Name" />
                     </div>
-
                     <div class="form-group">
                         <label>Select accounts: (use ctrl to multi-select)</label>
-                        <select class="multi-select" multiple>
+                        <!-- UPDATED: POPULATE ACCOUNTS FROM THE CURRENT USER -->
+                        <select class="multi-select custom-dropdown" multiple>
                             <option value="All">All</option>
-                            <option value="Checking">Checking</option>
-                            <option value="Savings">Savings</option>
-                            <option value="Credit Card">Credit Card</option>
+                            @foreach (var account in userAccounts)
+                            {
+                                <option value="@account.AccountId">@account.AccountName</option>
+                            }
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label>Select categories: (use ctrl to multi-select)</label>
-                        <select class="multi-select" multiple @onchange="OnCategoriesChange">
+                        <!-- UPDATED: POPULATE CATEGORIES FROM THE CURRENT USER -->
+                        <select class="multi-select custom-dropdown" multiple @onchange="OnCategoriesChange">
                             <option value="All">All</option>
-                            <option value="Expenses">Expenses</option>
-                            <option value="Income">Income</option>
-                            <option value="Debts & Loans">Debts & Loans</option>
-                            <option value="Savings & Investments">Savings & Investments</option>
-                            <option value="Subscriptions & Memberships">Subscriptions & Memberships</option>
+                            @foreach (var category in userCategories)
+                            {
+                                <option value="@category.CategoryID">@category.Name</option>
+                            }
                         </select>
                         @if (!string.IsNullOrEmpty(categoryError))
                         {
                             <div class="error-message">@categoryError</div>
                         }
                     </div>
-
                     <div class="form-group">
                         <label>Date range:</label>
                         <div class="date-range">
@@ -603,12 +616,10 @@
                             <div class="error-message">@dateError</div>
                         }
                     </div>
-
                     <div class="form-group">
                         <label>Description:</label>
                         <textarea @bind="reportDescription" placeholder="Enter description"></textarea>
                     </div>
-
                     <button class="reports-custom-btn"
                             @onclick="ViewReport"
                             disabled="@(!CanViewReport)">
@@ -631,7 +642,6 @@
                     <strong>Description:</strong> @reportDescription <br />
                     <strong>Date Range:</strong> @($"{fromDate:dd MMM yyyy}") - @($"{toDate:dd MMM yyyy}")
                 </div>
-
                 <div class="report-results">
                     @if (filteredTransactions.Count == 0)
                     {
@@ -677,13 +687,11 @@
                                 </tr>
                             </tbody>
                         </table>
-
                         <div class="export-buttons">
                             <button class="reports-btn" @onclick="ExportToCsv">Export to CSV</button>
                             <button class="reports-btn" @onclick="ExportToPdf">Export to PDF</button>
                         </div>
                     }
-
                     <button class="reports-custom-btn" @onclick="GoBackToFilters">
                         Back to Filters
                     </button>
@@ -692,7 +700,7 @@
         </div>
     }
 
-    <!-- ADDED: Current Month Expenses Modal -->
+    <!--Current Month Expenses Modal -->
     @if (showCurrentMonthExpensesModal)
     {
         <div class="results-modal">
@@ -741,7 +749,7 @@
         </div>
     }
 
-    <!-- ADDED: Current Month Savings Modal -->
+    <!-- Current Month Savings Modal -->
     @if (showCurrentMonthSavingsModal)
     {
         <div class="results-modal">
