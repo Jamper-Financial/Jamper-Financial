@@ -5,14 +5,19 @@
 @inherits LayoutComponentBase
 
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JS   // ADDED: JS RUNTIME INJECTION FOR CHARTS
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
 
     // Toggles the "Create Custom Report" modal
     private bool showCreateReportModal = false;
-    // Toggles the "Report Results" modal
+    // Toggles the "Report Results" modal (for custom reports)
     private bool showResultsModal = false;
+    // ADDED: Toggles the "Current Month Expenses" modal
+    private bool showCurrentMonthExpensesModal = false;
+    // ADDED: Toggles the "Current Month Savings" modal
+    private bool showCurrentMonthSavingsModal = false;
 
     // User-selected filters
     private List<string> selectedCategories = new List<string>();
@@ -35,7 +40,6 @@
     // Totals for Debit/Credit
     private decimal totalDebit => filteredTransactions.Where(t => t.TransactionType == "e").Sum(t => t.Amount);
     private decimal totalCredit => filteredTransactions.Where(t => t.TransactionType == "i").Sum(t => t.Amount);
-
 
     protected override async Task OnInitializedAsync()
     {
@@ -68,7 +72,7 @@
     }
 
     // -------------------------
-    // Report Results Modal
+    // Report Results Modal (Custom Report)
     // -------------------------
     private void OpenResultsModal()
     {
@@ -81,7 +85,7 @@
     }
 
     // -------------------------
-    // View Report
+    // View Report (Custom Report)
     // -------------------------
     private void ViewReport()
     {
@@ -103,6 +107,34 @@
 
         CloseCreateReportModal();
         OpenResultsModal();
+    }
+
+    // -------------------------
+    // ADDED: View Current Month Expenses Modal
+    // -------------------------
+    private void ViewCurrentMonthExpenses()
+    {
+        // Filter transactions for the current month expenses (assumed type "e")
+        var currentMonth = DateTime.Now.Month;
+        var currentYear = DateTime.Now.Year;
+        filteredTransactions = transactions
+            .Where(t => t.Date.Month == currentMonth && t.Date.Year == currentYear && t.TransactionType == "e")
+            .ToList();
+        showCurrentMonthExpensesModal = true;
+    }
+
+    // -------------------------
+    // ADDED: View Current Month Savings Modal
+    // -------------------------
+    private void ViewCurrentMonthSavings()
+    {
+        // Filter transactions for the current month savings (assumed type "i")
+        var currentMonth = DateTime.Now.Month;
+        var currentYear = DateTime.Now.Year;
+        filteredTransactions = transactions
+            .Where(t => t.Date.Month == currentMonth && t.Date.Year == currentYear && t.TransactionType == "i")
+            .ToList();
+        showCurrentMonthSavingsModal = true;
     }
 
     // Must select at least one category
@@ -160,7 +192,7 @@
     }
 
     // -------------------------
-    // Export CSV/PDF
+    // Export CSV/PDF (unchanged)
     // -------------------------
     private void ExportToCsv()
     {
@@ -195,9 +227,90 @@
 
         NavigationManager.NavigateTo(url, forceLoad: true);
     }
+
+    // ADDED: OVERRIDE ONAFTERRENDERASYNC TO RENDER CHARTS ON FIRST RENDER
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await RenderMonthlyBudgetChart();
+            await RenderMonthlySavingsChart();
+        }
+    }
+
+    // ADDED: METHOD TO RENDER THE MONTHLY BUDGET CHART WITH DUMMY DATA
+    private async Task RenderMonthlyBudgetChart()
+    {
+        // DEFINE MONTH NAMES
+        var months = new[]
+        {
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        };
+
+        // DUMMY DATA FOR MONTHLY BUDGET REPORT (PLACEHOLDER VALUES)
+        var budgetData = new decimal[12] { 500, 450, 600, 520, 700, 550, 480, 530, 620, 580, 550, 600 };
+
+        // PREPARE CHART DATA OBJECT
+        var chartData = new
+        {
+            labels = months,
+            datasets = new[]
+            {
+                new
+                {
+                    label = "Monthly Budget",
+                    data = budgetData,
+                    backgroundColor = "rgba(75, 192, 192, 0.2)",
+                    borderColor = "rgba(75, 192, 192, 1)",
+                    borderWidth = 1,
+                    borderRadius = 0
+                }
+            }
+        };
+
+        // CALL JS FUNCTION TO INITIALIZE BAR CHART
+        await JS.InvokeVoidAsync("initializeBarChart", "monthlyBudgetChart", chartData);
+    }
+
+    // ADDED: METHOD TO RENDER THE MONTHLY SAVINGS CHART WITH DUMMY DATA
+    private async Task RenderMonthlySavingsChart()
+    {
+        // DEFINE MONTH NAMES
+        var months = new[]
+        {
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        };
+
+        // DUMMY DATA FOR MONTHLY SAVINGS REPORT (PLACEHOLDER VALUES)
+        var savingsData = new decimal[12] { 300, 350, 400, 380, 450, 420, 410, 460, 480, 500, 520, 550 };
+
+        // PREPARE CHART DATA OBJECT
+        var chartData = new
+        {
+            labels = months,
+            datasets = new[]
+            {
+                new
+                {
+                    label = "Monthly Savings",
+                    data = savingsData,
+                    backgroundColor = "rgba(153, 102, 255, 0.2)",
+                    borderColor = "rgba(153, 102, 255, 1)",
+                    borderWidth = 1,
+                    borderRadius = 0
+                }
+            }
+        };
+
+        // CALL JS FUNCTION TO INITIALIZE BAR CHART
+        await JS.InvokeVoidAsync("initializeBarChart", "monthlySavingsChart", chartData);
+    }
 }
 
 <style>
+/* (KEEP YOUR EXISTING CSS AS-IS) */
 .reports-page {
     padding: 20px !important;
     font-family: Arial, sans-serif !important;
@@ -296,31 +409,9 @@
 /* Make only the placeholder text grey */
 .reports-page .create-report-modal .modal-content input::placeholder,
 .reports-page .create-report-modal .modal-content textarea::placeholder {
-    color: #888 !important; /* Choose your preferred grey tone */
+    color: #888 !important;
     opacity: 1 !important;
 }
-
-/* Keep the 'View Report' button style as before */
-.reports-page .reports-custom-btn {
-    padding: 12px 24px !important;
-    background-color: white !important;
-    color: #62AD41 !important;
-    font-size: 18px !important;
-    border: none !important;
-    border-radius: 5px !important;
-    cursor: pointer !important;
-    margin-top: 20px !important;
-    display: block !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    transition: background-color 0.2s, color 0.2s !important;
-}
-.reports-page .reports-custom-btn:hover {
-    background-color: #62AD41 !important;
-    color: #e3f2dc !important;
-}
-
-
 
 .reports-page .close {
     color: #aaa !important;
@@ -421,26 +512,29 @@
 </style>
 
 <div class="reports-page">
-    <!-- Some placeholder sections -->
+    <!-- EXPENSES REPORT OVERVIEW WITH CHART -->
     <div class="report-container">
-        <h3>Budget Report Overview</h3>
+        <h3>Expenses Report Overview</h3>
         <div class="graph-card">
-            <p>Graph will be displayed here.</p>
+            <!-- ADDED: CANVAS FOR MONTHLY BUDGET CHART -->
+            <canvas id="monthlyBudgetChart"></canvas>
         </div>
         <div class="export-buttons">
-            <button class="reports-btn">Export to CSV</button>
-            <button class="reports-btn">Export to PDF</button>
+            <!-- UPDATED: BUTTON CALLS NEW METHOD -->
+            <button class="reports-btn" @onclick="ViewCurrentMonthExpenses">View Current Month Expenses</button>
         </div>
     </div>
 
+    <!-- SAVINGS REPORT OVERVIEW WITH CHART -->
     <div class="report-container">
         <h3>Savings Report Overview</h3>
         <div class="graph-card">
-            <p>Graph will be displayed here.</p>
+            <!-- ADDED: CANVAS FOR MONTHLY SAVINGS CHART -->
+            <canvas id="monthlySavingsChart"></canvas>
         </div>
         <div class="export-buttons">
-            <button class="reports-btn">Export to CSV</button>
-            <button class="reports-btn">Export to PDF</button>
+            <!-- UPDATED: BUTTON CALLS NEW METHOD -->
+            <button class="reports-btn" @onclick="ViewCurrentMonthSavings">View Current Month Savings</button>
         </div>
 
         <button class="reports-custom-btn" @onclick="OpenCreateReportModal">
@@ -448,7 +542,7 @@
         </button>
     </div>
 
-    <!-- Create Custom Report Modal -->
+    <!-- Create Custom Report Modal (UNCHANGED) -->
     @if (showCreateReportModal)
     {
         <div class="create-report-modal">
@@ -456,7 +550,6 @@
                 <span class="close" @onclick="CloseCreateReportModal">&times;</span>
                 <h3>Create Custom Report</h3>
                 <div class="modal-body">
-                    <!-- (Same form as before) -->
                     <div class="form-group">
                         <label>Enter the name of the report:</label>
                         <input type="text" @bind="reportName" placeholder="Report Name" />
@@ -526,20 +619,17 @@
         </div>
     }
 
-    <!-- Report Results Modal -->
+    <!-- Report Results Modal (Custom Report) -->
     @if (showResultsModal)
     {
         <div class="results-modal">
             <div class="modal-content">
                 <span class="close" @onclick="CloseResultsModal">&times;</span>
                 <h3>Report Results</h3>
-
-                <!-- Show the "Report Name", "Description" and date range at the top -->
                 <div style="margin-bottom: 15px;">
                     <strong>Report Name:</strong> @reportName <br />
                     <strong>Description:</strong> @reportDescription <br />
                     <strong>Date Range:</strong> @($"{fromDate:dd MMM yyyy}") - @($"{toDate:dd MMM yyyy}")
-
                 </div>
 
                 <div class="report-results">
@@ -549,7 +639,6 @@
                     }
                     else
                     {
-                        <!-- 7 columns total: Desc, Category, Date, Debit, Credit, Frequency, End Date -->
                         <table class="transactions-table">
                             <thead>
                                 <tr>
@@ -579,7 +668,6 @@
                                         <td>@(t.EndDate.HasValue ? t.EndDate.Value.ToString("dd MMM yyyy") : "")</td>
                                     </tr>
                                 }
-                                <!-- Totals row => 7 columns now -->
                                 <tr>
                                     <td colspan="3"><strong>Totals:</strong></td>
                                     <td><strong>@totalDebit.ToString("C")</strong></td>
@@ -598,6 +686,104 @@
 
                     <button class="reports-custom-btn" @onclick="GoBackToFilters">
                         Back to Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- ADDED: Current Month Expenses Modal -->
+    @if (showCurrentMonthExpensesModal)
+    {
+        <div class="results-modal">
+            <div class="modal-content">
+                <span class="close" @onclick="() => showCurrentMonthExpensesModal = false">&times;</span>
+                <h3>Current Month Expenses</h3>
+                <div style="margin-bottom: 15px;">
+                    <strong>Month:</strong> @($"{DateTime.Now:MMMM yyyy}")
+                </div>
+                <div class="report-results">
+                    @if (filteredTransactions.Count == 0)
+                    {
+                        <p>No expense transactions found for the current month.</p>
+                    }
+                    else
+                    {
+                        <table class="transactions-table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var t in filteredTransactions)
+                                {
+                                    <tr>
+                                        <td>@t.Description</td>
+                                        <td>@t.CategoryID</td>
+                                        <td>@t.Date.ToString("dd MMM yyyy")</td>
+                                        <td class="negative">
+                                            @t.Amount.ToString("C")
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    <button class="reports-custom-btn" @onclick="() => showCurrentMonthExpensesModal = false">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- ADDED: Current Month Savings Modal -->
+    @if (showCurrentMonthSavingsModal)
+    {
+        <div class="results-modal">
+            <div class="modal-content">
+                <span class="close" @onclick="() => showCurrentMonthSavingsModal = false">&times;</span>
+                <h3>Current Month Savings</h3>
+                <div style="margin-bottom: 15px;">
+                    <strong>Month:</strong> @($"{DateTime.Now:MMMM yyyy}")
+                </div>
+                <div class="report-results">
+                    @if (filteredTransactions.Count == 0)
+                    {
+                        <p>No savings transactions found for the current month.</p>
+                    }
+                    else
+                    {
+                        <table class="transactions-table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var t in filteredTransactions)
+                                {
+                                    <tr>
+                                        <td>@t.Description</td>
+                                        <td>@t.CategoryID</td>
+                                        <td>@t.Date.ToString("dd MMM yyyy")</td>
+                                        <td class="positive">
+                                            @t.Amount.ToString("C")
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    <button class="reports-custom-btn" @onclick="() => showCurrentMonthSavingsModal = false">
+                        Close
                     </button>
                 </div>
             </div>
