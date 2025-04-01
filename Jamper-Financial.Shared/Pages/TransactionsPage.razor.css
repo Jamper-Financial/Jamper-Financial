@@ -99,11 +99,9 @@
 
     .transactions-table table {
         width: 100%;
-        height: 100%;
         background: #fff;
         color: #000;
         border-radius: 10px;
-        padding: 10px;
         border-collapse: collapse; /* Ensure borders are collapsed */
     }
 
@@ -128,6 +126,10 @@
 
 .transaction-item.selected-transaction {
     background-color: #ffe194; /* Highlight color for selected date transactions */
+}
+
+.empty-row {
+    height: 60px; /* Adjust this value to match the height of transaction items */
 }
 
 .positive {
@@ -166,11 +168,6 @@
         background-color: #519a37;
     }
 
-.scrollable-table {
-    max-height: 100%; /* Adjust the height as needed */
-    overflow-y: auto;
-}
-
 .delete, .cancel, .save, .add {
     padding: 5px 10px;
     margin: 5px;
@@ -207,3 +204,30 @@
     .manage-categories-btn:hover {
         background-color: #e0a800;
     }
+
+.pagination {
+    display: flex;
+    justify-content: flex-end; /* Align pagination to the right */
+    align-items: center;
+    margin-top: 20px;
+}
+
+    .pagination button {
+        background-color: #62ad41; /* Green color */
+        color: white;
+        border: none;
+        padding: 0.625rem 1.1rem;
+        border-radius: 0.625rem;
+        cursor: pointer;
+        font-size: 0.875rem;
+        margin: 0 5px;
+    }
+
+        .pagination button:disabled {
+            background-color: #ccc; /* Gray color for disabled state */
+            cursor: not-allowed;
+        }
+
+        .pagination button:hover:not(:disabled) {
+            background-color: #519a37; /* Darker green on hover */
+        }

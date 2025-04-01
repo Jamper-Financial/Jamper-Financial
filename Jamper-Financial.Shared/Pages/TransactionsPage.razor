@@ -50,7 +50,7 @@
                 <button class="manage-categories-btn" @onclick="NavigateToManageCategories">Manage Categories</button>
             </div>
         </div>
-        <div class="transactions-table scrollable-table">
+        <div class="transactions-table">
             <table>
                 <thead>
                     <tr>
@@ -66,7 +66,10 @@
                 <tbody>
                     @if (transactions != null)
                     {
-                        @foreach (var transaction in filteredTransactions.OrderBy(t => t.Date))
+                        var maxRows = 10; // Adjust this value based on your viewport
+                        var rowsToFill = maxRows - PaginatedTransactions.Count();
+
+                        @foreach (var transaction in PaginatedTransactions)
                         {
                             <tr class="transaction-item" @onclick="() => ShowEditTransactionModal(transaction)" style="cursor: pointer;">
                                 <td>@transaction.Date.ToString("dd MMM yyyy")</td>
@@ -78,9 +81,21 @@
                                 <td @onclick:stopPropagation="true"><button class="view-details" @onclick="() => OpenReceiptModal(transaction)">View Receipt</button></td>
                             </tr>
                         }
+
+                        @for (int i = 0; i < rowsToFill; i++)
+                        {
+                            <tr class="empty-row">
+                                <td colspan="7"></td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>
+        </div>
+        <div class="pagination">
+            <button @onclick="PreviousPage" disabled="@(!HasPreviousPage)">Previous</button>
+            <span>Page @currentPage of @totalPages</span>
+            <button @onclick="NextPage" disabled="@(!HasNextPage)">Next</button>
         </div>
     </div>
 </div>
@@ -118,15 +133,23 @@
     public bool ShowDeleteConfirmation { get; set; } = false;
     public Transaction NewTransaction { get; set; } = new Transaction();
     public Transaction SelectedTransaction { get; set; } = new Transaction();
-    private string currentSortColumn = string.Empty;
+    private string currentSortColumn = "Date";
     private bool isAscending = true;
+
+    // Pagination properties
+    private int currentPage = 1;
+    private int pageSize = 10;
+    private int totalPages => (int)Math.Ceiling((double)filteredTransactions.Count / pageSize);
+    private bool HasPreviousPage => currentPage > 1;
+    private bool HasNextPage => currentPage < totalPages;
+    private IEnumerable<Transaction> PaginatedTransactions => filteredTransactions.Skip((currentPage - 1) * pageSize).Take(pageSize);
 
     protected override async Task OnInitializedAsync()
     {
         transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
         Categories = (await DatabaseHelper.LoadUserCategoriesAsync(UserStateService.UserId)).ToList();
         accounts = await AccountService.GetBankAccounts(UserStateService.UserId);
-        filteredTransactions = transactions;
+        filteredTransactions = transactions.OrderBy(t => t.Date).ToList();
         SearchService.OnSearchQueryChanged += FilterTransactions;
     }
 
@@ -142,6 +165,7 @@
                 .Where(t => t.Description.Contains(SearchService.SearchQuery, StringComparison.OrdinalIgnoreCase))
                 .ToList();
         }
+        currentPage = 1; // Reset to first page after filtering
         StateHasChanged();
     }
 
@@ -208,7 +232,7 @@
         {
             await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
             transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
-            filteredTransactions = transactions;
+            filteredTransactions = transactions.OrderBy(t => t.Date).ToList();
         }
         catch
         {
@@ -248,7 +272,7 @@
         }
         CloseAddTransactionModal();
         transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
-        filteredTransactions = transactions;
+        filteredTransactions = transactions.OrderBy(t => t.Date).ToList();
     }
 
     private string GetAccountName(int accountId)
@@ -297,6 +321,7 @@
         {
             filteredTransactions = Sort.ApplySort(transactions, currentSortColumn, isAscending, Categories, accounts);
         }
+        currentPage = 1; // Reset to first page after sorting
     }
 
     private string GetSortIndicator(string column)
@@ -306,5 +331,21 @@
             return isAscending ? "↑" : "↓";
         }
         return string.Empty;
+    }
+
+    private void PreviousPage()
+    {
+        if (HasPreviousPage)
+        {
+            currentPage--;
+        }
+    }
+
+    private void NextPage()
+    {
+        if (HasNextPage)
+        {
+            currentPage++;
+        }
     }
 }
