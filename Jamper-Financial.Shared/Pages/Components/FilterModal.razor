@@ -1,5 +1,43 @@
-﻿<h3>FilterModal</h3>
+﻿@using System.Globalization
+@using Jamper_Financial.Shared.Data
+@using Jamper_Financial.Shared.Utilities
+@using Jamper_Financial.Shared.Models
+@using Jamper_Financial.Shared.Services
+
+<div class="filter-dropdown" style="@(ShowFilterDropdown ? "display:block;" : "display:none;")">
+    <h3>Filter Transactions</h3>
+    <div class="form-group">
+        <label for="filterCategory">Category:</label>
+        <select id="filterCategory" @bind="TempFilterCategory">
+            <option value="">All</option>
+            @foreach (var category in Categories)
+            {
+                <option value="@category.CategoryID">@category.Name</option>
+            }
+        </select>
+    </div>
+    <div class="form-group amount-filter">
+        <div>
+            <label for="minAmount">Min Amount:</label>
+            <input id="minAmount" type="number" @bind="TempMinAmount" />
+        </div>
+        <div>
+            <label for="maxAmount">Max Amount:</label>
+            <input id="maxAmount" type="number" @bind="TempMaxAmount" />
+        </div>
+    </div>
+    <div class="form-group button-group">
+        <button type="button" class="cancel" @onclick="OnCloseFilterDropdown">Cancel</button>
+        <button type="button" class="apply" @onclick="OnApplyFilters">Apply</button>
+    </div>
+</div>
 
 @code {
-
+    [Parameter] public bool ShowFilterDropdown { get; set; }
+    [Parameter] public List<Category> Categories { get; set; }
+    [Parameter] public string TempFilterCategory { get; set; }
+    [Parameter] public decimal? TempMinAmount { get; set; }
+    [Parameter] public decimal? TempMaxAmount { get; set; }
+    [Parameter] public EventCallback OnApplyFilters { get; set; }
+    [Parameter] public EventCallback OnCloseFilterDropdown { get; set; }
 }
