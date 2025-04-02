@@ -47,15 +47,6 @@
             <div class="title-filter">
                 <h3 class="section-title">Recent Transactions</h3>
                 <button class="filter-button" @onclick="ToggleFilterDropdown">Filter</button>
-                @* Filter Modal *@
-                @if (ShowFilterDropdown)
-                {
-                    <FilterModal ShowFilterDropdown="ShowFilterDropdown"
-                                 Categories="Categories"
-                                 Transactions="transactions"
-                                 OnFilteredTransactionsChanged="HandleFilteredTransactionsChanged"
-                                 OnCloseFilterDropdown="CloseFilterDropdown" />
-                }
             </div>
             <div style="display: flex; gap: 10px;">
                 <button class="add-transaction" @onclick="OpenAddTransactionModal">+ Add Transaction</button>
@@ -119,7 +110,7 @@
                       IsEditMode="IsEditMode"
                       NewTransaction="NewTransaction"
                       Categories="Categories"
-                      Accounts="accounts"
+                      Accounts="Accounts"
                       OnClose="CloseAddTransactionModal"
                       OnSave="HandleAddOrEditTransaction"
                       OnDelete="ShowDeleteConfirmationForm"
@@ -134,11 +125,22 @@
                   OnClose="CloseReceiptModal" />
 }
 
+@* Filter Modal *@
+                @if (ShowFilterDropdown)
+                {
+                    <FilterModal ShowFilterDropdown="ShowFilterDropdown"
+                                 Categories="Categories"
+                                 Accounts="Accounts"
+                                 Transactions="transactions"
+                                 OnFilteredTransactionsChanged="HandleFilteredTransactionsChanged"
+                                 OnCloseFilterDropdown="CloseFilterDropdown" />
+                }
+
 @code {
     private List<Transaction> transactions;
     private List<Transaction> filteredTransactions;
     private List<Category> Categories = new();
-    private List<BankAccount> accounts = new();
+    private List<BankAccount> Accounts = new();
     public bool ShowAddTransactionModal { get; set; } = false;
     public bool ShowReceiptModal { get; set; } = false;
     public bool IsEditMode { get; set; } = false;
@@ -161,12 +163,12 @@
     {
         transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
         Categories = (await DatabaseHelper.LoadUserCategoriesAsync(UserStateService.UserId)).ToList();
-        accounts = await AccountService.GetBankAccounts(UserStateService.UserId);
+        Accounts = await AccountService.GetBankAccounts(UserStateService.UserId);
         filteredTransactions = transactions.OrderBy(t => t.Date).ToList();
-        SearchService.OnSearchQueryChanged += FilterTransactions;
+        SearchService.OnSearchQueryChanged += SearchTransactions;
     }
 
-    private void FilterTransactions()
+    private void SearchTransactions()
     {
         if (string.IsNullOrEmpty(SearchService.SearchQuery))
         {
@@ -184,7 +186,7 @@
 
     public void Dispose()
     {
-        SearchService.OnSearchQueryChanged -= FilterTransactions;
+        SearchService.OnSearchQueryChanged -= SearchTransactions;
     }
 
     private void NavigateToManageCategories()
@@ -290,7 +292,7 @@
 
     private string GetAccountName(int accountId)
     {
-        var account = accounts.FirstOrDefault(a => a.AccountId == accountId);
+        var account = Accounts.FirstOrDefault(a => a.AccountId == accountId);
         return account != null ? account.AccountName : "Unknown Account";
     }
 
@@ -302,7 +304,7 @@
 
     private string GetAccountNumber(int accountId)
     {
-        var account = accounts.FirstOrDefault(a => a.AccountId == accountId);
+        var account = Accounts.FirstOrDefault(a => a.AccountId == accountId);
         return account != null ? account.AccountNumber : "Unknown Account Number";
     }
 
@@ -332,7 +334,7 @@
         }
         else
         {
-            filteredTransactions = Sort.ApplySort(transactions, currentSortColumn, isAscending, Categories, accounts);
+            filteredTransactions = Sort.ApplySort(transactions, currentSortColumn, isAscending, Categories, Accounts);
         }
         currentPage = 1; // Reset to first page after sorting
     }
