@@ -18,12 +18,14 @@
     width: 400px;
     text-align: center;
     position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to modal content */
 }
 
 .modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    color: var(--primary-color);
+    width: 100%;
+    -webkit-justify-content: center;
+    justify-content: center;
 }
 
 .close-button {

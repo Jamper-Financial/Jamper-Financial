@@ -8,6 +8,8 @@
     --background-color: #62AD41;
     --background-color-hover: #519a37;
     --text-color: #333;
+    --text-color-placeholder: #B1BCC4;
+    --text-color-value: black;
 }
 
 html, body {
@@ -140,8 +142,14 @@ canvas {
         padding: 5px;
         border: 1px solid #ced4da;
         border-radius: 0.5rem;
-        color: #B1BCC4;
+        color: var(--text-color-value); 
     }
+
+        .form-group input::placeholder,
+        .form-group select::placeholder,
+        .form-group textarea::placeholder {
+            color: var(--text-color-placeholder);
+        }
 
     .form-group .error {
         color: #dc3545;

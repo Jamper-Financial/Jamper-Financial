@@ -524,34 +524,70 @@ namespace Jamper_Financial.Shared.Data
             return categories;
         }
 
-
-
         // Insert Set Categories
-        private static void InsertDefaultCategories(int userId, SqliteConnection connection)
+        public static async void InsertDefaultCategories(int userId)
         {
-            string[] defaultCategories = {
-        "Rent", "Mortgage", "Utilities", "Insurance", "Condo fees",
-        "Car maintenance", "Car payment", "Gas", "Public transportation",
-        "Groceries", "Restaurant", "Take Out",
-        "Gym", "Medical",
-        "Entertainment", "Going out", "Subscriptions",
-        "Clothing", "Gifts", "Electronics", "Home maintenance",
-        "Debt", "Work (Job)", "Side project", "Tax refund", "Expense reimbursement"
-    };
-
-            foreach (var category in defaultCategories)
+            Category[] defaultCategories = new[]
             {
-                string insertCategoryQuery = "INSERT INTO Categories (UserID, Name) VALUES (@UserID, @Name);";
-                using (var command = new SqliteCommand(insertCategoryQuery, connection))
+                // Expenses
+                new Category { Name = "Housing", TransactionType = "e", Color = "#3498DB" },
+                new Category { Name = "Transportation", TransactionType = "e", Color = "#3498DB" },
+                new Category { Name = "Food", TransactionType = "e", Color = "#3498DB" },
+                new Category { Name = "Health", TransactionType = "e", Color = "#3498DB" },
+                new Category { Name = "Entertainment", TransactionType = "e", Color = "#3498DB" },
+                new Category { Name = "Personal", TransactionType = "e", Color = "#3498DB" },
+                new Category { Name = "Debt Payments", TransactionType = "e", Color = "#3498DB" }, 
+                //new Category { Name = "Housing: Rent/Mortgage", Type = "e", Color = "#3498DB" }, // Blue
+                //new Category { Name = "Housing: Utilities", Type = "e", Color = "#2ECC71" }, // Green
+                //new Category { Name = "Housing: Insurance", Type = "e", Color = "#9B59B6" }, // Purple
+                //new Category { Name = "Housing: Condo Fees", Type = "e", Color = "#F39C12" }, // Orange
+                //new Category { Name = "Transportation: Car Payment", Type = "e", Color = "#E74C3C" }, // Red
+                //new Category { Name = "Transportation: Car Maintenance", Type = "e", Color = "#1ABC9C" }, // Teal
+                //new Category { Name = "Transportation: Gas/Fuel", Type = "e", Color = "#34495E" }, // Dark Blue
+                //new Category { Name = "Transportation: Public Transit", Type = "e", Color = "#95A5A6" }, // Gray
+                //new Category { Name = "Food: Groceries", Type = "e", Color = "#F1C40F" }, // Yellow
+                //new Category { Name = "Food: Restaurants", Type = "e", Color = "#E67E22" }, // Brown
+                //new Category { Name = "Food: Takeout/Delivery", Type = "e", Color = "#D35400" }, // Darker Brown
+                //new Category { Name = "Health: Medical", Type = "e", Color = "#8E44AD" }, // Dark Purple
+                //new Category { Name = "Health: Fitness/Gym", Type = "e", Color = "#27AE60" }, // Dark Green
+                //new Category { Name = "Entertainment: Subscriptions", Type = "e", Color = "#16A085" }, // Dark Teal
+                //new Category { Name = "Entertainment: Going Out", Type = "e", Color = "#C0392B" }, // Darker Red
+                //new Category { Name = "Personal: Clothing", Type = "e", Color = "#7F8C8D" }, // Darker Gray
+                //new Category { Name = "Personal: Gifts", Type = "e", Color = "#F39C12" }, // Orange
+                //new Category { Name = "Personal: Electronics", Type = "e", Color = "#34495E" }, // Dark Blue
+                //new Category { Name = "Home Maintenance", Type = "e", Color = "#9B59B6" }, // Purple
+                //new Category { Name = "Debt Payments", Type = "e", Color = "#E74C3C" }, // Red
+
+                // Income
+                new Category { Name = "Income", TransactionType = "i", Color = "#2ECC71" }, 
+                //new Category { Name = "Income: Salary", Type = "i", Color = "#2ECC71" }, // Green
+                //new Category { Name = "Income: Side Project", Type = "i", Color = "#3498DB" }, // Blue
+                //new Category { Name = "Income: Tax Refund", Type = "i", Color = "#1ABC9C" }, // Teal
+                //new Category { Name = "Income: Reimbursement", Type = "i", Color = "#F1C40F" }, // Yellow
+                //new Category { Name = "Income: Investments", Type = "i", Color = "#9B59B6" }, // Purple
+                //new Category { Name = "Income: Other", Type = "i", Color = "#95A5A6" } // Gray
+            };
+
+            using (var connection = GetConnection())
+            {
+                await connection.OpenAsync();
+
+                foreach (var category in defaultCategories)
                 {
-                    command.Parameters.AddWithValue("@UserID", userId);
-                    command.Parameters.AddWithValue("@Name", category);
-                    command.ExecuteNonQuery();
+                    string insertCategoryQuery = "INSERT INTO Categories (UserID, Name, Color, TransactionType) VALUES (@UserID, @Name, @Color, @TransactionType);";
+                    using (var command = new SqliteCommand(insertCategoryQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@UserID", userId);
+                        command.Parameters.AddWithValue("@Name", category.Name);
+                        command.Parameters.AddWithValue("@Color", category.Color);
+                        command.Parameters.AddWithValue("@TransactionType", category.TransactionType);
+                        await command.ExecuteNonQueryAsync();
+                    }
                 }
             }
         }
 
-                private static void InitiateData(SqliteConnection connection)
+        private static void InitiateData(SqliteConnection connection)
         {
             // check if role table is empty
             string checkRoleQuery = "SELECT COUNT(*) FROM Roles;";

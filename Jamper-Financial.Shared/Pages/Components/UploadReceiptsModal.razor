@@ -40,15 +40,13 @@
         <div class="modal-content" @onclick:stopPropagation="true">
             <div class="modal-header">
                 <h3>Upload Receipts</h3>
-                <button class="close-button" @onclick="CloseModal">X</button>
             </div>
             <div class="modal-body">
                 <div class="upload-container">
                     <div class="upload-icon">
                         <img src="/images/upload-icon.png" alt="Upload Icon" />
                     </div>
-                    <h4>Upload Receipts</h4>
-                    <p>Upload your receipts here</p>
+                    <p>Upload your receipts here. Receipts shouldn't be more than 5MB</p>
                     <div id="upload-area" class="upload-area">
                         <label for="file-upload" class="upload-label">
                             <img src="/images/folder-icon.png" alt="Folder Icon" />

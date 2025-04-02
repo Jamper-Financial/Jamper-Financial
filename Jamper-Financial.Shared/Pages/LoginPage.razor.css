@@ -53,7 +53,7 @@ h1 {
     /* Reduce input field width */
     .login-form input[type="text"],
     .login-form input[type="password"] {
-        width: 90%;
+        width: 100%;
         padding: 8px;
         font-size: 14px;
     }
@@ -77,7 +77,6 @@ label {
 input[type="email"],
 input[type="text"],
 input[type="password"] {
-    width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
@@ -167,16 +166,6 @@ button {
     cursor: pointer;
 }
 
-.create-account-button {
-    background-color: #62ad41;
-    color: white;
-    border: none;
-}
-
-    .create-account-button:hover {
-        background-color: #519a37;
-    }
-
 .terms {
     color: #888;
     font-size: 12px;
@@ -203,4 +192,59 @@ button {
     justify-content: space-between;
     padding: 0 10px;
     margin: 20px;
+    gap: 10px;
 }
+
+.create-account-button {
+    width: fit-content; /* Make the button fit its content */
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px; /* Add padding for better appearance */
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+    .create-account-button:hover {
+        background-color: var(--primary-color-hover);
+    }
+
+.back-button {
+    flex: 1;
+    background-color: #f5f5f5;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 10px 15px;
+    white-space: nowrap;
+}
+
+    .back-button:hover {
+        background-color: var(--primary-color);
+        color: white;
+    }
+
+/*Show and hide password*/
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    align-items: left; /* Vertically align items */
+}
+
+.flex-grow {
+    flex-grow: 1; /* Make the input take up available space */
+}
+
+.toggleShowPassword {
+    position: absolute;
+    top: 15%;
+    right: 10px;
+    z-index: 1;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+}
+
+    .toggleShowPassword svg {
+        width: 1.5rem;
+        height: 1.5rem;
+        fill: var(--primary-color);
+    }

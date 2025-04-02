@@ -4,6 +4,7 @@
 @using Jamper_Financial.Shared.Models
 @inject NavigationManager Navigation
 @inject AuthenticationService AuthenticationService
+@inject IJSRuntime JSRuntime
 
 @* MGE 03/13/2025 Remove Birth Date as per review*@
 
@@ -29,10 +30,49 @@
                 <input id="email" type="email" placeholder="Enter your email" @bind="userProfile.Email" />
 
                 <label for="password">Password <span class="required">*</span></label>
-                <input id="password" type="password" placeholder="Create your password" @bind="userProfile.Password" />
+                <div class="flex-row">
+                    <input id="password" type="password" placeholder="Create your password" @bind="userProfile.Password" />
+                    <button class="toggleShowPassword" type="button" id="togglePasswordButton"
+                    @onclick="() => TogglePasswordVisibility(true)">
+                        @if (passwordVisible)
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.133 13.133 0 0 1 1.172 8z" />
+                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                            </svg>
+                        }
+                        else
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                            </svg>
+                        }
+                    </button>
+                </div>
 
                 <label for="confirm-password">Confirm Password <span class="required">*</span></label>
-                <input id="confirm-password" type="password" placeholder="Confirm your password" @bind="ConfirmPassword" />
+                <div class="flex-row">
+                    <input id="confirm-password" type="password" placeholder="Confirm your password" @bind="ConfirmPassword" />
+                    <button class="toggleShowPassword" type="button" id="togglePasswordButton"
+                    @onclick="() => TogglePasswordVisibility(false)">
+                        @if (confirmPasswordVisible)
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.133 13.133 0 0 1 1.172 8z" />
+                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                            </svg>
+                        }
+                        else
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                            </svg>
+                        }
+                    </button>
+
+                </div>
                 <small class="password-hint">Password must be at least 8 characters long, contain uppercase, lowercase, digit, and special character.</small>
                 <div class="bottom-buttons">
                     <button type="button" class="back-button" @onclick="NavigateToLoginPage">Back</button>
@@ -70,6 +110,9 @@
     private string ConfirmPassword { get; set; } = string.Empty;
     private string ErrorMessage { get; set; } = string.Empty;
     private bool AccountCreated { get; set; } = false;
+
+    private bool passwordVisible = false;
+    private bool confirmPasswordVisible = false;
 
     private void NavigateToLoginPage()
     {
@@ -146,6 +189,21 @@
 
         // Redirect to login page after a short delay
         Task.Delay(2000).ContinueWith(_ => NavigateToLoginPage());
+    }
+
+    private async Task TogglePasswordVisibility(bool passwordfield)
+    {
+        string field = "password";
+        if (passwordfield)
+        {
+            passwordVisible = !passwordVisible;
+        }
+        else
+        {
+            confirmPasswordVisible = !confirmPasswordVisible;
+            field = "confirm-password";
+        }
+        await JSRuntime.InvokeVoidAsync("togglePasswordVisibility", field);
     }
 }
 

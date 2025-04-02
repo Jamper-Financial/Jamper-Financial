@@ -18,6 +18,12 @@
     private bool updateStatus;
     private bool ShowUploadAvatarModal = false;
 
+    // Toaster variables
+    private string toasterMessage = string.Empty;
+    private string toasterClass = string.Empty;
+    private System.Threading.Timer toasterTimer;
+
+
     protected override async Task OnInitializedAsync()
     {
         // Get the logged-in user's ID and username from the UserStateService
@@ -55,6 +61,21 @@
         StateHasChanged();
     }
 
+    private void AutoCloseToaster(object state)
+    {
+        InvokeAsync(() =>
+        {
+            ClearToaster();
+            StateHasChanged(); // Update the UI
+        });
+    }
+
+    private void ClearToaster()
+    {
+        toasterMessage = string.Empty;
+        toasterClass = string.Empty;
+    }
+
     private void CloseModal()
     {
         showStatusMessage = false;
@@ -80,6 +101,28 @@
         StateHasChanged();
     }
 
+    private void HandleAvatarSaved(string message)
+    {
+        // Set the toaster message and class based on the result
+        if (message == "success")
+            {
+                toasterMessage = "Avatar added successfully!";
+                toasterClass = "success";
+            }
+            else
+            {
+            toasterMessage = "Failed to save Avatar.";
+                toasterClass = "error";
+            }
+
+        Console.WriteLine(message);
+        ShowUploadAvatarModal = false;
+
+        // Start the timer to auto-close the toaster
+        toasterTimer?.Dispose(); // Dispose of any existing timer
+        toasterTimer = new System.Threading.Timer(AutoCloseToaster, null, 5000, Timeout.Infinite);
+        StateHasChanged();
+    }
 }
 
 <div>
@@ -97,13 +140,13 @@
                     <div class="profile-management">
                         <div class="profile-management-column flex-column">
                             <div class="profile-picture">
-                                @if (userProfile.Username != null)
+                                @if (userProfile.ProfilePicture != null)
                                 {
                                     <img src="data:image/png;base64,@Convert.ToBase64String(userProfile.ProfilePicture)" />
                                 }
                                 else
                                 {
-                                    < img src = "./images/placeholder.png" />
+                                    <img src = "./images/placeholder.png" />
                                 }
                             </div>
                             <div class="edit-icon">
@@ -176,8 +219,8 @@
                         @if (updateStatus)
                         {
                             <div class="modal fade show" id="settingsSavedModal" tabindex="-1" role="dialog" @onclick="CloseModal">
-                                <div class="modal-dialog align-content-center border-success shadow-sm p-3" role="document" @onclick:stopPropagation>
-                                    <div class="modal-content align-content-center align-items-center">
+                                <div class="modal-dialog" role="document" @onclick:stopPropagation>
+                                    <div class="modal-content">
                                         <div class="modal-header">
                                             <h3 class="modal-title">Edit Profile</h3>
                                         </div>
@@ -214,8 +257,16 @@
     </div>
 </div>
 
-                                                @* Upload Avatar Modal *@
+@* Upload Avatar Modal *@
 @if (ShowUploadAvatarModal)
 {
-    <UploadAvatarModal IsVisible="ShowUploadAvatarModal" OnClose="CloseUploadAvatarModal" Profile="userProfile" />
+    <UploadAvatarModal IsVisible="ShowUploadAvatarModal" OnClose="CloseUploadAvatarModal" Profile="userProfile" OnAvatarSaved="HandleAvatarSaved" />
+}
+
+@if (!string.IsNullOrEmpty(toasterMessage))
+{
+    <div class="toaster @toasterClass">
+        <span>@toasterMessage</span>
+        <button class="close-toaster" @onclick="ClearToaster">×</button>
+    </div>
 }

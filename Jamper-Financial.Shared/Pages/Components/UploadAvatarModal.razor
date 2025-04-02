@@ -6,14 +6,14 @@
     [Parameter] public bool IsVisible { get; set; }
     [Parameter] public EventCallback<bool> OnClose { get; set; }
     [Parameter] public UserProfile Profile { get; set; }
+    [Parameter] public EventCallback<string> OnAvatarSaved { get; set; } // Add this line
 
     private IBrowserFile? uploadedFile;
     private string toasterMessage = string.Empty;
     private string toasterClass = string.Empty;
-    private bool showDeleteConfirmation = false;
     private string? errorMessage;
     private string? previewAvatar;
-    private int userid ;
+    private int userid;
     [Inject] IJSRuntime JSRuntime { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -61,20 +61,16 @@
             // Implement the logic to save the avatar
             if (await UserService.UpdateUserAvatarAsync(Profile, fileData))
             {
-                toasterMessage = "Avatar added successfully!";
                 toasterClass = "success";
-                await GetAvatar();
-                errorMessage = null;
-                CloseModal();
             }
             else
             {
-                errorMessage = "Failed to save Avatar.";
-                Console.WriteLine(errorMessage);
-                toasterMessage = errorMessage;
                 toasterClass = "error";
-                await GetAvatar();
             }
+
+            await OnAvatarSaved.InvokeAsync(toasterClass); // Notify parent component
+            await GetAvatar();
+            await CloseModal();
         }
     }
 
@@ -109,7 +105,6 @@
         <div class="modal-content" @onclick:stopPropagation="true">
             <div class="modal-header">
                 <h3>Upload Avatar</h3>
-                <button class="close-button" @onclick="CloseModal">X</button>
             </div>
             <div class="modal-body">
                 <div class="upload-container">
@@ -117,7 +112,6 @@
                         <img src="/images/upload-icon.png" alt="Upload Icon" />
                     </div>
                     <div>
-                        <h4>Upload Avatar</h4>
                         <p>File should be 5MB only</p>
                     </div>
                     <div id="upload-area" class="upload-area">

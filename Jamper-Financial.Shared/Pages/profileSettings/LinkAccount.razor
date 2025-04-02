@@ -3,6 +3,7 @@
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Services
 @using Jamper_Financial.Shared.Models
+@using Jamper_Financial.Shared.Pages.Components
 @inject NavigationManager Navigation
 @inject IUserService UserService
 @inject UserStateService UserStateService
@@ -47,7 +48,7 @@
                                 }
                                 else
                                 {
-                                    @account.Balance
+                                    @account.Balance.ToString("C")
                                 }
                             </td>
                             <td>
@@ -79,8 +80,8 @@
                                 <div class="kebab-menu">
                                     <button class="kebab-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                                        class="lucide lucide-ellipsis-vertical h-4 w-4">
+                                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                             class="lucide lucide-ellipsis-vertical h-4 w-4">
                                             <circle cx="12" cy="12" r="1"></circle>
                                             <circle cx="12" cy="5" r="1"></circle>
                                             <circle cx="12" cy="19" r="1"></circle>
@@ -146,41 +147,7 @@
 
 @if (showAddAccountModal)
 {
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <h3 class="modal-header">Add Bank Account</h3>
-            <div class="modal-body">
-                <div class="form-group manual-account-input">
-                    <label for="bankName">Name/Description:</label>
-                    <input type="text" id="bankName" @bind="newAccount.AccountName" placeholder="e.g., Checking Account" />
-                </div>
-                <div class="manual-account-input form-group">
-                    <label for="accountAmount">Amount:</label>
-                    <input type="number" id="accountAmount" @bind="newAccount.Balance" placeholder="e.g., 1000" />
-                </div>
-                <div class="manual-account-input form-group">
-                    <label for="accountType">Account Type:</label>
-                    <select @bind="newAccount.AccountTypeID">
-                        @foreach (var accountType in accountTypes)
-                        {
-                            <option value="@accountType.AccountTypeId">@accountType.AccountTypeName</option>
-                        }
-                    </select>
-                </div>
-                <div class="manual-account-input form-group">
-                    <label for="accountNumber">Account or Card Number:</label>
-                    <input type="text" id="accountNumber" @bind="newAccount.AccountNumber" @oninput="ValidateAccountNumber" maxlength="4" placeholder="Enter only last 4 digits (optional)" />
-                    @if (!string.IsNullOrEmpty(accountNumberError))
-                    {
-                        <div class="error-message">@accountNumberError</div>
-                    }                    <div class="button-container">
-                        <button class="save" @onclick="AddManualAccount">Add Account</button>
-                        <button class="cancel" @onclick="CloseAddAccountModal">Cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <AddAccountModal IsVisible="showAddAccountModal" OnClose="CloseAddAccountModal" newAccount="newAccount" OnAccountSaved="HandleAccountSaved" />
 }
 
 @if (!string.IsNullOrEmpty(toasterMessage))
@@ -192,17 +159,15 @@
 }
 
 @code {
-    [Parameter] public bool showAddAccountModal { get; set; }
-    [Parameter] public EventCallback<bool> showAddAccountModalChanged { get; set; }
-
+    private bool showAddAccountModal { get; set; }
     private UserProfile userProfile = new UserProfile();
     private string inviteEmails = string.Empty;
     private bool usePlaid = false;
     private List<string> existingHouseholdMembers = new List<string>();
     private List<BankAccountType> accountTypes = new List<BankAccountType>();
     private List<BankAccount> bankAccounts = new List<BankAccount>();
-    private BankAccount newAccount = new BankAccount();
     private int editAccountId = 0;
+    private BankAccount newAccount = new BankAccount();
 
     // Toaster variables
     private string toasterMessage = string.Empty;
@@ -249,46 +214,33 @@
         showAddAccountModal = true;
     }
 
-    private async Task CloseAddAccountModal()
+    private async Task CloseAddAccountModal(bool isVisible)
     {
-        showAddAccountModal = false;
+        showAddAccountModal = isVisible;
     }
 
-    private async Task AddManualAccount()
+    private void HandleAccountSaved(string message)
     {
-        try
+        Console.WriteLine(message);
+        // Set the toaster message and class based on the result
+        if (message == "success")
         {
-            await AccountService.CreateAccount(newAccount);
-
-
             toasterMessage = "Account added successfully!";
             toasterClass = "success";
-
-            await CloseAddAccountModal();
-            LoadBankAccounts();
         }
-        catch
+        else
         {
-            toasterMessage = "Failed to add account.";
+            toasterMessage = "Failed to save Account.";
             toasterClass = "error";
         }
+
+        Console.WriteLine(message);
+        showAddAccountModal = false;
 
         // Start the timer to auto-close the toaster
         toasterTimer?.Dispose(); // Dispose of any existing timer
         toasterTimer = new System.Threading.Timer(AutoCloseToaster, null, 5000, Timeout.Infinite);
-    }
-
-    private void ValidateAccountNumber(ChangeEventArgs e)
-    {
-        var input = e.Value?.ToString();
-        if (input != null && input.Length > 4)
-        {
-            accountNumberError = "Please enter only the last 4 digits.";
-        }
-        else
-        {
-            accountNumberError = string.Empty;
-        }
+        StateHasChanged();
     }
 
     private void AutoCloseToaster(object state)
