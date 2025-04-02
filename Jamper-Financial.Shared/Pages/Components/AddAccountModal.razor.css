@@ -91,3 +91,28 @@
             .button-container button.cancel:hover {
                 background-color: #c33c2f;
             }
+
+.validation-message {
+    display: block; /* Show even when field isn't touched */
+    color: red;
+    font-size: 0.875rem;
+}
+
+.validation-summary {
+    border: 1px solid red;
+    padding: 10px;
+    margin-bottom: 0px;
+    background-color: #ffe6e6; /* light red background */
+    color: red;
+}
+
+    .validation-summary ul {
+        list-style-type: none; /* remove bullet points */
+        padding: 0;
+        margin: 0;
+    }
+
+    .validation-summary li {
+        margin-bottom: 5px;
+        list-style-type: none; /* remove bullet points */
+    }

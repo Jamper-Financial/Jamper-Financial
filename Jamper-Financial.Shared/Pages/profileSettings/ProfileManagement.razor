@@ -140,13 +140,13 @@
                     <div class="profile-management">
                         <div class="profile-management-column flex-column">
                             <div class="profile-picture">
-                                @if (userProfile.Username != null)
+                                @if (userProfile.ProfilePicture != null)
                                 {
                                     <img src="data:image/png;base64,@Convert.ToBase64String(userProfile.ProfilePicture)" />
                                 }
                                 else
                                 {
-                                    < img src = "./images/placeholder.png" />
+                                    <img src = "./images/placeholder.png" />
                                 }
                             </div>
                             <div class="edit-icon">

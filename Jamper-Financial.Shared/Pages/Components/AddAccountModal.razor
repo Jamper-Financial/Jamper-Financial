@@ -11,12 +11,12 @@
         <div class="modal-body">
             <EditForm Model="newAccount" OnValidSubmit="AddManualAccount">
                 <DataAnnotationsValidator />
-                @* <ValidationSummary /> *@
+                <ValidationSummary class="validation-summary" />
 
                 <div class="form-group manual-account-input">
                     <label for="bankName">Name/Description:</label>
                     <InputText id="bankName" @bind-Value="newAccount.AccountName" placeholder="e.g., Checking Account" />
-                    <ValidationMessage For="@(() => newAccount.AccountName)" />
+                    @* <ValidationMessage For="@(() => newAccount.AccountName)" /> *@
                 </div>
                 <div class="manual-account-input form-group">
                     <label for="accountAmount">Amount:</label>
@@ -25,13 +25,13 @@
                 <div class="manual-account-input form-group">
                     <label for="accountType">Account Type:</label>
                     <InputSelect @bind-Value="newAccount.AccountTypeID">
-                        <option selected>Select Account Type</option>
+                        <option value="">Select Account Type</option>
                         @foreach (var accountType in accountTypes)
                         {
                             <option value="@accountType.AccountTypeId">@accountType.AccountTypeName</option>
                         }
                     </InputSelect>
-                    <ValidationMessage For="@(() => newAccount.AccountTypeID)" />
+                    @* <ValidationMessage For="@(() => newAccount.AccountTypeID)" /> *@
                 </div>
                 <div class="manual-account-input form-group">
                     <label for="accountNumber">Account or Card Number:</label>
@@ -70,6 +70,8 @@
     private string toasterClass = string.Empty;
     private string? errorMessage;
 
+    private EditContext editContext;
+
     protected override async Task OnInitializedAsync()
     {
         // Get the logged-in user's ID and username from the UserStateService
@@ -82,6 +84,7 @@
         else
         {
             accountTypes = await AccountService.GetAccountTypes();
+            editContext = new EditContext(newAccount);
         }
     }
 
@@ -89,6 +92,14 @@
     {
         try
         {
+
+            if (!editContext.Validate())
+            {
+                // Do not return. Let the ValidationSummary and ValidationMessage components display errors.
+                return;
+            }
+
+
             if (await AccountService.CreateAccount(newAccount))
             {
                 toasterClass = "success";
@@ -101,6 +112,7 @@
             await OnAccountSaved.InvokeAsync(toasterClass); // Notify parent component
             await AccountService.GetBankAccounts(UserStateService.UserId);
             await CloseAddAccountModal();
+
         }
         catch (Exception ex)
         {
