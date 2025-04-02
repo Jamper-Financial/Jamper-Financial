@@ -382,6 +382,9 @@
                 </table>
             </div>
         </div>
+        <div class="chart-container">
+            <canvas id="goalsChart"></canvas>
+        </div>
     </div>
 </div>
 
@@ -494,6 +497,36 @@
     protected override void OnInitialized()
     {
         goals = DatabaseHelper.GetGoals();
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await RenderGoalsChart();
+        }
+    }
+
+    private async Task RenderGoalsChart()
+    {
+        var goalNames = goals.Select(g => g.Name).ToArray();
+        var goalAmounts = goals.Select(g => g.Amount).ToArray();
+
+        var chartData = new
+        {
+            labels = goalNames,
+            datasets = new[]
+            {
+                new
+                {
+                    label = "Goal Amounts",
+                    data = goalAmounts,
+                    backgroundColor = "rgba(75, 192, 192, 0.2)",
+                    borderColor = "rgba(75, 192, 192, 1)",
+                    borderWidth = 1
+                }
+            }
+        };
+        await JSRuntime.InvokeVoidAsync("initializeBarChart", "goalsChart", chartData, "Amount");
     }
 
         private void ToggleDescription(Goal goal)
