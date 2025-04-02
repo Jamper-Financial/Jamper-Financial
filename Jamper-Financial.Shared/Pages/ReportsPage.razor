@@ -8,8 +8,8 @@
 @inherits LayoutComponentBase
 
 @inject NavigationManager NavigationManager
-@inject IJSRuntime JS   // ADDED: JS RUNTIME INJECTION FOR CHARTS
-@inject UserStateService UserStateService  // ADDED: FOR CURRENT USER FILTERING
+@inject IJSRuntime JS   // CAPSLOCK: JS RUNTIME INJECTION FOR CHARTS
+@inject UserStateService UserStateService  // CAPSLOCK: FOR CURRENT USER FILTERING
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -17,8 +17,8 @@
     // TOGGLES FOR MODALS
     private bool showCreateReportModal = false;
     private bool showResultsModal = false;
-    private bool showCurrentMonthExpensesModal = false; // ADDED: For current month expenses modal
-    private bool showCurrentMonthSavingsModal = false;  // ADDED: For current month savings modal
+    private bool showCurrentMonthExpensesModal = false; // CAPSLOCK: CURRENT MONTH EXPENSES MODAL
+    private bool showCurrentMonthSavingsModal = false;  // CAPSLOCK: CURRENT MONTH SAVINGS MODAL
 
     // USER-SELECTED FILTERS
     private List<string> selectedCategories = new List<string>();
@@ -34,42 +34,38 @@
     private List<Transaction> transactions = new List<Transaction>();
     private List<Transaction> filteredTransactions = new List<Transaction>();
 
-    // ADDED: USER LINKED ACCOUNTS (Using BankAccount model from LinkedAccount.razor)
+    // USER LINKED ACCOUNTS & CATEGORIES
     private List<BankAccount> userAccounts = new List<BankAccount>(); // LOADED VIA LoadUserAccountsAsync()
-    // ADDED: USER CATEGORIES
     private List<Category> userCategories = new List<Category>();      // LOADED VIA DatabaseHelper.GetCategories(userId)
 
     // REPORT FIELDS
     private string reportName = string.Empty;
     private string reportDescription = string.Empty;
 
-    // CALCULATED TOTALS
+    // CALCULATED TOTALS (Used for custom report export)
     private decimal totalDebit => filteredTransactions.Where(t => t.TransactionType == "e").Sum(t => t.Amount);
     private decimal totalCredit => filteredTransactions.Where(t => t.TransactionType == "i").Sum(t => t.Amount);
 
     protected override async Task OnInitializedAsync()
     {
         int userId = UserStateService.UserId;
-        @* if (userId <= 0)
-        {
-            NavigationManager.NavigateTo("/login");
-            return;
-        }
-        SetPageTitle("Reports"); *@
+        // For testing, login check is commented out
+        //@* if (userId <= 0) { NavigationManager.NavigateTo("/login"); return; } *@
+        SetPageTitle("Reports");
 
         // LOAD TRANSACTIONS FOR CURRENT USER
         var allFromDb = await TransactionHelper.GetTransactionsAsync(userId);
         transactions = allFromDb.ToList();
         filteredTransactions = transactions; // DEFAULT: SHOW ALL
 
-        // ADDED: LOAD USER LINKED ACCOUNTS FROM DATABASE
+        // LOAD USER ACCOUNTS
         await LoadUserAccountsAsync(userId);
 
-        // ADDED: LOAD USER CATEGORIES FROM DATABASE
+        // LOAD USER CATEGORIES
         userCategories = DatabaseHelper.GetCategories(userId);
     }
 
-    // ADDED: METHOD TO LOAD USER ACCOUNTS FROM THE ACCOUNTS TABLE
+    // METHOD: LOAD ACCOUNTS FROM DATABASE
     private async Task LoadUserAccountsAsync(int userId)
     {
         var accounts = new List<BankAccount>();
@@ -86,11 +82,11 @@
                     {
                         accounts.Add(new BankAccount
                         {
-                            AccountId = reader.GetInt32(reader.GetOrdinal("AccountID")),   // MATCHES model property
+                            AccountId = reader.GetInt32(reader.GetOrdinal("AccountID")),   // CAPSLOCK: MATCHES MODEL PROPERTY
                             AccountName = reader.GetString(reader.GetOrdinal("AccountName")),
                             AccountTypeID = reader.GetInt32(reader.GetOrdinal("AccountTypeID")),
-                            Balance = (int)reader.GetDecimal(reader.GetOrdinal("Balance")),  // Explicitly cast Balance to int
-                            AccountNumber = reader.GetInt32(reader.GetOrdinal("AccountNumber")).ToString()  // Convert to string for display
+                            Balance = (int)reader.GetDecimal(reader.GetOrdinal("Balance")),  // CAPSLOCK: EXPLICIT CAST TO INT
+                            AccountNumber = reader.GetInt32(reader.GetOrdinal("AccountNumber")).ToString()  // CAPSLOCK: CONVERT TO STRING
                         });
                     }
                 }
@@ -100,7 +96,7 @@
     }
 
     // -------------------------
-    // Create Custom Report Modal
+    // CREATE CUSTOM REPORT MODAL
     // -------------------------
     private void OpenCreateReportModal()
     {
@@ -111,13 +107,13 @@
     private void CloseCreateReportModal() => showCreateReportModal = false;
 
     // -------------------------
-    // Report Results Modal (Custom Report)
+    // REPORT RESULTS MODAL (CUSTOM REPORT)
     // -------------------------
     private void OpenResultsModal() => showResultsModal = true;
     private void CloseResultsModal() => showResultsModal = false;
 
     // -------------------------
-    // View Report (Custom Report)
+    // VIEW CUSTOM REPORT
     // -------------------------
     private void ViewReport()
     {
@@ -128,7 +124,8 @@
         }
         if (!ValidateCategories() | !ValidateDates())
             return;
-        // FILTER TRANSACTIONS BASED ON SELECTED CATEGORIES AND DATE RANGE
+
+        // CAPSLOCK: FILTER TRANSACTIONS BASED ON SELECTED CATEGORIES AND DATE RANGE
         filteredTransactions = transactions
             .Where(t => selectedCategories.Contains("All") || selectedCategories.Contains(t.CategoryID.ToString()))
             .Where(t => t.Date >= fromDate && t.Date <= toDate)
@@ -138,7 +135,7 @@
     }
 
     // -------------------------
-    // View Current Month Expenses Modal
+    // VIEW CURRENT MONTH EXPENSES
     // -------------------------
     private void ViewCurrentMonthExpenses()
     {
@@ -151,7 +148,7 @@
     }
 
     // -------------------------
-    // View Current Month Savings Modal
+    // VIEW CURRENT MONTH SAVINGS
     // -------------------------
     private void ViewCurrentMonthSavings()
     {
@@ -163,7 +160,9 @@
         showCurrentMonthSavingsModal = true;
     }
 
+    // -------------------------
     // VALIDATION METHODS
+    // -------------------------
     private bool ValidateCategories()
     {
         if (selectedCategories.Count == 0)
@@ -198,14 +197,16 @@
     }
     private void OnCategoriesChange(ChangeEventArgs e)
     {
-        // UPDATE SELECTED CATEGORIES FROM DROPDOWN VALUE(S)
+        // CAPSLOCK: UPDATE SELECTED CATEGORIES FROM DROPDOWN VALUE(S)
         var selectedOptions = (e.Value as IEnumerable<string>)?.ToList() ?? new List<string>();
         selectedCategories = selectedOptions;
         ValidateCategories();
     }
     private bool CanViewReport => string.IsNullOrEmpty(categoryError) && string.IsNullOrEmpty(dateError);
 
-    // RETURN FROM "REPORT RESULTS" TO "CREATE CUSTOM REPORT"
+    // -------------------------
+    // RETURN FROM REPORT RESULTS TO CUSTOM REPORT
+    // -------------------------
     private void GoBackToFilters()
     {
         showResultsModal = false;
@@ -213,7 +214,7 @@
     }
 
     // -------------------------
-    // EXPORT CSV/PDF (UNCHANGED)
+    // EXPORT FOR CUSTOM REPORT (FULL 7-COLUMN LAYOUT)
     // -------------------------
     private void ExportToCsv()
     {
@@ -223,7 +224,10 @@
             toDate = DateTime.Now;
         }
         var catParam = string.Join(",", selectedCategories);
-        var url = $"/export/csv?reportName={Uri.EscapeDataString(reportName)}" +
+        // CAPSLOCK: reportType=custom yields full layout (with Debit/Credit)
+        var url = $"/export/csv?reportType=custom" +
+                  $"&userId={UserStateService.UserId}" + // CAPSLOCK: INCLUDE CURRENT USER ID
+                  $"&reportName={Uri.EscapeDataString(reportName)}" +
                   $"&description={Uri.EscapeDataString(reportDescription)}" +
                   $"&fromDate={fromDate:o}&toDate={toDate:o}" +
                   $"&categories={Uri.EscapeDataString(catParam)}";
@@ -237,10 +241,58 @@
             toDate = DateTime.Now;
         }
         var catParam = string.Join(",", selectedCategories);
-        var url = $"/export/pdf?reportName={Uri.EscapeDataString(reportName)}" +
+        var url = $"/export/pdf?reportType=custom" +
+                  $"&userId={UserStateService.UserId}" + // CAPSLOCK: INCLUDE CURRENT USER ID
+                  $"&reportName={Uri.EscapeDataString(reportName)}" +
                   $"&description={Uri.EscapeDataString(reportDescription)}" +
                   $"&fromDate={fromDate:o}&toDate={toDate:o}" +
                   $"&categories={Uri.EscapeDataString(catParam)}";
+        NavigationManager.NavigateTo(url, forceLoad: true);
+    }
+
+    // -------------------------
+    // EXPORT FOR CURRENT MONTH REPORTS (SIMPLIFIED, 4-COLUMN LAYOUT)
+    // -------------------------
+    // CAPSLOCK: THESE METHODS FORCE THE DATE RANGE TO THE CURRENT MONTH, FORCE CATEGORIES TO "All", AND PASS A reportType FOR SIMPLIFIED LAYOUT.
+    private void ExportCurrentMonthCsv(string reportType)
+    {
+        DateTime now = DateTime.Now;
+        DateTime firstDay = new DateTime(now.Year, now.Month, 1);
+        DateTime lastDay = firstDay.AddMonths(1).AddDays(-1);
+        var catParam = "All"; // CAPSLOCK: FORCE ALL CATEGORIES
+
+        // CAPSLOCK: DYNAMIC REPORT NAME FOR MONTHLY EXPORTS
+        string monthName = now.ToString("MMMM");
+        string dynamicReportName = reportType == "monthlyExpenses"
+            ? $"Expense Report for Month of {monthName}"
+            : $"Savings Report for Month of {monthName}";
+
+        var url = $"/export/csv?reportType={reportType}" +
+                  $"&userId={UserStateService.UserId}" + // CAPSLOCK: INCLUDE CURRENT USER ID
+                  $"&reportName={Uri.EscapeDataString(dynamicReportName)}" +
+                  $"&description=Auto%20Generated%20Monthly%20Report" +
+                  $"&fromDate={firstDay:o}&toDate={lastDay:o}" +
+                  $"&categories={catParam}";
+        NavigationManager.NavigateTo(url, forceLoad: true);
+    }
+    private void ExportCurrentMonthPdf(string reportType)
+    {
+        DateTime now = DateTime.Now;
+        DateTime firstDay = new DateTime(now.Year, now.Month, 1);
+        DateTime lastDay = firstDay.AddMonths(1).AddDays(-1);
+        var catParam = "All"; // CAPSLOCK: FORCE ALL CATEGORIES
+
+        string monthName = now.ToString("MMMM");
+        string dynamicReportName = reportType == "monthlyExpenses"
+            ? $"Expense Report for Month of {monthName}"
+            : $"Savings Report for Month of {monthName}";
+
+        var url = $"/export/pdf?reportType={reportType}" +
+                  $"&userId={UserStateService.UserId}" + // CAPSLOCK: INCLUDE CURRENT USER ID
+                  $"&reportName={Uri.EscapeDataString(dynamicReportName)}" +
+                  $"&description=Auto%20Generated%20Monthly%20Report" +
+                  $"&fromDate={firstDay:o}&toDate={lastDay:o}" +
+                  $"&categories={catParam}";
         NavigationManager.NavigateTo(url, forceLoad: true);
     }
 
@@ -256,7 +308,7 @@
         }
     }
 
-    // RENDER MONTHLY EXPENSES CHART
+    // RENDER MONTHLY EXPENSES CHART (SKIP FUTURE TRANSACTIONS)
     private async Task RenderMonthlyBudgetChart()
     {
         var months = new[]
@@ -265,12 +317,11 @@
             "July", "August", "September", "October", "November", "December"
         };
 
-        // AGGREGATE EXPENSE DATA FROM REAL TRANSACTIONS
-        // CAPSLOCK COMMENT: SKIP TRANSACTIONS WITH A DATE IN THE FUTURE (NOT YET DONE)
+        // CAPSLOCK: AGGREGATE EXPENSE DATA, SKIPPING FUTURE TRANSACTIONS
         var expenseData = new decimal[12];
         foreach (var trans in transactions)
         {
-            if (trans.Date > DateTime.Now) continue; // DO NOT INCLUDE FUTURE TRANSACTIONS
+            if (trans.Date > DateTime.Now) continue; // CAPSLOCK: SKIP FUTURE TRANSACTIONS
             if (trans.TransactionType == "e")
             {
                 int monthIndex = trans.Date.Month - 1;
@@ -298,7 +349,7 @@
         await JS.InvokeVoidAsync("initializeBarChart", "monthlyBudgetChart", chartData);
     }
 
-    // RENDER MONTHLY SAVINGS CHART
+    // RENDER MONTHLY SAVINGS CHART (SKIP FUTURE TRANSACTIONS)
     private async Task RenderMonthlySavingsChart()
     {
         var months = new[]
@@ -307,12 +358,11 @@
             "July", "August", "September", "October", "November", "December"
         };
 
-        // AGGREGATE INCOME DATA FROM REAL TRANSACTIONS
-        // SKIP FUTURE TRANSACTIONS FOR SAVINGS CHART
+        // CAPSLOCK: AGGREGATE INCOME DATA, SKIPPING FUTURE TRANSACTIONS
         var incomeData = new decimal[12];
         foreach (var trans in transactions)
         {
-            if (trans.Date > DateTime.Now) continue; // DO NOT INCLUDE FUTURE TRANSACTIONS
+            if (trans.Date > DateTime.Now) continue; // CAPSLOCK: SKIP FUTURE TRANSACTIONS
             if (trans.TransactionType == "i")
             {
                 int monthIndex = trans.Date.Month - 1;
@@ -342,7 +392,6 @@
 }
 
 <style>
-
 .reports-page {
     padding: 20px !important;
     font-family: Arial, sans-serif !important;
@@ -398,7 +447,7 @@
     margin: 10px 0 !important;
     height: 250px !important;
     text-align: center !important;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1) !important;
     background-color: #ffffff !important;
 }
 .reports-page .create-report-modal,
@@ -466,7 +515,7 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
-    background-image: url('down-arrow-icon.png');
+    background-image: url('down-arrow-icon.png'); /* REPLACE with your icon */
     background-repeat: no-repeat;
     background-position: right 10px center;
     padding-right: 30px;
@@ -530,6 +579,7 @@
 }
 </style>
 
+
 <div class="reports-page">
     <!-- EXPENSES REPORT OVERVIEW WITH CHART -->
     <div class="report-container">
@@ -556,7 +606,7 @@
         </button>
     </div>
 
-    <!-- Create Custom Report Modal (UPDATED DROPDOWNS) -->
+    <!-- CREATE CUSTOM REPORT MODAL -->
     @if (showCreateReportModal)
     {
         <div class="create-report-modal">
@@ -570,7 +620,6 @@
                     </div>
                     <div class="form-group">
                         <label>Select accounts: (use ctrl to multi-select)</label>
-                        <!-- UPDATED: POPULATE ACCOUNTS FROM THE CURRENT USER -->
                         <select class="multi-select custom-dropdown" multiple>
                             <option value="All">All</option>
                             @foreach (var account in userAccounts)
@@ -581,7 +630,6 @@
                     </div>
                     <div class="form-group">
                         <label>Select categories: (use ctrl to multi-select)</label>
-                        <!-- UPDATED: POPULATE CATEGORIES FROM THE CURRENT USER -->
                         <select class="multi-select custom-dropdown" multiple @onchange="OnCategoriesChange">
                             <option value="All">All</option>
                             @foreach (var category in userCategories)
@@ -630,7 +678,7 @@
         </div>
     }
 
-    <!-- Report Results Modal (Custom Report) -->
+    <!-- REPORT RESULTS MODAL (CUSTOM REPORT) -->
     @if (showResultsModal)
     {
         <div class="results-modal">
@@ -700,7 +748,7 @@
         </div>
     }
 
-    <!--Current Month Expenses Modal -->
+    <!-- CURRENT MONTH EXPENSES MODAL (NO DEBIT/CREDIT) -->
     @if (showCurrentMonthExpensesModal)
     {
         <div class="results-modal">
@@ -740,6 +788,15 @@
                                 }
                             </tbody>
                         </table>
+                        <!-- CAPSLOCK: EXPORT BUTTONS FOR CURRENT MONTH EXPENSES -->
+                        <div class="export-buttons">
+                            <button class="reports-btn" @onclick='() => ExportCurrentMonthCsv("monthlyExpenses")'>
+                                Export to CSV
+                            </button>
+                            <button class="reports-btn" @onclick='() => ExportCurrentMonthPdf("monthlyExpenses")'>
+                                Export to PDF
+                            </button>
+                        </div>
                     }
                     <button class="reports-custom-btn" @onclick="() => showCurrentMonthExpensesModal = false">
                         Close
@@ -749,7 +806,7 @@
         </div>
     }
 
-    <!-- Current Month Savings Modal -->
+    <!-- CURRENT MONTH SAVINGS MODAL (NO DEBIT/CREDIT) -->
     @if (showCurrentMonthSavingsModal)
     {
         <div class="results-modal">
@@ -789,6 +846,15 @@
                                 }
                             </tbody>
                         </table>
+                        <!-- CAPSLOCK: EXPORT BUTTONS FOR CURRENT MONTH SAVINGS -->
+                        <div class="export-buttons">
+                            <button class="reports-btn" @onclick='() => ExportCurrentMonthCsv("monthlySavings")'>
+                                Export to CSV
+                            </button>
+                            <button class="reports-btn" @onclick='() => ExportCurrentMonthPdf("monthlySavings")'>
+                                Export to PDF
+                            </button>
+                        </div>
                     }
                     <button class="reports-custom-btn" @onclick="() => showCurrentMonthSavingsModal = false">
                         Close
