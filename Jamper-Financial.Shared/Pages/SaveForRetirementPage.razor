@@ -4,6 +4,7 @@
 @inject NavigationManager Navigation
 @inject GoalState GoalState
 @inject DatabaseHelperFactory DatabaseHelper
+@inject UserStateService UserStateService
 
 <style>
     .back-button {
@@ -60,12 +61,14 @@
     private decimal monthlyContribution;
     private DateTime retirementDate = DateTime.Today;
 
+
     private void SubmitRetirementGoal()
     {
         if (targetAmount > 0)
         {
             var retirementGoal = new Goal
                 {
+                    Name = $"Retirement",
                     Amount = targetAmount,
                     StartDate = DateTime.Now,
                     EndDate = retirementDate,
@@ -73,7 +76,8 @@
                     Category = "Retirement",
                     GoalType = "Savings",
                     Frequency = "Monthly",
-                    IsRetirementGoal = true
+                    IsRetirementGoal = true,
+                    UserID = UserStateService.UserId
                 };
 
             GoalState.AddGoal(retirementGoal);

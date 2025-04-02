@@ -4,6 +4,7 @@
 @inject NavigationManager Navigation
 @inject GoalState GoalState
 @inject DatabaseHelperFactory DatabaseHelper
+@inject UserStateService UserStateService
 
 <div class="header-container">
     <h3 class="header">Save for Emergency Fund</h3>
@@ -61,7 +62,8 @@
                     Category = "Emergency Fund",
                     GoalType = "Savings",
                     Frequency = "Monthly",
-                    IsEmergencyFundGoal = true
+                    IsEmergencyFundGoal = true,
+                    UserID = UserStateService.UserId
                 };
 
             GoalState.AddGoal(emergencyFundGoal);

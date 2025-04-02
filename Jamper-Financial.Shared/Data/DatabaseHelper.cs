@@ -65,6 +65,7 @@ namespace Jamper_Financial.Shared.Data
                         PhoneNumber TEXT,
                         EmailConfirmed INTEGER,
                         PhoneNumberConfirmed INTEGER,
+                        Avatar BLOB,
                         FOREIGN KEY (UserID) REFERENCES Users(UserID)
                         );
                 ");

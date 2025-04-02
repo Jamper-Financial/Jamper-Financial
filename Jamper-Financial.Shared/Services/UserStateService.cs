@@ -15,6 +15,7 @@ namespace Jamper_Financial.Shared.Services
             Username = username;
             LoggedInUser.UserName = username;
             LoggedInUser.Email = email;
+            LoggedInUser.UserID = userId;
         }
 
         public void ClearUser()

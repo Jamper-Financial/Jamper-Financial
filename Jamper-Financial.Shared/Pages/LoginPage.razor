@@ -5,6 +5,8 @@
 @inject LoginStateService LoginState
 @inject UserStateService UserStateService
 @inject AuthenticationService AuthenticationService
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
 
 <div class="login-container">
     <div class="login-left">
@@ -16,7 +18,27 @@
                 <input id="email" type="text" placeholder="Enter your email or username" @bind="Identifier" />
 
                 <label for="password">Password</label>
-                <input id="password" type="password" placeholder="********" @bind="Password" />
+                <div style="position: relative;">
+                    <input id="password" type="password" placeholder="********" @bind="Password" style="padding-right: 30px;" />
+                    <button type="button" id="togglePasswordButton" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer;"
+                            @onclick="TogglePasswordVisibility">
+                        @if (passwordVisible)
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.133 13.133 0 0 1 1.172 8z" />
+                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                            </svg>
+                        }
+                        else
+                        {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+                                <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.417 1.117a2.5 2.5 0 0 1 2.888-1.681l.545.167a11.977 11.977 0 0 1 2.827 3.483zM9.86 13.34a7.794 7.794 0 0 0 4.312-3.805c1.382-1.89 2.116-4.34 2.116-6.022 0-1.054-.29-2.005-.83-2.832-3.382 0-6.455 2.48-8.015 6.233.2.328 3.876 1.626 6.112.774 3.655l-.958 1.376a7.024 7.024 0 0 1-2.816-1.55zM2.141 3.762 3.438 5.059a11.977 11.977 0 0 0 2.827 3.483l.545-.167a2.5 2.5 0 0 1 2.888 1.681l.773-1.117a7.028 7.028 0 0 0-2.792-5.88z" />
+                                <path d="M5.52 7.507a4.474 4.474 0 0 0-2.278.792l1.096 1.096a2.5 2.5 0 0 1 3.212 0l1.096-1.096A4.474 4.474 0 0 0 8.493 7.5z" />
+                            </svg>
+                        }
+
+                    </button>
+                </div>
 
                 <div class="remember-me">
                     <input type="checkbox" id="remember" @bind="RememberMe" />
@@ -24,7 +46,6 @@
                 </div>
 
                 <button type="submit" class="login-button">🔒 Log in</button>
-                @* display error message if any *@
                 @if (!string.IsNullOrWhiteSpace(ErrorMessage))
                 {
                     <div class="alert alert-danger" role="alert">
@@ -51,11 +72,6 @@
 </div>
 
 @code {
-    [Inject]
-    private NavigationManager Navigation { get; set; } = default!;
-    [Inject]
-    private IJSRuntime JSRuntime { get; set; } = default!;
-
     private UserProfile userProfile = new UserProfile();
     private bool IsGoogleLogin { get; set; } = false;
     private string Identifier { get; set; } = string.Empty;
@@ -64,6 +80,7 @@
     private bool RememberMe { get; set; } = false;
     private string Email { get; set; } = string.Empty;
     private string UserName { get; set; } = string.Empty;
+    private bool passwordVisible = false;
 
     private string FilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "credentials.txt");
 
@@ -89,6 +106,12 @@
         {
             _objectReference = DotNetObjectReference.Create(this);
         }
+    }
+
+    private async Task TogglePasswordVisibility()
+    {
+        passwordVisible = !passwordVisible;
+        await JSRuntime.InvokeVoidAsync("togglePasswordVisibility", "password");
     }
 
     private void NavigateToCreateAccount()
@@ -175,46 +198,46 @@
             return;
         }
 
-        var isValid = await Task.Run(() => AuthenticationService.ValidateUserCredentials(Identifier, Password));
-        if (isValid)
+        try
         {
-            var (userid, username, email) = await Task.Run(() => DatabaseHelper.GetUserDetails(Identifier));
-
-            if (username != null && email != null)
+            var isValid = await Task.Run(() => AuthenticationService.ValidateUserCredentials(Identifier, Password));
+            if (isValid)
             {
-                UserStateService.LoggedInUser.UserName = username;
-                UserStateService.LoggedInUser.Email = email;
+                var (userid, username, email) = await Task.Run(() => DatabaseHelper.GetUserDetails(Identifier));
+                UserStateService.SetUser(userid, username ?? string.Empty, email);
 
-                Console.WriteLine($"Logged in as: {username} with email: {email}");
-            }
-        }
+                if (username != null && email != null)
+                {
+                    UserStateService.LoggedInUser.UserName = username;
+                    UserStateService.LoggedInUser.Email = email;
+                    UserStateService.LoggedInUser.UserID = userid;
 
-        if (isValid)
-        {
-            LoginState.IsGoogleLogin = false;
-            ErrorMessage = string.Empty;
-            Console.WriteLine("Login successful");
+                    Console.WriteLine($"Logged in as: {username} with email: {email} and userid: {userid}");
+                }
 
-            var details = await Task.Run(() => DatabaseHelper.GetUserDetails(Identifier));
-            UserStateService.SetUser(details.Userid, Identifier, details.Email);
+                if (RememberMe)
+                {
+                    await Task.Run(() => File.WriteAllLines(FilePath, new[] { Identifier, Password }));
+                }
+                else
+                {
+                    if (File.Exists(FilePath))
+                    {
+                        await Task.Run(() => File.Delete(FilePath));
+                    }
+                }
 
-            if (RememberMe)
-            {
-                await Task.Run(() => File.WriteAllLines(FilePath, new[] { Identifier, Password }));
+                Navigation.NavigateTo("/dashboard-page");
             }
             else
             {
-                if (File.Exists(FilePath))
-                {
-                    await Task.Run(() => File.Delete(FilePath));
-                }
+                ErrorMessage = "Invalid email/username or password.";
             }
-
-            Navigation.NavigateTo("/dashboard-page");
         }
-        else
+        catch (Exception ex)
         {
-            ErrorMessage = "Invalid email/username or password.";
+            ErrorMessage = $"An error occurred during login: {ex.Message}";
+            Console.Error.WriteLine($"Login error: {ex}"); // Log the error
         }
     }
 }

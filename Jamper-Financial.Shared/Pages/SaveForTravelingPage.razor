@@ -4,6 +4,7 @@
 @inject NavigationManager Navigation
 @inject GoalState GoalState
 @inject DatabaseHelperFactory DatabaseHelper
+@inject UserStateService UserStateService
 
 <style>
     .back-button {
@@ -94,7 +95,8 @@
                     Category = "Travel",
                     GoalType = "Savings",
                     Frequency = "Monthly",
-                    IsTravelGoal = true
+                    IsTravelGoal = true,
+                    UserID = UserStateService.UserId
                 };
 
             GoalState.AddGoal(travelGoal);

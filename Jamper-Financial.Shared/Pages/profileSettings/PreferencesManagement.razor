@@ -67,7 +67,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        int userId = UserStateService.UserId;
+        // Get the logged-in user's ID and username from the UserStateService
+        int userId = UserStateService.LoggedInUser.UserID;
 
         if (userId <= 0)
         {

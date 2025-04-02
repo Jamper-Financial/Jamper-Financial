@@ -1,0 +1,71 @@
+﻿@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+    [Inject] IJSRuntime JSRuntime { get; set; }
+
+    private bool isFileUploaded = false;
+
+    private async Task CloseModal()
+    {
+        await OnClose.InvokeAsync();
+    }
+
+    private async Task HandleFileUpload(InputFileChangeEventArgs e)
+    {
+        foreach (var file in e.GetMultipleFiles())
+        {
+            // Handle file upload logic here
+            // For example, save the file to a temporary location and read its content
+            var buffer = new byte[file.Size];
+            await file.OpenReadStream().ReadAsync(buffer);
+            // Save buffer to a temporary location or process it as needed
+        }
+
+        // Set the flag to true after file upload
+        isFileUploaded = true;
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializeDragAndDrop", "upload-area", "file-upload");
+        }
+    }
+}
+
+@if (IsVisible)
+{
+    <div class="modal-overlay" @onclick="CloseModal">
+        <div class="modal-content" @onclick:stopPropagation="true">
+            <div class="modal-header">
+                <h3>Upload Receipts</h3>
+                <button class="close-button" @onclick="CloseModal">X</button>
+            </div>
+            <div class="modal-body">
+                <div class="upload-container">
+                    <div class="upload-icon">
+                        <img src="/images/upload-icon.png" alt="Upload Icon" />
+                    </div>
+                    <h4>Upload Receipts</h4>
+                    <p>Upload your receipts here</p>
+                    <div id="upload-area" class="upload-area">
+                        <label for="file-upload" class="upload-label">
+                            <img src="/images/folder-icon.png" alt="Folder Icon" />
+                            <span>Drag and Drop your receipts here to upload</span>
+                        </label>
+                        <InputFile id="file-upload" OnChange="HandleFileUpload" multiple />
+                    </div>
+                    <button id="btn-upload" class="upload-button" @onclick="UploadReceipts" disabled="@(isFileUploaded ? false : true)">Upload receipts</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private async Task UploadReceipts()
+    {
+        // Handle the upload receipts logic here
+    }
+}

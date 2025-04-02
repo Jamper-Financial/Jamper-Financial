@@ -3,9 +3,11 @@
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Services
 @using Jamper_Financial.Shared.Models
+@using Jamper_Financial.Shared.Pages.Components;
 @inject NavigationManager Navigation
 @inject IUserService UserService
 @inject UserStateService UserStateService
+
 
 @namespace Jamper_Financial.Shared.Pages.profileSettings
 @code {
@@ -14,12 +16,12 @@
     private bool showStatusMessage;
     private string statusMessageClass = string.Empty;
     private bool updateStatus;
+    private bool ShowUploadAvatarModal = false;
 
     protected override async Task OnInitializedAsync()
     {
         // Get the logged-in user's ID and username from the UserStateService
-        int userId = UserStateService.UserId;
-        string username = UserStateService.Username;
+        int userId = UserStateService.LoggedInUser.UserID;
 
         if (userId > 0)
         {
@@ -67,6 +69,17 @@
         }
     }
 
+    private void SelectAvatar()
+    {
+        ShowUploadAvatarModal = true;
+    }
+
+    private void CloseUploadAvatarModal()
+    {
+        ShowUploadAvatarModal = false;
+        StateHasChanged();
+    }
+
 }
 
 <div>
@@ -82,15 +95,22 @@
             {
                 <div class="content-container" @onclick="HandleClickOutsideModal">
                     <div class="profile-management">
-                        <div class="profile-management-column">
+                        <div class="profile-management-column flex-column">
                             <div class="profile-picture">
-                                <img src="./images/placeholder.png" />
+                                @if (userProfile.Username != null)
+                                {
+                                    <img src="data:image/png;base64,@Convert.ToBase64String(userProfile.ProfilePicture)" />
+                                }
+                                else
+                                {
+                                    < img src = "./images/placeholder.png" />
+                                }
                             </div>
                             <div class="edit-icon">
                                 <div class="absolute">
-                                    <button class="space-x-1 inline-flex items-center justify-center whitespace-nowrap text-sm ring-offset-background transition-all select-none touch-none focus:outline-none disabled:bg-none disabled:pointer-events-none disabled:text-foreground text-primary-foreground hover:brightness-90 bg-muted disabled:bg-muted size-10 rounded-full [&amp;_path]:fill-[#2BA8FC]">
+                                    <button type="button" @onclick="() => SelectAvatar()" class="btn_editavatar">
                                         <span class="flex items-center gap-1">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="var(--primary-color">
                                                 <path fill="url(#pencil-gradient-school_svg__a)" d="M4.167 15.833h1.187L13.5 7.688 12.313 6.5l-8.146 8.146zM3.333 17.5a.8.8 0 0 1-.593-.24.8.8 0 0 1-.24-.593v-2.021a1.65 1.65 0 0 1 .48-1.167L13.5 2.98q.25-.229.553-.354.302-.125.634-.125.333 0 .646.125.315.125.542.375l1.146 1.167q.25.229.364.541t.115.625q0 .334-.115.636a1.6 1.6 0 0 1-.364.552l-10.5 10.5q-.23.229-.532.354a1.65 1.65 0 0 1-.635.125zm9.563-10.396-.584-.604L13.5 7.688z">
 
                                                 </path>
@@ -193,3 +213,9 @@
         </EditForm>
     </div>
 </div>
+
+                                                @* Upload Avatar Modal *@
+@if (ShowUploadAvatarModal)
+{
+    <UploadAvatarModal IsVisible="ShowUploadAvatarModal" OnClose="CloseUploadAvatarModal" Profile="userProfile" />
+}
