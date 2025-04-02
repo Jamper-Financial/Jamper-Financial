@@ -100,15 +100,15 @@
 
 @if (IsVisible)
 {
-    <div class="modal">
-        <div class="modal-content">
+    <div class="transaction-modal">
+        <div class="transaction-modal-content">
             @if (ShowDeleteConfirmation)
             {
                 @if (NewTransaction.Frequency != null)
                 {
                     <h3>Confirm Deletion</h3>
                     <p>This transaction is recurring. Do you want to delete all occurrences or just this one?</p>
-                    <div class="form-group button-group">
+                    <div class="transaction-form-group button-group">
                         <button type="button" class="save" @onclick="async () => await ConfirmDeleteTransaction(true)">Delete All</button>
                         <button type="button" class="save" @onclick="async () => await ConfirmDeleteTransaction(false)">Delete This One</button>
                         <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
@@ -118,7 +118,7 @@
                 {
                     <h3>Confirm Deletion</h3>
                     <p>Are you sure you want to delete this transaction?</p>
-                    <div class="form-group button-group">
+                    <div class="transaction-form-group button-group">
                         <button type="button" class="save" @onclick="async () => await ConfirmDeleteTransaction(false)">Confirm</button>
                         <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
                     </div>
@@ -128,11 +128,11 @@
             {
                 <h3>@(IsEditMode ? "Edit Transaction" : "Add Transaction")</h3>
                 <form @onsubmit="HandleSubmit">
-                    <div class="form-group">
+                    <div class="transaction-form-group">
                         <label for="description">Description:</label>
                         <input id="description" @bind="NewTransaction.Description" required />
                     </div>
-                    <div class="form-group">
+                    <div class="transaction-form-group">
                         <label for="accountname">Account:</label>
                         <select id="accountname" @bind="NewTransaction.AccountID" required>
                             <option value="">Select Account</option>
@@ -142,7 +142,7 @@
                             }
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="transaction-form-group">
                         <label for="category">Category:</label>
                         <select id="category" @bind="NewTransaction.CategoryID" required>
                             <option value=""> Select Category</option>
@@ -152,15 +152,15 @@
                             }
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="transaction-form-group">
                         <label for="amount">Amount:</label>
                         <input id="amount" type="number" step="0.01" @bind="NewTransaction.Amount" required />
                     </div>
-                    <div class="form-group">
+                    <div class="transaction-form-group">
                         <label for="transactionDate">Transaction Date:</label>
                         <input id="transactionDate" type="date" @bind="NewTransaction.Date" required />
                     </div>
-                    <div class="form-group">
+                    <div class="transaction-form-group">
                         <label for="frequency">Frequency:</label>
                         <select id="frequency" @bind="NewTransaction.Frequency" required>
                             <option value="None">None</option>
@@ -170,12 +170,12 @@
                     </div>
                     @if (NewTransaction.Frequency != "None" && NewTransaction.Frequency != null)
                     {
-                        <div class="form-group">
+                        <div class="transaction-form-group">
                             <label for="endDate">End Date:</label>
-                            <input id="endDate" type="date" @bind="NewTransaction.EndDate" required/>
+                            <input id="endDate" type="date" @bind="NewTransaction.EndDate" required />
                         </div>
                     }
-                    <div class="form-group button-group">
+                    <div class="transaction-form-group button-group">
                         @if (IsEditMode)
                         {
                             <button type="button" class="delete" @onclick="ShowDeleteConfirmationForm">Delete</button>
