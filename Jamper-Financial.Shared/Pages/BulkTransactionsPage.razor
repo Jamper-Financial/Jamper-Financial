@@ -1,33 +1,32 @@
 ﻿@page "/bulk-transactions"
 @inherits LayoutComponentBase
+@using Jamper_Financial.Shared.Pages.Components;
+@using Jamper_Financial.Shared.Utilities
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
+    private bool isExcel = false;
+    private bool isOCR = false;
+    private bool norecords = true;
+    private bool ShowUploadReceiptsModal = false;
+    private List<Transaction> transactions = new List<Transaction>();
 
     protected override void OnInitialized()
     {
         SetPageTitle("Bulk Transactions");
+
+        // Initialize the transactions list with sample data
+        transactions = new List<Transaction>
+        {
+            new Transaction { Description = "Sample Description", AccountID = 1, TransactionType = "Expense", Date = DateTime.Now, Amount = 100.00m }
+        };
     }
-}
-
-<div class="transactions-section">
-    <div class="transactions-header">
-        <h3 class="section-title">Recent Transactions</h3>
-        <div style="display: flex; gap: 10px;">
-            <button class="add-viaCsv" @onclick="OpenExcelModal">Import via Excel</button>
-            <button class="add-viaReceipt" @onclick="OpenOCRModal">Import via Receipts</button>
-        </div>
-    </div>
-</div>
-
-@code {
-    private bool isExcel = false;
-    private bool isOCR = false;
 
     public void OpenExcelModal()
     {
         isExcel = true;
         isOCR = false;
+        ShowUploadReceiptsModal = true;
         Console.WriteLine("Open Excel Modal");
     }
 
@@ -35,6 +34,7 @@
     {
         isExcel = false;
         isOCR = true;
+        ShowUploadReceiptsModal = true;
         Console.WriteLine("Open OCR Modal");
     }
 
@@ -46,13 +46,75 @@
 
         // show data
 
+
         // save data
         Console.WriteLine("Extract Data");
     }
 
-    public void CloseModal()
+
+    private void OpenUploadReceiptsModal()
     {
-        isExcel = false;
-        isOCR = false;
+        ShowUploadReceiptsModal = true;
     }
+
+    private void CloseUploadReceiptsModal()
+    {
+        ShowUploadReceiptsModal = false;
+    }
+}
+
+<div class="bulktransaction-container">
+    <div class="transactions-section">
+        <div class="transactions-header">
+            <h3 class="section-title">Recent Transactions</h3>
+            <div style="display: flex; gap: 10px;">
+                <button class="add-viaCsv" @onclick="OpenExcelModal">Import via Excel</button>
+                <button class="add-viaReceipt" @onclick="OpenOCRModal">Import via Receipts</button>
+            </div>
+        </div>
+    </div>
+    <div class="transactions-table scrollable-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Account Name</th>
+                    <th>Category Name</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Receipt</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+            @if (norecords)
+            {
+                <tr>
+                    <td>No records to import</td>
+                </tr>
+            }
+            else
+            {
+                foreach (var transaction in transactions)
+                {
+                    <tr>
+                        <td>@transaction.Description</td>
+                        <td>@transaction.AccountID</td>
+                        <td>@transaction.CategoryID</td>
+                        <td>@transaction.Date</td>
+                        <td>@transaction.Amount</td>
+                        <td>
+                            <button class="view-receipt" @onclick="OpenUploadReceiptsModal">View Receipt</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+
+@* Upload Receipts Modal *@
+@if (ShowUploadReceiptsModal)
+{
+    <UploadReceiptsModal IsVisible="ShowUploadReceiptsModal" OnClose="CloseUploadReceiptsModal" />
 }

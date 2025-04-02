@@ -1,24 +1,74 @@
-label {
-    color: #000000;
-    font-size: 18px;
-    font-family: Inter;
-    font-weight: 500;
-    word-wrap: break-word;
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center items horizontally */
+    position: relative; /* Needed for absolute positioning of edit-icon */
 }
 
-.profile-picture ::deep {
+.profile-picture {
     border-radius: 50%;
     overflow: hidden;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    margin-bottom: 10px; /* Add some space between image and username */
 }
 
-.profile-picture img ::deep {
-    justify-content: center;
-    border: none;
-    border-radius: 50%;
+    .profile-picture img {
+        border: none;
+        border-radius: 50%;
+        height: 200px;
+        width: 200px;
+        object-fit: cover; /* Ensure image covers the area without distortion */
+    }
+
+.edit-icon {
+    position: absolute;
+    bottom: 50px;
+    right: 20px;
+    margin: 10px; /* Add some space around the edit icon */
 }
+
+.btn_editavatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    font-size: 0.875rem;
+    transition: all 0.2s;
+    user-select: none;
+    touch-action: none;
+    outline: none;
+    color: var(--primary-foreground);
+    background-color: var(--muted);
+    border-radius: 9999px;
+    padding: 0.625rem;
+}
+
+    .btn_editavatar:disabled {
+        background-color: var(--muted);
+        pointer-events: none;
+        color: var(--foreground);
+    }
+
+    .btn_editavatar:hover {
+        filter: brightness(0.9);
+    }
+
+    .btn_editavatar svg path {
+        fill: var(--primary-color);
+    }
+
+.username {
+    text-align: center; /* Center the username text */
+}
+
+    .username label {
+        color: var(--secondary-color);
+        font-size: 18px;
+        font-family: Inter;
+        word-wrap: break-word;
+    }
 
 .box {
     display: flex;
@@ -95,13 +145,15 @@ label {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    align-self: center;
+    text-align: center;
     margin-left: 30px;
     margin-right: 30px;
     font-size: 20px;
     font-weight: 800;
 }
 
-.username, .last-name, .country, .postal-code, .city, .permanent-address, .present-address, .date-of-birth, .password, .email, .your-name {
+.last-name, .country, .postal-code, .city, .permanent-address, .present-address, .date-of-birth, .password, .email, .your-name {
     position: relative;
     padding-top: 20px;
 }

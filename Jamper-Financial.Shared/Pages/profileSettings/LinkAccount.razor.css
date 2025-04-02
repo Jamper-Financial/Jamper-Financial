@@ -7,8 +7,9 @@ h4 {
 }
 
 .link-account {
+    margin:0;
     width: 100%;
-    padding: 20px;
+/*    padding: 20px;*/
     border: none;
     border-radius: 5px;
     font-family: sans-serif;

@@ -24,7 +24,7 @@
         new CardItem { Title = "History", Route = "/dashboard-page", ChartType = "HistoryChart" },
         new CardItem { Title = "Recent Transactions", Route = "/transactions-page", ChartType = "" },
         new CardItem { Title = "Manage Saving Goals", Route = "/view-goals-page", ChartType = "SavingsGoalsChart" },
-        new CardItem { Title = "Subscription Due", Route = "/calendar", ChartType = "" },
+        new CardItem { Title = "Subscription Due", Route = "/calendar-page", ChartType = "" },
     };
     private List<Expense> weeklyExpenses = new List<Expense>();
     private List<Transaction> transactions;
@@ -37,10 +37,11 @@
         SetPageTitle("Dashboard");
 
         // Get the logged-in user's ID and username from the UserStateService
-        int userId = UserStateService.UserId;
-        username = UserStateService.Username;
+        int userId = UserStateService.LoggedInUser.UserID;
+        username = UserStateService.LoggedInUser.UserName;
 
         Console.WriteLine(username);
+        Console.WriteLine("UserID: " + userId);
 
         if (userId > 0)
         {

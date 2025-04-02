@@ -12,7 +12,6 @@
 
 <div class="link-account">
     <h3>Account Management</h3>
-
     <div class="manual-accounts">
         <h4>Bank Accounts</h4>
         @if (bankAccounts != null && bankAccounts.Any())
@@ -214,7 +213,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        int userId = UserStateService.UserId;
+        // Get the logged-in user's ID and username from the UserStateService
+        int userId = UserStateService.LoggedInUser.UserID;
 
         if (userId <= 0)
         {

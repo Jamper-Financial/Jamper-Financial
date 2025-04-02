@@ -1,4 +1,5 @@
 ﻿using Jamper_Financial.Shared.Models;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.Data.Sqlite;
 
 namespace Jamper_Financial.Shared.Services
@@ -112,7 +113,7 @@ namespace Jamper_Financial.Shared.Services
                     await connection.OpenAsync();
 
                     string query = @"
-                        SELECT p.ProfileId, p.UserId, p.FirstName, p.LastName, u.Password, u.Email, p.PhoneNumber, p.EmailConfirmed, p.PhoneNumberConfirmed, u.Username
+                        SELECT p.ProfileId, p.UserId, p.FirstName, p.LastName, u.Password, u.Email, p.PhoneNumber, p.EmailConfirmed, p.PhoneNumberConfirmed, u.Username, p.Avatar
                         FROM Profile p
                         JOIN Users u ON p.UserId = u.UserId
                         WHERE p.UserId = @UserId;
@@ -135,7 +136,8 @@ namespace Jamper_Financial.Shared.Services
                                     PhoneNumber = reader.IsDBNull(reader.GetOrdinal("PhoneNumber")) ? null : reader.GetString(reader.GetOrdinal("PhoneNumber")),
                                     EmailConfirmed = reader.IsDBNull(reader.GetOrdinal("EmailConfirmed")) ? (bool?)null : reader.GetBoolean(reader.GetOrdinal("EmailConfirmed")),
                                     PhoneNumberConfirmed = reader.IsDBNull(reader.GetOrdinal("PhoneNumberConfirmed")) ? (bool?)null : reader.GetBoolean(reader.GetOrdinal("PhoneNumberConfirmed")),
-                                    Username = reader.IsDBNull(reader.GetOrdinal("Username")) ? null : reader.GetString(reader.GetOrdinal("Username"))
+                                    Username = reader.IsDBNull(reader.GetOrdinal("Username")) ? null : reader.GetString(reader.GetOrdinal("Username")),
+                                    ProfilePicture = reader.IsDBNull(reader.GetOrdinal("Avatar")) ? null : reader.GetFieldValue<byte[]>(reader.GetOrdinal("Avatar"))
                                 };
                             }
                         }
@@ -211,6 +213,36 @@ namespace Jamper_Financial.Shared.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"Error in UpdateUserProfileAsync: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateUserAvatarAsync(UserProfile userProfile, byte[] avatar)
+        {
+            try
+            {
+                userProfile.ProfilePicture = avatar;
+
+                using (var connection = new SqliteConnection(_connectionString))
+                {
+                    await connection.OpenAsync();
+                    string query = @"
+                        UPDATE Profile
+                        SET Avatar = @Avatar
+                        WHERE UserId = @UserId;
+                    ";
+                    using (var command = new SqliteCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Avatar", userProfile.ProfilePicture);
+                        command.Parameters.AddWithValue("@UserId", userProfile.UserId);
+                        int rowsAffected = await command.ExecuteNonQueryAsync();
+                        return rowsAffected > 0;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in UpdateUserAvatarAsync: {ex.Message}");
                 return false;
             }
         }
