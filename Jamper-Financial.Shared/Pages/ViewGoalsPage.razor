@@ -120,15 +120,15 @@
 
     .cancel-btn {
         background-color: #fff;
-        color: #28a745;
+        color: red;
         padding: 8px 16px;
-        border: 1px solid #28a745;
+        border: 1px solid red;
         border-radius: 4px;
         cursor: pointer;
     }
 
     .cancel-btn:hover {
-        background-color: #88db9b;
+        background-color: darkred;
         color: #fff;
     }
 
@@ -152,6 +152,8 @@
         padding: 20px;
         border: 1px solid #888;
         width: 80%;
+        margin-left: auto; 
+        margin-right: 3rem; 
     }
 
     .close {
@@ -439,7 +441,6 @@
                 else
                 {
                     <p><strong>Name of goal:</strong> @selectedGoal.Name</p>
-                    <p><strong>Account:</strong> @selectedGoal.Type</p>
                     <p><strong>Category:</strong> @selectedGoal.Category</p>
                     <p><strong>Start Date:</strong> @selectedGoal.StartDate.ToShortDateString()</p>
                     <p><strong>End Date:</strong> @selectedGoal.EndDate.ToShortDateString()</p>
@@ -495,9 +496,11 @@
         goals = DatabaseHelper.GetGoals();
     }
 
-    private void ToggleDescription(Goal goal)
+        private void ToggleDescription(Goal goal)
     {
-        goal.ShowDescription = !goal.ShowDescription;
+        selectedGoal = goal;
+        showModal = true;
+        StateHasChanged();
     }
 
     private void CloseModal()
