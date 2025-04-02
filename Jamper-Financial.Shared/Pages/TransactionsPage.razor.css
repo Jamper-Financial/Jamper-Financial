@@ -84,6 +84,33 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    position: relative;
+}
+
+    .transactions-header h3 {
+        margin: 0;
+        color: #417828;
+        font-weight: bold; /* Bold the section titles */
+    }
+
+    .transactions-header .filter-button {
+        background-color: #62ad41;
+        color: white;
+        border: none;
+        padding: 0.625rem 0.9375rem;
+        border-radius: 0.625rem;
+        cursor: pointer;
+        font-size: 0.875rem;
+        margin-left: 10px;
+    }
+
+        .transactions-header .filter-button:hover {
+            background-color: #519a37;
+        }
+
+.title-filter {
+    display: flex;
+    position: relative;
 }
 
 .transactions-table {

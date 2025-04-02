@@ -4,40 +4,133 @@
 @using Jamper_Financial.Shared.Models
 @using Jamper_Financial.Shared.Services
 
-<div class="filter-dropdown" style="@(ShowFilterDropdown ? "display:block;" : "display:none;")">
-    <h3>Filter Transactions</h3>
-    <div class="form-group">
-        <label for="filterCategory">Category:</label>
-        <select id="filterCategory" @bind="TempFilterCategory">
-            <option value="">All</option>
-            @foreach (var category in Categories)
-            {
-                <option value="@category.CategoryID">@category.Name</option>
-            }
-        </select>
-    </div>
-    <div class="form-group amount-filter">
-        <div>
-            <label for="minAmount">Min Amount:</label>
-            <input id="minAmount" type="number" @bind="TempMinAmount" />
+@if (ShowFilterDropdown)
+{
+    <div class="filter-modal">
+        <div class="filter-modal-content">
+            <h3>Filter Transactions</h3>
+            <div class="filter-form-group">
+                <label for="filterCategory">Category:</label>
+                <select id="filterCategory" @bind="TempFilterCategory">
+                    <option value="">All</option>
+                    @foreach (var category in Categories)
+                    {
+                        <option value="@category.CategoryID">@category.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="filter-form-group amount-filter">
+                <div>
+                    <label for="minAmount">Min Amount:</label>
+                    <input id="minAmount" type="number" @bind="TempMinAmount" />
+                </div>
+                <div>
+                    <label for="maxAmount">Max Amount:</label>
+                    <input id="maxAmount" type="number" @bind="TempMaxAmount" />
+                </div>
+            </div>
+            <div class="filter-form-group date-filter">
+                <div>
+                    <label for="firstDate">Start Date:</label>
+                    <input id="firstDate" type="date" @bind="TempFirstDate" />
+                </div>
+                <div>
+                    <label for="secondDate">End Date:</label>
+                    <input id="secondDate" type="date" @bind="TempSecondDate" />
+                </div>
+            </div>
+            <div class="filter-form-group">
+                <label for="hasReceipt">Has Receipt:</label>
+                <select id="hasReceipt" @bind="TempHasReceipt">
+                    <option value="">All</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+            <div class="filter-form-group">
+                <label for="frequency">Frequency:</label>
+                <select id="frequency" @bind="TempFrequency">
+                    <option value="">All</option>
+                    <option value="None">None</option>
+                    <option value="Monthly">Monthly</option>
+                    <option value="Yearly">Yearly</option>
+                </select>
+            </div>
+            <div class="filter-form-group">
+                <label for="isPaid">Is Paid:</label>
+                <select id="isPaid" @bind="TempIsPaid">
+                    <option value="">All</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+            <div class="filter-form-group">
+                <label for="hasEndDate">Has End Date:</label>
+                <select id="hasEndDate" @bind="TempHasEndDate">
+                    <option value="">All</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+            </div>
+            <div class="filter-form-group">
+                <label for="accountId">Account:</label>
+                <select id="accountId" @bind="TempAccountId">
+                    <option value="">All</option>
+                    @if (Accounts != null)
+                    {
+                        @foreach (var account in Accounts)
+                        {
+                            <option value="@account.AccountId">@account.AccountName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="filter-form-group button-group">
+                <button type="button" class="reset" @onclick="ResetFilters">Reset</button>
+                <button type="button" class="cancel" @onclick="OnCloseFilterDropdown">Cancel</button>
+                <button type="button" class="apply" @onclick="ApplyFilters">Apply</button>
+            </div>
         </div>
-        <div>
-            <label for="maxAmount">Max Amount:</label>
-            <input id="maxAmount" type="number" @bind="TempMaxAmount" />
-        </div>
     </div>
-    <div class="form-group button-group">
-        <button type="button" class="cancel" @onclick="OnCloseFilterDropdown">Cancel</button>
-        <button type="button" class="apply" @onclick="OnApplyFilters">Apply</button>
-    </div>
-</div>
+}
 
 @code {
     [Parameter] public bool ShowFilterDropdown { get; set; }
     [Parameter] public List<Category> Categories { get; set; }
-    [Parameter] public string TempFilterCategory { get; set; }
-    [Parameter] public decimal? TempMinAmount { get; set; }
-    [Parameter] public decimal? TempMaxAmount { get; set; }
-    [Parameter] public EventCallback OnApplyFilters { get; set; }
+    [Parameter] public List<BankAccount> Accounts { get; set; }
+    [Parameter] public List<Transaction> Transactions { get; set; }
+    [Parameter] public EventCallback<List<Transaction>> OnFilteredTransactionsChanged { get; set; }
     [Parameter] public EventCallback OnCloseFilterDropdown { get; set; }
+
+    private string TempFilterCategory { get; set; }
+    private decimal? TempMinAmount { get; set; }
+    private decimal? TempMaxAmount { get; set; }
+    private DateTime? TempFirstDate { get; set; }
+    private DateTime? TempSecondDate { get; set; }
+    private bool? TempHasReceipt { get; set; }
+    private string TempFrequency { get; set; }
+    private bool? TempIsPaid { get; set; }
+    private bool? TempHasEndDate { get; set; }
+    private int? TempAccountId { get; set; }
+
+    private void ApplyFilters()
+    {
+        var filteredTransactions = Filters.ApplyFilters(Transactions, TempFilterCategory, TempMinAmount, TempMaxAmount, TempFirstDate, TempSecondDate, TempHasReceipt, TempFrequency, TempHasEndDate, TempIsPaid, TempAccountId);
+        OnFilteredTransactionsChanged.InvokeAsync(filteredTransactions);
+        OnCloseFilterDropdown.InvokeAsync();
+    }
+
+    private void ResetFilters()
+    {
+        TempFilterCategory = string.Empty;
+        TempMinAmount = null;
+        TempMaxAmount = null;
+        TempFirstDate = null;
+        TempSecondDate = null;
+        TempHasReceipt = null;
+        TempFrequency = string.Empty;
+        TempIsPaid = null;
+        TempHasEndDate = null;
+        TempAccountId = null;
+    }
 }

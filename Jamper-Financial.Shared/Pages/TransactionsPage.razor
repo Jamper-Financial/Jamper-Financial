@@ -44,7 +44,19 @@
     @* Transactions Section *@
     <div class="transactions-section">
         <div class="transactions-header">
-            <h3 class="section-title">Recent Transactions</h3>
+            <div class="title-filter">
+                <h3 class="section-title">Recent Transactions</h3>
+                <button class="filter-button" @onclick="ToggleFilterDropdown">Filter</button>
+                @* Filter Modal *@
+                @if (ShowFilterDropdown)
+                {
+                    <FilterModal ShowFilterDropdown="ShowFilterDropdown"
+                                 Categories="Categories"
+                                 Transactions="transactions"
+                                 OnFilteredTransactionsChanged="HandleFilteredTransactionsChanged"
+                                 OnCloseFilterDropdown="CloseFilterDropdown" />
+                }
+            </div>
             <div style="display: flex; gap: 10px;">
                 <button class="add-transaction" @onclick="OpenAddTransactionModal">+ Add Transaction</button>
                 <button class="manage-categories-btn" @onclick="NavigateToManageCategories">Manage Categories</button>
@@ -135,6 +147,7 @@
     public Transaction SelectedTransaction { get; set; } = new Transaction();
     private string currentSortColumn = "Date";
     private bool isAscending = true;
+    public bool ShowFilterDropdown { get; set; } = false;
 
     // Pagination properties
     private int currentPage = 1;
@@ -347,5 +360,21 @@
         {
             currentPage++;
         }
+    }
+
+    private void HandleFilteredTransactionsChanged(List<Transaction> filteredTransactions)
+    {
+        this.filteredTransactions = filteredTransactions;
+        StateHasChanged();
+    }
+
+    private void CloseFilterDropdown()
+    {
+        ShowFilterDropdown = false;
+    }
+
+    private void ToggleFilterDropdown()
+    {
+        ShowFilterDropdown = !ShowFilterDropdown;
     }
 }
