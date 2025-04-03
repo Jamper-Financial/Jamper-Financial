@@ -6,12 +6,12 @@
 
 @if (ShowFilterDropdown)
 {
-    <div class="filter-modal">
-        <div class="filter-modal-content">
+    <div class="filter-modal" @onclick="OnCloseFilterDropdown">
+        <div class="filter-modal-content" @onclick:stopPropagation="true">
             <h3>Filter Transactions</h3>
             <div class="filter-form-group">
                 <label for="filterCategory">Category:</label>
-                <select id="filterCategory" @bind="TempFilterCategory">
+                <select id="filterCategory" @bind="FilterCategory">
                     <option value="">All</option>
                     @foreach (var category in Categories)
                     {
@@ -22,26 +22,26 @@
             <div class="filter-form-group amount-filter">
                 <div>
                     <label for="minAmount">Min Amount:</label>
-                    <input id="minAmount" type="number" @bind="TempMinAmount" />
+                    <input id="minAmount" type="number" @bind="MinAmount" />
                 </div>
                 <div>
                     <label for="maxAmount">Max Amount:</label>
-                    <input id="maxAmount" type="number" @bind="TempMaxAmount" />
+                    <input id="maxAmount" type="number" @bind="MaxAmount" />
                 </div>
             </div>
             <div class="filter-form-group date-filter">
                 <div>
                     <label for="firstDate">Start Date:</label>
-                    <input id="firstDate" type="date" @bind="TempFirstDate" />
+                    <input id="firstDate" type="date" @bind="FirstDate" format="yyyy-MM-dd" />
                 </div>
                 <div>
                     <label for="secondDate">End Date:</label>
-                    <input id="secondDate" type="date" @bind="TempSecondDate" />
+                    <input id="secondDate" type="date" @bind="SecondDate" format="yyyy-MM-dd" />
                 </div>
             </div>
             <div class="filter-form-group">
                 <label for="accountId">Account:</label>
-                <select id="accountId" @bind="TempAccountId">
+                <select id="accountId" @bind="AccountId">
                     <option value="">All</option>
                     @foreach (var account in Accounts)
                     {
@@ -51,7 +51,7 @@
             </div>
             <div class="filter-form-group">
                 <label for="frequency">Frequency:</label>
-                <select id="frequency" @bind="TempFrequency">
+                <select id="frequency" @bind="Frequency">
                     <option value="">All</option>
                     <option value="None">None</option>
                     <option value="Monthly">Monthly</option>
@@ -60,7 +60,7 @@
             </div>
             <div class="filter-form-group">
                 <label for="hasEndDate">Has End Date:</label>
-                <select id="hasEndDate" @bind="TempHasEndDate">
+                <select id="hasEndDate" @bind="HasEndDateString">
                     <option value="">All</option>
                     <option value="true">Yes</option>
                     <option value="false">No</option>
@@ -68,7 +68,7 @@
             </div>
             <div class="filter-form-group">
                 <label for="hasReceipt">Has Receipt:</label>
-                <select id="hasReceipt" @bind="TempHasReceipt">
+                <select id="hasReceipt" @bind="HasReceiptString">
                     <option value="">All</option>
                     <option value="true">Yes</option>
                     <option value="false">No</option>
@@ -76,7 +76,7 @@
             </div>
             <div class="filter-form-group">
                 <label for="isPaid">Is Paid:</label>
-                <select id="isPaid" @bind="TempIsPaid">
+                <select id="isPaid" @bind="IsPaidString">
                     <option value="">All</option>
                     <option value="true">Yes</option>
                     <option value="false">No</option>
@@ -99,16 +99,64 @@
     [Parameter] public EventCallback<List<Transaction>> OnFilteredTransactionsChanged { get; set; }
     [Parameter] public EventCallback OnCloseFilterDropdown { get; set; }
 
-    private string TempFilterCategory { get; set; }
-    private decimal? TempMinAmount { get; set; }
-    private decimal? TempMaxAmount { get; set; }
-    private DateTime? TempFirstDate { get; set; }
-    private DateTime? TempSecondDate { get; set; }
-    private bool? TempHasReceipt { get; set; }
-    private string TempFrequency { get; set; }
-    private bool? TempIsPaid { get; set; }
-    private bool? TempHasEndDate { get; set; }
-    private int? TempAccountId { get; set; }
+    // Add parameters for current filter values
+    [Parameter] public string CurrentFilterCategory { get; set; } = string.Empty;
+    [Parameter] public decimal? CurrentMinAmount { get; set; }
+    [Parameter] public decimal? CurrentMaxAmount { get; set; }
+    [Parameter] public DateTime? CurrentFirstDate { get; set; }
+    [Parameter] public DateTime? CurrentSecondDate { get; set; }
+    [Parameter] public int? CurrentAccountId { get; set; }
+    [Parameter] public string CurrentFrequency { get; set; } = string.Empty;
+    [Parameter] public bool? CurrentHasEndDate { get; set; }
+    [Parameter] public bool? CurrentHasReceipt { get; set; }
+    [Parameter] public bool? CurrentIsPaid { get; set; }
+
+    private string FilterCategory { get; set; } = string.Empty;
+    private decimal? MinAmount { get; set; }
+    private decimal? MaxAmount { get; set; }
+    private DateTime? FirstDate { get; set; }
+    private DateTime? SecondDate { get; set; }
+    private int? AccountId { get; set; }
+    private string Frequency { get; set; } = string.Empty;
+    private bool? HasEndDate { get; set; }
+    private bool? HasReceipt { get; set; }
+    private bool? IsPaid { get; set; }
+
+    // String properties for proper select binding
+    private string HasEndDateString
+    {
+        get => HasEndDate?.ToString() ?? string.Empty;
+        set => HasEndDate = string.IsNullOrEmpty(value) ? null : bool.Parse(value);
+    }
+
+    private string HasReceiptString
+    {
+        get => HasReceipt?.ToString() ?? string.Empty;
+        set => HasReceipt = string.IsNullOrEmpty(value) ? null : bool.Parse(value);
+    }
+
+    private string IsPaidString
+    {
+        get => IsPaid?.ToString() ?? string.Empty;
+        set => IsPaid = string.IsNullOrEmpty(value) ? null : bool.Parse(value);
+    }
+
+    protected override void OnParametersSet()
+    {
+        // When parameters change (modal opens), set the filter values to the current applied filters
+        FilterCategory = CurrentFilterCategory;
+        MinAmount = CurrentMinAmount;
+        MaxAmount = CurrentMaxAmount;
+        FirstDate = CurrentFirstDate;
+        SecondDate = CurrentSecondDate;
+        AccountId = CurrentAccountId;
+        Frequency = CurrentFrequency;
+        HasEndDate = CurrentHasEndDate;
+        HasReceipt = CurrentHasReceipt;
+        IsPaid = CurrentIsPaid;
+
+        base.OnParametersSet();
+    }
 
     private void ApplyFilters()
     {
@@ -119,15 +167,15 @@
 
     private void ResetFilters()
     {
-        TempFilterCategory = string.Empty;
-        TempMinAmount = null;
-        TempMaxAmount = null;
-        TempFirstDate = null;
-        TempSecondDate = null;
-        TempHasReceipt = null;
-        TempFrequency = string.Empty;
-        TempIsPaid = null;
-        TempHasEndDate = null;
-        TempAccountId = null;
+        FilterCategory = string.Empty;
+        MinAmount = null;
+        MaxAmount = null;
+        FirstDate = null;
+        SecondDate = null;
+        HasReceipt = null;
+        Frequency = string.Empty;
+        IsPaid = null;
+        HasEndDate = null;
+        AccountId = null;
     }
 }

@@ -126,15 +126,15 @@
 }
 
 @* Filter Modal *@
-                @if (ShowFilterDropdown)
-                {
-                    <FilterModal ShowFilterDropdown="ShowFilterDropdown"
-                                 Categories="Categories"
-                                 Accounts="Accounts"
-                                 Transactions="Transactions"
-                                 OnFilteredTransactionsChanged="HandleFilteredTransactionsChanged"
-                                 OnCloseFilterDropdown="CloseFilterDropdown" />
-                }
+@if (ShowFilterDropdown)
+{
+    <FilterModal ShowFilterDropdown="ShowFilterDropdown"
+                    Categories="Categories"
+                    Accounts="Accounts"
+                    Transactions="Transactions"
+                    OnFilteredTransactionsChanged="HandleFilteredTransactionsChanged"
+                    OnCloseFilterDropdown="CloseFilterDropdown" />
+}
 
 @code {
     private List<Transaction> Transactions;
@@ -164,7 +164,7 @@
         Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
         Categories = (await DatabaseHelper.LoadUserCategoriesAsync(UserStateService.UserId)).ToList();
         Accounts = await AccountService.GetBankAccounts(UserStateService.UserId);
-        FilteredTransactions = Transactions.OrderBy(t => t.Date).ToList();
+        FilteredTransactions = Transactions.ToList();
         SearchService.OnSearchQueryChanged += SearchTransactions;
     }
 
@@ -247,7 +247,7 @@
         {
             await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
             Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
-            FilteredTransactions = Transactions.OrderBy(t => t.Date).ToList();
+            FilteredTransactions = Transactions.ToList();
         }
         catch
         {
@@ -287,7 +287,7 @@
         }
         CloseAddTransactionModal();
         Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
-        FilteredTransactions = Transactions.OrderBy(t => t.Date).ToList();
+        FilteredTransactions = Transactions.ToList();
     }
 
     private string GetAccountName(int accountId)
@@ -367,6 +367,7 @@
     private void HandleFilteredTransactionsChanged(List<Transaction> FilteredTransactions)
     {
         this.FilteredTransactions = FilteredTransactions;
+        currentPage = 1;
         StateHasChanged();
     }
 

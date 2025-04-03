@@ -20,10 +20,6 @@
 
     protected override void OnParametersSet()
     {
-        if (!IsEditMode && NewTransaction.Frequency == null)
-        {
-            NewTransaction.Frequency = "None";
-        }
 
         if (IsVisible)
         {
@@ -49,7 +45,6 @@
     {
         if (NewTransaction.Frequency == "None")
         {
-            NewTransaction.Frequency = null;
             NewTransaction.EndDate = null;
         }
         await OnSave.InvokeAsync();
@@ -100,11 +95,11 @@
 
 @if (IsVisible)
 {
-    <div class="transaction-modal">
-        <div class="transaction-modal-content">
+    <div class="transaction-modal" @onclick="OnClose">
+        <div class="transaction-modal-content" @onclick:stopPropagation="true">
             @if (ShowDeleteConfirmation)
             {
-                @if (NewTransaction.Frequency != null)
+                @if (NewTransaction.Frequency != "None")
                 {
                     <h3>Confirm Deletion</h3>
                     <p>This transaction is recurring. Do you want to delete all occurrences or just this one?</p>
@@ -168,7 +163,7 @@
                             <option value="Yearly">Yearly</option>
                         </select>
                     </div>
-                    @if (NewTransaction.Frequency != "None" && NewTransaction.Frequency != null)
+                    @if (NewTransaction.Frequency != "None")
                     {
                         <div class="transaction-form-group">
                             <label for="endDate">End Date:</label>
