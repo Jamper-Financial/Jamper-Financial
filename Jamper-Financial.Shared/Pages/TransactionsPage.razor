@@ -67,7 +67,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (transactions != null)
+                    @if (Transactions != null)
                     {
                         var maxRows = 10; // Adjust this value based on your viewport
                         var rowsToFill = maxRows - PaginatedTransactions.Count();
@@ -131,14 +131,14 @@
                     <FilterModal ShowFilterDropdown="ShowFilterDropdown"
                                  Categories="Categories"
                                  Accounts="Accounts"
-                                 Transactions="transactions"
+                                 Transactions="Transactions"
                                  OnFilteredTransactionsChanged="HandleFilteredTransactionsChanged"
                                  OnCloseFilterDropdown="CloseFilterDropdown" />
                 }
 
 @code {
-    private List<Transaction> transactions;
-    private List<Transaction> filteredTransactions;
+    private List<Transaction> Transactions;
+    private List<Transaction> FilteredTransactions;
     private List<Category> Categories = new();
     private List<BankAccount> Accounts = new();
     public bool ShowAddTransactionModal { get; set; } = false;
@@ -154,17 +154,17 @@
     // Pagination properties
     private int currentPage = 1;
     private int pageSize = 10;
-    private int totalPages => (int)Math.Ceiling((double)filteredTransactions.Count / pageSize);
+    private int totalPages => (int)Math.Ceiling((double)FilteredTransactions.Count / pageSize);
     private bool HasPreviousPage => currentPage > 1;
     private bool HasNextPage => currentPage < totalPages;
-    private IEnumerable<Transaction> PaginatedTransactions => filteredTransactions.Skip((currentPage - 1) * pageSize).Take(pageSize);
+    private IEnumerable<Transaction> PaginatedTransactions => FilteredTransactions.Skip((currentPage - 1) * pageSize).Take(pageSize);
 
     protected override async Task OnInitializedAsync()
     {
-        transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
+        Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
         Categories = (await DatabaseHelper.LoadUserCategoriesAsync(UserStateService.UserId)).ToList();
         Accounts = await AccountService.GetBankAccounts(UserStateService.UserId);
-        filteredTransactions = transactions.OrderBy(t => t.Date).ToList();
+        FilteredTransactions = Transactions.OrderBy(t => t.Date).ToList();
         SearchService.OnSearchQueryChanged += SearchTransactions;
     }
 
@@ -172,11 +172,11 @@
     {
         if (string.IsNullOrEmpty(SearchService.SearchQuery))
         {
-            filteredTransactions = transactions;
+            FilteredTransactions = Transactions;
         }
         else
         {
-            filteredTransactions = transactions
+            FilteredTransactions = Transactions
                 .Where(t => t.Description.Contains(SearchService.SearchQuery, StringComparison.OrdinalIgnoreCase))
                 .ToList();
         }
@@ -246,8 +246,8 @@
         try
         {
             await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
-            transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
-            filteredTransactions = transactions.OrderBy(t => t.Date).ToList();
+            Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
+            FilteredTransactions = Transactions.OrderBy(t => t.Date).ToList();
         }
         catch
         {
@@ -275,7 +275,7 @@
         if (deleteAll)
         {
             await TransactionManager.DeleteRecurringTransactionsAsync(NewTransaction);
-            transactions.RemoveAll(t => t.Description == NewTransaction.Description &&
+            Transactions.RemoveAll(t => t.Description == NewTransaction.Description &&
                                     t.CategoryID == NewTransaction.CategoryID &&
                                     t.Frequency == NewTransaction.Frequency &&
                                     t.Date > NewTransaction.Date);
@@ -283,11 +283,11 @@
         else
         {
             await TransactionManager.DeleteTransactionAsync(NewTransaction);
-            transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
+            Transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
         }
         CloseAddTransactionModal();
-        transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
-        filteredTransactions = transactions.OrderBy(t => t.Date).ToList();
+        Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
+        FilteredTransactions = Transactions.OrderBy(t => t.Date).ToList();
     }
 
     private string GetAccountName(int accountId)
@@ -330,11 +330,11 @@
 
         if (string.IsNullOrEmpty(currentSortColumn))
         {
-            filteredTransactions = transactions;
+            FilteredTransactions = Transactions;
         }
         else
         {
-            filteredTransactions = Sort.ApplySort(transactions, currentSortColumn, isAscending, Categories, Accounts);
+            FilteredTransactions = Sort.ApplySort(Transactions, currentSortColumn, isAscending, Categories, Accounts);
         }
         currentPage = 1; // Reset to first page after sorting
     }
@@ -364,9 +364,9 @@
         }
     }
 
-    private void HandleFilteredTransactionsChanged(List<Transaction> filteredTransactions)
+    private void HandleFilteredTransactionsChanged(List<Transaction> FilteredTransactions)
     {
-        this.filteredTransactions = filteredTransactions;
+        this.FilteredTransactions = FilteredTransactions;
         StateHasChanged();
     }
 

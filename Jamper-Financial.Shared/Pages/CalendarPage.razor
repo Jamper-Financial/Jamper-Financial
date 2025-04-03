@@ -70,12 +70,12 @@
                 @foreach (var date in GetCalendarDates())
                 {
                     <div class="day-box @(date.Month != SelectedMonth ? "greyed-out" : "") @(SelectedDate == date.Day && date.Month == SelectedMonth ? "selected" : "")"
-                         @onclick="() => SelectDate(date)">
+                    @onclick="() => SelectDate(date)">
                         <span class="day">@date.Day</span>
                         @if (FilteredTransactions.Any(t => t.Date.Date == date.Date))
                         {
                             <div class="transaction-dots">
-                                @foreach (var transaction in FilteredTransactions.Where(t => t.Date.Date == date.Date))
+                                @foreach (var transaction in (SelectedDate != 0 ? SelectedDateTransactions : FilteredTransactions).Where(t => t.Date.Date == date.Date))
                                 {
                                     <div class="transaction-dot-container">
                                         <span class="transaction-dot" style="background-color: @(Categories.FirstOrDefault(c => c.CategoryID == transaction.CategoryID)?.Color ?? "#000000");"></span>
@@ -95,7 +95,7 @@
             </h3>
             @if (FilteredTransactions.Any())
             {
-                @foreach (var transaction in FilteredTransactions)
+                @foreach (var transaction in (SelectedDate != 0 ? SelectedDateTransactions : FilteredTransactions))
                 {
                     <div class="transaction-item @(transaction.Date.Day == SelectedDate ? "selected-transaction" : "")" @onclick="() => ShowEditTransactionModal(transaction)">
                         <h4 class="description" style="color: @(Categories.FirstOrDefault(c => c.CategoryID == transaction.CategoryID)?.Color ?? "#000000");">
@@ -126,25 +126,25 @@
     @if (ShowAddTransactionModal)
     {
         <TransactionModal IsVisible="ShowAddTransactionModal"
-                          IsEditMode="IsEditMode"
-                          NewTransaction="NewTransaction"
-                          Categories="Categories"
-                          Accounts="Accounts"
-                          OnClose="CloseAddTransactionModal"
-                          OnSave="HandleAddOrEditTransaction"
-                          OnDelete="ShowDeleteConfirmationForm"
-                          OnConfirmDelete="ConfirmDeleteTransaction" />
+        IsEditMode="IsEditMode"
+        NewTransaction="NewTransaction"
+        Categories="Categories"
+        Accounts="Accounts"
+        OnClose="CloseAddTransactionModal"
+        OnSave="HandleAddOrEditTransaction"
+        OnDelete="ShowDeleteConfirmationForm"
+        OnConfirmDelete="ConfirmDeleteTransaction" />
     }
 
     <!-- Filter Modal -->
     @if (ShowFilterModal)
     {
         <FilterModal ShowFilterDropdown="ShowFilterModal"
-                     Categories="Categories"
-                     Accounts="Accounts"
-                     Transactions="Transactions"
-                     OnFilteredTransactionsChanged="UpdateFilteredTransactions"
-                     OnCloseFilterDropdown="CloseFilterModal" />
+        Categories="Categories"
+        Accounts="Accounts"
+        Transactions="Transactions"
+        OnFilteredTransactionsChanged="HandleFilteredTransactionsChanged"
+        OnCloseFilterDropdown="CloseFilterModal" />
     }
 </div>
 
@@ -152,11 +152,12 @@
     // Calendar State
     public int SelectedMonth { get; set; } = DateTime.Now.Month;
     public int SelectedYear { get; set; } = DateTime.Now.Year;
-    public int SelectedDate { get; set; } = DateTime.Now.Day;
+    public int SelectedDate { get; set; } = 0;
 
     // Transactions State
     public List<Transaction> Transactions { get; set; } = new();
     public List<Transaction> FilteredTransactions { get; set; } = new();
+    public List<Transaction> SelectedDateTransactions { get; set; } = new();
 
     // Categories State
     public List<Category> Categories { get; set; } = new();
@@ -171,18 +172,13 @@
     // Filter Modal State
     public bool ShowFilterModal { get; set; } = false;
 
-    private void NavigateToManageCategories()
-    {
-        NavigationManager.NavigateTo("/manage-categories");
-    }
-
     // Load Transactions Data
     protected override async Task OnInitializedAsync()
     {
         Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
         Categories = (await DatabaseHelper.LoadUserCategoriesAsync(UserStateService.UserId)).ToList();
         Accounts = await AccountService.GetBankAccounts(UserStateService.UserId);
-        UpdateFilteredTransactions();
+        HandleFilteredTransactionsChanged(Transactions);
         SortTransactions("Date", true); // Ensure default sort is by Date ascending
         SearchService.OnSearchQueryChanged += SearchTransactions;
     }
@@ -197,7 +193,7 @@
         if (string.IsNullOrEmpty(SearchService.SearchQuery))
         {
             // Reset to show all transactions if the search query is empty
-            UpdateFilteredTransactions();
+            HandleFilteredTransactionsChanged(Transactions);
         }
         else
         {
@@ -209,26 +205,12 @@
         StateHasChanged(); // Re-render the UI
     }
 
-    private void UpdateFilteredTransactions()
+    private void HandleFilteredTransactionsChanged(List<Transaction> FilteredTransactions)
     {
-        FilteredTransactions = Transactions
+        this.FilteredTransactions = FilteredTransactions
             .Where(t => t.Date.Month == SelectedMonth && t.Date.Year == SelectedYear)
             .ToList();
 
-        if (SelectedDate != 0)
-        {
-            FilteredTransactions = FilteredTransactions
-                .Where(t => t.Date.Day == SelectedDate)
-                .ToList();
-        }
-
-        ReapplySort();
-        StateHasChanged();
-    }
-
-    private void ApplyFilter(List<Transaction> filteredTransactions)
-    {
-        FilteredTransactions = filteredTransactions;
         ReapplySort();
         StateHasChanged();
     }
@@ -246,7 +228,7 @@
             SelectedMonth--;
         }
         SelectedDate = 0;
-        UpdateFilteredTransactions();
+        HandleFilteredTransactionsChanged(Transactions);
     }
 
     private void NextMonth()
@@ -261,7 +243,7 @@
             SelectedMonth++;
         }
         SelectedDate = 0;
-        UpdateFilteredTransactions();
+        HandleFilteredTransactionsChanged(Transactions);
     }
 
     private IEnumerable<DateTime> GetCalendarDates()
@@ -284,15 +266,20 @@
         {
             if (SelectedDate == date.Day)
             {
-                // Unselect the date if it is already selected
+                // Unselect the date if it's already selected
                 SelectedDate = 0;
+                SelectedDateTransactions = FilteredTransactions
+                    .Where(t => t.Date.Month == SelectedMonth && t.Date.Year == SelectedYear)
+                    .ToList();
             }
             else
             {
                 // Select the date
                 SelectedDate = date.Day;
+                SelectedDateTransactions = FilteredTransactions
+                    .Where(t => t.Date.Month == SelectedMonth && t.Date.Year == SelectedYear && t.Date.Day == SelectedDate)
+                    .ToList();
             }
-            UpdateFilteredTransactions();
         }
     }
 
@@ -408,7 +395,7 @@
         await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
         Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
         CloseAddTransactionModal();
-        UpdateFilteredTransactions();
+        HandleFilteredTransactionsChanged(Transactions);
     }
 
     private void ShowDeleteConfirmationForm()
@@ -437,7 +424,7 @@
             Transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
         }
         CloseAddTransactionModal();
-        UpdateFilteredTransactions();
+        HandleFilteredTransactionsChanged(Transactions);
     }
 
     // Filter Modal Logic
