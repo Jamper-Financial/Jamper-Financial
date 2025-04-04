@@ -160,7 +160,7 @@
 
     private void ApplyFilters()
     {
-        var filteredTransactions = Filters.ApplyFilters(Transactions, TempFilterCategory, TempMinAmount, TempMaxAmount, TempFirstDate, TempSecondDate, TempHasReceipt, TempFrequency, TempHasEndDate, TempIsPaid, TempAccountId);
+        var filteredTransactions = Filters.ApplyFilters(Transactions, FilterCategory, MinAmount, MaxAmount, FirstDate, SecondDate, HasReceipt, Frequency, HasEndDate, IsPaid, AccountId);
         OnFilteredTransactionsChanged.InvokeAsync(filteredTransactions);
         OnCloseFilterDropdown.InvokeAsync();
     }
