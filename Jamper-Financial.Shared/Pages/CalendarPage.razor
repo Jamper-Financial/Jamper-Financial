@@ -381,10 +381,6 @@
         IsEditMode = true;
         ShowDeleteConfirmation = false;
         ShowAddTransactionModal = true;
-        if (string.IsNullOrEmpty(NewTransaction.Frequency))
-        {
-            NewTransaction.Frequency = "None";
-        }
     }
 
     private void CloseAddTransactionModal()
@@ -394,10 +390,38 @@
 
     private async Task HandleAddOrEditTransaction()
     {
-        await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
-        Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
-        CloseAddTransactionModal();
-        HandleFilteredTransactionsChanged(Transactions);
+        try
+        {
+            await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
+
+            // Preserve all state
+            var currentSelectedDate = SelectedDate;
+            var currentFilters = CurrentFilter;
+            var currentSortOption = SortOption;
+
+            // Reload data
+            Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
+
+            // Reapply filters and sort
+            FilteredTransactions = FilterUtilities.ApplyFilters(Transactions, currentFilters)
+                .Where(t => t.Date.Month == SelectedMonth && t.Date.Year == SelectedYear)
+                .ToList();
+
+            ReapplySort();
+
+            // Force refresh selected date transactions if a date was selected
+            if (currentSelectedDate > 0)
+            {
+                SelectedDateTransactions = FilteredTransactions
+                    .Where(t => t.Date.Day == currentSelectedDate)
+                    .ToList();
+                StateHasChanged(); // Explicitly trigger UI update
+            }
+        }
+        finally
+        {
+            CloseAddTransactionModal();
+        }
     }
 
     private void ShowDeleteConfirmationForm()
@@ -412,21 +436,40 @@
 
     private async Task ConfirmDeleteTransaction(bool deleteAll)
     {
+        // Preserve selected date
+        var currentSelectedDate = SelectedDate;
+    
         if (deleteAll)
         {
             await TransactionManager.DeleteRecurringTransactionsAsync(NewTransaction);
             Transactions.RemoveAll(t => t.Description == NewTransaction.Description &&
-                                        t.CategoryID == NewTransaction.CategoryID &&
-                                        t.Frequency == NewTransaction.Frequency &&
-                                        t.Date > NewTransaction.Date);
+                                      t.CategoryID == NewTransaction.CategoryID &&
+                                      t.Frequency == NewTransaction.Frequency &&
+                                      t.Date > NewTransaction.Date);
         }
         else
         {
             await TransactionManager.DeleteTransactionAsync(NewTransaction);
             Transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
         }
-        CloseAddTransactionModal();
-        HandleFilteredTransactionsChanged(Transactions);
+    
+        // Reapply filters
+        FilteredTransactions = FilterUtilities.ApplyFilters(Transactions, CurrentFilter)
+            .Where(t => t.Date.Month == SelectedMonth && t.Date.Year == SelectedYear)
+            .ToList();
+    
+        ReapplySort();
+    
+        // Refresh selected date if one was active
+        if (currentSelectedDate > 0)
+        {
+            SelectedDateTransactions = FilteredTransactions
+                .Where(t => t.Date.Day == currentSelectedDate)
+                .ToList();
+            StateHasChanged(); // Explicitly trigger UI update
+    }
+    
+    CloseAddTransactionModal();
     }
 
     // Filter Modal Logic

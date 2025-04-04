@@ -95,8 +95,8 @@
 
 @if (IsVisible)
 {
-    <div class="transaction-modal" @onclick="OnClose">
-        <div class="transaction-modal-content" @onclick:stopPropagation="true">
+    <div class="transaction-modal">
+        <div class="transaction-modal-content">
             @if (ShowDeleteConfirmation)
             {
                 @if (NewTransaction.Frequency != "None")

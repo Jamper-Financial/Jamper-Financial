@@ -57,12 +57,12 @@
             <table>
                 <thead>
                     <tr>
-                        <th @onclick='() => SortTransactions("Date")'>Date @GetSortIndicator("Date")</th>
-                        <th @onclick='() => SortTransactions("Description")'>Description @GetSortIndicator("Description")</th>
-                        <th @onclick='() => SortTransactions("CategoryName")'>Category @GetSortIndicator("CategoryName")</th>
-                        <th @onclick='() => SortTransactions("AccountName")'>Account Name @GetSortIndicator("AccountName")</th>
-                        <th @onclick='() => SortTransactions("AccountNumber")'>Account Number @GetSortIndicator("AccountNumber")</th>
-                        <th @onclick='() => SortTransactions("Amount")'>Amount @GetSortIndicator("Amount")</th>
+                        <th @onclick='() => SortTransactions("Date", isAscending)'>Date @GetSortIndicator("Date")</th>
+                        <th @onclick='() => SortTransactions("Description", isAscending)'>Description @GetSortIndicator("Description")</th>
+                        <th @onclick='() => SortTransactions("CategoryName", isAscending)'>Category @GetSortIndicator("CategoryName")</th>
+                        <th @onclick='() => SortTransactions("AccountName", isAscending)'>Account Name @GetSortIndicator("AccountName")</th>
+                        <th @onclick='() => SortTransactions("AccountNumber", isAscending)'>Account Number @GetSortIndicator("AccountNumber")</th>
+                        <th @onclick='() => SortTransactions("Amount", isAscending)'>Amount @GetSortIndicator("Amount")</th>
                         <th>Receipt</th>
                     </tr>
                 </thead>
@@ -80,7 +80,9 @@
                                 <td>@GetCategoryName(transaction.CategoryID)</td>
                                 <td>@GetAccountName(transaction.AccountID)</td>
                                 <td>@GetAccountNumber(transaction.AccountID)</td>
-                                <td class="@(transaction.TransactionType == "e" ? "negative" : "positive")">@((transaction.Amount > 0 ? transaction.Amount : transaction.Amount).ToString("C"))</td>
+                                <td class="@(transaction.TransactionType == "e" ? "negative" : "positive")">
+                                    @(transaction.Amount > 0 ? "-" : "+")@((transaction.Amount > 0 ? transaction.Amount : transaction.Amount).ToString("C"))
+                                </td>
                                 <td @onclick:stopPropagation="true"><button class="view-details" @onclick="() => OpenReceiptModal(transaction)">View Receipt</button></td>
                             </tr>
                         }
@@ -215,7 +217,7 @@
                 Description = string.Empty,
                 CategoryID = 0,
                 Amount = 0,
-                Frequency = null,
+                Frequency = "None",
                 EndDate = DateTime.Now,
                 UserID = UserStateService.UserId,
                 AccountID = 0
@@ -232,10 +234,6 @@
         IsEditMode = true;
         ShowDeleteConfirmation = false;
         ShowAddTransactionModal = true;
-        if (string.IsNullOrEmpty(NewTransaction.Frequency))
-        {
-            NewTransaction.Frequency = null;
-        }
     }
 
     private void CloseAddTransactionModal()
@@ -248,8 +246,24 @@
         try
         {
             await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
+
+            // Save current sort state
+            var currentSortColumn = this.currentSortColumn;
+            var currentIsAscending = this.isAscending;
+            var currentFilters = CurrentFilter;
+
+            // Reload data
             Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
-            FilteredTransactions = Transactions.ToList();
+
+            // Reapply filters and sorting
+            FilteredTransactions = FilterUtilities.ApplyFilters(Transactions, currentFilters);
+            if (!string.IsNullOrEmpty(currentSortColumn))
+            {
+                FilteredTransactions = Sort.ApplySort(FilteredTransactions, currentSortColumn, currentIsAscending, Categories, Accounts);
+            }
+
+            // Reset pagination
+            currentPage = 1;
         }
         catch
         {
@@ -274,6 +288,11 @@
 
     private async Task ConfirmDeleteTransaction(bool deleteAll)
     {
+        // Save current sort state
+        var currentSortColumn = this.currentSortColumn;
+        var currentIsAscending = this.isAscending;
+        var currentFilters = CurrentFilter;
+
         if (deleteAll)
         {
             await TransactionManager.DeleteRecurringTransactionsAsync(NewTransaction);
@@ -287,9 +306,17 @@
             await TransactionManager.DeleteTransactionAsync(NewTransaction);
             Transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
         }
+
+        // Reapply filters and sorting
+        FilteredTransactions = FilterUtilities.ApplyFilters(Transactions, currentFilters);
+        if (!string.IsNullOrEmpty(currentSortColumn))
+        {
+            FilteredTransactions = Sort.ApplySort(FilteredTransactions, currentSortColumn, currentIsAscending, Categories, Accounts);
+        }
+
+        // Reset pagination
+        currentPage = 1;
         CloseAddTransactionModal();
-        Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
-        FilteredTransactions = Transactions.ToList();
     }
 
     private string GetAccountName(int accountId)
@@ -310,35 +337,40 @@
         return account != null ? account.AccountNumber : "Unknown Account Number";
     }
 
-    private void SortTransactions(string column)
+    private void SortTransactions(string column, bool isAscending)
     {
+        // Toggle sort state
         if (currentSortColumn == column)
         {
-            if (isAscending)
+            if (this.isAscending)
             {
-                isAscending = false;
+                this.isAscending = false;
             }
             else
             {
                 currentSortColumn = string.Empty;
-                isAscending = true;
+                this.isAscending = true;
             }
         }
         else
         {
             currentSortColumn = column;
-            isAscending = true;
+            this.isAscending = true;
         }
 
-        if (string.IsNullOrEmpty(currentSortColumn))
+        // Apply filters and sorting
+        var filteredTransactions = FilterUtilities.ApplyFilters(Transactions, CurrentFilter);
+        if (!string.IsNullOrEmpty(currentSortColumn))
         {
-            FilteredTransactions = Transactions;
+            FilteredTransactions = Sort.ApplySort(filteredTransactions, currentSortColumn, this.isAscending, Categories, Accounts);
         }
         else
         {
-            FilteredTransactions = Sort.ApplySort(Transactions, currentSortColumn, isAscending, Categories, Accounts);
+            FilteredTransactions = filteredTransactions; // No sorting, just filtered
         }
-        currentPage = 1; // Reset to first page after sorting
+
+        currentPage = 1;
+        StateHasChanged();
     }
 
     private string GetSortIndicator(string column)
