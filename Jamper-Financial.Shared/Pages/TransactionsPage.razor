@@ -129,11 +129,12 @@
 @if (ShowFilterDropdown)
 {
     <FilterModal ShowFilterDropdown="ShowFilterDropdown"
-                    Categories="Categories"
-                    Accounts="Accounts"
-                    Transactions="Transactions"
-                    OnFilteredTransactionsChanged="HandleFilteredTransactionsChanged"
-                    OnCloseFilterDropdown="CloseFilterDropdown" />
+                 Categories="Categories"
+                 Accounts="Accounts"
+                 Transactions="Transactions"
+                 CurrentFilter="CurrentFilter"
+                 OnFilteredTransactionsChanged="HandleFilteredTransactionsChanged"
+                 OnCloseFilterDropdown="CloseFilterDropdown" />
 }
 
 @code {
@@ -150,6 +151,7 @@
     private string currentSortColumn = "Date";
     private bool isAscending = true;
     public bool ShowFilterDropdown { get; set; } = false;
+    public Filter CurrentFilter { get; set; } = new Filter();
 
     // Pagination properties
     private int currentPage = 1;

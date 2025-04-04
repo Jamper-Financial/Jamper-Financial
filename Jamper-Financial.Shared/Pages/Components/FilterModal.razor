@@ -31,12 +31,13 @@
             </div>
             <div class="filter-form-group date-filter">
                 <div>
-                    <label for="firstDate">Start Date:</label>
-                    <input id="firstDate" type="date" @bind="Filter.StartDate" format="yyyy-MM-dd" />
+                    <label for="dateFrom">Date From:</label>
+                    <input id="dateFrom" type="date" @bind="Filter.DateFrom" />
                 </div>
                 <div>
-                    <label for="secondDate">End Date:</label>
-                    <input id="secondDate" type="date" @bind="Filter.EndDate" format="yyyy-MM-dd" />
+                    <label for="dateTo">Date To:</label>
+                    <input id="dateTo" type="date" @bind="Filter.DateTo" />
+                    
                 </div>
             </div>
             <div class="filter-form-group">
@@ -58,14 +59,19 @@
                     <option value="Yearly">Yearly</option>
                 </select>
             </div>
-            <div class="filter-form-group">
-                <label for="hasEndDate">Has End Date:</label>
-                <select id="hasEndDate" @bind="HasEndDateString">
-                    <option value="">All</option>
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                </select>
-            </div>
+            @if (Filter.Frequency != "None" && Filter.Frequency != "")
+            {
+                <div class="filter-form-group date-filter">
+                    <div>
+                        <label for="endDateFrom">End Date From:</label>
+                        <input id="endDateFrom" type="date" @bind="Filter.EndDateFrom" />
+                    </div>
+                    <div>
+                        <label for="endDateTo">End Date To:</label>
+                        <input id="endDateTo" type="date" @bind="Filter.EndDateTo" />
+                    </div>
+                </div>
+            }
             <div class="filter-form-group">
                 <label for="hasReceipt">Has Receipt:</label>
                 <select id="hasReceipt" @bind="HasReceiptString">
@@ -103,33 +109,64 @@
 
     private Filter Filter { get; set; } = new Filter();
 
-    private string HasEndDateString
-    {
-        get => Filter.HasEndDate?.ToString() ?? string.Empty;
-        set => Filter.HasEndDate = string.IsNullOrEmpty(value) ? null : bool.Parse(value);
-    }
-
     private string HasReceiptString
     {
-        get => Filter.HasReceipt?.ToString() ?? string.Empty;
-        set => Filter.HasReceipt = string.IsNullOrEmpty(value) ? null : bool.Parse(value);
+        get => Filter.HasReceipt.HasValue
+               ? Filter.HasReceipt.Value.ToString().ToLower()
+               : string.Empty;
+        set => Filter.HasReceipt = string.IsNullOrEmpty(value)
+               ? null
+               : bool.Parse(value);
     }
 
     private string IsPaidString
     {
-        get => Filter.IsPaid?.ToString() ?? string.Empty;
-        set => Filter.IsPaid = string.IsNullOrEmpty(value) ? null : bool.Parse(value);
+        get => Filter.IsPaid.HasValue
+               ? Filter.IsPaid.Value.ToString().ToLower()
+               : string.Empty;
+        set => Filter.IsPaid = string.IsNullOrEmpty(value)
+               ? null
+               : bool.Parse(value);
     }
 
     protected override void OnParametersSet()
     {
-        Filter = CurrentFilter;
+        if (ShowFilterDropdown)
+        {
+            Filter = new Filter()
+                {
+                    Category = CurrentFilter.Category,
+                    MinAmount = CurrentFilter.MinAmount,
+                    MaxAmount = CurrentFilter.MaxAmount,
+                    DateFrom = CurrentFilter.DateFrom,
+                    DateTo = CurrentFilter.DateTo,
+                    AccountId = CurrentFilter.AccountId,
+                    Frequency = CurrentFilter.Frequency,
+                    EndDateFrom = CurrentFilter.EndDateFrom,
+                    EndDateTo = CurrentFilter.EndDateTo,
+                    HasReceipt = CurrentFilter.HasReceipt,
+                    IsPaid = CurrentFilter.IsPaid
+                };
+        }
         base.OnParametersSet();
     }
 
     private void ApplyFilters()
     {
         var filteredTransactions = FilterUtilities.ApplyFilters(Transactions, Filter);
+
+        CurrentFilter.Category = Filter.Category;
+        CurrentFilter.MinAmount = Filter.MinAmount;
+        CurrentFilter.MaxAmount = Filter.MaxAmount;
+        CurrentFilter.DateFrom = Filter.DateFrom;
+        CurrentFilter.DateTo = Filter.DateTo;
+        CurrentFilter.AccountId = Filter.AccountId;
+        CurrentFilter.Frequency = Filter.Frequency;
+        CurrentFilter.EndDateFrom = Filter.EndDateFrom;
+        CurrentFilter.EndDateTo = Filter.EndDateTo;
+        CurrentFilter.HasReceipt = Filter.HasReceipt;
+        CurrentFilter.IsPaid = Filter.IsPaid;
+
         OnFilteredTransactionsChanged.InvokeAsync(filteredTransactions);
         OnCloseFilterDropdown.InvokeAsync();
     }

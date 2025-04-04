@@ -26,14 +26,14 @@ namespace Jamper_Financial.Shared.Utilities
                 filteredTransactions = filteredTransactions.Where(t => t.Amount <= filter.MaxAmount.Value);
             }
 
-            if (filter.StartDate.HasValue)
+            if (filter.DateFrom.HasValue)
             {
-                filteredTransactions = filteredTransactions.Where(t => t.Date >= filter.StartDate.Value);
+                filteredTransactions = filteredTransactions.Where(t => t.Date >= filter.DateFrom.Value);
             }
 
-            if (filter.EndDate.HasValue)
+            if (filter.DateTo.HasValue)
             {
-                filteredTransactions = filteredTransactions.Where(t => t.Date <= filter.EndDate.Value);
+                filteredTransactions = filteredTransactions.Where(t => t.Date <= filter.DateTo.Value);
             }
 
             if (filter.AccountId.HasValue)
@@ -46,9 +46,14 @@ namespace Jamper_Financial.Shared.Utilities
                 filteredTransactions = filteredTransactions.Where(t => t.Frequency == filter.Frequency);
             }
 
-            if (filter.HasEndDate.HasValue)
+            if (filter.EndDateFrom.HasValue)
             {
-                filteredTransactions = filteredTransactions.Where(t => t.EndDate.HasValue == filter.HasEndDate.Value);
+                filteredTransactions = filteredTransactions.Where(t => t.EndDate >= filter.EndDateFrom.Value);
+            }
+
+            if (filter.EndDateTo.HasValue)
+            {
+                filteredTransactions = filteredTransactions.Where(t => t.EndDate <= filter.EndDateTo.Value);
             }
 
             if (filter.HasReceipt.HasValue)

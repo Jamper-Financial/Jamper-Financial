@@ -70,7 +70,7 @@
                 @foreach (var date in GetCalendarDates())
                 {
                     <div class="day-box @(date.Month != SelectedMonth ? "greyed-out" : "") @(SelectedDate == date.Day && date.Month == SelectedMonth ? "selected" : "")"
-                    @onclick="() => SelectDate(date)">
+                         @onclick="() => SelectDate(date)">
                         <span class="day">@date.Day</span>
                         @if (FilteredTransactions.Any(t => t.Date.Date == date.Date))
                         {
@@ -126,25 +126,26 @@
     @if (ShowAddTransactionModal)
     {
         <TransactionModal IsVisible="ShowAddTransactionModal"
-        IsEditMode="IsEditMode"
-        NewTransaction="NewTransaction"
-        Categories="Categories"
-        Accounts="Accounts"
-        OnClose="CloseAddTransactionModal"
-        OnSave="HandleAddOrEditTransaction"
-        OnDelete="ShowDeleteConfirmationForm"
-        OnConfirmDelete="ConfirmDeleteTransaction" />
+                          IsEditMode="IsEditMode"
+                          NewTransaction="NewTransaction"
+                          Categories="Categories"
+                          Accounts="Accounts"
+                          OnClose="CloseAddTransactionModal"
+                          OnSave="HandleAddOrEditTransaction"
+                          OnDelete="ShowDeleteConfirmationForm"
+                          OnConfirmDelete="ConfirmDeleteTransaction" />
     }
 
     <!-- Filter Modal -->
     @if (ShowFilterModal)
     {
         <FilterModal ShowFilterDropdown="ShowFilterModal"
-        Categories="Categories"
-        Accounts="Accounts"
-        Transactions="Transactions"
-        OnFilteredTransactionsChanged="HandleFilteredTransactionsChanged"
-        OnCloseFilterDropdown="CloseFilterModal" />
+                     Categories="Categories"
+                     Accounts="Accounts"
+                     Transactions="Transactions"
+                     CurrentFilter="CurrentFilter"
+                     OnFilteredTransactionsChanged="HandleFilteredTransactionsChanged"
+                     OnCloseFilterDropdown="CloseFilterModal" />
     }
 </div>
 
@@ -171,6 +172,7 @@
 
     // Filter Modal State
     public bool ShowFilterModal { get; set; } = false;
+    public Filter CurrentFilter { get; set; } = new Filter();
 
     // Load Transactions Data
     protected override async Task OnInitializedAsync()
