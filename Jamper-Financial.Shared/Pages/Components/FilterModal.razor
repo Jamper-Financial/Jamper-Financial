@@ -11,7 +11,7 @@
             <h3>Filter Transactions</h3>
             <div class="filter-form-group">
                 <label for="filterCategory">Category:</label>
-                <select id="filterCategory" @bind="FilterCategory">
+                <select id="filterCategory" @bind="Filter.Category">
                     <option value="">All</option>
                     @foreach (var category in Categories)
                     {
@@ -22,26 +22,26 @@
             <div class="filter-form-group amount-filter">
                 <div>
                     <label for="minAmount">Min Amount:</label>
-                    <input id="minAmount" type="number" @bind="MinAmount" />
+                    <input id="minAmount" type="number" @bind="Filter.MinAmount" />
                 </div>
                 <div>
                     <label for="maxAmount">Max Amount:</label>
-                    <input id="maxAmount" type="number" @bind="MaxAmount" />
+                    <input id="maxAmount" type="number" @bind="Filter.MaxAmount" />
                 </div>
             </div>
             <div class="filter-form-group date-filter">
                 <div>
                     <label for="firstDate">Start Date:</label>
-                    <input id="firstDate" type="date" @bind="FirstDate" format="yyyy-MM-dd" />
+                    <input id="firstDate" type="date" @bind="Filter.StartDate" format="yyyy-MM-dd" />
                 </div>
                 <div>
                     <label for="secondDate">End Date:</label>
-                    <input id="secondDate" type="date" @bind="SecondDate" format="yyyy-MM-dd" />
+                    <input id="secondDate" type="date" @bind="Filter.EndDate" format="yyyy-MM-dd" />
                 </div>
             </div>
             <div class="filter-form-group">
                 <label for="accountId">Account:</label>
-                <select id="accountId" @bind="AccountId">
+                <select id="accountId" @bind="Filter.AccountId">
                     <option value="">All</option>
                     @foreach (var account in Accounts)
                     {
@@ -51,7 +51,7 @@
             </div>
             <div class="filter-form-group">
                 <label for="frequency">Frequency:</label>
-                <select id="frequency" @bind="Frequency">
+                <select id="frequency" @bind="Filter.Frequency">
                     <option value="">All</option>
                     <option value="None">None</option>
                     <option value="Monthly">Monthly</option>
@@ -99,83 +99,43 @@
     [Parameter] public EventCallback<List<Transaction>> OnFilteredTransactionsChanged { get; set; }
     [Parameter] public EventCallback OnCloseFilterDropdown { get; set; }
 
-    // Add parameters for current filter values
-    [Parameter] public string CurrentFilterCategory { get; set; } = string.Empty;
-    [Parameter] public decimal? CurrentMinAmount { get; set; }
-    [Parameter] public decimal? CurrentMaxAmount { get; set; }
-    [Parameter] public DateTime? CurrentFirstDate { get; set; }
-    [Parameter] public DateTime? CurrentSecondDate { get; set; }
-    [Parameter] public int? CurrentAccountId { get; set; }
-    [Parameter] public string CurrentFrequency { get; set; } = string.Empty;
-    [Parameter] public bool? CurrentHasEndDate { get; set; }
-    [Parameter] public bool? CurrentHasReceipt { get; set; }
-    [Parameter] public bool? CurrentIsPaid { get; set; }
+    [Parameter] public Filter CurrentFilter { get; set; } = new Filter();
 
-    private string FilterCategory { get; set; } = string.Empty;
-    private decimal? MinAmount { get; set; }
-    private decimal? MaxAmount { get; set; }
-    private DateTime? FirstDate { get; set; }
-    private DateTime? SecondDate { get; set; }
-    private int? AccountId { get; set; }
-    private string Frequency { get; set; } = string.Empty;
-    private bool? HasEndDate { get; set; }
-    private bool? HasReceipt { get; set; }
-    private bool? IsPaid { get; set; }
+    private Filter Filter { get; set; } = new Filter();
 
-    // String properties for proper select binding
     private string HasEndDateString
     {
-        get => HasEndDate?.ToString() ?? string.Empty;
-        set => HasEndDate = string.IsNullOrEmpty(value) ? null : bool.Parse(value);
+        get => Filter.HasEndDate?.ToString() ?? string.Empty;
+        set => Filter.HasEndDate = string.IsNullOrEmpty(value) ? null : bool.Parse(value);
     }
 
     private string HasReceiptString
     {
-        get => HasReceipt?.ToString() ?? string.Empty;
-        set => HasReceipt = string.IsNullOrEmpty(value) ? null : bool.Parse(value);
+        get => Filter.HasReceipt?.ToString() ?? string.Empty;
+        set => Filter.HasReceipt = string.IsNullOrEmpty(value) ? null : bool.Parse(value);
     }
 
     private string IsPaidString
     {
-        get => IsPaid?.ToString() ?? string.Empty;
-        set => IsPaid = string.IsNullOrEmpty(value) ? null : bool.Parse(value);
+        get => Filter.IsPaid?.ToString() ?? string.Empty;
+        set => Filter.IsPaid = string.IsNullOrEmpty(value) ? null : bool.Parse(value);
     }
 
     protected override void OnParametersSet()
     {
-        // When parameters change (modal opens), set the filter values to the current applied filters
-        FilterCategory = CurrentFilterCategory;
-        MinAmount = CurrentMinAmount;
-        MaxAmount = CurrentMaxAmount;
-        FirstDate = CurrentFirstDate;
-        SecondDate = CurrentSecondDate;
-        AccountId = CurrentAccountId;
-        Frequency = CurrentFrequency;
-        HasEndDate = CurrentHasEndDate;
-        HasReceipt = CurrentHasReceipt;
-        IsPaid = CurrentIsPaid;
-
+        Filter = CurrentFilter;
         base.OnParametersSet();
     }
 
     private void ApplyFilters()
     {
-        var filteredTransactions = Filters.ApplyFilters(Transactions, FilterCategory, MinAmount, MaxAmount, FirstDate, SecondDate, HasReceipt, Frequency, HasEndDate, IsPaid, AccountId);
+        var filteredTransactions = FilterUtilities.ApplyFilters(Transactions, Filter);
         OnFilteredTransactionsChanged.InvokeAsync(filteredTransactions);
         OnCloseFilterDropdown.InvokeAsync();
     }
 
     private void ResetFilters()
     {
-        FilterCategory = string.Empty;
-        MinAmount = null;
-        MaxAmount = null;
-        FirstDate = null;
-        SecondDate = null;
-        HasReceipt = null;
-        Frequency = string.Empty;
-        IsPaid = null;
-        HasEndDate = null;
-        AccountId = null;
+        Filter = new Filter();
     }
 }
