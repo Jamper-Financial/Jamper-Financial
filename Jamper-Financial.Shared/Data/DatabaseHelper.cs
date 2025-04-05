@@ -206,44 +206,49 @@ namespace Jamper_Financial.Shared.Data
                 }
             }
         }
-        public static List<Goal> GetGoals()
+        public static List<Goal> GetGoals(int userId)
         {
             var goals = new List<Goal>();
             using (var connection = GetConnection())
             {
                 connection.Open();
-                string query = "SELECT * FROM Goals;";
+                string query = "SELECT * FROM Goals where UserId = @UserId;";
                 using (var command = new SqliteCommand(query, connection))
-                using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
-                    {
-                        DateTime date, startDate, endDate;
-                        DateTime.TryParseExact(reader["Date"].ToString(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out date);
-                        DateTime.TryParseExact(reader["StartDate"].ToString(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out startDate);
-                        DateTime.TryParseExact(reader["EndDate"].ToString(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out endDate);
+                    command.Parameters.AddWithValue("@UserId", userId);
 
-                        goals.Add(new Goal
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
                         {
-                            GoalId = reader.GetInt32(reader.GetOrdinal("GoalId")),
-                            Type = reader["Type"].ToString(),
-                            Name = reader["Name"].ToString(),
-                            Amount = reader.GetDecimal(reader.GetOrdinal("Amount")),
-                            Date = date,
-                            GoalType = reader["GoalType"].ToString(),
-                            IsQuickGoal = reader.GetBoolean(reader.GetOrdinal("IsQuickGoal")),
-                            IsRetirementGoal = reader.GetBoolean(reader.GetOrdinal("IsRetirementGoal")),
-                            IsEmergencyFundGoal = reader.GetBoolean(reader.GetOrdinal("IsEmergencyFundGoal")),
-                            IsTravelGoal = reader.GetBoolean(reader.GetOrdinal("IsTravelGoal")),
-                            IsHomeGoal = reader.GetBoolean(reader.GetOrdinal("IsHomeGoal")),
-                            Category = reader["Category"].ToString(),
-                            StartDate = startDate,
-                            EndDate = endDate,
-                            Description = reader["Description"].ToString(),
-                            ShowDescription = reader.GetBoolean(reader.GetOrdinal("ShowDescription")),
-                            Frequency = reader["Frequency"].ToString(),
-                            IsFadingOut = reader.GetBoolean(reader.GetOrdinal("IsFadingOut"))
-                        });
+                            DateTime date, startDate, endDate;
+                            DateTime.TryParseExact(reader["Date"].ToString(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out date);
+                            DateTime.TryParseExact(reader["StartDate"].ToString(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out startDate);
+                            DateTime.TryParseExact(reader["EndDate"].ToString(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out endDate);
+
+                            goals.Add(new Goal
+                            {
+                                GoalId = reader.GetInt32(reader.GetOrdinal("GoalId")),
+                                Type = reader["Type"].ToString(),
+                                Name = reader["Name"].ToString(),
+                                Amount = reader.GetDecimal(reader.GetOrdinal("Amount")),
+                                Date = date,
+                                GoalType = reader["GoalType"].ToString(),
+                                IsQuickGoal = reader.GetBoolean(reader.GetOrdinal("IsQuickGoal")),
+                                IsRetirementGoal = reader.GetBoolean(reader.GetOrdinal("IsRetirementGoal")),
+                                IsEmergencyFundGoal = reader.GetBoolean(reader.GetOrdinal("IsEmergencyFundGoal")),
+                                IsTravelGoal = reader.GetBoolean(reader.GetOrdinal("IsTravelGoal")),
+                                IsHomeGoal = reader.GetBoolean(reader.GetOrdinal("IsHomeGoal")),
+                                Category = reader["Category"].ToString(),
+                                StartDate = startDate,
+                                EndDate = endDate,
+                                Description = reader["Description"].ToString(),
+                                ShowDescription = reader.GetBoolean(reader.GetOrdinal("ShowDescription")),
+                                Frequency = reader["Frequency"].ToString(),
+                                IsFadingOut = reader.GetBoolean(reader.GetOrdinal("IsFadingOut"))
+                            });
+                        }
                     }
                 }
             }

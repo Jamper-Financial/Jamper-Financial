@@ -1,9 +1,15 @@
-﻿@code {
+﻿@using SixLabors.ImageSharp;
+
+@code {
     [Parameter] public bool IsVisible { get; set; }
     [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public EventCallback<List<byte[]>> OnCloseWithImages { get; set; }
     [Inject] IJSRuntime JSRuntime { get; set; }
 
     private bool isFileUploaded = false;
+    private List<byte[]> uploadedImages = new List<byte[]>();
+    private const long MaxFileSize = 5 * 1024 * 1024; // 5 MB
+    private string errorMessage = string.Empty;
 
     private async Task CloseModal()
     {
@@ -12,17 +18,47 @@
 
     private async Task HandleFileUpload(InputFileChangeEventArgs e)
     {
-        foreach (var file in e.GetMultipleFiles())
+        Console.WriteLine("Handle File upload");
+        uploadedImages.Clear();
+        errorMessage = string.Empty;
+        isFileUploaded = false; // Initialize to false at the beginning
+
+        try
         {
-            // Handle file upload logic here
-            // For example, save the file to a temporary location and read its content
-            var buffer = new byte[file.Size];
-            await file.OpenReadStream().ReadAsync(buffer);
-            // Save buffer to a temporary location or process it as needed
+            foreach (var file in e.GetMultipleFiles())
+            {
+                if (file.Size > MaxFileSize)
+                {
+                    errorMessage = $"File size {file.Size} exceeds the maximum allowed size of {MaxFileSize} bytes.";
+                    return;
+                }
+
+                if (!file.Name.EndsWith(".jpg") && !file.Name.EndsWith(".jpeg") && !file.Name.EndsWith(".png"))
+                {
+                    errorMessage = "Invalid file type. Only .jpg, .jpeg, and .png files are allowed.";
+                }
+
+
+                // Use a MemoryStream to read the file asynchronously
+                using var stream = file.OpenReadStream(MaxFileSize);
+                using var memoryStream = new MemoryStream();
+                await stream.CopyToAsync(memoryStream);
+
+
+                uploadedImages.Add(memoryStream.ToArray()); // Add the byte array to the list
+
+                Console.WriteLine($"Uploaded file: {file.Name}, Size: {file.Size} bytes");
+            }
+
+            isFileUploaded = true; // Set to true only if all files are processed successfully
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"An error occurred while uploading the file: {ex.Message}";
         }
 
-        // Set the flag to true after file upload
-        isFileUploaded = true;
+        // Optionally, you might want to trigger a state change to re-render the UI
+        StateHasChanged();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -31,6 +67,13 @@
         {
             await JSRuntime.InvokeVoidAsync("initializeDragAndDrop", "upload-area", "file-upload");
         }
+    }
+
+    private async Task UploadReceipts()
+    {
+        Console.WriteLine("Click Upload Receipts");
+        await OnCloseWithImages.InvokeAsync(uploadedImages);
+        await OnClose.InvokeAsync();
     }
 }
 
@@ -52,18 +95,15 @@
                             <img src="/images/folder-icon.png" alt="Folder Icon" />
                             <span>Drag and Drop your receipts here to upload</span>
                         </label>
-                        <InputFile id="file-upload" OnChange="HandleFileUpload" multiple />
+                        <InputFile id="file-upload" OnChange="HandleFileUpload" multiple MaxAllowedSize="@(5 * 1024 * 1024)" />
                     </div>
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="error-message">@errorMessage</div>
+                    }
                     <button id="btn-upload" class="upload-button" @onclick="UploadReceipts" disabled="@(isFileUploaded ? false : true)">Upload receipts</button>
                 </div>
             </div>
         </div>
     </div>
-}
-
-@code {
-    private async Task UploadReceipts()
-    {
-        // Handle the upload receipts logic here
-    }
 }

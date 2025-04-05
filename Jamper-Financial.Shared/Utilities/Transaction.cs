@@ -18,6 +18,7 @@ namespace Jamper_Financial.Shared.Utilities
         public DateTime? EndDate { get; set; }
         public int AccountID { get; set; }
         public bool IsPaid { get; set; } = true;
+        public string? TemporaryReceiptFilePath { get; set; }
 
 
     }

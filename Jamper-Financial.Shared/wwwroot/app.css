@@ -10,6 +10,8 @@
     --text-color: #333;
     --text-color-placeholder: #B1BCC4;
     --text-color-value: black;
+    --btn-cancel-color: #ccc;
+    --btn-cancel-color-hover: #aaa;
 }
 
 html, body {
@@ -39,12 +41,6 @@ h4 {
     flex-direction: column;
     gap: 1rem;
     max-width: 400px;
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {

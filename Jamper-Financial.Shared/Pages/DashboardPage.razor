@@ -11,6 +11,7 @@
 @inject UserStateService UserStateService
 @inject IExpenseService ExpenseService
 @inject IJSRuntime JS
+@inject DatabaseHelperFactory DataFactory
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -29,6 +30,7 @@
     private List<Expense> weeklyExpenses = new List<Expense>();
     private List<Transaction> transactions;
     private List<Expense> monthlyExpenses = new List<Expense>();
+    private List<Goal> savingsGoals = new List<Goal>();
     private bool isChartRendered = false;
     string username = "";
 
@@ -40,8 +42,7 @@
         int userId = UserStateService.LoggedInUser.UserID;
         username = UserStateService.LoggedInUser.UserName;
 
-        Console.WriteLine(username);
-        Console.WriteLine("UserID: " + userId);
+        Console.WriteLine("User name: " + username + " User ID: " + userId);
 
         if (userId > 0)
         {
@@ -49,7 +50,7 @@
             transactions = await TransactionManager.LoadTransactionsAsync(userId);
             weeklyExpenses = await ExpenseService.GetExpensesAsync(userId, "weekly");
             monthlyExpenses = await ExpenseService.GetExpensesAsync(userId, "monthly");
-            Console.WriteLine(weeklyExpenses.Count);
+            savingsGoals = DataFactory.GetGoals(userId);
         }
         else
         {
@@ -180,43 +181,49 @@
 
     private async Task RenderSavingGoalsChart()
     {
-        var daysOfWeek = new[] { "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
-        var expenseData = new decimal[7];
-        var salaryData = new decimal[7];
+        var goalTypeData = new Dictionary<string, decimal>();
 
-        foreach (var expense in weeklyExpenses)
-        {
-            var dayOfWeek = (int)expense.Date.DayOfWeek;
-            expenseData[dayOfWeek] += expense.ExpenseAmount;
-            salaryData[dayOfWeek] += expense.SalaryAmount;
-        }
+        // Calculate the sum of amounts for each goal type
+        goalTypeData["Quick Goal"] = savingsGoals.Where(g => g.IsQuickGoal).Sum(g => g.Amount);
+        goalTypeData["Retirement Fund"] = savingsGoals.Where(g => g.IsRetirementGoal).Sum(g => g.Amount);
+        goalTypeData["Emergency Fund"] = savingsGoals.Where(g => g.IsEmergencyFundGoal).Sum(g => g.Amount);
+        goalTypeData["Travel Goal"] = savingsGoals.Where(g => g.IsTravelGoal).Sum(g => g.Amount);
+        goalTypeData["Home Goal"] = savingsGoals.Where(g => g.IsHomeGoal).Sum(g => g.Amount);
+        goalTypeData["Custom Goal"] = savingsGoals.Where(g => !g.IsQuickGoal && !g.IsRetirementGoal && !g.IsEmergencyFundGoal && !g.IsTravelGoal && !g.IsHomeGoal).Sum(g => g.Amount);
 
         var chartData = new
         {
-            labels = daysOfWeek,
+            labels = goalTypeData.Keys.ToArray(), // Get the goal types as labels
             datasets = new[]
             {
-                new
+            new
+            {
+                label = "Savings Goals",
+                data = goalTypeData.Values.ToArray(), // Get the summed amounts for each goal type
+                backgroundColor = new[]
                 {
-                    label = "Expenses",
-                    data = expenseData,
-                    backgroundColor = "rgba(75, 192, 192, 0.2)",
-                    borderColor = "rgba(75, 192, 192, 1)",
-                    borderWidth = 1,
-                    borderRadius = 0
+                    "rgba(255, 99, 132, 0.2)",
+                    "rgba(54, 162, 235, 0.2)",
+                    "rgba(255, 206, 86, 0.2)",
+                    "rgba(75, 192, 192, 0.2)",
+                    "rgba(153, 102, 255, 0.2)",
+                    "rgba(140, 67, 55, 0.2)"
                 },
-                new
+                borderColor = new[]
                 {
-                    label = "Salary",
-                    data = salaryData,
-                    backgroundColor = "rgba(153, 102, 255, 0.2)",
-                    borderColor = "rgba(153, 102, 255, 1)",
-                    borderWidth = 1,
-                    borderRadius = 10
-                }
+                    "rgba(255, 99, 132, 1)",
+                    "rgba(54, 162, 235, 1)",
+                    "rgba(255, 206, 86, 1)",
+                    "rgba(75, 192, 192, 1)",
+                    "rgba(153, 102, 255, 1)",
+                    "rgba(140, 67, 55, 1)"
+                },
+                borderWidth = 1
             }
+        }
         };
-        await JS.InvokeVoidAsync("initializeBarChart", "SavingsGoalsChart", chartData);
+
+        await JS.InvokeVoidAsync("initializePolarChart", "SavingsGoalsChart", chartData);
     }
 
     private async Task NextCard()
@@ -313,7 +320,7 @@
                             {
                                 <ul class="transaction-item flex-row">
                                     <li class="icon-image flex-item">
-                                            <img src="images/expense.svg" alt="Expense Icon" />
+                                        <img src="images/expense.svg" alt="Expense Icon" />
                                     </li>
                                     <li class="flex-item transaction-description">
                                         <div class="transaction-title">@transaction.Description</div>
