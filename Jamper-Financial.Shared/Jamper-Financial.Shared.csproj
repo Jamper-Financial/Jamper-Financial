@@ -30,11 +30,13 @@
          <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="9.0.3" />
         <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.2" />
         <PackageReference Include="QuestPDF" Version="2025.1.5" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="3.1.7" />
         <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
         <PackageReference Include="FirebaseAdmin" Version="3.1.0" />
-        <PackageReference Include="Tailwind.Extensions.AspNetCore" />
+        <PackageReference Include="Tesseract" Version="5.2.0" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="images\" />
+        <Folder Include="temp\" />
     </ItemGroup>
 </Project>
