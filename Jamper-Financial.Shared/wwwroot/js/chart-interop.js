@@ -84,53 +84,115 @@ window.initializePieChart = function (canvasId, chartData) {
     }
 };
 
-window.initializeBarChart = function (canvasId, chartData, indAxis = 'x', labeldisplay = false) {
-    const canvas = document.getElementById(canvasId);
-    const ctx = canvas.getContext('2d');
+//added by romer
+window.isElementReady = function (elementId) {
+    const element = document.getElementById(elementId);
+    if (!element) return false;
 
-    if (ctx) {
-        let existingChart = Chart.getChart(canvasId);
+    const style = window.getComputedStyle(element);
+    return style.display !== 'none' &&
+        element.offsetWidth > 0 &&
+        element.offsetHeight > 0;
+};
+
+window.safeDestroyChart = async function (canvasId) {
+    return new Promise(resolve => {
+        const chart = Chart.getChart(canvasId);
+        if (chart) {
+            chart.destroy();
+            setTimeout(resolve, 50);
+        } else {
+            resolve();
+        }
+    });
+};
+
+window.destroyChart = function (canvasId) {
+    const canvas = document.getElementById(canvasId);
+    if (canvas) {
+        const existingChart = Chart.getChart(canvasId);
         if (existingChart) {
             existingChart.destroy();
         }
-
-        const plugins = {
-            legend: { display: true },
-            datalabels: labeldisplay ? {
-                anchor: 'bottom',
-                align: 'top',
-                font: {
-                    size: 14,
-                    family: 'Arial',
-                    weight: 'bold'
-                },
-                formatter: (value) => {
-                    return value;
-                }
-            } : {
-                display: false
-            }
-        };
-
-        const myBarChart = new Chart(ctx, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                indexAxis: indAxis,
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: plugins
-            },
-            plugins: [ChartDataLabels]
-        });
-    } else {
-        console.error(`Canvas element with id '${canvasId}' not found for Bar Chart.`);
     }
+};
+
+
+window.initializeBarChart = function (canvasId, chartData, indAxis = 'x', labeldisplay = false) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) {
+        console.error(`Canvas element with id '${canvasId}' not found`);
+        return;
+    }
+
+    // Add visibility control
+    canvas.style.opacity = '0';
+    canvas.style.transition = 'opacity 0.3s ease';
+
+    // Use requestAnimationFrame for smoother initialization
+    requestAnimationFrame(() => {
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        // Destroy existing chart with callback
+        const existingChart = Chart.getChart(canvasId);
+        if (existingChart) {
+            existingChart.destroy();
+            // Small delay to ensure complete cleanup
+            setTimeout(createNewChart, 50);
+        } else {
+            createNewChart();
+        }
+
+        function createNewChart() {
+            const plugins = {
+                legend: {
+                    display: true,
+                    position: 'top' // More stable than default
+                },
+                datalabels: labeldisplay ? {
+                    anchor: 'end', // Better for bar charts
+                    align: 'top',
+                    clamp: true, // Prevents label overflow
+                    font: {
+                        size: 12, // Slightly smaller for stability
+                        family: 'Arial',
+                        weight: 'bold'
+                    },
+                    formatter: (value) => value
+                } : { display: false }
+            };
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    indexAxis: indAxis,
+                    responsive: false, // Critical change - prevents resize jumps
+                    maintainAspectRatio: false,
+                    animation: {
+                        duration: 300,
+                        onComplete: () => {
+                            canvas.style.opacity = '1';
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grace: '5%' // Adds padding to prevent clipping
+                        },
+                        x: {
+                            grid: {
+                                display: false // Cleaner appearance
+                            }
+                        }
+                    },
+                    plugins: plugins
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+    });
 };
 
 window.initializeLineChart = function (canvasId, chartData, indAxis = 'x', labeldisplay = false) {
