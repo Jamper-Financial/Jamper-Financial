@@ -7,7 +7,7 @@
 
 <div class="modal-overlay" @onclick="CloseAddAccountModal">
     <div class="modal-content" @onclick:stopPropagation="true">
-        <h3 class="modal-header">Add Bank Account</h3>
+        <h3 class="modal-header">@title</h3>
         <div class="modal-body">
             <EditForm Model="newAccount" OnValidSubmit="AddManualAccount">
                 <DataAnnotationsValidator />
@@ -63,6 +63,7 @@
     [Parameter] public EventCallback<bool> OnClose { get; set; }
     [Parameter] public EventCallback<string> OnAccountSaved { get; set; }
     [Parameter] public BankAccount newAccount { get; set; }
+    [Parameter] public string? title { get; set; } = "Add Bank Account";
     private List<BankAccountType> accountTypes = new List<BankAccountType>();
 
     private string accountNumberError = string.Empty;

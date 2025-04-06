@@ -5,11 +5,14 @@
 @using Jamper_Financial.Shared.Services
 @using Jamper_Financial.Shared.Models
 @using Jamper_Financial.Shared.Utilities
+@using Jamper_Financial.Shared.Pages.Components
+
 @inject NavigationManager Navigation
 @inject IUserService UserService
 @inject LoginStateService LoginState
 @inject UserStateService UserStateService
 @inject IExpenseService ExpenseService
+@inject IAccountService AccountService
 @inject IJSRuntime JS
 @inject DatabaseHelperFactory DataFactory
 
@@ -34,6 +37,16 @@
     private bool isChartRendered = false;
     string username = "";
 
+    private BankAccount newAccount = new BankAccount();
+    private List<BankAccount> bankAccounts = new List<BankAccount>();
+    private bool showAccountModal = false;
+
+
+    // Toaster variables
+    private string toasterMessage = string.Empty;
+    private string toasterClass = string.Empty;
+    private System.Threading.Timer toasterTimer;
+
     protected override async Task OnInitializedAsync()
     {
         SetPageTitle("Dashboard");
@@ -51,6 +64,13 @@
             weeklyExpenses = await ExpenseService.GetExpensesAsync(userId, "weekly");
             monthlyExpenses = await ExpenseService.GetExpensesAsync(userId, "monthly");
             savingsGoals = DataFactory.GetGoals(userId);
+            bankAccounts = await AccountService.GetBankAccounts(userId);
+            if (bankAccounts == null || !bankAccounts.Any())
+            {
+                ShowNewAccountModal();
+            }
+            ;
+            Console.WriteLine(weeklyExpenses.Count);
         }
         else
         {
@@ -71,6 +91,20 @@
             chartsNeedInitialization = false;
             await InitializeVisibleCharts();
         }
+    }
+
+    private async Task ShowNewAccountModal()
+    {
+        newAccount = new BankAccount
+            {
+                AccountTypeID = 0,
+                AccountName = string.Empty,
+                Balance = 0,
+                AccountNumber = string.Empty,
+                UserId = UserStateService.UserId
+
+            };
+        showAccountModal = true;
     }
 
     private async Task InitializeVisibleCharts()
@@ -136,7 +170,7 @@
                 }
             }
         };
-        await JS.InvokeVoidAsync("initializeBarChart", "weeklyActivityChart", chartData, "y");
+        await JS.InvokeVoidAsync("initializeBarChart", "weeklyActivityChart", chartData, "x");
     }
 
     private async Task RenderBalanceHistoryChart()
@@ -261,6 +295,50 @@
                     .Take(3);  // Always show 3 cards
     }
 
+    private async Task CloseAddAccountModal(bool isVisible)
+    {
+        showAccountModal = isVisible;
+    }
+
+    private void HandleAccountSaved(string message)
+    {
+        Console.WriteLine(message);
+        // Set the toaster message and class based on the result
+        if (message == "success")
+        {
+            toasterMessage = "Account added successfully!";
+            toasterClass = "success";
+        }
+        else
+        {
+            toasterMessage = "Failed to save Account.";
+            toasterClass = "error";
+        }
+
+        Console.WriteLine(message);
+        showAccountModal = false;
+
+        // Start the timer to auto-close the toaster
+        toasterTimer?.Dispose(); // Dispose of any existing timer
+        toasterTimer = new System.Threading.Timer(AutoCloseToaster, null, 5000, Timeout.Infinite);
+        StateHasChanged();
+    }
+
+    private void AutoCloseToaster(object state)
+    {
+        InvokeAsync(() =>
+        {
+            ClearToaster();
+            StateHasChanged(); // Update the UI
+        });
+    }
+
+    private void ClearToaster()
+    {
+        toasterMessage = string.Empty;
+        toasterClass = string.Empty;
+    }
+
     private class CardItem
     {
         public string Title { get; set; }
@@ -348,3 +426,12 @@
         </div>
     </div>
 </div>
+
+@if (showAccountModal)
+{
+    <AddAccountModal IsVisible="showAccountModal"
+                     OnClose="CloseAddAccountModal"
+                     newAccount="newAccount"
+                     OnAccountSaved="HandleAccountSaved" 
+                     title="Please add an Account to get you started"/>
+}
