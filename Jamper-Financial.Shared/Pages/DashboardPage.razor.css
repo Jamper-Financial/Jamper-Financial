@@ -30,13 +30,20 @@ canvas {
     height: auto;
 }
 
+.card {
+    height: 250px;
+}
+
+.card-full {
+    height: 100%;
+}
+
 .card, .card-full {
     flex: 0 0 50%;
     border: .1rem solid var(--primary-color);
     border-radius: 1rem;
     gap: 1.5rem;
     min-width: 450px;
-    height: 250px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     display: flex;
