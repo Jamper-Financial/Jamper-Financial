@@ -170,6 +170,14 @@ window.initializeBarChart = function (canvasId, chartData, indAxis = 'x', labeld
                     indexAxis: indAxis,
                     responsive: false, // Critical change - prevents resize jumps
                     maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
                     animation: {
                         duration: 300,
                         onComplete: () => {
