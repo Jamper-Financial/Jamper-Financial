@@ -14,7 +14,7 @@ namespace Jamper_Financial.Shared.Utilities
         public int CategoryID { get; set; }
         public string TransactionType { get; set; } = "e"; // Expense by default
         public bool HasReceipt { get; set; } = false;
-        public string? Frequency { get; set; } = null;
+        public string Frequency { get; set; } = "None";
         public DateTime? EndDate { get; set; }
         public int AccountID { get; set; }
         public bool IsPaid { get; set; } = true;
@@ -36,7 +36,7 @@ namespace Jamper_Financial.Shared.Utilities
             if (isEditMode)
             {
                 await TransactionHelper.UpdateTransactionAsync(transaction);
-                if (transaction.Frequency == null)
+                if (transaction.Frequency == "None")
                 {
                     await DeleteRecurringTransactionsAsync(transaction);
                 }
@@ -45,7 +45,7 @@ namespace Jamper_Financial.Shared.Utilities
                     EditRecurringTransactions(transaction);
                 }
 
-                if (transaction.Frequency != null && transaction.EndDate.HasValue)
+                if (transaction.Frequency != "None" && transaction.EndDate.HasValue)
                 {
                     AddRecurringTransactions(transaction, true);
                 }
@@ -53,7 +53,7 @@ namespace Jamper_Financial.Shared.Utilities
             else
             {
                 await TransactionHelper.AddTransactionAsync(transaction);
-                if (transaction.Frequency != null && transaction.EndDate.HasValue)
+                if (transaction.Frequency != "None" && transaction.EndDate.HasValue)
                 {
                     AddRecurringTransactions(transaction, false);
                 }
@@ -93,8 +93,6 @@ namespace Jamper_Financial.Shared.Utilities
             {
                 recurringTransaction.Description = transaction.Description;
                 recurringTransaction.Amount = transaction.Amount;
-                //recurringTransaction.Debit = transaction.Debit;
-                //recurringTransaction.Credit = transaction.Credit;
                 recurringTransaction.CategoryID = transaction.CategoryID;
                 recurringTransaction.Frequency = transaction.Frequency;
                 recurringTransaction.EndDate = transaction.EndDate;
@@ -106,7 +104,6 @@ namespace Jamper_Financial.Shared.Utilities
 
         private static void AddRecurringTransactions(Transaction transaction, bool isEditing)
         {
-            
             DateTime nextDate = transaction.Date;
             while (true)
             {
@@ -190,14 +187,12 @@ namespace Jamper_Financial.Shared.Utilities
             {
                 Console.WriteLine(ex.Message);
                 return false;
-
             }
         }
 
         public static async Task<ReceiptData> GetReceiptAsync(Transaction transaction)
         {
             ReceiptData receiptData = await TransactionHelper.GetReceiptAsync(transaction.TransactionID);
-
             return receiptData;
         }
     }

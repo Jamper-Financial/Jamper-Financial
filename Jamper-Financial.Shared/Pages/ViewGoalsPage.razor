@@ -171,8 +171,26 @@
     text-decoration: none;
     cursor: pointer;
     }
+
+    .chart-container {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        padding-top: 20px;
+        width: 50%; 
+        height: 400px; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px auto; 
+    }
+
 </style>
 
+<div class="chart-container">
+    <canvas id="goalsChart"></canvas>
+</div>
 <div class="content-container">
     <div class="transactions-page">
         <div class="transactions-section">
@@ -456,9 +474,23 @@
 </div>
 
 @code {
+    private bool isChartInitializing = false;
+    private DotNetObjectReference<ViewGoalsPage>? objRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !isChartInitializing)
+        {
+            isChartInitializing = true;
+            objRef = DotNetObjectReference.Create(this);
+            await RenderGoalsChart();
+            isChartInitializing = false;
+        }
+    }
     private List<Goal> goals = new List<Goal>();
     private Goal selectedGoal;
     private bool showModal = false;
+    private bool isChartRendered = false;
 
     // Local fields for Retirement
     private decimal retCurrentSavings;
@@ -503,6 +535,42 @@
         }
         
         goals = DatabaseHelper.GetGoals(userId);
+    }
+
+    private async Task RenderGoalsChart()
+    {
+        try
+        {
+            var isReady = await JSRuntime.InvokeAsync<bool>("isElementReady", "goalsChart");
+            if (!isReady) return;
+
+            await JSRuntime.InvokeVoidAsync("safeDestroyChart", "goalsChart");
+            await Task.Delay(50);
+
+            var chartData = new
+            {
+                labels = goals.Select(g => g.Name).ToArray(),
+                datasets = new[] {
+                    new {
+                        label = "Goal Amounts",
+                        data = goals.Select(g => g.Amount).ToArray(),
+                        backgroundColor = "rgba(75, 192, 192, 0.2)",
+                        borderColor = "rgba(75, 192, 192, 1)",
+                        borderWidth = 1
+                    }
+                }
+            };
+
+            await JSRuntime.InvokeVoidAsync("initializeBarChart",
+                "goalsChart",
+                chartData,
+                "x",
+                false);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Chart error: {ex.Message}");
+        }
     }
 
         private void ToggleDescription(Goal goal)
@@ -723,6 +791,16 @@
     private void CancelEdit(Goal goal)
     {
         goal.IsEditing = false;
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("safeDestroyChart", "goalsChart");
+            objRef?.Dispose();
+        }
+        catch { /* Ignore cleanup errors */ }
     }
 }
                 
