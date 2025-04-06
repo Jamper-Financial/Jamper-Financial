@@ -90,3 +90,14 @@ button.cancel-button {
     button.cancel-button:hover {
         background-color: var(--btn-cancel-color-hover);
     }
+
+.checkbox {
+    display: inline-flex;
+}
+
+    .checkbox:checked {
+        background-color: var(--primary-color);
+        accent-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+

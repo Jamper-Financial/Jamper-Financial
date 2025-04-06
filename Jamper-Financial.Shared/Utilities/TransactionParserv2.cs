@@ -1,40 +1,60 @@
 ﻿using System.Globalization;
 using System.Text.RegularExpressions;
-using Tesseract;
-using System.IO;
+using Amazon;
+using Amazon.Runtime;
+using Amazon.Textract;
+using Amazon.Textract.Model;
 
 namespace Jamper_Financial.Shared.Utilities
 {
-    public class TransactionParser2
+
+    //NOTE USE THIS FOR HIGHER ACCURACY, USE THE OTHER PARSER FOR FREE BUT LOWER ACCURACY
+    public class TransactionParser
     {
-        public static string ExtractTextFromImage(string imagePath)
+        private static AmazonTextractClient GetTextractClient()
+        {
+            // Replace with your AWS credentials and region
+            var credentials = new BasicAWSCredentials("AKIAWAGWZ7XHNKY4W2HY", "iFkBzVgavA6x+1ToFn+AvPPcehvJU/MAs8O6MOqe");
+            var region = RegionEndpoint.CACentral1; // Example: Canada Central
+
+            return new AmazonTextractClient(credentials, region);
+        }
+
+        public static async Task<string> ExtractTextFromImageTextractAsync(string imagePath)
         {
             try
             {
-                string tessdataPath = "../Jamper-Financial.Shared/tessdata";
-
-                if (!Directory.Exists(tessdataPath))
+                using (var client = GetTextractClient())
                 {
-                    Console.WriteLine($"Tessdata directory not found: {tessdataPath}");
-                    return string.Empty;
-                }
-
-                using (var engine = new TesseractEngine(tessdataPath, "eng", EngineMode.Default))
-                {
-                    using (var img = Pix.LoadFromFile(imagePath))
+                    using (var fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
                     {
-                        using (var page = engine.Process(img, PageSegMode.Auto))
+                        var imageBytes = new byte[fs.Length];
+                        fs.Read(imageBytes, 0, (int)fs.Length);
+
+                        var request = new DetectDocumentTextRequest
                         {
-                            string text = page.GetText();
-                            text = PostProcessText(text);
-                            return text;
+                            Document = new Document
+                            {
+                                Bytes = new MemoryStream(imageBytes)
+                            }
+                        };
+
+                        var response = await client.DetectDocumentTextAsync(request);
+
+                        if (response?.Blocks != null)
+                        {
+                            return string.Join(Environment.NewLine, response.Blocks
+                                .Where(b => b.BlockType == BlockType.LINE)
+                                .Select(b => b.Text));
                         }
+
+                        return string.Empty;
                     }
                 }
             }
-            catch (TesseractException e)
+            catch (AmazonServiceException e)
             {
-                Console.WriteLine($"Tesseract Error: {e.Message}");
+                Console.WriteLine($"Amazon Textract Service Error: {e.Message}");
                 return string.Empty;
             }
             catch (Exception e)
@@ -46,11 +66,12 @@ namespace Jamper_Financial.Shared.Utilities
 
         public static Transaction? ParseTransactionsSingleLoop(string imagePath)
         {
+            string extractedText = Task.Run(() => ExtractTextFromImageTextractAsync(imagePath)).GetAwaiter().GetResult();
+
             try
             {
-                Console.WriteLine($"Parsing image: {imagePath}");
-                string extractedText = ExtractTextFromImage(imagePath);
-                Console.WriteLine($"Raw extracted text:\n{extractedText}"); // Add this line
+                Console.WriteLine($"Parsing image with Textract: {imagePath}");
+                Console.WriteLine($"Raw extracted text from Textract:\n{extractedText}");
                 if (string.IsNullOrEmpty(extractedText))
                 {
                     return null;
@@ -68,16 +89,16 @@ namespace Jamper_Financial.Shared.Utilities
                     firstLine = lines[0];
                     Console.WriteLine($"First line: \n {firstLine}");
 
-                    // Handle the case where the receipt is mostly on a single line
-                    if (lines.Length <= 2 && !string.IsNullOrWhiteSpace(firstLine)) // Adjust '2' based on typical minimal lines
+                    if (lines.Length <= 2 && !string.IsNullOrWhiteSpace(firstLine))
                     {
                         description = firstLine.Length > 25 ? firstLine.Substring(0, 25).Trim() : firstLine.Trim();
                         Console.WriteLine($"Single-line potential description: {description}");
                     }
                 }
 
-                foreach (string line in lines)
+                for (int i = 0; i < lines.Length; i++)
                 {
+                    string line = lines[i];
                     try
                     {
                         Console.WriteLine("Line Texts " + line.Trim() + " Description " + description);
@@ -95,8 +116,8 @@ namespace Jamper_Financial.Shared.Utilities
                         {
                             string dateString = dateMatch.Value;
                             string[] dateFormats = { "MM/dd/yyyy", "MM/dd/yy", "dd/MM/yyyy", "dd/MM/yy",
-                                                     "yyyy/MM/dd", "yy/MM/dd", "MM-dd-yyyy", "MM-dd-yy",
-                                                     "dd-MM-yyyy", "dd-MM-yy", "yyyy-MM-dd", "yy-MM-dd" };
+                                                   "yyyy/MM/dd", "yy/MM/dd", "MM-dd-yyyy", "MM-dd-yy",
+                                                   "dd-MM-yyyy", "dd-MM-yy", "yyyy-MM-dd", "yy-MM-dd" };
 
                             if (DateTime.TryParseExact(dateString, dateFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime parsedDate))
                             {
@@ -107,14 +128,39 @@ namespace Jamper_Financial.Shared.Utilities
                             }
                         }
 
-                        if ((trimmedLine.Contains("grand total") ||
-                             trimmedLine.Contains("total due") ||
-                             trimmedLine.Contains("amount due") ||
-                             trimmedLine.Contains("balance due") ||
-                             (trimmedLine.Contains("total") && IsLikelyFinalTotal(lines, Array.IndexOf(lines, line)))) &&
-                            (line.Contains("$") || line.Contains("CAD")))
+                        bool isTotalLine = trimmedLine.Contains("grand total") ||
+                                           trimmedLine.Contains("total due") ||
+                                           trimmedLine.Contains("amount due") ||
+                                           trimmedLine.Contains("balance due") ||
+                                           trimmedLine.Contains("total paid") ||
+                                           (trimmedLine == "total" && IsLikelyFinalTotal(lines, i)) || // Check for standalone "total"
+                                           (trimmedLine == "total:" && IsLikelyFinalTotal(lines, i)) || // Check for "total:"
+                                           (trimmedLine == "total $" && IsLikelyFinalTotal(lines, i)); // Check for "total $"
+
+                        if (isTotalLine && (line.Contains("$") || line.Contains("CAD")))
                         {
                             grandTotalLine = line;
+                        }
+                        else if ((trimmedLine.Contains("total paid") || trimmedLine == "total" || trimmedLine == "total:" || trimmedLine == "total $") &&
+                                 !(line.Contains("$") || line.Contains("CAD")) && i + 1 < lines.Length)
+                        {
+                            string nextLine = lines[i + 1].Trim();
+                            Match amountMatchOnNextLine = Regex.Match(nextLine, @"(?:[$]|CAD)?\s*(\d{1,}(?:,\d{3})*(?:\.\d{2})?)");
+                            if (amountMatchOnNextLine.Success)
+                            {
+                                grandTotalLine = nextLine;
+                                i++;
+                            }
+                        }
+                        else if (isTotalLine && grandTotalLine == null && i + 1 < lines.Length)
+                        {
+                            string nextLine = lines[i + 1].Trim();
+                            Match amountMatchOnNextLine = Regex.Match(nextLine, @"(?:[$]|CAD)?\s*(\d{1,}(?:,\d{3})*(?:\.\d{2})?)");
+                            if (amountMatchOnNextLine.Success)
+                            {
+                                grandTotalLine = nextLine;
+                                i++;
+                            }
                         }
                     }
                     catch (Exception e)
@@ -122,6 +168,7 @@ namespace Jamper_Financial.Shared.Utilities
                         Console.WriteLine($"Error processing line for Grand Total/Date '{line}': {e.Message}");
                     }
                 }
+
                 if (description == null && lines.Length > 0 && !IsLikelyFinancialLine(firstLine))
                 {
                     description = firstLine.Trim();
@@ -133,7 +180,6 @@ namespace Jamper_Financial.Shared.Utilities
                     description = lines[0].Length > 25 ? lines[0].Substring(0, 25).Trim() : lines[0].Trim();
                     Console.WriteLine($"Fallback Description (first 25 chars): {description}");
                 }
-
 
                 if (!string.IsNullOrEmpty(grandTotalLine))
                 {
@@ -179,25 +225,6 @@ namespace Jamper_Financial.Shared.Utilities
                 return true;
             }
             return false;
-        }
-
-        private static string PostProcessText(string text)
-        {
-            string processedText = Regex.Replace(text, @"(\d{1,2}[/-]\d{1,2}[/-]\d{2,4}|\d{4}[/-]\d{1,2}[/-]\d{1,2})", "\n$1");
-            processedText = Regex.Replace(processedText, @"(\$?\d{1,}(?:,\d{3})*(?:\.\d{2})?)", "\n$1");
-
-            if (!processedText.Contains(Environment.NewLine))
-            {
-                processedText = Regex.Replace(processedText, @"(?<=[a-zA-Z])(?=\d)", "\n");
-                processedText = Regex.Replace(processedText, @"(?<=\d)(?=[a-zA-Z])", "\n");
-                processedText = Regex.Replace(processedText, @"\s{2,}", "\n");
-
-                // Add more specific rules based on the structure of this receipt
-                processedText = Regex.Replace(processedText, @"(SUBTOTAL|GST|TOTAL|VISA TEND|CHANGE DUE)\s+(\$?\d)", "\n$1 $2", RegexOptions.IgnoreCase);
-                processedText = Regex.Replace(processedText, @"([a-zA-Z0-9]{3,})\s+(\$?\d+\.\d{2})", "$1\n$2"); // Split between potential item and price
-            }
-
-            return processedText;
         }
     }
 }

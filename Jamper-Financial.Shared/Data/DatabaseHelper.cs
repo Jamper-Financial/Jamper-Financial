@@ -466,33 +466,6 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
-        // Get Categories
-        public static List<Category> GetCategories(int userId)
-        {
-            var categories = new List<Category>();
-            using (var connection = new SqliteConnection($"Data Source={DbPath}"))
-            {
-                connection.Open();
-                string query = "SELECT CategoryID, Name FROM Categories WHERE UserID = @UserID;";
-                using (var command = new SqliteCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@UserID", userId);
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            categories.Add(new Category
-                            {
-                                CategoryID = reader.GetInt32(0),
-                                Name = reader.GetString(1)
-                            });
-                        }
-                    }
-                }
-            }
-            return categories;
-        }
-
         public static async Task<List<Category>> LoadUserCategoriesAsync(int userId)
         {
             var categories = new List<Category>();

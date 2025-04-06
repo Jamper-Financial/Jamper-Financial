@@ -1,13 +1,20 @@
 ﻿@using SixLabors.ImageSharp;
+@using Jamper_Financial.Shared.Models;
+@using Microsoft.AspNetCore.Components.Forms;
+@using Microsoft.JSInterop;
+@using System.IO;
+@using System.Collections.Generic;
+@using System.Threading.Tasks;
 
 @code {
     [Parameter] public bool IsVisible { get; set; }
     [Parameter] public EventCallback OnClose { get; set; }
-    [Parameter] public EventCallback<List<byte[]>> OnCloseWithImages { get; set; }
+    [Parameter] public EventCallback<ReceiptUploadEventArgs> OnCloseWithImages { get; set; }
     [Inject] IJSRuntime JSRuntime { get; set; }
 
     private bool isFileUploaded = false;
     private List<byte[]> uploadedImages = new List<byte[]>();
+    private List<string> uploadedFileNames = new List<string>(); // Add this list to store filenames
     private const long MaxFileSize = 5 * 1024 * 1024; // 5 MB
     private string errorMessage = string.Empty;
 
@@ -20,8 +27,9 @@
     {
         Console.WriteLine("Handle File upload");
         uploadedImages.Clear();
+        uploadedFileNames.Clear(); // Clear filenames as well
         errorMessage = string.Empty;
-        isFileUploaded = false; // Initialize to false at the beginning
+        isFileUploaded = false;
 
         try
         {
@@ -33,31 +41,30 @@
                     return;
                 }
 
-                if (!file.Name.EndsWith(".jpg") && !file.Name.EndsWith(".jpeg") && !file.Name.EndsWith(".png"))
+                if (!file.Name.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) &&
+                    !file.Name.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) &&
+                    !file.Name.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
                 {
                     errorMessage = "Invalid file type. Only .jpg, .jpeg, and .png files are allowed.";
+                    return;
                 }
 
-
-                // Use a MemoryStream to read the file asynchronously
                 using var stream = file.OpenReadStream(MaxFileSize);
                 using var memoryStream = new MemoryStream();
                 await stream.CopyToAsync(memoryStream);
 
-
-                uploadedImages.Add(memoryStream.ToArray()); // Add the byte array to the list
-
+                uploadedImages.Add(memoryStream.ToArray());
+                uploadedFileNames.Add(file.Name); // Store the filename
                 Console.WriteLine($"Uploaded file: {file.Name}, Size: {file.Size} bytes");
             }
 
-            isFileUploaded = true; // Set to true only if all files are processed successfully
+            isFileUploaded = true;
         }
         catch (Exception ex)
         {
             errorMessage = $"An error occurred while uploading the file: {ex.Message}";
         }
 
-        // Optionally, you might want to trigger a state change to re-render the UI
         StateHasChanged();
     }
 
@@ -72,8 +79,19 @@
     private async Task UploadReceipts()
     {
         Console.WriteLine("Click Upload Receipts");
-        await OnCloseWithImages.InvokeAsync(uploadedImages);
-        await OnClose.InvokeAsync();
+
+        var args = new ReceiptUploadEventArgs
+            {
+                UploadedImages = uploadedImages,
+                FileNames = uploadedFileNames // Now the filenames are included
+            };
+
+        await OnCloseWithImages.InvokeAsync(args);
+
+        if (OnClose.HasDelegate)
+        {
+            await OnClose.InvokeAsync();
+        }
     }
 }
 
@@ -95,13 +113,13 @@
                             <img src="/images/folder-icon.png" alt="Folder Icon" />
                             <span>Drag and Drop your receipts here to upload</span>
                         </label>
-                        <InputFile id="file-upload" OnChange="HandleFileUpload" multiple MaxAllowedSize="@(5 * 1024 * 1024)" />
+                        <InputFile id="file-upload" class="file-upload" OnChange="HandleFileUpload" multiple MaxAllowedSize="@(5 * 1024 * 1024)" />
                     </div>
                     @if (!string.IsNullOrEmpty(errorMessage))
                     {
                         <div class="error-message">@errorMessage</div>
                     }
-                    <button id="btn-upload" class="upload-button" @onclick="UploadReceipts" disabled="@(isFileUploaded ? false : true)">Upload receipts</button>
+                    <button id="btn-upload" class="upload-button" @onclick="UploadReceipts" disabled="@(!isFileUploaded)">Upload receipts</button>
                 </div>
             </div>
         </div>

@@ -3,54 +3,85 @@
 @using Jamper_Financial.Shared.Pages.Components;
 @using Jamper_Financial.Shared.Utilities
 @using Jamper_Financial.Shared.Services
+@using Jamper_Financial.Shared.Models;
+@using Jamper_Financial.Shared.Data;
+@using System.IO;
+@using Microsoft.AspNetCore.Components.Forms;
+@using Microsoft.Extensions.Hosting; 
+
 @inject UserStateService UserStateService
 @inject TransactionParser TransactionParser;
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
+@inject IAccountService AccountService
+@inject IHostEnvironment Environment
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; } = default!;
     private bool norecords = true;
     private bool ShowUploadReceiptsModal = false;
-    private List<Transaction> transactions = new List<Transaction>();
+    private bool ShowConfirmSaveModal = false;
+    private bool isLoading = false;
+    private bool selectAll = false;
     private int currentUserId;
 
-    // Get the base directory of the application (where the executable runs)
-    string baseDirectory = "..\\Jamper-Financial.Shared";
+    private string tempDirectory = string.Empty;
+    private const string TempReceiptsFolderName = "temp-receipts";
 
-    // Combine the base directory with a "temp" folder (you can name it differently)
-    string tempDirectory;
+    private string errorMessage = string.Empty;
 
-    protected override void OnInitialized()
+    private string toasterMessage = string.Empty;
+    private string toasterClass = string.Empty;
+
+    private List<Category> categories = new();
+    private List<BankAccount> accounts = new();
+    private List<Transaction> transactions = new List<Transaction>();
+
+    protected override async Task OnInitializedAsync()
     {
         currentUserId = UserStateService.UserId;
         if (currentUserId <= 0)
         {
             Navigation.NavigateTo("/login");
+            return;
         }
 
         SetPageTitle("Bulk Transactions");
 
-        // Get the base directory of the application (where the executable runs)
-        baseDirectory = "../Jamper-Financial.Shared";
+        // Assuming your Shared project is in the same parent directory as your Web project
+        var webRootPath = Environment.ContentRootPath;
+        var sharedProjectRoot = Path.GetFullPath(Path.Combine(webRootPath, "..", "Jamper-Financial.Shared")); // Adjust "Jamper-Financial.Shared" if your Shared project has a different name
+        tempDirectory = Path.Combine(sharedProjectRoot, "wwwroot", TempReceiptsFolderName);
 
-        // Combine the base directory with a "temp" folder (you can name it differently)
-        tempDirectory = Path.Combine(baseDirectory, "temp");
-
-        // Create the temporary directory if it doesn't exist
         Directory.CreateDirectory(tempDirectory);
+
+        isLoading = true;
+        try
+        {
+            categories = (await DatabaseHelper.LoadUserCategoriesAsync(UserStateService.UserId));
+            accounts = await AccountService.GetBankAccounts(UserStateService.UserId);
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error loading data: {ex.Message}";
+            Console.Error.WriteLine(errorMessage);
+        }
+        finally
+        {
+            isLoading = false;
+        }
     }
 
     public void OpenExcelModal()
     {
-        ShowUploadReceiptsModal = true;
-        Console.WriteLine("Open Excel Modal");
+        // Implement Excel import logic here (not covered in this example)
+        Console.WriteLine("Open Excel Modal (Not Implemented)");
+        JSRuntime.InvokeVoidAsync("alert", "Excel import functionality is not yet implemented in this example.");
     }
 
     public void OpenReceiptsModal()
     {
         ShowUploadReceiptsModal = true;
-        Console.WriteLine("Open Receipts Modal");
     }
 
     private void CloseUploadReceiptsModal()
@@ -58,75 +89,191 @@
         ShowUploadReceiptsModal = false;
     }
 
-    private void HandleReceiptsUpload(List<byte[]> uploadedImages)
+    private async Task HandleReceiptsUpload(ReceiptUploadEventArgs args)
     {
+        List<byte[]> uploadedImages = args.UploadedImages;
+        List<string> fileNames = args.FileNames;
 
         Console.WriteLine("Handle Receipts Upload");
-        // Process the uploaded receipt images and update the transactions list
-        foreach (var image in uploadedImages)
+        isLoading = true;
+        errorMessage = string.Empty;
+        try
         {
-            // Generate a unique filename within the temporary directory
-            string tempFileName = Guid.NewGuid().ToString("N") + ".png"; // Or .jpg, etc.
-            string tempFilePath = Path.Combine(tempDirectory, tempFileName);
-
-            // Save the image to the temporary file
-            File.WriteAllBytes(tempFilePath, image);
-
-            Console.WriteLine($"Temporary file created: {tempFilePath}");
-
-            // Parse a single transaction from the image
-            var parsedTransaction = TransactionParser.ParseTransactionsSingleLoop(tempFilePath);
-            if (parsedTransaction != null)
+            foreach (var i in Enumerable.Range(0, uploadedImages.Count))
             {
-                // Set the UserID and TemporaryReceiptFilePath for the parsed transaction
-                parsedTransaction.UserID = currentUserId;
-                parsedTransaction.TemporaryReceiptFilePath = tempFilePath;
-
-                transactions.Add(parsedTransaction);
+                var imageBytes = uploadedImages[i];
+                var fileName = fileNames[i];
+                var tempFilePath = GetTemporaryFilePath(imageBytes, fileName);
+                Console.WriteLine($"Processing receipt image: {fileName} on {tempFilePath}");
+                await ProcessReceiptImage(tempFilePath);
             }
+            norecords = !transactions.Any();
         }
-
-        norecords = transactions.Count == 0;
-
+        catch (Exception ex)
+        {
+            errorMessage = $"Error processing receipts: {ex.Message}";
+            Console.Error.WriteLine(errorMessage);
+            await JSRuntime.InvokeVoidAsync("alert", $"Error processing receipts: {ex.Message}");
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
     }
 
-    private void SaveTransactions()
+    private string GetTemporaryFilePath(byte[] fileBytes, string originalFileName)
     {
-        // Save the transactions to the database
-        foreach (var transaction in transactions)
-        {
-            // Save each transaction to the database
-            // TransactionService.SaveTransaction(transaction);
-        }
-        // Clear the transactions list after saving
-        transactions.Clear();
-        norecords = true;
+        var extension = Path.GetExtension(originalFileName);
+        var tempFileName = $"{Guid.NewGuid():N}{extension}";
+        var tempFilePath = Path.Combine(tempDirectory, tempFileName);
+        File.WriteAllBytes(tempFilePath, fileBytes);
+        Console.WriteLine($"Temporary file created: {tempFilePath}");
+        return tempFilePath;
+    }
 
-        //delete the temporary files
-        foreach (var file in Directory.GetFiles(tempDirectory, "*.jpg"))
+    private async Task ProcessReceiptImage(string imagePath)
+    {
+        var parsedTransaction = TransactionParser.ParseTransactionsSingleLoop(imagePath);
+        if (parsedTransaction != null)
         {
-            File.Delete(file);
+            parsedTransaction.UserID = currentUserId;
+            parsedTransaction.TemporaryReceiptFilePath = imagePath;
+            parsedTransaction.addItem = true;
+            parsedTransaction.IsPaid = true;
+            parsedTransaction.HasReceipt = true;
+            parsedTransaction.Frequency = "None";
+            if (parsedTransaction.Date == DateTime.MinValue)
+            {
+                parsedTransaction.Date = DateTime.Now; // Default to today if not parsed
+            }
+            transactions.Add(parsedTransaction);
         }
+        else
+        {
+            Console.WriteLine($"Failed to parse transaction from: {imagePath}");
+            await JSRuntime.InvokeVoidAsync("alert", $"Could not reliably parse transaction from one of the receipts.");
+        }
+    }
+
+    private async Task SaveTransactionsToDatabase()
+    {
+        if (!transactions.Any(t => t.addItem))
+        {
+            toasterMessage = "Please select transactions to save.";
+            toasterClass = "error";
+            return;
+        }
+
+        isLoading = true;
+        errorMessage = string.Empty;
+        try
+        {
+            var transactionsToSave = transactions.Where(t => t.addItem).ToList();
+            foreach (var transaction in transactionsToSave)
+            {
+                if (transaction.AccountID == 0 || transaction.CategoryID == 0)
+                {
+                    toasterMessage = "Please select a valid account and category for all transactions.";
+                    toasterClass = "error";
+                    isLoading = false;
+                    StateHasChanged();
+                    return;
+                }
+
+                await TransactionManager.AddOrUpdateTransactionAsync(transaction, false);
+                if (!string.IsNullOrEmpty(transaction.TemporaryReceiptFilePath) && File.Exists(transaction.TemporaryReceiptFilePath))
+                {
+                    File.Delete(transaction.TemporaryReceiptFilePath);
+                    Console.WriteLine($"Deleted temporary file after save: {transaction.TemporaryReceiptFilePath}");
+                }
+            }
+            transactions.RemoveAll(t => t.addItem);
+            norecords = !transactions.Any();
+            toasterMessage = "Selected transactions saved successfully!";
+            toasterClass = "success";
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error saving transactions: {ex.Message}";
+            Console.Error.WriteLine(errorMessage);
+            toasterMessage = $"Error saving transactions: {ex.Message}";
+            toasterClass = "error";
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+
+
+    private async Task SaveTransactions()
+    {
+        ShowConfirmSaveModal = true;
+    }
+
+    private async Task ConfirmSave()
+    {
+        ShowConfirmSaveModal = false;
+        await SaveTransactionsToDatabase();
     }
 
     private async void ViewReceipts(Transaction transaction)
     {
-        if (transaction.TemporaryReceiptFilePath != null)
+        Console.WriteLine("View Receipts: " + transaction.TemporaryReceiptFilePath);
+        if (!string.IsNullOrEmpty(transaction.TemporaryReceiptFilePath) && File.Exists(transaction.TemporaryReceiptFilePath))
         {
-            await JSRuntime.InvokeVoidAsync("openInNewTab", transaction.TemporaryReceiptFilePath);
+            var fileName = Path.GetFileName(transaction.TemporaryReceiptFilePath);
+            var imageUrl = $"/{TempReceiptsFolderName}/{fileName}"; // URL relative to wwwroot
+            await JSRuntime.InvokeVoidAsync("openInNewTab", imageUrl);
+        }
+        else
+        {
+            await JSRuntime.InvokeVoidAsync("alert", "Receipt file not found.");
         }
     }
 
     private void CancelImport()
     {
-        // Clear the transactions list and close the modal
         transactions.Clear();
         norecords = true;
         ShowUploadReceiptsModal = false;
-        //delete the temporary files
-        foreach (var file in Directory.GetFiles(Path.GetTempPath(), "*.jpg"))
+        CleanupTemporaryFiles();
+        StateHasChanged();
+    }
+
+    private void CleanupTemporaryFiles()
+    {
+        try
         {
-            File.Delete(file);
+            if (Directory.Exists(tempDirectory))
+            {
+                var files = Directory.GetFiles(tempDirectory);
+                foreach (var file in files)
+                {
+                    try
+                    {
+                        File.Delete(file);
+                        Console.WriteLine($"Deleted temporary file: {file}");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error deleting temporary file {file}: {ex.Message}");
+                    }
+                }
+                // Optionally, you can delete the directory itself if it's only used for this purpose and is now empty
+                if (!Directory.GetFileSystemEntries(tempDirectory).Any())
+                {
+                    Directory.Delete(tempDirectory, true);
+                    Console.WriteLine($"Deleted temporary directory: {tempDirectory}");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error cleaning up temporary files/directory: {ex.Message}");
         }
     }
 }
@@ -134,106 +281,123 @@
 <div class="bulktransaction-container">
     <div class="transactions-section">
         <div class="transactions-header">
-            <h3 class="section-title">Recent Transactions</h3>
+            <h3 class="section-title">Bulk Transaction Import</h3>
+            <p>Import multiple transactions at once using an Excel file or by uploading receipt images.</p>
             <div style="display: flex; gap: 10px;">
                 <button class="add-viaCsv" @onclick="OpenExcelModal">Import via Excel</button>
-                <button class="add-viaReceipt" @onclick="OpenReceiptsModal">Import via Receipts</button>
+                <button class="add-viaReceipt" @onclick="OpenReceiptsModal" disabled="@isLoading">Import via Receipts</button>
             </div>
         </div>
     </div>
+
+    @if (isLoading)
+    {
+        <p>Loading...</p>
+    }
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <p class="error-message">@errorMessage</p>
+    }
+
     <div class="transactions-table scrollable-table">
         <table>
             <thead>
                 <tr>
-                    @* <th></th> *@
+                    <th>Select Items</th>
                     <th>Description</th>
-                    <th>Transaction Type</th>
-                    <th>Account Name</th>
-                    <th>Category Name</th>
+                    <th>Account</th>
+                    <th>Category</th>
                     <th>Date</th>
                     <th>Amount</th>
                     <th>Receipt</th>
                 </tr>
             </thead>
             <tbody>
-            </tbody>
-            @if (norecords)
-            {
-                <tr>
-                    <td>No records to import</td>
-                </tr>
-            }
-            else
-            {
-                foreach (var transaction in transactions)
+                @if (norecords && !isLoading)
                 {
                     <tr>
-                        @* <td><InputCheckbox bind-Value="itemid"></InputCheckbox></td>    *@ 
-                        <td>
-                            <input type="text" value="@transaction.Description"/>
-                        </td>
-                        <td>
-                            <select id="@transaction.TransactionType" required>
-                                <option value="e"> Expense </option>
-                                <option value="i"> Income </option>
-                            </select>
-                        </td>
-                        <td>
-                            <input type="text" value="@transaction.AccountID" />
-                            <div class="form-group">
-                                <label for="accountname">Account:</label>
-                                @*<select id="accountname" @bind="NewTransaction.AccountID" required>
-                                    <option value="">Select Account</option>
+                        <td colspan="9">No transactions have been imported yet. Use the buttons above to import transactions.</td>
+                    </tr>
+                }
+                else
+                {
+                    @foreach (var transaction in transactions)
+                    {
+                        <tr>
+                            <td class="align-content-center align-items-center align-text-">
+                                <InputCheckbox @bind-Value="transaction.addItem" class="checkbox"></InputCheckbox>
+                            </td>
+                            <td><InputText @bind-Value="transaction.Description" class="form-control" /></td>
+                            <td>
+                                <InputSelect @bind-Value="transaction.AccountID" class="form-control">
                                     @foreach (var account in accounts)
                                     {
-                                        <option value="@account.AccountId"> @account.AccountName </option>
+                                        <option value="@account.AccountId">@account.AccountName</option>
                                     }
-                                </select>  *@
-                            </div>
-                        </td>
-                        <td>
-                            <input type="text" value="@transaction.CategoryID" />
-                            <div class="form-group">
-                                <label for="category">Category:</label>
-                                @* <select id="category" @bind="NewTransaction.CategoryID" required>
-                                    <option value=""> Select Category</option>
-                                    @foreach (var category in Categories)
+                                </InputSelect>
+                            </td>
+                            <td>
+                                <InputSelect @bind-Value="transaction.CategoryID" class="form-control">
+                                    @foreach (var category in categories)
                                     {
                                         <option value="@category.CategoryID">@category.Name</option>
                                     }
-                                </select>      *@
-                            </div>
-                        </td>
-                        <td>
-                            <input type="text" value="@transaction.Date" />
-                        </td>
-                        <td>
-                            <input type="text" value="@transaction.Amount" />
-                        </td>
-                        <td>
-                            <button class="view-receipt" @onclick="() => ViewReceipts(transaction)">View Receipt</button>
-                        </td>
-                    </tr>
+                                </InputSelect>
+                            </td>
+                            <td><InputDate @bind-Value="transaction.Date" class="form-control" /></td>
+                            <td><InputNumber @bind-Value="transaction.Amount" step="0.01" class="form-control" /></td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(transaction.TemporaryReceiptFilePath))
+                                {
+                                    <button class="view-receipt" @onclick="() => ViewReceipts(transaction)">View</button>
+                                }
+                            </td>
+                        </tr>
+                    }
                 }
-            }
+            </tbody>
         </table>
     </div>
-    @if (!norecords)
+
+    @if (!norecords && !isLoading)
     {
         <div class="button-container">
             <div class="save-button-container">
-                <button class="save-transactions" @onclick="SaveTransactions">Save Transactions</button>
+                <button class="save-transactions" @onclick="SaveTransactions">Save Selected Transactions</button>
             </div>
             <div class="cancel-button-container">
-                <button class="cancel-button" @onclick="CancelImport">Cancel</button>
+                <button class="cancel-button" @onclick="CancelImport">Cancel Import</button>
             </div>
         </div>
     }
 </div>
 
-
-@* Upload Receipts Modal *@
 @if (ShowUploadReceiptsModal)
 {
-    <UploadReceiptsModal IsVisible="ShowUploadReceiptsModal" OnClose="CloseUploadReceiptsModal" OnCloseWithImages="HandleReceiptsUpload" />
+    <UploadReceiptsModal IsVisible="ShowUploadReceiptsModal"
+                         OnClose="CloseUploadReceiptsModal"
+                         OnCloseWithImages="@((ReceiptUploadEventArgs args) => HandleReceiptsUpload(args))" />
+}
+
+@if (ShowConfirmSaveModal)
+{
+    <ConfirmSaveModal IsVisible="ShowConfirmSaveModal"
+                      OnClose="@(async (bool isVisible) => ShowConfirmSaveModal = isVisible)"
+                      OnConfirm="ConfirmSave" />
+}
+
+@if (!string.IsNullOrEmpty(toasterMessage))
+{
+    <div class="toaster @toasterClass">
+        <span>@toasterMessage</span>
+        <button class="close-toaster" @onclick="ClearToaster">×</button>
+    </div>
+}
+
+@code {
+    private void ClearToaster()
+    {
+        toasterMessage = string.Empty;
+        toasterClass = string.Empty;
+    }
 }
