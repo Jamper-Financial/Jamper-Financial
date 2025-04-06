@@ -1,0 +1,118 @@
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    text-align: left;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to modal content */
+}
+
+.modal-header {
+    color: var(--primary-color);
+    width: 100%;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.modal-body {
+    margin: 20px 0;
+}
+
+    .modal-body p {
+        font-size: 14px;
+        color: #17a2b8;
+    }
+
+    .modal-body .success-text {
+        font-weight: bold;
+        color: var(--tertiary-color);
+        font-size: 16px;
+    }
+
+
+/*  Style buttons here */
+
+.manual-account-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+    .manual-account-input input {
+        padding: 5px;
+        margin-top: 5px;
+    }
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+    .button-container button {
+        flex: 1;
+        padding: 10px;
+        border-radius: .25rem;
+    }
+
+        .button-container button.save {
+            background-color: var(--background-color);
+            color: white;
+            border: none;
+        }
+
+            .button-container button.save:hover {
+                background-color: var(--background-color-hover);
+                color: white;
+            }
+
+        .button-container button.cancel {
+            background-color: var(--btn-cancel-color);
+            color: white;
+            border: none;
+        }
+
+            .button-container button.cancel:hover {
+                background-color: var(--btn-cancel-color-hover);
+            }
+
+.validation-message {
+    display: block; /* Show even when field isn't touched */
+    color: red;
+    font-size: 0.875rem;
+}
+
+.validation-summary {
+    border: 1px solid red;
+    padding: 10px;
+    margin-bottom: 0px;
+    background-color: #ffe6e6; /* light red background */
+    color: red;
+}
+
+    .validation-summary ul {
+        list-style-type: none; /* remove bullet points */
+        padding: 0;
+        margin: 0;
+    }
+
+    .validation-summary li {
+        margin-bottom: 5px;
+        list-style-type: none; /* remove bullet points */
+    }

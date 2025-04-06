@@ -37,18 +37,19 @@ namespace Jamper_Financial.Shared.Services
                 using var connection = new SqliteConnection(_connectionString);
                 await connection.OpenAsync();
 
-                string query = @"
-            SELECT c.Name AS Category, 
-                   IFNULL(SUM(t.Debit - t.Credit), 0) AS CurrentAmount, 
-                   IFNULL(b.PlannedAmount, 0) AS PlannedAmount,
-                   c.TransactionType
-            FROM Categories c
-            LEFT JOIN Transactions t ON c.CategoryID = t.CategoryID
-            LEFT JOIN Budget b ON c.CategoryID = b.CategoryID AND b.UserID = @UserID
-            WHERE c.UserID = @UserID
-            GROUP BY c.CategoryID
-			Order BY c.Name;
-        ";
+            string query = @"
+                SELECT c.Name AS Category, 
+                       IFNULL(SUM(CASE WHEN t.TransactionType = 'i' THEN t.Amount ELSE 0 END) - 
+                              SUM(CASE WHEN t.TransactionType = 'e' THEN t.Amount ELSE 0 END), 0) AS CurrentAmount, 
+                       IFNULL(b.PlannedAmount, 0) AS PlannedAmount,
+                       c.TransactionType
+                FROM Categories c
+                LEFT JOIN Transactions t ON c.CategoryID = t.CategoryID
+                LEFT JOIN Budget b ON c.CategoryID = b.CategoryID AND b.UserID = @UserID
+                WHERE c.UserID = @UserID
+                GROUP BY c.CategoryID
+                ORDER BY c.Name;
+            ";
 
                 using var command = new SqliteCommand(query, connection);
                 command.Parameters.AddWithValue("@UserID", userId);

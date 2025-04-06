@@ -4,6 +4,7 @@
 @inject NavigationManager Navigation
 @inject GoalState GoalState
 @inject DatabaseHelperFactory DatabaseHelper
+@inject UserStateService UserStateService
 
 <div class="header-container">
     <h3 class="header">Save to Buy a Home</h3>
@@ -42,6 +43,7 @@
     private decimal monthlySavings;
     private DateTime targetPurchaseDate = DateTime.Today;
 
+
     private void SubmitHomeGoal()
     {
         if (homePrice > 0)
@@ -56,7 +58,8 @@
                     Category = "Home",
                     GoalType = "Savings",
                     Frequency = "Monthly",
-                    IsHomeGoal = true
+                    IsHomeGoal = true  ,
+                    UserID = UserStateService.UserId
                 };
 
             GoalState.AddGoal(homeGoal);

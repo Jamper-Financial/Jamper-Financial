@@ -1,9 +1,16 @@
 ﻿@page "/Transactions-Page"
 @inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
 
 @using Jamper_Financial.Shared.Data;
 @using Jamper_Financial.Shared.Utilities;
 @using Jamper_Financial.Shared.Pages.Components;
+@using Jamper_Financial.Shared.Models;
+@using Jamper_Financial.Shared.Services;
+
+@inject SearchService SearchService
+@inject UserStateService UserStateService
+@inject IAccountService AccountService
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -12,7 +19,6 @@
     {
         SetPageTitle("Transactions");
     }
-
 }
 
 <div class="transactions-page">
@@ -38,40 +44,63 @@
     @* Transactions Section *@
     <div class="transactions-section">
         <div class="transactions-header">
-            <h3 class="section-title">Recent Transactions</h3>
-            <button class="add-transaction" @onclick="OpenAddTransactionModal">+ Add Transaction</button>
+            <div class="title-filter">
+                <h3 class="section-title">Recent Transactions</h3>
+                <button class="filter-button" @onclick="ToggleFilterDropdown">Filter</button>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button class="add-transaction" @onclick="OpenAddTransactionModal">+ Add Transaction</button>
+                <button class="manage-categories-btn" @onclick="NavigateToManageCategories">Manage Categories</button>
+            </div>
         </div>
-        <div class="transactions-table scrollable-table">
+        <div class="transactions-table">
             <table>
                 <thead>
                     <tr>
-                        <th>Description</th>
-                        <th>Transaction ID</th>
-                        <th>Type</th>
-                        <th>Card</th>
-                        <th>Date</th>
-                        <th>Amount</th>
+                        <th @onclick='() => SortTransactions("Date", isAscending)'>Date @GetSortIndicator("Date")</th>
+                        <th @onclick='() => SortTransactions("Description", isAscending)'>Description @GetSortIndicator("Description")</th>
+                        <th @onclick='() => SortTransactions("CategoryName", isAscending)'>Category @GetSortIndicator("CategoryName")</th>
+                        <th @onclick='() => SortTransactions("AccountName", isAscending)'>Account Name @GetSortIndicator("AccountName")</th>
+                        <th @onclick='() => SortTransactions("AccountNumber", isAscending)'>Account Number @GetSortIndicator("AccountNumber")</th>
+                        <th @onclick='() => SortTransactions("Amount", isAscending)'>Amount @GetSortIndicator("Amount")</th>
                         <th>Receipt</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if (transactions != null)
+                    @if (Transactions != null)
                     {
-                        @foreach (var transaction in transactions)
+                        var maxRows = 10; // Adjust this value based on your viewport
+                        var rowsToFill = maxRows - PaginatedTransactions.Count();
+
+                        @foreach (var transaction in PaginatedTransactions)
                         {
                             <tr class="transaction-item" @onclick="() => ShowEditTransactionModal(transaction)" style="cursor: pointer;">
+                                <td>@transaction.Date.ToString("dd MMM yyyy")</td>
                                 <td>@transaction.Description</td>
-                                <td>@transaction.TransactionID</td>
-                                <td>@transaction.Category</td>
-                                <td>1234 ****</td>
-                                <td>@transaction.Date.ToString("dd MMM, hh:mm tt")</td>
-                                <td class="@(transaction.Debit > 0 ? "negative" : "positive")">@((transaction.Debit > 0 ? transaction.Debit : transaction.Credit).ToString("C"))</td>
+                                <td>@GetCategoryName(transaction.CategoryID)</td>
+                                <td>@GetAccountName(transaction.AccountID)</td>
+                                <td>@GetAccountNumber(transaction.AccountID)</td>
+                                <td class="@(transaction.TransactionType == "e" ? "negative" : "positive")">
+                                    @(transaction.Amount > 0 ? "-" : "+")@((transaction.Amount > 0 ? transaction.Amount : transaction.Amount).ToString("C"))
+                                </td>
                                 <td @onclick:stopPropagation="true"><button class="view-details" @onclick="() => OpenReceiptModal(transaction)">View Receipt</button></td>
+                            </tr>
+                        }
+
+                        @for (int i = 0; i < rowsToFill; i++)
+                        {
+                            <tr class="empty-row">
+                                <td colspan="7"></td>
                             </tr>
                         }
                     }
                 </tbody>
             </table>
+        </div>
+        <div class="pagination">
+            <button @onclick="PreviousPage" disabled="@(!HasPreviousPage)">Previous</button>
+            <span>Page @currentPage of @totalPages</span>
+            <button @onclick="NextPage" disabled="@(!HasNextPage)">Next</button>
         </div>
     </div>
 </div>
@@ -79,121 +108,99 @@
 @* Add/Edit Transaction Modal *@
 @if (ShowAddTransactionModal)
 {
-    <div class="modal">
-        <div class="modal-content">
-            @if (ShowDeleteConfirmation)
-            {
-                @if (NewTransaction.Frequency != "None")
-                {
-                    <h3>Confirm Deletion</h3>
-                    <p>This transaction is recurring. Do you want to delete all occurrences or just this one?</p>
-                    <div class="form-group button-group">
-                        <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(true)">Delete All</button>
-                        <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(false)">Delete This One</button>
-                        <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
-                    </div>
-                }
-                else
-                {
-                    <h3>Confirm Deletion</h3>
-                    <p>Are you sure you want to delete this transaction?</p>
-                    <div class="form-group button-group">
-                        <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(false)">Confirm</button>
-                        <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
-                    </div>
-                }
-            }
-            else
-            {
-                <h3>@(IsEditMode ? "Edit Transaction" : "Add Transaction")</h3>
-                <form @onsubmit="HandleAddOrEditTransaction">
-                    <div class="form-group">
-                        <label for="description">Description:</label>
-                        <input id="description" @bind="NewTransaction.Description" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="category">Category:</label>
-                        <select id="category" @onchange="HandleCategoryChange" required>
-                            <option value="Expenses">Expenses</option>
-                            <option value="Income">Income</option>
-                            <option value="Debts & Loans">Debts & Loans</option>
-                            <option value="Savings & Investments">Savings & Investments</option>
-                            <option value="Subscriptions & Memberships">Subscriptions & Memberships</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="amount">Amount:</label>
-                        <input id="amount" type="number" step="0.01" @bind="Amount" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="transactionDate">Transaction Date:</label>
-                        <input id="transactionDate" type="date" @bind="NewTransaction.Date" required />
-                    </div>
-                    <div class="form-group">
-                        <label for="frequency">Frequency:</label>
-                        <select id="frequency" @bind="NewTransaction.Frequency" @bind:event="onchange" required>
-                            <option value="None">None</option>
-                            <option value="Monthly">Monthly</option>
-                            <option value="Yearly">Yearly</option>
-                        </select>
-                    </div>
-                    @if (NewTransaction.Frequency != "None")
-                    {
-                        <div class="form-group">
-                            <label for="endDate">End Date:</label>
-                            <input id="endDate" type="date" @bind="NewTransaction.EndDate" required />
-                        </div>
-                    }
-                    @if (NewTransaction.Category == "Subscriptions & Memberships")
-                    {
-                        <div class="form-group">
-                            <label for="color">Color:</label>
-                            <input id="color" type="color" @bind="NewTransaction.Color" />
-                        </div>
-                    }
-                    <div class="form-group button-group">
-                        @if (IsEditMode)
-                        {
-                            <button type="button" class="delete" @onclick="ShowDeleteConfirmationForm">Delete</button>
-                        }
-                        <button type="button" class="cancel" @onclick="CloseAddTransactionModal">Cancel</button>
-                        <button type="submit" class="@(IsEditMode ? "save" : "add")">@((IsEditMode ? "Save" : "Add"))</button>
-                    </div>
-                </form>
-            }
-        </div>
-    </div>
+    <TransactionModal IsVisible="ShowAddTransactionModal"
+                      IsEditMode="IsEditMode"
+                      NewTransaction="NewTransaction"
+                      Categories="Categories"
+                      Accounts="Accounts"
+                      OnClose="CloseAddTransactionModal"
+                      OnSave="HandleAddOrEditTransaction"
+                      OnDelete="ShowDeleteConfirmationForm"
+                      OnConfirmDelete="ConfirmDeleteTransaction" />
 }
 
 @* Receipt Modal *@
-
 @if (ShowReceiptModal)
 {
-    <ReceiptModal IsVisible="ShowReceiptModal" Transaction="SelectedTransaction" OnClose="CloseReceiptModal" />
+    <ReceiptModal IsVisible="ShowReceiptModal"
+                  Transaction="SelectedTransaction"
+                  OnClose="CloseReceiptModal" />
+}
 
+@* Filter Modal *@
+@if (ShowFilterDropdown)
+{
+    <FilterModal ShowFilterDropdown="ShowFilterDropdown"
+                 Categories="Categories"
+                 Accounts="Accounts"
+                 Transactions="Transactions"
+                 CurrentFilter="CurrentFilter"
+                 OnFilteredTransactionsChanged="HandleFilteredTransactionsChanged"
+                 OnCloseFilterDropdown="CloseFilterDropdown" />
 }
 
 @code {
-    private List<Transaction> transactions;
+    private List<Transaction> Transactions;
+    private List<Transaction> FilteredTransactions;
+    private List<Category> Categories = new();
+    private List<BankAccount> Accounts = new();
     public bool ShowAddTransactionModal { get; set; } = false;
     public bool ShowReceiptModal { get; set; } = false;
     public bool IsEditMode { get; set; } = false;
     public bool ShowDeleteConfirmation { get; set; } = false;
     public Transaction NewTransaction { get; set; } = new Transaction();
     public Transaction SelectedTransaction { get; set; } = new Transaction();
-    public decimal Amount { get; set; } = 0;
+    private string currentSortColumn = "Date";
+    private bool isAscending = true;
+    public bool ShowFilterDropdown { get; set; } = false;
+    public Filter CurrentFilter { get; set; } = new Filter();
+
+    // Pagination properties
+    private int currentPage = 1;
+    private int pageSize = 10;
+    private int totalPages => (int)Math.Ceiling((double)FilteredTransactions.Count / pageSize);
+    private bool HasPreviousPage => currentPage > 1;
+    private bool HasNextPage => currentPage < totalPages;
+    private IEnumerable<Transaction> PaginatedTransactions => FilteredTransactions.Skip((currentPage - 1) * pageSize).Take(pageSize);
 
     protected override async Task OnInitializedAsync()
     {
-        transactions = await TransactionManager.LoadTransactionsAsync();
+        Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
+        Categories = (await DatabaseHelper.LoadUserCategoriesAsync(UserStateService.UserId)).ToList();
+        Accounts = await AccountService.GetBankAccounts(UserStateService.UserId);
+        FilteredTransactions = Transactions.ToList();
+        SearchService.OnSearchQueryChanged += SearchTransactions;
+    }
+
+    private void SearchTransactions()
+    {
+        if (string.IsNullOrEmpty(SearchService.SearchQuery))
+        {
+            FilteredTransactions = Transactions;
+        }
+        else
+        {
+            FilteredTransactions = Transactions
+                .Where(t => t.Description.Contains(SearchService.SearchQuery, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+        currentPage = 1; // Reset to first page after filtering
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        SearchService.OnSearchQueryChanged -= SearchTransactions;
+    }
+
+    private void NavigateToManageCategories()
+    {
+        NavigationManager.NavigateTo("/manage-categories");
     }
 
     private void OpenReceiptModal(Transaction transaction)
     {
-        Console.Write("Trying to open receipt modal");
-
         SelectedTransaction = transaction;
-        Console.WriteLine(transaction);
         ShowReceiptModal = true;
     }
 
@@ -208,14 +215,14 @@
             {
                 Date = DateTime.Now,
                 Description = string.Empty,
-                Category = "Expenses",
-                Debit = 0,
-                Credit = 0,
-                Color = GetColorForCategory("Expenses"),
+                CategoryID = 0,
+                Amount = 0,
                 Frequency = "None",
-                EndDate = DateTime.Now
+                EndDate = DateTime.Now,
+                UserID = UserStateService.UserId,
+                AccountID = 0
+
             };
-        Amount = 0;
         IsEditMode = false;
         ShowDeleteConfirmation = false;
         ShowAddTransactionModal = true;
@@ -224,14 +231,9 @@
     private void ShowEditTransactionModal(Transaction transaction)
     {
         NewTransaction = transaction;
-        Amount = transaction.Debit > 0 ? transaction.Debit : transaction.Credit;
         IsEditMode = true;
         ShowDeleteConfirmation = false;
         ShowAddTransactionModal = true;
-        if (string.IsNullOrEmpty(NewTransaction.Frequency))
-        {
-            NewTransaction.Frequency = "None";
-        }
     }
 
     private void CloseAddTransactionModal()
@@ -241,10 +243,37 @@
 
     private async Task HandleAddOrEditTransaction()
     {
-        NewTransaction.Amount = Amount;
-        await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
-        CloseAddTransactionModal();
-        transactions = await TransactionManager.LoadTransactionsAsync();
+        try
+        {
+            await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
+
+            // Save current sort state
+            var currentSortColumn = this.currentSortColumn;
+            var currentIsAscending = this.isAscending;
+            var currentFilters = CurrentFilter;
+
+            // Reload data
+            Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
+
+            // Reapply filters and sorting
+            FilteredTransactions = FilterUtilities.ApplyFilters(Transactions, currentFilters);
+            if (!string.IsNullOrEmpty(currentSortColumn))
+            {
+                FilteredTransactions = Sort.ApplySort(FilteredTransactions, currentSortColumn, currentIsAscending, Categories, Accounts);
+            }
+
+            // Reset pagination
+            currentPage = 1;
+        }
+        catch
+        {
+            // Handle any errors if needed
+            throw;
+        }
+        finally
+        {
+            CloseAddTransactionModal();
+        }
     }
 
     private void ShowDeleteConfirmationForm()
@@ -259,58 +288,130 @@
 
     private async Task ConfirmDeleteTransaction(bool deleteAll)
     {
+        // Save current sort state
+        var currentSortColumn = this.currentSortColumn;
+        var currentIsAscending = this.isAscending;
+        var currentFilters = CurrentFilter;
+
         if (deleteAll)
         {
             await TransactionManager.DeleteRecurringTransactionsAsync(NewTransaction);
-            transactions.RemoveAll(t => t.Description == NewTransaction.Description &&
-                                        t.Category == NewTransaction.Category &&
-                                        t.Color == NewTransaction.Color &&
-                                        t.Frequency == NewTransaction.Frequency &&
-                                        t.Date > NewTransaction.Date);
+            Transactions.RemoveAll(t => t.Description == NewTransaction.Description &&
+                                    t.CategoryID == NewTransaction.CategoryID &&
+                                    t.Frequency == NewTransaction.Frequency &&
+                                    t.Date > NewTransaction.Date);
         }
         else
         {
             await TransactionManager.DeleteTransactionAsync(NewTransaction);
-            transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
+            Transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
         }
+
+        // Reapply filters and sorting
+        FilteredTransactions = FilterUtilities.ApplyFilters(Transactions, currentFilters);
+        if (!string.IsNullOrEmpty(currentSortColumn))
+        {
+            FilteredTransactions = Sort.ApplySort(FilteredTransactions, currentSortColumn, currentIsAscending, Categories, Accounts);
+        }
+
+        // Reset pagination
+        currentPage = 1;
         CloseAddTransactionModal();
-        transactions = await TransactionManager.LoadTransactionsAsync();
     }
 
-    private void HandleCategoryChange(ChangeEventArgs e)
+    private string GetAccountName(int accountId)
     {
-        var selectedCategory = e.Value.ToString();
-        NewTransaction.Category = selectedCategory;
-        if (selectedCategory == "Subscriptions & Memberships")
+        var account = Accounts.FirstOrDefault(a => a.AccountId == accountId);
+        return account != null ? account.AccountName : "Unknown Account";
+    }
+
+    private string GetCategoryName(int categoryId)
+    {
+        var category = Categories.FirstOrDefault(c => c.CategoryID == categoryId);
+        return category != null ? category.Name : "Unknown Category";
+    }
+
+    private string GetAccountNumber(int accountId)
+    {
+        var account = Accounts.FirstOrDefault(a => a.AccountId == accountId);
+        return account != null ? account.AccountNumber : "Unknown Account Number";
+    }
+
+    private void SortTransactions(string column, bool isAscending)
+    {
+        // Toggle sort state
+        if (currentSortColumn == column)
         {
-            // Do not change the color if it is already set (i.e., user selected a custom color)
-            if (string.IsNullOrEmpty(NewTransaction.Color))
+            if (this.isAscending)
             {
-                NewTransaction.Color = GetRandomColor();
+                this.isAscending = false;
+            }
+            else
+            {
+                currentSortColumn = string.Empty;
+                this.isAscending = true;
             }
         }
         else
         {
-            NewTransaction.Color = GetColorForCategory(selectedCategory);
+            currentSortColumn = column;
+            this.isAscending = true;
+        }
+
+        // Apply filters and sorting
+        var filteredTransactions = FilterUtilities.ApplyFilters(Transactions, CurrentFilter);
+        if (!string.IsNullOrEmpty(currentSortColumn))
+        {
+            FilteredTransactions = Sort.ApplySort(filteredTransactions, currentSortColumn, this.isAscending, Categories, Accounts);
+        }
+        else
+        {
+            FilteredTransactions = filteredTransactions; // No sorting, just filtered
+        }
+
+        currentPage = 1;
+        StateHasChanged();
+    }
+
+    private string GetSortIndicator(string column)
+    {
+        if (currentSortColumn == column)
+        {
+            return isAscending ? "↑" : "↓";
+        }
+        return string.Empty;
+    }
+
+    private void PreviousPage()
+    {
+        if (HasPreviousPage)
+        {
+            currentPage--;
         }
     }
 
-    private string GetColorForCategory(string category)
+    private void NextPage()
     {
-        return category switch
+        if (HasNextPage)
         {
-            "Expenses" => "#FF0000", // Red
-            "Income" => "#00FF00", // Green
-            "Debts & Loans" => "#FFA500", // Orange
-            "Savings & Investments" => "#005AFF", // Blue
-            "Subscriptions & Memberships" => GetRandomColor(), // Random color for subscriptions
-            _ => "#000000" // Default color
-        };
+            currentPage++;
+        }
     }
 
-    private string GetRandomColor()
+    private void HandleFilteredTransactionsChanged(List<Transaction> FilteredTransactions)
     {
-        var random = new Random();
-        return $"#{random.Next(0x1000000):X6}";
+        this.FilteredTransactions = FilteredTransactions;
+        currentPage = 1;
+        StateHasChanged();
+    }
+
+    private void CloseFilterDropdown()
+    {
+        ShowFilterDropdown = false;
+    }
+
+    private void ToggleFilterDropdown()
+    {
+        ShowFilterDropdown = !ShowFilterDropdown;
     }
 }

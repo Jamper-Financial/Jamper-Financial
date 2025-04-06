@@ -7,6 +7,7 @@
 @inject NavigationManager Navigation
 @inject GoalState GoalState
 @inject DatabaseHelperFactory DatabaseHelper
+@inject UserStateService UserStateService
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -14,6 +15,10 @@
     protected override void OnInitialized()
     {
         SetPageTitle("Saving Goals");
+        if (UserStateService.LoggedInUser.UserID <= 0)
+        {
+            Navigation.NavigateTo("/login");
+        }
     }
 }
 
@@ -150,11 +155,12 @@
                     Amount = amount,
                     StartDate = startDate,
                     EndDate = endDate,
-                    IsQuickGoal = true
+                    IsQuickGoal = true  ,
+                    UserID = UserStateService.UserId
                 };
 
             GoalState.AddGoal(newGoal);
-            DatabaseHelper.InsertGoal(newGoal);
+            DatabaseHelper.InsertGoal(newGoal);    
             Navigation.NavigateTo("/view-goals-page");
         }
     }

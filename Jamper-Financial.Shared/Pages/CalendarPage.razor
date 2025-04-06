@@ -2,6 +2,14 @@
 @using System.Globalization
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Utilities
+@using Jamper_Financial.Shared.Pages.Components;
+@using Jamper_Financial.Shared.Models
+@using Jamper_Financial.Shared.Services
+
+@inject SearchService SearchService
+@inject NavigationManager NavigationManager
+@inject UserStateService UserStateService
+@inject IAccountService AccountService
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -15,61 +23,28 @@
 <div class="calendar-page">
     <!-- Header Section -->
     <div class="header">
-        <div class="sort-container">
-            <div class="sort-button">
-                <select @onchange="HandleSortChange" class="border-0">
-                    <option value="" selected>Sort By</option>
-                    <option value="DateAsc">Date Ascending</option>
-                    <option value="DateDesc">Date Descending</option>
-                    <option value="CategoryAsc">Category Ascending</option>
-                    <option value="CategoryDesc">Category Descending</option>
-                    <option value="AmountAsc">Amount Ascending</option>
-                    <option value="AmountDesc">Amount Descending</option>
-                    <option value="DescriptionAsc">Description Ascending</option>
-                    <option value="DescriptionDesc">Description Descending</option>
-                </select>
-            </div>
-            <button class="filter-button" @onclick="ToggleFilterDropdown">Filter</button>
-            <!-- Filter Dropdown -->
-            @if (ShowFilterDropdown)
-            {
-                <div class="filter-dropdown">
-                    <h3>Filter Transactions</h3>
-                    <div class="form-group">
-                        <label for="filterCategory">Category:</label>
-                        <select id="filterCategory" @bind="TempFilterCategory">
-                            <option value="">All</option>
-                            <option value="Expenses">Expenses</option>
-                            <option value="Income">Income</option>
-                            <option value="Debts & Loans">Debts & Loans</option>
-                            <option value="Savings & Investments">Savings & Investments</option>
-                            <option value="Subscriptions & Memberships">Subscriptions & Memberships</option>
-                        </select>
-                    </div>
-                    <div class="form-group amount-filter">
-                        <div>
-                            <label for="minAmount">Min Amount:</label>
-                            <input id="minAmount" type="number" @bind="TempMinAmount" />
-                        </div>
-                        <div>
-                            <label for="maxAmount">Max Amount:</label>
-                            <input id="maxAmount" type="number" @bind="TempMaxAmount" />
-                        </div>
-                    </div>
-                    <div class="form-group button-group">
-                        <button type="button" class="cancel" @onclick="CloseFilterDropdown">Cancel</button>
-                        <button type="button" class="apply" @onclick="ApplyFilters">Apply</button>
-                    </div>
-                </div>
-            }
+        <div class="sort-filter">
+            <select @onchange="HandleSortChange" class="sort-button">
+                <option value="" selected>Sort By</option>
+                <option value="DateAsc">Date Ascending</option>
+                <option value="DateDesc">Date Descending</option>
+                <option value="CategoryAsc">Category Ascending</option>
+                <option value="CategoryDesc">Category Descending</option>
+                <option value="AmountAsc">Amount Ascending</option>
+                <option value="AmountDesc">Amount Descending</option>
+                <option value="DescriptionAsc">Description Ascending</option>
+                <option value="DescriptionDesc">Description Descending</option>
+            </select>
+            <button class="filter-button" @onclick="OpenFilterModal">Filter</button>
         </div>
-        <button class="new-transaction" @onclick="OpenAddTransactionModal">+ Add Transaction</button>
+        <div style="display: flex; gap: 10px;">
+            <button class="new-transaction" @onclick="OpenAddTransactionModal">+ Add Transaction</button>
+        </div>
     </div>
 
     <!-- Main Content Section -->
     <div class="main-content">
         <!-- Calendar Section -->
-
         <div class="calendar-container">
             <h3>Calendar</h3>
             <div class="calendar-header">
@@ -95,16 +70,15 @@
                 @foreach (var date in GetCalendarDates())
                 {
                     <div class="day-box @(date.Month != SelectedMonth ? "greyed-out" : "") @(SelectedDate == date.Day && date.Month == SelectedMonth ? "selected" : "")"
-                    @onclick="() => SelectDate(date)">
+                         @onclick="() => SelectDate(date)">
                         <span class="day">@date.Day</span>
-                        @if (HasTransactions(date))
+                        @if (FilteredTransactions.Any(t => t.Date.Date == date.Date))
                         {
                             <div class="transaction-dots">
-                                @foreach (var transaction in GetTransactions(date))
+                                @foreach (var transaction in (SelectedDate != 0 ? SelectedDateTransactions : FilteredTransactions).Where(t => t.Date.Date == date.Date))
                                 {
                                     <div class="transaction-dot-container">
-                                        <span class="transaction-dot" style="background-color: @transaction.Color;"></span>
-                                        @* <span class="transaction-description">@transaction.Description</span> *@
+                                        <span class="transaction-dot" style="background-color: @(Categories.FirstOrDefault(c => c.CategoryID == transaction.CategoryID)?.Color ?? "#000000");"></span>
                                     </div>
                                 }
                             </div>
@@ -118,21 +92,19 @@
         <div class="transaction-details">
             <h3 class="transaction-details-header">
                 Upcoming Payments
-                @* 
-                        //remove this for now to make the page not crowded
-                    <div class="transaction-date"> *@
-                @*     <strong>@CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(SelectedMonth) @SelectedYear</strong> *@
-                @* </div> *@
             </h3>
-            @if (FilteredTransactionsForSelectedMonth.Any())
+            @if (FilteredTransactions.Any())
             {
-                @foreach (var transaction in FilteredTransactionsForSelectedMonth)
+                @foreach (var transaction in (SelectedDate != 0 ? SelectedDateTransactions : FilteredTransactions))
                 {
                     <div class="transaction-item @(transaction.Date.Day == SelectedDate ? "selected-transaction" : "")" @onclick="() => ShowEditTransactionModal(transaction)">
-                        <h4 class="description" style="color: @transaction.Color;">@transaction.Description</h4>
-                        <p>@transaction.Category</p>
-                        <p class="@(transaction.Debit > 0 ? "negative-amount" : "positive-amount")">
-                            @(transaction.Debit > 0 ? "-" : "+")@((transaction.Debit > 0 ? transaction.Debit : transaction.Credit).ToString("C"))
+                        <h4 class="description" style="color: @(Categories.FirstOrDefault(c => c.CategoryID == transaction.CategoryID)?.Color ?? "#000000");">
+                            @transaction.Description
+                        </h4>
+                        <p>@(Categories.FirstOrDefault(c => c.CategoryID == transaction.CategoryID)?.Name ?? "Unknown")</p>
+
+                        <p class="@(transaction.TransactionType == "e" ? "negative-amount" : "positive-amount")">
+                            @(transaction.Amount > 0 ? "-" : "+")@((transaction.Amount > 0 ? transaction.Amount : transaction.Amount).ToString("C"))
                         </p>
                         <p>@transaction.Date.ToString("d")</p>
                         <p>Frequency: @(string.IsNullOrEmpty(transaction.Frequency) ? "None" : transaction.Frequency)</p>
@@ -140,9 +112,6 @@
                         {
                             <p>End Date: @transaction.EndDate.Value.ToString("d")</p>
                         }
-                        @* <button @onclick="() => ShowEditTransactionModal(transaction)">Edit</button> 
-                            //remove this for now to make the page not crowded
-                        *@
                     </div>
                 }
             }
@@ -156,90 +125,27 @@
     <!-- Add/Edit Transaction Modal -->
     @if (ShowAddTransactionModal)
     {
-        <div class="modal">
-            <div class="modal-content">
-                @if (ShowDeleteConfirmation)
-                {
-                    @if (NewTransaction.Frequency != "None")
-                    {
-                        <h3>Confirm Deletion</h3>
-                        <p>This transaction is recurring. Do you want to delete all occurrences or just this one?</p>
-                        <div class="form-group button-group">
-                            <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(true)">Delete All</button>
-                            <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(false)">Delete This One</button>
-                            <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
-                        </div>
-                    }
-                    else
-                    {
-                        <h3>Confirm Deletion</h3>
-                        <p>Are you sure you want to delete this transaction?</p>
-                        <div class="form-group button-group">
-                            <button type="button" class="save" @onclick="() => ConfirmDeleteTransaction(false)">Confirm</button>
-                            <button type="button" class="cancel" @onclick="CancelDeleteTransaction">Cancel</button>
-                        </div>
-                    }
-                }
-                else
-                {
-                    <h3>@(IsEditMode ? "Edit Transaction" : "Add Transaction")</h3>
-                    <form @onsubmit="HandleAddOrEditTransaction">
-                        <div class="form-group">
-                            <label for="description">Description:</label>
-                            <input id="description" @bind="NewTransaction.Description" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="category">Category:</label>
-                            <select id="category" @onchange="HandleCategoryChange" required>
-                                <option value="Expenses">Expenses</option>
-                                <option value="Income">Income</option>
-                                <option value="Debts & Loans">Debts & Loans</option>
-                                <option value="Savings & Investments">Savings & Investments</option>
-                                <option value="Subscriptions & Memberships">Subscriptions & Memberships</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="amount">Amount:</label>
-                            <input id="amount" type="number" step="0.01" @bind="Amount" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="transactionDate">Transaction Date:</label>
-                            <input id="transactionDate" type="date" @bind="NewTransaction.Date" required />
-                        </div>
-                        <div class="form-group">
-                            <label for="frequency">Frequency:</label>
-                            <select id="frequency" @bind="NewTransaction.Frequency" @bind:event="onchange" required>
-                                <option value="None">None</option>
-                                <option value="Monthly">Monthly</option>
-                                <option value="Yearly">Yearly</option>
-                            </select>
-                        </div>
-                        @if (NewTransaction.Frequency != "None")
-                        {
-                            <div class="form-group">
-                                <label for="endDate">End Date:</label>
-                                <input id="endDate" type="date" @bind="NewTransaction.EndDate" required />
-                            </div>
-                        }
-                        @if (NewTransaction.Category == "Subscriptions & Memberships")
-                        {
-                            <div class="form-group">
-                                <label for="color">Color:</label>
-                                <input id="color" type="color" @bind="NewTransaction.Color" />
-                            </div>
-                        }
-                        <div class="form-group button-group">
-                            @if (IsEditMode)
-                            {
-                                <button type="button" class="delete" @onclick="ShowDeleteConfirmationForm">Delete</button>
-                            }
-                            <button type="button" class="cancel" @onclick="CloseAddTransactionModal">Cancel</button>
-                            <button type="submit" class="@(IsEditMode ? "save" : "add")">@((IsEditMode ? "Save" : "Add"))</button>
-                        </div>
-                    </form>
-                }
-            </div>
-        </div>
+        <TransactionModal IsVisible="ShowAddTransactionModal"
+                          IsEditMode="IsEditMode"
+                          NewTransaction="NewTransaction"
+                          Categories="Categories"
+                          Accounts="Accounts"
+                          OnClose="CloseAddTransactionModal"
+                          OnSave="HandleAddOrEditTransaction"
+                          OnDelete="ShowDeleteConfirmationForm"
+                          OnConfirmDelete="ConfirmDeleteTransaction" />
+    }
+
+    <!-- Filter Modal -->
+    @if (ShowFilterModal)
+    {
+        <FilterModal ShowFilterDropdown="ShowFilterModal"
+                     Categories="Categories"
+                     Accounts="Accounts"
+                     Transactions="Transactions"
+                     CurrentFilter="CurrentFilter"
+                     OnFilteredTransactionsChanged="HandleFilteredTransactionsChanged"
+                     OnCloseFilterDropdown="CloseFilterModal" />
     }
 </div>
 
@@ -247,56 +153,66 @@
     // Calendar State
     public int SelectedMonth { get; set; } = DateTime.Now.Month;
     public int SelectedYear { get; set; } = DateTime.Now.Year;
-    public int SelectedDate { get; set; } = DateTime.Now.Day;
+    public int SelectedDate { get; set; } = 0;
 
     // Transactions State
     public List<Transaction> Transactions { get; set; } = new();
-    public List<Transaction> TransactionsForSelectedMonth { get; set; } = new();
-    public List<Transaction> FilteredTransactionsForSelectedMonth { get; set; } = new();
+    public List<Transaction> FilteredTransactions { get; set; } = new();
+    public List<Transaction> SelectedDateTransactions { get; set; } = new();
 
-    // Search and Filter State
-    public string FilterCategory { get; set; } = string.Empty;
-    public double? MinAmount { get; set; } = null;
-    public double? MaxAmount { get; set; } = null;
-    public string TempFilterCategory { get; set; } = string.Empty;
-    public double? TempMinAmount { get; set; } = null;
-    public double? TempMaxAmount { get; set; } = null;
+    // Categories State
+    public List<Category> Categories { get; set; } = new();
+    public List<BankAccount> Accounts { get; set; } = new();
 
     // Add/Edit Transaction Modal State
     public bool ShowAddTransactionModal { get; set; } = false;
     public bool IsEditMode { get; set; } = false;
     public bool ShowDeleteConfirmation { get; set; } = false;
-    public bool ShowFilterDropdown { get; set; } = false;
     public Transaction NewTransaction { get; set; } = new Transaction();
-    public decimal Amount { get; set; } = 0;
+
+    // Filter Modal State
+    public bool ShowFilterModal { get; set; } = false;
+    public Filter CurrentFilter { get; set; } = new Filter();
 
     // Load Transactions Data
     protected override async Task OnInitializedAsync()
     {
-        Transactions = await TransactionManager.LoadTransactionsAsync();
-        UpdateTransactionsForSelectedMonth();
+        Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
+        Categories = (await DatabaseHelper.LoadUserCategoriesAsync(UserStateService.UserId)).ToList();
+        Accounts = await AccountService.GetBankAccounts(UserStateService.UserId);
+        HandleFilteredTransactionsChanged(Transactions);
         SortTransactions("Date", true); // Ensure default sort is by Date ascending
+        SearchService.OnSearchQueryChanged += SearchTransactions;
     }
 
-    private void ToggleFilterDropdown() => ShowFilterDropdown = !ShowFilterDropdown;
-
-    private void CloseFilterDropdown()
+    public void Dispose()
     {
-        ShowFilterDropdown = false;
+        SearchService.OnSearchQueryChanged -= SearchTransactions; // Unsubscribe to avoid memory leaks
     }
 
-    private void ApplyFilters()
+    private void SearchTransactions()
     {
-        FilterCategory = TempFilterCategory;
-        MinAmount = TempMinAmount;
-        MaxAmount = TempMaxAmount;
-        UpdateFilteredTransactionsForSelectedMonth();
-        CloseFilterDropdown();
+        if (string.IsNullOrEmpty(SearchService.SearchQuery))
+        {
+            // Reset to show all transactions if the search query is empty
+            HandleFilteredTransactionsChanged(Transactions);
+        }
+        else
+        {
+            // Filter transactions based on the search query
+            FilteredTransactions = Transactions
+                .Where(t => t.Description.Contains(SearchService.SearchQuery, StringComparison.OrdinalIgnoreCase))
+                .ToList();
+        }
+        StateHasChanged(); // Re-render the UI
     }
 
-    private void UpdateFilteredTransactionsForSelectedMonth()
+    private void HandleFilteredTransactionsChanged(List<Transaction> FilteredTransactions)
     {
-        FilteredTransactionsForSelectedMonth = Filters.ApplyFilters(TransactionsForSelectedMonth, FilterCategory, MinAmount, MaxAmount);
+        this.FilteredTransactions = FilteredTransactions
+            .Where(t => t.Date.Month == SelectedMonth && t.Date.Year == SelectedYear)
+            .ToList();
+
         ReapplySort();
         StateHasChanged();
     }
@@ -313,7 +229,8 @@
         {
             SelectedMonth--;
         }
-        UpdateTransactionsForSelectedMonth();
+        SelectedDate = 0;
+        HandleFilteredTransactionsChanged(Transactions);
     }
 
     private void NextMonth()
@@ -327,7 +244,8 @@
         {
             SelectedMonth++;
         }
-        UpdateTransactionsForSelectedMonth();
+        SelectedDate = 0;
+        HandleFilteredTransactionsChanged(Transactions);
     }
 
     private IEnumerable<DateTime> GetCalendarDates()
@@ -350,39 +268,21 @@
         {
             if (SelectedDate == date.Day)
             {
-                // Unselect the date if it is already selected
+                // Unselect the date if it's already selected
                 SelectedDate = 0;
-                UpdateFilteredTransactionsForSelectedMonth();
+                SelectedDateTransactions = FilteredTransactions
+                    .Where(t => t.Date.Month == SelectedMonth && t.Date.Year == SelectedYear)
+                    .ToList();
             }
             else
             {
                 // Select the date
                 SelectedDate = date.Day;
-                FilteredTransactionsForSelectedMonth = TransactionsForSelectedMonth
-                    .Where(t => t.Date.Day == SelectedDate)
+                SelectedDateTransactions = FilteredTransactions
+                    .Where(t => t.Date.Month == SelectedMonth && t.Date.Year == SelectedYear && t.Date.Day == SelectedDate)
                     .ToList();
             }
-            StateHasChanged();
         }
-    }
-
-    private bool HasTransactions(DateTime date) =>
-        GetFilteredTransactions(date).Any();
-
-    private List<Transaction> GetTransactions(DateTime date) => 
-        GetFilteredTransactions(date);
-
-    private List<Transaction> GetFilteredTransactions(DateTime date) =>
-        Filters.ApplyFilters(Transactions.Where(t => t.Date.Date == date.Date).ToList(), FilterCategory, MinAmount, MaxAmount);
-
-
-    private void UpdateTransactionsForSelectedMonth()
-    {
-        TransactionsForSelectedMonth = Transactions
-            .Where(t => t.Date.Month == SelectedMonth && t.Date.Year == SelectedYear)
-            .ToList();
-        UpdateFilteredTransactionsForSelectedMonth();
-        ReapplySort();
     }
 
     // Sorting Methods
@@ -400,10 +300,10 @@
                 SortTransactions("Date", false);
                 break;
             case "CategoryAsc":
-                SortTransactions("Category", true);
+                SortTransactions("CategoryName", true);
                 break;
             case "CategoryDesc":
-                SortTransactions("Category", false);
+                SortTransactions("CategoryName", false);
                 break;
             case "AmountAsc":
                 SortTransactions("Amount", true);
@@ -422,7 +322,7 @@
 
     private void SortTransactions(string sortBy, bool ascending)
     {
-        FilteredTransactionsForSelectedMonth = Sort.ApplySort(FilteredTransactionsForSelectedMonth, sortBy, ascending);
+        FilteredTransactions = Sort.ApplySort(FilteredTransactions, sortBy, ascending, Categories, Accounts);
         StateHasChanged();
     }
 
@@ -437,10 +337,10 @@
                 SortTransactions("Date", false);
                 break;
             case "CategoryAsc":
-                SortTransactions("Category", true);
+                SortTransactions("CategoryName", true);
                 break;
             case "CategoryDesc":
-                SortTransactions("Category", false);
+                SortTransactions("CategoryName", false);
                 break;
             case "AmountAsc":
                 SortTransactions("Amount", true);
@@ -461,17 +361,15 @@
     private void OpenAddTransactionModal()
     {
         NewTransaction = new Transaction
-        {
-            Date = SelectedDate != 0 ? new DateTime(SelectedYear, SelectedMonth, SelectedDate) : DateTime.Now,
-            Description = string.Empty,
-            Category = "Expenses",
-            Debit = 0,
-            Credit = 0,
-            Color = GetColorForCategory("Expenses"),
-            Frequency = "None",
-            EndDate = SelectedDate != 0 ? new DateTime(SelectedYear, SelectedMonth, SelectedDate) : DateTime.Now
-        };
-        Amount = 0;
+            {
+                Date = SelectedDate != 0 ? new DateTime(SelectedYear, SelectedMonth, SelectedDate) : DateTime.Now,
+                Description = string.Empty,
+                CategoryID = 0,
+                Amount = 0,
+                Frequency = "None",
+                EndDate = SelectedDate != 0 ? new DateTime(SelectedYear, SelectedMonth, SelectedDate) : DateTime.Now,
+                UserID = UserStateService.UserId
+            };
         IsEditMode = false;
         ShowDeleteConfirmation = false;
         ShowAddTransactionModal = true;
@@ -480,14 +378,9 @@
     private void ShowEditTransactionModal(Transaction transaction)
     {
         NewTransaction = transaction;
-        Amount = transaction.Debit > 0 ? transaction.Debit : transaction.Credit;
         IsEditMode = true;
         ShowDeleteConfirmation = false;
         ShowAddTransactionModal = true;
-        if (string.IsNullOrEmpty(NewTransaction.Frequency))
-        {
-            NewTransaction.Frequency = "None";
-        }
     }
 
     private void CloseAddTransactionModal()
@@ -497,12 +390,38 @@
 
     private async Task HandleAddOrEditTransaction()
     {
-        NewTransaction.Amount = Amount;
-        await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
-        Transactions = await TransactionManager.LoadTransactionsAsync();
-        CloseAddTransactionModal();
-        UpdateTransactionsForSelectedMonth();
-        ReapplySort();
+        try
+        {
+            await TransactionManager.AddOrUpdateTransactionAsync(NewTransaction, IsEditMode);
+
+            // Preserve all state
+            var currentSelectedDate = SelectedDate;
+            var currentFilters = CurrentFilter;
+            var currentSortOption = SortOption;
+
+            // Reload data
+            Transactions = (await TransactionManager.LoadTransactionsAsync(UserStateService.UserId)).ToList();
+
+            // Reapply filters and sort
+            FilteredTransactions = FilterUtilities.ApplyFilters(Transactions, currentFilters)
+                .Where(t => t.Date.Month == SelectedMonth && t.Date.Year == SelectedYear)
+                .ToList();
+
+            ReapplySort();
+
+            // Force refresh selected date transactions if a date was selected
+            if (currentSelectedDate > 0)
+            {
+                SelectedDateTransactions = FilteredTransactions
+                    .Where(t => t.Date.Day == currentSelectedDate)
+                    .ToList();
+                StateHasChanged(); // Explicitly trigger UI update
+            }
+        }
+        finally
+        {
+            CloseAddTransactionModal();
+        }
     }
 
     private void ShowDeleteConfirmationForm()
@@ -517,58 +436,50 @@
 
     private async Task ConfirmDeleteTransaction(bool deleteAll)
     {
+        // Preserve selected date
+        var currentSelectedDate = SelectedDate;
+    
         if (deleteAll)
         {
             await TransactionManager.DeleteRecurringTransactionsAsync(NewTransaction);
             Transactions.RemoveAll(t => t.Description == NewTransaction.Description &&
-                                        t.Category == NewTransaction.Category &&
-                                        t.Color == NewTransaction.Color &&
-                                        t.Frequency == NewTransaction.Frequency &&
-                                        t.Date > NewTransaction.Date);
+                                      t.CategoryID == NewTransaction.CategoryID &&
+                                      t.Frequency == NewTransaction.Frequency &&
+                                      t.Date > NewTransaction.Date);
         }
         else
         {
             await TransactionManager.DeleteTransactionAsync(NewTransaction);
             Transactions.RemoveAll(t => t.TransactionID == NewTransaction.TransactionID);
         }
-        CloseAddTransactionModal();
-        UpdateTransactionsForSelectedMonth();
+    
+        // Reapply filters
+        FilteredTransactions = FilterUtilities.ApplyFilters(Transactions, CurrentFilter)
+            .Where(t => t.Date.Month == SelectedMonth && t.Date.Year == SelectedYear)
+            .ToList();
+    
+        ReapplySort();
+    
+        // Refresh selected date if one was active
+        if (currentSelectedDate > 0)
+        {
+            SelectedDateTransactions = FilteredTransactions
+                .Where(t => t.Date.Day == currentSelectedDate)
+                .ToList();
+            StateHasChanged(); // Explicitly trigger UI update
+    }
+    
+    CloseAddTransactionModal();
     }
 
-    private void HandleCategoryChange(ChangeEventArgs e)
+    // Filter Modal Logic
+    private void OpenFilterModal()
     {
-        var selectedCategory = e.Value.ToString();
-        NewTransaction.Category = selectedCategory;
-        if (selectedCategory == "Subscriptions & Memberships")
-        {
-            // Do not change the color if it is already set (i.e., user selected a custom color)
-            if (string.IsNullOrEmpty(NewTransaction.Color))
-            {
-                NewTransaction.Color = GetRandomColor();
-            }
-        }
-        else
-        {
-            NewTransaction.Color = GetColorForCategory(selectedCategory);
-        }
+        ShowFilterModal = true;
     }
 
-    private string GetColorForCategory(string category)
+    private void CloseFilterModal()
     {
-        return category switch
-        {
-            "Expenses" => "#FF0000", // Red
-            "Income" => "#00FF00", // Green
-            "Debts & Loans" => "#FFA500", // Orange
-            "Savings & Investments" => "#005AFF", // Blue
-            "Subscriptions & Memberships" => GetRandomColor(), // Random color for subscriptions
-            _ => "#000000" // Default color
-        };
-    }
-
-    private string GetRandomColor()
-    {
-        var random = new Random();
-        return $"#{random.Next(0x1000000):X6}";
+        ShowFilterModal = false;
     }
 }

@@ -1,4 +1,4 @@
-﻿@page "/reports-page"
+@page "/reports-page"
 @using Jamper_Financial.Shared.Utilities
 @using Jamper_Financial.Shared.Data
 @using System.Text
@@ -33,16 +33,19 @@
     private string reportDescription = string.Empty;
 
     // Totals for Debit/Credit
-    private decimal totalDebit => filteredTransactions.Sum(t => t.Debit);
-    private decimal totalCredit => filteredTransactions.Sum(t => t.Credit);
+    private decimal totalDebit => filteredTransactions.Where(t => t.TransactionType == "e").Sum(t => t.Amount);
+    private decimal totalCredit => filteredTransactions.Where(t => t.TransactionType == "i").Sum(t => t.Amount);
+
 
     protected override async Task OnInitializedAsync()
     {
         // Set the page title
         SetPageTitle("Reports");
 
-        // Load transactions from DB
-        var allFromDb = await TransactionHelper.GetTransactionsAsync();
+        // Load all transactions from the database
+        int userId = 1; // Hardcoded for now.
+        var allFromDb = await TransactionHelper.GetTransactionsAsync(userId);
+
         transactions = allFromDb.ToList();
 
         // By default, show everything
@@ -94,7 +97,7 @@
 
         // Filter
         filteredTransactions = transactions
-            .Where(t => selectedCategories.Contains("All") || selectedCategories.Contains(t.Category))
+            .Where(t => selectedCategories.Contains("All") || selectedCategories.Contains(t.CategoryID.ToString()))
             .Where(t => t.Date >= fromDate && t.Date <= toDate)
             .ToList();
 
@@ -283,6 +286,41 @@
     padding: 20px !important;
     position: relative !important;
 }
+
+/* Make typed text in input/textarea black */
+.reports-page .create-report-modal .modal-content input,
+.reports-page .create-report-modal .modal-content textarea {
+    color: #000 !important;
+}
+
+/* Make only the placeholder text grey */
+.reports-page .create-report-modal .modal-content input::placeholder,
+.reports-page .create-report-modal .modal-content textarea::placeholder {
+    color: #888 !important; /* Choose your preferred grey tone */
+    opacity: 1 !important;
+}
+
+/* Keep the 'View Report' button style as before */
+.reports-page .reports-custom-btn {
+    padding: 12px 24px !important;
+    background-color: white !important;
+    color: #62AD41 !important;
+    font-size: 18px !important;
+    border: none !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    margin-top: 20px !important;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    transition: background-color 0.2s, color 0.2s !important;
+}
+.reports-page .reports-custom-btn:hover {
+    background-color: #62AD41 !important;
+    color: #e3f2dc !important;
+}
+
+
 
 .reports-page .close {
     color: #aaa !important;
@@ -529,13 +567,13 @@
                                 {
                                     <tr>
                                         <td>@t.Description</td>
-                                        <td>@t.Category</td>
+                                        <td>@t.CategoryID</td>
                                         <td>@t.Date.ToString("dd MMM yyyy")</td>
-                                        <td class="@(t.Debit > 0 ? "negative" : "")">
-                                            @(t.Debit != 0 ? t.Debit.ToString("C") : "")
+                                        <td class="@(t.TransactionType == "e" ? "negative" : "")">
+                                            @(t.Amount != 0 ? t.Amount.ToString("C") : "")
                                         </td>
-                                        <td class="@(t.Credit > 0 ? "positive" : "")">
-                                            @(t.Credit != 0 ? t.Credit.ToString("C") : "")
+                                        <td class="@(t.TransactionType == "i" ? "positive" : "")">
+                                            @(t.Amount != 0 ? t.Amount.ToString("C") : "")
                                         </td>
                                         <td>@(string.IsNullOrEmpty(t.Frequency) ? "" : t.Frequency)</td>
                                         <td>@(t.EndDate.HasValue ? t.EndDate.Value.ToString("dd MMM yyyy") : "")</td>

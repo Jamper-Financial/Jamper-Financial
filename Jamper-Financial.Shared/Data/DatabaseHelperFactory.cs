@@ -5,9 +5,9 @@ namespace Jamper_Financial.Shared.Data
 {
     public class DatabaseHelperFactory
     {
-        public List<Goal> GetGoals()
+        public List<Goal> GetGoals(int userid)
         {
-            return DatabaseHelper.GetGoals();
+            return DatabaseHelper.GetGoals(userid);
         }
 
         public void InsertGoal(Goal goal)
@@ -19,11 +19,9 @@ namespace Jamper_Financial.Shared.Data
         {
             DatabaseHelper.DeleteGoal(goalId);
         }
-        public void UpdateGoal(Goal goal)
+        public void UpdateGoal(Goal goal) // ADDED
         {
             DatabaseHelper.UpdateGoal(goal);
         }
-
-
     }
 }

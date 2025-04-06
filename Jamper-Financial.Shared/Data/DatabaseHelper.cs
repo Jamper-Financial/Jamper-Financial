@@ -7,12 +7,7 @@ namespace Jamper_Financial.Shared.Data
 {
     public static class DatabaseHelper
     {
-        // Use this for local run
         private static readonly string DbPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "AppDatabase.db");
-
-        // uncomment this for docker container
-        // private static readonly string DbPath = Path.Combine(AppContext.BaseDirectory, "AppDatabase.db");
-
         private static readonly string[] stringArray = ["LastName", "FirstName", "Birthday"];
 
         // This method is used to initialize the database
@@ -42,7 +37,9 @@ namespace Jamper_Financial.Shared.Data
                     Description TEXT,
                     ShowDescription INTEGER,
                     Frequency TEXT,
-                    IsFadingOut INTEGER
+                    IsFadingOut INTEGER,
+                    UserID INTEGER NOT NULL,
+                    CONSTRAINT Goals_Users_FK  FOREIGN KEY (UserID) REFERENCES Users(UserID)
                 );
         ");
 
@@ -68,6 +65,7 @@ namespace Jamper_Financial.Shared.Data
                         PhoneNumber TEXT,
                         EmailConfirmed INTEGER,
                         PhoneNumberConfirmed INTEGER,
+                        Avatar BLOB,
                         FOREIGN KEY (UserID) REFERENCES Users(UserID)
                         );
                 ");
@@ -84,14 +82,13 @@ namespace Jamper_Financial.Shared.Data
                 // Create Accounts Table
                 CreateTableIfNotExists(connection, "Accounts", @"
                     CREATE TABLE Accounts (
-	                    AccountID INTEGER NOT NULL,
+	                    AccountID INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
 	                    AccountTypeID INTEGER NOT NULL,
-	                    ""Account Name"" TEXT,
+	                    AccountName TEXT NOT NULL ,
                         Balance REAL,
                         AccountNumber INTEGER,
                         UserID INTEGER,
                         CONSTRAINT Accounts_Users_FK  FOREIGN KEY (UserID) REFERENCES Users(UserID)
-	                    CONSTRAINT Accounts_PK PRIMARY KEY (AccountID),
 	                    CONSTRAINT Accounts_AccountType_FK FOREIGN KEY (AccountTypeID) REFERENCES AccountType(AccountTypeId)
                     );
                 ");
@@ -130,24 +127,24 @@ namespace Jamper_Financial.Shared.Data
                 ");
 
                 // Create Transactions Table
+                // MGE 03/26 Remove the debit and credit columns since we have the amount column and transaction type column
                 CreateTableIfNotExists(connection, "Transactions", @"
                     CREATE TABLE IF NOT EXISTS Transactions (
                         TransactionID INTEGER PRIMARY KEY AUTOINCREMENT,
-                        Date TEXT NOT NULL,
+                        UserID INTEGER NOT NULL,
+                        AccountID INTEGER NOT NULL,
+                        Date TEXT NOT NULL, 
                         Description TEXT NOT NULL,
-                        Debit REAL NOT NULL,
-                        Credit REAL NOT NULL,
-                        Category TEXT,
-                        Color TEXT NOT NULL,
-                        Frequency TEXT,
-                        EndDate TEXT,
-	                    CategoryID INTEGER,
-                        HasReceipt INTEGER,
-                        UserID INTEGER,
-                        AccountID INTEGER,
-	                    CONSTRAINT Transactions_Categories_FK FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID) ON UPDATE CASCADE
-                        CONSTRAINT Transactions_Users_FK FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
-                        CONSTRAINT Transactions_Accounts_FK FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID) ON DELETE CASCADE
+                        Amount DECIMAL(10, 2) NOT NULL,  -- Re-added Amount
+                        CategoryID INTEGER NOT NULL,  
+                        TransactionType TEXT CHECK(TransactionType IN ('e', 'i')) NOT NULL,
+                        HasReceipt INTEGER DEFAULT 0,
+                        Frequency TEXT DEFAULT 'None',
+                        EndDate TEXT DEFAULT NULL,
+                        IsPaid INTEGER DEFAULT 1,
+                        CONSTRAINT Transactions_Users_FK FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
+                        CONSTRAINT Transactions_Categories_FK FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID) ON DELETE CASCADE
+	                    CONSTRAINT Transactions_Accounts_FK FOREIGN KEY (AccountID) REFERENCES Accounts(AccountID)
                     );
                 ");
 
@@ -156,9 +153,12 @@ namespace Jamper_Financial.Shared.Data
                     CREATE TABLE IF NOT EXISTS Categories (
                         CategoryID INTEGER PRIMARY KEY AUTOINCREMENT,
                         UserID INTEGER NOT NULL,
-                        TransactionType INTEGER NOT NULL CHECK (TransactionType IN (0, 1)),
-                        Name TEXT NOT NULL UNIQUE,
-                        FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE
+                        Name TEXT NOT NULL,
+                        Color TEXT NOT NULL,
+                        TransactionType TEXT CHECK(TransactionType IN ('e', 'i')) NOT NULL,
+                        ParentCategoryID INTEGER,
+                        FOREIGN KEY (UserID) REFERENCES Users(UserID) ON DELETE CASCADE,
+                        FOREIGN KEY (ParentCategoryID) REFERENCES Categories(CategoryID) ON DELETE SET NULL
                         
                     );
 
@@ -187,8 +187,8 @@ namespace Jamper_Financial.Shared.Data
                     );
                 ");
 
-                // Insert initial roles
-                InsertInitialRoles(connection);
+                // Insert initial data
+                InitiateData(connection);
 
             }
         }
@@ -206,44 +206,49 @@ namespace Jamper_Financial.Shared.Data
                 }
             }
         }
-        public static List<Goal> GetGoals()
+        public static List<Goal> GetGoals(int userId)
         {
             var goals = new List<Goal>();
             using (var connection = GetConnection())
             {
                 connection.Open();
-                string query = "SELECT * FROM Goals;";
+                string query = "SELECT * FROM Goals where UserId = @UserId;";
                 using (var command = new SqliteCommand(query, connection))
-                using (var reader = command.ExecuteReader())
                 {
-                    while (reader.Read())
-                    {
-                        DateTime date, startDate, endDate;
-                        DateTime.TryParseExact(reader["Date"].ToString(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out date);
-                        DateTime.TryParseExact(reader["StartDate"].ToString(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out startDate);
-                        DateTime.TryParseExact(reader["EndDate"].ToString(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out endDate);
+                    command.Parameters.AddWithValue("@UserId", userId);
 
-                        goals.Add(new Goal
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
                         {
-                            GoalId = reader.GetInt32(reader.GetOrdinal("GoalId")),
-                            Type = reader["Type"].ToString(),
-                            Name = reader["Name"].ToString(),
-                            Amount = reader.GetDecimal(reader.GetOrdinal("Amount")),
-                            Date = date,
-                            GoalType = reader["GoalType"].ToString(),
-                            IsQuickGoal = reader.GetBoolean(reader.GetOrdinal("IsQuickGoal")),
-                            IsRetirementGoal = reader.GetBoolean(reader.GetOrdinal("IsRetirementGoal")),
-                            IsEmergencyFundGoal = reader.GetBoolean(reader.GetOrdinal("IsEmergencyFundGoal")),
-                            IsTravelGoal = reader.GetBoolean(reader.GetOrdinal("IsTravelGoal")),
-                            IsHomeGoal = reader.GetBoolean(reader.GetOrdinal("IsHomeGoal")),
-                            Category = reader["Category"].ToString(),
-                            StartDate = startDate,
-                            EndDate = endDate,
-                            Description = reader["Description"].ToString(),
-                            ShowDescription = reader.GetBoolean(reader.GetOrdinal("ShowDescription")),
-                            Frequency = reader["Frequency"].ToString(),
-                            IsFadingOut = reader.GetBoolean(reader.GetOrdinal("IsFadingOut"))
-                        });
+                            DateTime date, startDate, endDate;
+                            DateTime.TryParseExact(reader["Date"].ToString(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out date);
+                            DateTime.TryParseExact(reader["StartDate"].ToString(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out startDate);
+                            DateTime.TryParseExact(reader["EndDate"].ToString(), "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out endDate);
+
+                            goals.Add(new Goal
+                            {
+                                GoalId = reader.GetInt32(reader.GetOrdinal("GoalId")),
+                                Type = reader["Type"].ToString(),
+                                Name = reader["Name"].ToString(),
+                                Amount = reader.GetDecimal(reader.GetOrdinal("Amount")),
+                                Date = date,
+                                GoalType = reader["GoalType"].ToString(),
+                                IsQuickGoal = reader.GetBoolean(reader.GetOrdinal("IsQuickGoal")),
+                                IsRetirementGoal = reader.GetBoolean(reader.GetOrdinal("IsRetirementGoal")),
+                                IsEmergencyFundGoal = reader.GetBoolean(reader.GetOrdinal("IsEmergencyFundGoal")),
+                                IsTravelGoal = reader.GetBoolean(reader.GetOrdinal("IsTravelGoal")),
+                                IsHomeGoal = reader.GetBoolean(reader.GetOrdinal("IsHomeGoal")),
+                                Category = reader["Category"].ToString(),
+                                StartDate = startDate,
+                                EndDate = endDate,
+                                Description = reader["Description"].ToString(),
+                                ShowDescription = reader.GetBoolean(reader.GetOrdinal("ShowDescription")),
+                                Frequency = reader["Frequency"].ToString(),
+                                IsFadingOut = reader.GetBoolean(reader.GetOrdinal("IsFadingOut"))
+                            });
+                        }
                     }
                 }
             }
@@ -257,8 +262,8 @@ namespace Jamper_Financial.Shared.Data
                 {
                     connection.Open();
                     string insertQuery = @"
-                    INSERT INTO Goals (Type, Name, Amount, Date, GoalType, IsQuickGoal, IsRetirementGoal, IsEmergencyFundGoal, IsTravelGoal, IsHomeGoal, Category, StartDate, EndDate, Description, ShowDescription, Frequency, IsFadingOut)
-                    VALUES (@Type, @Name, @Amount, @Date, @GoalType, @IsQuickGoal, @IsRetirementGoal, @IsEmergencyFundGoal, @IsTravelGoal, @IsHomeGoal, @Category, @StartDate, @EndDate, @Description, @ShowDescription, @Frequency, @IsFadingOut);
+                    INSERT INTO Goals (Type, Name, Amount, Date, GoalType, IsQuickGoal, IsRetirementGoal, IsEmergencyFundGoal, IsTravelGoal, IsHomeGoal, Category, StartDate, EndDate, Description, ShowDescription, Frequency, IsFadingOut, UserID)
+                    VALUES (@Type, @Name, @Amount, @Date, @GoalType, @IsQuickGoal, @IsRetirementGoal, @IsEmergencyFundGoal, @IsTravelGoal, @IsHomeGoal, @Category, @StartDate, @EndDate, @Description, @ShowDescription, @Frequency, @IsFadingOut, @UserID);
                 ";
                     using (var command = new SqliteCommand(insertQuery, connection))
                     {
@@ -279,11 +284,12 @@ namespace Jamper_Financial.Shared.Data
                         command.Parameters.AddWithValue("@ShowDescription", goal.ShowDescription);
                         command.Parameters.AddWithValue("@Frequency", goal.Frequency ?? (object)DBNull.Value);
                         command.Parameters.AddWithValue("@IsFadingOut", goal.IsFadingOut);
+                        command.Parameters.AddWithValue("@UserID", goal.UserID);
                         command.ExecuteNonQuery();
 
                         command.CommandText = "SELECT last_insert_rowid();"; // ADDED
                         long newId = (long)command.ExecuteScalar();         // ADDED
-                        goal.GoalId = (int)newId; 
+                        goal.GoalId = (int)newId;
                     }
                 }
             }
@@ -373,7 +379,7 @@ namespace Jamper_Financial.Shared.Data
             }
             catch (Exception ex)
             {
-            
+
             }
         }
 
@@ -390,37 +396,59 @@ namespace Jamper_Financial.Shared.Data
         }
 
         // Add categories 
-        public static void AddCategory(int userId, string name)
+        public static void InsertCategory(int userId, string name, string color, string transactionType, int? parentCategoryId)
         {
-            using (var connection = new SqliteConnection($"Data Source={DbPath}"))
+            using (var connection = GetConnection())
             {
                 connection.Open();
-                string insertQuery = "INSERT INTO Categories (UserID, Name) VALUES (@UserID, @Name);";
+                string insertQuery = @"
+            INSERT INTO Categories (UserID, Name, Color, TransactionType, ParentCategoryID)
+            VALUES (@UserID, @Name, @Color, @TransactionType, @ParentCategoryID);
+        ";
+
                 using (var command = new SqliteCommand(insertQuery, connection))
                 {
                     command.Parameters.AddWithValue("@UserID", userId);
                     command.Parameters.AddWithValue("@Name", name);
+                    command.Parameters.AddWithValue("@Color", color);
+                    command.Parameters.AddWithValue("@TransactionType", transactionType);
+                    command.Parameters.AddWithValue("@ParentCategoryID", parentCategoryId ?? (object)DBNull.Value);
                     command.ExecuteNonQuery();
                 }
             }
         }
 
+
         // Update Categories
-        public static void UpdateCategory(int userId, int categoryId, string newName)
+        public static void UpdateCategory(int userId, int categoryId, string newName, string newColor, string newTransactionType, int? parentCategoryId)
         {
-            using (var connection = new SqliteConnection($"Data Source={DbPath}"))
+            using (var connection = GetConnection())
             {
                 connection.Open();
-                string updateQuery = "UPDATE Categories SET Name = @NewName WHERE CategoryID = @CategoryID AND UserID = @UserID;";
+                string updateQuery = @"
+                    UPDATE Categories 
+                    SET 
+                        Name = @NewName, 
+                        Color = @NewColor, 
+                        TransactionType = @TransactionType,
+                        ParentCategoryID = @ParentCategoryID
+                    WHERE 
+                        CategoryID = @CategoryID 
+                        AND UserID = @UserID;";
                 using (var command = new SqliteCommand(updateQuery, connection))
                 {
                     command.Parameters.AddWithValue("@NewName", newName);
+                    command.Parameters.AddWithValue("@NewColor", newColor);
+                    command.Parameters.AddWithValue("@TransactionType", newTransactionType);
+                    command.Parameters.AddWithValue("@ParentCategoryID", parentCategoryId ?? (object)DBNull.Value);
                     command.Parameters.AddWithValue("@CategoryID", categoryId);
                     command.Parameters.AddWithValue("@UserID", userId);
+
                     command.ExecuteNonQuery();
                 }
             }
         }
+
 
         // Delete Categories
         public static void DeleteCategory(int userId, int categoryId)
@@ -438,78 +466,161 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
-        // Get Categories
-        public static List<Category> GetCategories(int userId)
+        public static async Task<List<Category>> LoadUserCategoriesAsync(int userId)
         {
             var categories = new List<Category>();
-            using (var connection = new SqliteConnection($"Data Source={DbPath}"))
+
+            using (var connection = GetConnection())
             {
-                connection.Open();
-                string query = "SELECT CategoryID, Name FROM Categories WHERE UserID = @UserID;";
+                await connection.OpenAsync();
+
+                string query = @"
+            SELECT CategoryID, UserID, Name, Color, TransactionType
+            FROM Categories
+            WHERE UserID = @UserID";
+
                 using (var command = new SqliteCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@UserID", userId);
-                    using (var reader = command.ExecuteReader())
+                    using (var reader = await command.ExecuteReaderAsync())
                     {
-                        while (reader.Read())
+                        while (await reader.ReadAsync())
                         {
                             categories.Add(new Category
                             {
                                 CategoryID = reader.GetInt32(0),
-                                Name = reader.GetString(1)
+                                UserID = reader.GetInt32(1),
+                                Name = reader.GetString(2),
+                                Color = reader.GetString(3),
+                                TransactionType = reader.GetString(4)
                             });
                         }
                     }
                 }
             }
+
             return categories;
         }
 
-
         // Insert Set Categories
-        private static void InsertDefaultCategories(int userId, SqliteConnection connection)
+        public static async void InsertDefaultCategories(int userId)
         {
-            string[] defaultCategories = {
-        "Rent", "Mortgage", "Utilities", "Insurance", "Condo fees",
-        "Car maintenance", "Car payment", "Gas", "Public transportation",
-        "Groceries", "Restaurant", "Take Out",
-        "Gym", "Medical",
-        "Entertainment", "Going out", "Subscriptions",
-        "Clothing", "Gifts", "Electronics", "Home maintenance",
-        "Debt", "Work (Job)", "Side project", "Tax refund", "Expense reimbursement"
-    };
-
-            foreach (var category in defaultCategories)
+            Category[] defaultCategories = new[]
             {
-                string insertCategoryQuery = "INSERT INTO Categories (UserID, Name) VALUES (@UserID, @Name);";
-                using (var command = new SqliteCommand(insertCategoryQuery, connection))
+                // Expenses
+                new Category { Name = "Housing", TransactionType = "e", Color = "#3498DB" },
+                new Category { Name = "Transportation", TransactionType = "e", Color = "#3498DB" },
+                new Category { Name = "Food", TransactionType = "e", Color = "#3498DB" },
+                new Category { Name = "Health", TransactionType = "e", Color = "#3498DB" },
+                new Category { Name = "Entertainment", TransactionType = "e", Color = "#3498DB" },
+                new Category { Name = "Personal", TransactionType = "e", Color = "#3498DB" },
+                new Category { Name = "Debt Payments", TransactionType = "e", Color = "#3498DB" }, 
+                //new Category { Name = "Housing: Rent/Mortgage", Type = "e", Color = "#3498DB" }, // Blue
+                //new Category { Name = "Housing: Utilities", Type = "e", Color = "#2ECC71" }, // Green
+                //new Category { Name = "Housing: Insurance", Type = "e", Color = "#9B59B6" }, // Purple
+                //new Category { Name = "Housing: Condo Fees", Type = "e", Color = "#F39C12" }, // Orange
+                //new Category { Name = "Transportation: Car Payment", Type = "e", Color = "#E74C3C" }, // Red
+                //new Category { Name = "Transportation: Car Maintenance", Type = "e", Color = "#1ABC9C" }, // Teal
+                //new Category { Name = "Transportation: Gas/Fuel", Type = "e", Color = "#34495E" }, // Dark Blue
+                //new Category { Name = "Transportation: Public Transit", Type = "e", Color = "#95A5A6" }, // Gray
+                //new Category { Name = "Food: Groceries", Type = "e", Color = "#F1C40F" }, // Yellow
+                //new Category { Name = "Food: Restaurants", Type = "e", Color = "#E67E22" }, // Brown
+                //new Category { Name = "Food: Takeout/Delivery", Type = "e", Color = "#D35400" }, // Darker Brown
+                //new Category { Name = "Health: Medical", Type = "e", Color = "#8E44AD" }, // Dark Purple
+                //new Category { Name = "Health: Fitness/Gym", Type = "e", Color = "#27AE60" }, // Dark Green
+                //new Category { Name = "Entertainment: Subscriptions", Type = "e", Color = "#16A085" }, // Dark Teal
+                //new Category { Name = "Entertainment: Going Out", Type = "e", Color = "#C0392B" }, // Darker Red
+                //new Category { Name = "Personal: Clothing", Type = "e", Color = "#7F8C8D" }, // Darker Gray
+                //new Category { Name = "Personal: Gifts", Type = "e", Color = "#F39C12" }, // Orange
+                //new Category { Name = "Personal: Electronics", Type = "e", Color = "#34495E" }, // Dark Blue
+                //new Category { Name = "Home Maintenance", Type = "e", Color = "#9B59B6" }, // Purple
+                //new Category { Name = "Debt Payments", Type = "e", Color = "#E74C3C" }, // Red
+
+                // Income
+                new Category { Name = "Income", TransactionType = "i", Color = "#2ECC71" }, 
+                //new Category { Name = "Income: Salary", Type = "i", Color = "#2ECC71" }, // Green
+                //new Category { Name = "Income: Side Project", Type = "i", Color = "#3498DB" }, // Blue
+                //new Category { Name = "Income: Tax Refund", Type = "i", Color = "#1ABC9C" }, // Teal
+                //new Category { Name = "Income: Reimbursement", Type = "i", Color = "#F1C40F" }, // Yellow
+                //new Category { Name = "Income: Investments", Type = "i", Color = "#9B59B6" }, // Purple
+                //new Category { Name = "Income: Other", Type = "i", Color = "#95A5A6" } // Gray
+            };
+
+            using (var connection = GetConnection())
+            {
+                await connection.OpenAsync();
+
+                foreach (var category in defaultCategories)
                 {
-                    command.Parameters.AddWithValue("@UserID", userId);
-                    command.Parameters.AddWithValue("@Name", category);
-                    command.ExecuteNonQuery();
+                    string insertCategoryQuery = "INSERT INTO Categories (UserID, Name, Color, TransactionType) VALUES (@UserID, @Name, @Color, @TransactionType);";
+                    using (var command = new SqliteCommand(insertCategoryQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@UserID", userId);
+                        command.Parameters.AddWithValue("@Name", category.Name);
+                        command.Parameters.AddWithValue("@Color", category.Color);
+                        command.Parameters.AddWithValue("@TransactionType", category.TransactionType);
+                        await command.ExecuteNonQueryAsync();
+                    }
                 }
             }
         }
 
-        private static void InsertInitialRoles(SqliteConnection connection)
+        private static void InitiateData(SqliteConnection connection)
         {
-            string[] roles = { "Admin", "User" };
-
-            foreach (var role in roles)
+            // check if role table is empty
+            string checkRoleQuery = "SELECT COUNT(*) FROM Roles;";
+            using (var command = new SqliteCommand(checkRoleQuery, connection))
             {
-                string insertRoleQuery = @"
+                var result = command.ExecuteScalar();
+                if (Convert.ToInt32(result) == 0)
+                {
+                    // Insert default roles
+                    string[] roles = { "Admin", "User" };
+
+                    foreach (var role in roles)
+                    {
+                        string insertRoleQuery = @"
                     INSERT INTO Roles (RoleName)
                     SELECT @RoleName
                     WHERE NOT EXISTS (SELECT 1 FROM Roles WHERE RoleName = @RoleName);
                 ";
 
-                using (var command = new SqliteCommand(insertRoleQuery, connection))
+                        using (var roleCommand = new SqliteCommand(insertRoleQuery, connection))
+                        {
+                            roleCommand.Parameters.AddWithValue("@RoleName", role);
+                            roleCommand.ExecuteNonQuery();
+                        }
+                    }
+                }
+            }
+
+
+            // check if account type table is empty
+            string checkAccountTypeQuery = "SELECT COUNT(*) FROM AccountType;";
+            using (var command = new SqliteCommand(checkAccountTypeQuery, connection))
+            {
+                var result = command.ExecuteScalar();
+                if (Convert.ToInt32(result) == 0)
                 {
-                    command.Parameters.AddWithValue("@RoleName", role);
-                    command.ExecuteNonQuery();
+                    // Insert default account types
+                    string[] accountTypes = { "Checking", "Savings", "Credit Card", "Cash" };
+                    foreach (var accountType in accountTypes)
+                    {
+                        string insertAccountTypeQuery = @"
+                    INSERT INTO AccountType (Description)
+                    SELECT @AccountTypeName
+                    WHERE NOT EXISTS (SELECT 1 FROM AccountType WHERE Description = @AccountTypeName);
+                ";
+                        using (var accountTypeCommand = new SqliteCommand(insertAccountTypeQuery, connection))
+                        {
+                            accountTypeCommand.Parameters.AddWithValue("@AccountTypeName", accountType);
+                            accountTypeCommand.ExecuteNonQuery();
+                        }
+                    }
                 }
             }
         }
+
 
         // This method is used to insert a new user into the database
         public static void InsertUser(User user)
@@ -678,7 +789,7 @@ namespace Jamper_Financial.Shared.Data
             }
         }
 
- 
+
         public static (int UserId, int ProfileId, string Role)? GetUserDetailsByUsernameOrEmail(string usernameOrEmail)
         {
             try

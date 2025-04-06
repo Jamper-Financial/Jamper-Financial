@@ -17,7 +17,7 @@
     cursor: pointer;
 }
 
- .profile-tabs .nav-link {
+.profile-tabs .nav-link {
     padding: 10px 20px;
     text-decoration: none;
     color: darkgrey;
@@ -38,26 +38,26 @@
         transition: width 0.3s, background-color 0.3s;
     }
 
-     .profile-tabs .nav-link.active {
+    .profile-tabs .nav-link.active {
         color: #62AD41;
     }
 
-         .profile-tabs .nav-link.active::after {
+        .profile-tabs .nav-link.active::after {
             width: 100%;
             background: #62AD41;
         }
 
-     .profile-tabs .nav-link:hover {
+    .profile-tabs .nav-link:hover {
         color: #62AD41;
     }
 
 .profile-container {
-    margin: 30px auto;
-    padding: 20px;
+    margin: 2rem;
+    padding: 2rem;
     background-color: white;
-    border-radius: 20px;
-    width: 90%;
-    position: relative;
+    border-radius: 2rem;
+    position: center;
     align-items: center;
     align-self: center;
+    align-content: center
 }

@@ -1,138 +1,196 @@
 ﻿@page "/view-goals-page"
 @using Jamper_Financial.Shared.Data
+@using Jamper_Financial.Shared.Services
 @inherits LayoutComponentBase
 @inject GoalState GoalState
 @inject NavigationManager Navigation
 @inject IJSRuntime JSRuntime
 @inject DatabaseHelperFactory DatabaseHelper
+@inject UserStateService UserStateService
 
 <style>
     .transactions-page {
-        padding: 20px;
+    padding: 20px;
     }
 
     .transactions-section {
-        margin-top: 20px;
+    margin-top: 20px;
     }
 
     .transactions-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     }
 
     .section-title {
-        font-size: 1.5rem;
-        font-weight: bold;
+    font-size: 1.5rem;
+    font-weight: bold;
     }
 
     .add-transaction {
-        background-color: #28a745;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
     }
 
-        .add-transaction:hover {
-            background-color: #218838;
-        }
+    .add-transaction:hover {
+    background-color: #218838;
+    }
 
     .scrollable-table {
-        max-height: 500px;
-        overflow-y: auto;
+    max-height: 500px;
+    overflow-y: auto;
     }
 
     table {
-        width: 100%;
-        border-collapse: collapse;
+    width: 100%;
+    border-collapse: collapse;
     }
 
     th, td {
-        padding: 10px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
     }
 
     th {
-        background-color: #f2f2f2;
+    background-color: #f2f2f2;
     }
 
     .goal-item:hover {
-        background-color: #f5f5f5;
+    background-color: #f5f5f5;
     }
 
     .modify-btn, .delete-btn, .check-off-btn, .see-more-btn {
-        border: none;
-        background: none;
-        cursor: pointer;
+    border: none;
+    background: none;
+    cursor: pointer;
     }
 
-        .modify-btn img, .delete-btn img, .check-off-btn img {
-            width: 20px;
-            height: 20px;
-        }
+    .modify-btn img, .delete-btn img, .check-off-btn img {
+    width: 20px;
+    height: 20px;
+    }
 
     .goal-details {
-        padding: 10px;
-        background-color: #f9f9f9;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-top: 10px;
     }
 
     .back-button {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-top: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
     }
 
-        .back-button:hover {
-            background-color: #0056b3;
-        }
+    .back-button:hover {
+    background-color: #0056b3;
+    }
+
+    .edit-goal-form {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    }
+
+    .update-goal-btn {
+    background-color: #28a745;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+    }
+
+    .update-goal-btn:hover {
+    background-color: #218838;
+    }
+
+    .cancel-btn {
+    background-color: #fff;
+    color: red;
+    padding: 8px 16px;
+    border: 1px solid red;
+    border-radius: 4px;
+    cursor: pointer;
+    }
+
+    .cancel-btn:hover {
+    background-color: darkred;
+    color: #fff;
+    }
 
     .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0,0.4);
-        padding-top: 60px;
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
     }
 
     .modal-content {
-        background-color: #fefefe;
-        margin: 5% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    margin-left: auto; 
+    margin-right: 3rem; 
     }
 
     .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
     }
 
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
+    .close:hover,
+    .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+    }
+
+    .chart-container {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        padding-top: 20px;
+        width: 50%; 
+        height: 400px; 
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 20px auto; 
+    }
+
 </style>
 
+<div class="chart-container">
+    <canvas id="goalsChart"></canvas>
+</div>
 <div class="content-container">
     <div class="transactions-page">
         <div class="transactions-section">
@@ -168,7 +226,7 @@
                                         <button class="delete-btn" @onclick="() => ConfirmDeleteGoal(goal)">
                                             <img src="images/bin.png" alt="Delete" />
                                         </button>
-                                        <button class="check-off-btn" @onclick="() => ConfirmDeleteGoal(goal)">
+                                        <button class="check-off-btn" @onclick="() => ConfirmCheckOffGoal(goal)">
                                             <img src="images/check.png" alt="Check Off" />
                                         </button>
                                     </td>
@@ -176,11 +234,11 @@
                                 @if (goal.IsEditing)
                                 {
                                     <tr>
-                                        <td colspan="5">
+                                        <td colspan="6">
                                             <div class="edit-goal-form">
                                                 <h3>Edit Goal</h3>
                                                 <form @onsubmit="async (e) => SaveGoal(goal)">
-                                                    @if (goal.IsQuickGoal)
+                                                    @if(goal.IsQuickGoal)
                                                     {
                                                         <div class="form-group">
                                                             <label for="name">Name:</label>
@@ -322,11 +380,13 @@
                                                                 <option value="Annually">Annually</option>
                                                             </select>
                                                         </div>
+
                                                         <div class="form-group">
                                                             <label for="description">Description:</label>
                                                             <input id="description" @bind="goal.Description" required />
                                                         </div>
                                                     }
+
                                                     <div class="form-group button-group">
                                                         <button type="submit" class="update-goal-btn">Save</button>
                                                         <button type="button" class="cancel-btn" @onclick="() => CancelEdit(goal)">Cancel</button>
@@ -396,12 +456,11 @@
                     <p><strong>Amount:</strong> @selectedGoal.Amount.ToString("C")</p>
                     <p><strong>Current Savings:</strong> $@(parts.Length > 1 ? parts[1].Split(':')[1].Trim() : "N/A")</p>
                     <p><strong>Monthly Savings:</strong> $@(parts.Length > 2 ? parts[2].Split(':')[1].Trim() : "N/A")</p>
-                    <p><strong>Target Purchase Date:</strong> @selectedGoal.EndDate.ToShortDateString()</p>
+                    <p><strong>Targeted Purchase Date:</strong> @selectedGoal.EndDate.ToShortDateString()</p>
                 }
                 else
                 {
                     <p><strong>Name of goal:</strong> @selectedGoal.Name</p>
-                    <p><strong>Account:</strong> @selectedGoal.Type</p>
                     <p><strong>Category:</strong> @selectedGoal.Category</p>
                     <p><strong>Start Date:</strong> @selectedGoal.StartDate.ToShortDateString()</p>
                     <p><strong>End Date:</strong> @selectedGoal.EndDate.ToShortDateString()</p>
@@ -415,13 +474,31 @@
 </div>
 
 @code {
+    private bool isChartInitializing = false;
+    private DotNetObjectReference<ViewGoalsPage>? objRef;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !isChartInitializing)
+        {
+            isChartInitializing = true;
+            objRef = DotNetObjectReference.Create(this);
+            await RenderGoalsChart();
+            isChartInitializing = false;
+        }
+    }
     private List<Goal> goals = new List<Goal>();
     private Goal selectedGoal;
     private bool showModal = false;
+    private bool isChartRendered = false;
 
     // Local fields for Retirement
     private decimal retCurrentSavings;
     private decimal retMonthlyContribution;
+    private decimal retInvestmentGrowthRate;
+    private decimal retInflationRate;
+    private decimal retIncomeNeeds;
+    private decimal retOtherIncomeSources;
 
     // Local fields for Emergency
     private decimal emCurrentSavings;
@@ -432,22 +509,75 @@
     private string travelDestination;
     private decimal travelCurrentSavings;
     private decimal travelMonthlyContribution;
+    private string travelCategory;
     private string travelDescription;
+    private decimal travelAccommodationCosts;
+    private decimal travelTransportationCosts;
+    private decimal travelFoodEntertainmentCosts;
 
     // Local fields for Home
     private decimal homePrice;
     private decimal homeCurrentSavings;
     private decimal homeMonthlySavings;
+    private decimal homeLoanInterestRate;
+    private int homeLoanTerm;
+    private decimal homePropertyTaxes;
+    private decimal homeInsurance;
+    private decimal homeOtherCosts;
+    private int userId = 0;
 
     protected override void OnInitialized()
     {
-        goals = DatabaseHelper.GetGoals();
+        userId = UserStateService.LoggedInUser.UserID;
+        if (userId <= 0)
+        {
+            Navigation.NavigateTo("/login");
+        }
+        
+        goals = DatabaseHelper.GetGoals(userId);
     }
 
-    private void ToggleDescription(Goal goal)
+    private async Task RenderGoalsChart()
+    {
+        try
+        {
+            var isReady = await JSRuntime.InvokeAsync<bool>("isElementReady", "goalsChart");
+            if (!isReady) return;
+
+            await JSRuntime.InvokeVoidAsync("safeDestroyChart", "goalsChart");
+            await Task.Delay(50);
+
+            var chartData = new
+            {
+                labels = goals.Select(g => g.Name).ToArray(),
+                datasets = new[] {
+                    new {
+                        label = "Goal Amounts",
+                        data = goals.Select(g => g.Amount).ToArray(),
+                        backgroundColor = "rgba(75, 192, 192, 0.2)",
+                        borderColor = "rgba(75, 192, 192, 1)",
+                        borderWidth = 1
+                    }
+                }
+            };
+
+            await JSRuntime.InvokeVoidAsync("initializeBarChart",
+                "goalsChart",
+                chartData,
+                "x",
+                false);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Chart error: {ex.Message}");
+        }
+    }
+
+        private void ToggleDescription(Goal goal)
     {
         selectedGoal = goal;
         showModal = true;
+        StateHasChanged();
     }
 
     private void CloseModal()
@@ -471,13 +601,20 @@
             DatabaseHelper.DeleteGoal(goal.GoalId);
             await Task.Delay(100);
 
-            var updatedGoals = DatabaseHelper.GetGoals();
+            var updatedGoals = DatabaseHelper.GetGoals(userId);
             if (updatedGoals.Any(g => g.GoalId == goal.GoalId))
             {
+                Console.WriteLine($"Failed to delete goal with ID: {goal.GoalId} from the database.");
                 return;
             }
+
+            Console.WriteLine($"Goal with ID: {goal.GoalId} deleted from the database.");
+
             goals.Remove(goal);
-            goals = DatabaseHelper.GetGoals();
+
+            goals = DatabaseHelper.GetGoals(userId);
+            Console.WriteLine($"Reloaded goals from database. Total goals: {goals.Count}");
+
             StateHasChanged();
         }
         catch (Exception ex)
@@ -488,10 +625,34 @@
 
     private async Task ConfirmDeleteGoal(Goal goal)
     {
-        bool isConfirmed = await JSRuntime.InvokeAsync<bool>("confirm", $" {goal.Name} will permanently be gone, are you sure!");
+        bool isConfirmed = await JSRuntime.InvokeAsync<bool>("confirm", $"Are you sure you want to delete the goal '{goal.Name}'?");
         if (isConfirmed)
         {
             await DeleteGoal(goal);
+        }
+    }
+
+    private async Task CheckOffGoal(Goal goal)
+    {
+        try
+        {
+            goal.IsFadingOut = true;
+            StateHasChanged();
+            await Task.Delay(500);
+            goals.Remove(goal);
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error in CheckOffGoal: {ex.Message}");
+        }
+    }
+
+    private async Task ConfirmCheckOffGoal(Goal goal)
+    {
+        if (await JSRuntime.InvokeAsync<bool>("confirm", new object[] { $"Are you sure you want to check off the goal '{goal.Name}'?" }))
+        {
+            await CheckOffGoal(goal);
         }
     }
 
@@ -504,7 +665,7 @@
     {
         goal.IsEditing = true;
 
-        // Save for retirement
+        // If Retirement, parse
         if (goal.IsRetirementGoal && !string.IsNullOrEmpty(goal.Description))
         {
             try
@@ -512,14 +673,18 @@
                 var parts = goal.Description.Split(',');
                 retCurrentSavings = decimal.Parse(parts[0].Split(':')[1].Trim());
                 retMonthlyContribution = decimal.Parse(parts[1].Split(':')[1].Trim());
+                retInvestmentGrowthRate = decimal.Parse(parts[2].Split(':')[1].Trim().TrimEnd('%'));
+                retInflationRate = decimal.Parse(parts[3].Split(':')[1].Trim().TrimEnd('%'));
+                retIncomeNeeds = decimal.Parse(parts[4].Split(':')[1].Trim());
+                retOtherIncomeSources = decimal.Parse(parts[5].Split(':')[1].Trim());
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error parsing retirement goal details: {ex.Message}");
+                Console.WriteLine($"Error parsing retirement description: {ex.Message}");
             }
         }
 
-        // Save for Emergency fund
+        // If Emergency, parse
         if (goal.IsEmergencyFundGoal && !string.IsNullOrEmpty(goal.Description))
         {
             try
@@ -531,11 +696,11 @@
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error parsing emergency fund goal details: {ex.Message}");
+                Console.WriteLine($"Error parsing emergency description: {ex.Message}");
             }
         }
 
-        // Save for Traveling
+        // If Travel, parse
         if (goal.IsTravelGoal && !string.IsNullOrEmpty(goal.Description))
         {
             try
@@ -543,7 +708,11 @@
                 var parts = goal.Description.Split(',');
                 travelCurrentSavings = decimal.Parse(parts[0].Split(':')[1].Trim());
                 travelMonthlyContribution = decimal.Parse(parts[1].Split(':')[1].Trim());
-                travelDescription = parts[2].Split(':')[1].Trim();
+                travelAccommodationCosts = decimal.Parse(parts[2].Split(':')[1].Trim());
+                travelTransportationCosts = decimal.Parse(parts[3].Split(':')[1].Trim());
+                travelFoodEntertainmentCosts = decimal.Parse(parts[4].Split(':')[1].Trim());
+                travelCategory = parts[5].Split(':')[1].Trim();
+                travelDescription = parts[6].Split(':')[1].Trim();
 
                 if (goal.Name.StartsWith("Travel to "))
                 {
@@ -552,11 +721,11 @@
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error parsing travel goal details: {ex.Message}");
+                Console.WriteLine($"Error parsing travel description: {ex.Message}");
             }
         }
 
-        // Saving for a Home
+        // If Home, parse
         if (goal.IsHomeGoal && !string.IsNullOrEmpty(goal.Description))
         {
             try
@@ -565,10 +734,15 @@
                 homePrice = decimal.Parse(parts[0].Split(':')[1].Trim());
                 homeCurrentSavings = decimal.Parse(parts[1].Split(':')[1].Trim());
                 homeMonthlySavings = decimal.Parse(parts[2].Split(':')[1].Trim());
+                homeLoanInterestRate = decimal.Parse(parts[3].Split(':')[1].Trim().TrimEnd('%'));
+                homeLoanTerm = int.Parse(parts[4].Split(':')[1].Trim().Replace("years", ""));
+                homePropertyTaxes = decimal.Parse(parts[5].Split(':')[1].Trim());
+                homeInsurance = decimal.Parse(parts[6].Split(':')[1].Trim());
+                homeOtherCosts = decimal.Parse(parts[7].Split(':')[1].Trim());
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error parsing home goal details: {ex.Message}");
+                Console.WriteLine($"Error parsing home description: {ex.Message}");
             }
         }
     }
@@ -579,7 +753,9 @@
         {
             if (goal.IsRetirementGoal)
             {
-                goal.Description = $"Current Savings: {retCurrentSavings}, Monthly Contribution: {retMonthlyContribution}";
+                goal.Description = $"Current Savings: {retCurrentSavings}, Monthly Contribution: {retMonthlyContribution}, " +
+                                   $"Investment Growth Rate: {retInvestmentGrowthRate}%, Inflation Rate: {retInflationRate}%, " +
+                                   $"Retirement Income Needs: {retIncomeNeeds}, Other Income Sources: {retOtherIncomeSources}";
             }
             else if (goal.IsEmergencyFundGoal)
             {
@@ -588,17 +764,22 @@
             else if (goal.IsTravelGoal)
             {
                 goal.Name = $"Travel to {travelDestination}";
-                goal.Description = $"Current Savings: {travelCurrentSavings}, Monthly Contribution: {travelMonthlyContribution}, Description: {travelDescription}";
+
+                goal.Description = $"Current Savings: {travelCurrentSavings}, Monthly Contribution: {travelMonthlyContribution}, " +
+                                   $"Accommodation Costs: {travelAccommodationCosts}, Transportation Costs: {travelTransportationCosts}, " +
+                                   $"Food and Entertainment Costs: {travelFoodEntertainmentCosts}, Travel Category: {travelCategory}, " +
+                                   $"Description: {travelDescription}";
             }
             else if (goal.IsHomeGoal)
             {
-                goal.Description = $"Home Price: {homePrice}, Current Savings: {homeCurrentSavings}, Monthly Savings: {homeMonthlySavings}";
+                goal.Description = $"Home Price: {homePrice}, Current Savings: {homeCurrentSavings}, Monthly Savings: {homeMonthlySavings}, " +
+                                   $"Loan Interest Rate: {homeLoanInterestRate}%, Loan Term: {homeLoanTerm} years, Property Taxes: {homePropertyTaxes}, " +
+                                   $"Home Insurance: {homeInsurance}, Other Costs: {homeOtherCosts}";
             }
 
             DatabaseHelper.UpdateGoal(goal);
-            goals = DatabaseHelper.GetGoals();
+            goals = DatabaseHelper.GetGoals(userId);
             goal.IsEditing = false;
-            showModal = false;
             StateHasChanged();
         }
         catch (Exception ex)
@@ -611,4 +792,15 @@
     {
         goal.IsEditing = false;
     }
+
+    public async ValueTask DisposeAsync()
+    {
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("safeDestroyChart", "goalsChart");
+            objRef?.Dispose();
+        }
+        catch { /* Ignore cleanup errors */ }
+    }
 }
+                

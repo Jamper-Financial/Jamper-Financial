@@ -19,5 +19,6 @@ namespace Jamper_Financial.Shared.Models
         public bool? EmailConfirmed { get; set; }
         public bool? PhoneNumberConfirmed { get; set; }
         public string? Username { get; set; }
+        public byte[]? ProfilePicture { get; set; } = Array.Empty<byte>(); 
     }
 }

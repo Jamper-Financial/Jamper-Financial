@@ -10,7 +10,7 @@ using Jamper_Financial.Shared.Services;
 
 namespace Jamper_Financial.Shared.Services
 {
-    public class AuthenticationService
+    public class AuthenticationService : IAuthenticationService
     {
         private readonly NavigationManager _navigationManager;
         private readonly UserStateService _userStateService;
@@ -69,17 +69,22 @@ namespace Jamper_Financial.Shared.Services
             }
         }
 
-        public void CreateUserAccount(User user, UserProfile userProfile)
+        public async void CreateUserAccount(User user, UserProfile userProfile)
         {
             string hashedPassword = HashPassword(userProfile.Password);
             user.Password = hashedPassword;
             DatabaseHelper.InsertUser(user);
 
+                        Console.WriteLine("Create user Profile");
             int userId = DatabaseHelper.GetUserIdByUsername(userProfile.Username);
             DatabaseHelper.InsertProfile(userId, userProfile.FirstName, userProfile.LastName);
             int adminRoleId = DatabaseHelper.GetRoleIdByName("Admin");
+            Console.WriteLine("Create default role");
             DatabaseHelper.AssignRoleToUser(userId, adminRoleId);
+            Console.WriteLine("Create default categories");
+            DatabaseHelper.InsertDefaultCategories(userId);
         }
+
     }
 }
 
