@@ -250,50 +250,104 @@ window.initializeLineChart = function (canvasId, chartData, indAxis = 'x', label
     }
 };
 
-window.initializePolarChart = function (canvasId, chartData, indAxis = 'x') {
-    const canvas = document.getElementById(canvasId);
-    const ctx = canvas.getContext('2d');
+function initializePolarChart(canvasId, chartData) {
+    const ctx = document.getElementById(canvasId).getContext('2d');
 
-    if (ctx) {
-        let existingChart = Chart.getChart(canvasId);
-        if (existingChart) {
-            existingChart.destroy();
-        }
-
-        const myPolarChart = new Chart(ctx, {
-            type: 'polar',
-            data: chartData,
-            options: {
-                indexAxis: indAxis,
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: { display: true },
-                    datalabels: {
-                        anchor: 'bottom',
-                        align: 'top',
-                        font: {
-                            size: 14,
-                            family: 'Arial',
-                            weight: 'bold'
-                        },
-                        formatter: (value) => {
-                            return value;
-                        }
+    const myPolarChart = new Chart(ctx, {
+        type: 'polarArea',
+        responsive: true,
+        data: {
+            labels: chartData.labels,
+            datasets: [{
+                label: chartData.datasets[0].label,
+                data: Object.values(chartData.datasets[0].data),
+                backgroundColor: chartData.datasets[0].backgroundColor,
+                borderColor: chartData.datasets[0].borderColor,
+                borderWidth: chartData.datasets[0].borderWidth
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            },
+            scales: {
+                r: {
+                    angleLines: {
+                        display: true
                     },
-                    filler: {
-                        propagate: true
+                    grid: {
+                        circular: true
+                    },
+                    pointLabels: {
+                        display: true,
+                        centerPointLabels: false,
+                        font: {
+                            size: 10
+                        },
+                        padding: 2 // Reduce padding around point labels
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: calculateStepSize(Object.values(chartData.datasets[0].data)),
+                        min: 0
                     }
                 }
             },
-            plugins: [ChartDataLabels]
-        });
-    } else {
-        console.error(`Canvas element with id '${canvasId}' not found for Bar Chart.`);
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        font: {
+                            size: 12
+                        },
+                        boxWidth: 12,
+                        padding: 5
+                    }
+                },
+                title: {
+                    display: false,
+                    text: 'Savings Goals by Category',
+                    font: {
+                        size: 14
+                    }
+                },
+                tooltip: {
+                    bodyFontSize: 10,
+                    titleFontSize: 12
+                }
+            }
+        }
+    });
+}
+
+function calculateStepSize(data) {
+    if (!data || data.length === 0) {
+        return 1;
     }
-};
+    const maxValue = Math.max(...data);
+    if (maxValue === 0) {
+        return 1;
+    }
+    const suggestedSteps = 5; // Aim for around 5 steps
+    const rawStep = maxValue / suggestedSteps;
+    const power = Math.floor(Math.log10(rawStep));
+    const magnitude = Math.pow(10, power);
+    let normalizedStep = rawStep / magnitude;
+
+    if (normalizedStep > 5) {
+        normalizedStep = 10;
+    } else if (normalizedStep > 2) {
+        normalizedStep = 5;
+    } else {
+        normalizedStep = 2;
+    }
+
+    return normalizedStep * magnitude;
+}

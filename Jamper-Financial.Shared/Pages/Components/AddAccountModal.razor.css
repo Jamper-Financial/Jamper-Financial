@@ -83,13 +83,13 @@
             }
 
         .button-container button.cancel {
-            background-color: #db4437;
+            background-color: var(--btn-cancel-color);
             color: white;
             border: none;
         }
 
             .button-container button.cancel:hover {
-                background-color: #c33c2f;
+                background-color: var(--btn-cancel-color-hover);
             }
 
 .validation-message {

@@ -14,6 +14,7 @@ using QuestPDF.Infrastructure;
 using QuestPDF.Helpers;
 using Blazorise;
 using Microsoft.JSInterop;
+using Jamper_Financial.Shared.Utilities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +37,8 @@ builder.Services.AddRazorComponents()
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
 builder.Services.AddSingleton<AuthenticationService>();
+builder.Services.AddSingleton<TransactionParser>(); 
+
 
 builder.Services.AddScoped<IUserService, UserService>(sp => new UserService(connectionString));
 builder.Services.AddScoped<IAccountService, AccountService>(sp => new AccountService(connectionString));
