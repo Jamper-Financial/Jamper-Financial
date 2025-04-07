@@ -83,7 +83,8 @@ namespace Jamper_Financial.Shared.Services
                                     AccountId = reader.GetInt32(reader.GetOrdinal("AccountID")),
                                     AccountTypeID = reader.GetInt32(reader.GetOrdinal("AccountTypeID")),
                                     AccountName = reader.GetString(reader.GetOrdinal("AccountName")),
-                                    Balance = reader.GetInt32(reader.GetOrdinal("Balance")),
+                                    //Balance = reader.GetInt32(reader.GetOrdinal("Balance")),
+                                    Balance = (int)reader.GetDecimal(reader.GetOrdinal("Balance")),
                                     AccountNumber = reader.GetString(reader.GetOrdinal("AccountNumber")),
                                     UserId = reader.GetInt32(reader.GetOrdinal("UserID"))
                                 });

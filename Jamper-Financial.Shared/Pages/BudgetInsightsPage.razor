@@ -6,6 +6,7 @@
 @inject UserStateService UserStateService
 @inject IBudgetInsightsService BudgetInsightsService
 @inject IUserService UserService
+@inject IAccountService AccountService
 
 @code {
     [CascadingParameter] private Action<string>? SetPageTitle { get; set; }
@@ -20,9 +21,13 @@
     private List<decimal> chartData = new List<decimal>();
     private List<string> chartBackgroundColors = new List<string>();
 
+    private List<BankAccount> userAccounts = new List<BankAccount>();  // Instead of List<Account>
+
     private decimal income;
     private decimal expenses;
     private decimal totalSavings;
+    private decimal totalBalance = 0;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -37,8 +42,16 @@
             if (userId > 0)
             {
                 userProfile = await UserService.GetUserProfileByIdAsync(userId);
-                await LoadBudgetItemsAsync();
+                userAccounts = await AccountService.GetBankAccounts(userId);
 
+                //DEBUG LOGS
+                Console.WriteLine($"Number of accounts loaded: {userAccounts?.Count}");
+                if (userAccounts?.Count > 0)
+                {
+                    Console.WriteLine($"First account: {userAccounts[0].AccountName}, Balance: {userAccounts[0].Balance}");
+                }
+
+                await LoadBudgetItemsAsync();
                 UpdateChartData();
             }
             else
@@ -83,8 +96,15 @@
         expenses = budgetItems
             .Where(i => i.TransactionType == 1)
             .Sum(i => i.CurrentAmount);
+
+        // Calculate total balance from all accounts
+        totalBalance = userAccounts.Sum(a => a.Balance);
+
         Console.WriteLine($"Income: {income}, Expenses: {expenses}");
-        totalSavings = 255010 + income - expenses; // Assuming 255010 is the balance value
+        //totalSavings = 255010 + income - expenses; // Assuming 255010 is the balance value
+        totalSavings = totalBalance + income - expenses;  // Now using actual account balances
+		StateHasChanged(); // Forcing UI update
+
     }
 
 
@@ -194,7 +214,8 @@
                             <img class="stat-icon flex-item" src="images/balance-icon.svg" />
                             <div class="flex-container column-direction">
                                 <span class="stat-label flex-item">My Balance</span>
-                                <span class="stat-value flex-item">$255,010</span>
+                                @* <span class="stat-value flex-item">$255,010</span> *@
+                                <span class="stat-value flex-item">@totalBalance.ToString("$#,##0")</span>
                             </div>
                         </li>
                         <li class="flex-container row-direction">
