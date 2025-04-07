@@ -76,7 +76,6 @@ app.UseAntiforgery();
 // --------------------------------------------------
 // CSV Endpoint
 // --------------------------------------------------
-
 app.MapGet("/export/csv", async (HttpContext context) =>
 {
     var reportType = context.Request.Query["reportType"];
@@ -85,6 +84,7 @@ app.MapGet("/export/csv", async (HttpContext context) =>
     var fromDateStr = context.Request.Query["fromDate"];
     var toDateStr = context.Request.Query["toDate"];
     var categoriesStr = context.Request.Query["categories"];
+    var accountsStr = context.Request.Query["accounts"];
     var userIdStr = context.Request.Query["userId"];
 
     DateTime.TryParse(fromDateStr, out DateTime fromDate);
@@ -101,35 +101,47 @@ app.MapGet("/export/csv", async (HttpContext context) =>
 
     var allTransactions = await TransactionHelper.GetTransactionsAsync(userId);
 
+    // Filter by date range
     var filtered = allTransactions
         .Where(t => t.Date >= fromDate && t.Date <= toDate)
         .ToList();
 
+    // Filter by categories if needed
     if (!catList.Contains("All"))
         filtered = filtered.Where(t => catList.Contains(t.CategoryID.ToString())).ToList();
 
+    // Filter by report type
     if (reportType == "monthlyExpenses")
         filtered = filtered.Where(t => t.TransactionType == "e").ToList();
     else if (reportType == "monthlySavings")
         filtered = filtered.Where(t => t.TransactionType == "i").ToList();
 
+    // Summaries
     var culture = CultureInfo.CreateSpecificCulture("en-US");
-
     var totalDebit = filtered.Where(t => t.TransactionType == "e").Sum(t => t.Amount);
     var totalCredit = filtered.Where(t => t.TransactionType == "i").Sum(t => t.Amount);
     var netTotal = totalCredit - totalDebit;
 
+    // Build CSV
     var csv = new StringBuilder();
-    csv.AppendLine("Jamper Financial Report");
-    csv.AppendLine($"Report Name: {reportName}");
-    csv.AppendLine($"Report from {fromDate:yyyy-MM-dd} to {toDate:yyyy-MM-dd}");
-    csv.AppendLine($"Description: {description}");
-    csv.AppendLine($"Total Debit: {totalDebit.ToString("C", culture)}");
-    csv.AppendLine($"Total Credit: {totalCredit.ToString("C", culture)}");
-    csv.AppendLine($"Net Total: {netTotal.ToString("C", culture)}");
-    csv.AppendLine();
+
+    // Basic report info, each line is fully quoted if it might contain commas
+    csv.AppendLine("\"Jamper Financial Report\"");
+    csv.AppendLine($"\"Report Name: {reportName}\"");
+    csv.AppendLine($"\"Report from {fromDate:yyyy-MM-dd} to {toDate:yyyy-MM-dd}\"");
+    csv.AppendLine($"\"Description: {description}\"");
+
+    // Wrap these lines in quotes so that commas in the amounts do not break columns
+    csv.AppendLine($"\"Total Debit: {totalDebit.ToString("C", culture)}\"");
+    csv.AppendLine($"\"Total Credit: {totalCredit.ToString("C", culture)}\"");
+    csv.AppendLine($"\"Net Total: {netTotal.ToString("C", culture)}\"");
+
+    csv.AppendLine();  // blank line
+
+    // Table header
     csv.AppendLine("Description,Date,Debit,Credit,Frequency,Next Due");
 
+    // Table body rows
     foreach (var t in filtered)
     {
         string freq = string.IsNullOrEmpty(t.Frequency) ? "-" : t.Frequency;
@@ -140,15 +152,19 @@ app.MapGet("/export/csv", async (HttpContext context) =>
             _ => "-"
         };
 
+        // Debit if expense, Credit if income
         string debit = t.TransactionType == "e" ? t.Amount.ToString("C", culture) : "";
         string credit = t.TransactionType == "i" ? t.Amount.ToString("C", culture) : "";
 
-        csv.AppendLine($"\"{t.Description}\"," +
-                       $"\"{t.Date:yyyy-MM-dd}\"," +
-                       $"\"{debit}\"," +
-                       $"\"{credit}\"," +
-                       $"\"{freq}\"," +
-                       $"\"{nextDue}\"");
+        // Wrap each field in quotes in case it contains commas
+        csv.AppendLine(
+            $"\"{t.Description}\"," +
+            $"\"{t.Date:yyyy-MM-dd}\"," +
+            $"\"{debit}\"," +
+            $"\"{credit}\"," +
+            $"\"{freq}\"," +
+            $"\"{nextDue}\""
+        );
     }
 
     var csvBytes = Encoding.UTF8.GetBytes(csv.ToString());
@@ -156,9 +172,7 @@ app.MapGet("/export/csv", async (HttpContext context) =>
     return Results.File(csvBytes, "text/csv", fileName);
 });
 
-
-
- // --------------------------------------------------
+// --------------------------------------------------
 // PDF Endpoint
 // --------------------------------------------------
 
@@ -166,9 +180,9 @@ app.MapGet("/export/csv", async (HttpContext context) =>
 static IContainer CellStyleHeader(IContainer container)
 {
     return container
-        .Background("#62AD41")  // Your original green
+        .Background("#62AD41") 
         .PaddingVertical(10)    // Slightly more padding
-        .Border(0)              // Remove all borders
+        .Border(0)              
         .DefaultTextStyle(x => x.SemiBold()
                                .FontColor(Colors.White)
                                .FontSize(11));
@@ -177,7 +191,7 @@ static IContainer CellStyleHeader(IContainer container)
 // alternate rows
 Func<IContainer, IContainer> EvenRowStyle = container =>
     container
-        .Background("#F0F8ED")  // Very light green tint
+        .Background("DEF9C4")  // Very light green tint
         .PaddingVertical(8)
         .Border(0)             
         .DefaultTextStyle(x => x.FontSize(10)
@@ -284,8 +298,7 @@ app.MapGet("/export/pdf", async (HttpContext context) =>
                     contentCol.Spacing(20);
 
                     // Summary Box
-                    contentCol.Item().Background("#f5f9f3")
-                        .Border(1).BorderColor("#d0e0c9") // You can remove this line if you want NO box border
+                    contentCol.Item().Background("DEF9C4") 
                         .Padding(12)
                         .Row(row =>
                         {
