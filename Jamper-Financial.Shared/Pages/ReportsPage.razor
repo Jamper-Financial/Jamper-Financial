@@ -290,6 +290,7 @@
         NavigationManager.NavigateTo(url, forceLoad: true);
     }
 
+    
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
@@ -299,6 +300,7 @@
         }
     }
 
+    @* MONTHLY EXPENSES CHART *@
     private async Task RenderMonthlyBudgetChart()
     {
         var months = new[]
@@ -338,6 +340,7 @@
         await JS.InvokeVoidAsync("initializeBarChart", "monthlyBudgetChart", chartData);
     }
 
+    @* MONTHLY SAVINGS CHART *@
     private async Task RenderMonthlySavingsChart()
     {
         var months = new[]
@@ -379,253 +382,276 @@
 }
 
 <style>
-.reports-page {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-.reports-page .report-container {
-    width: 100%;
-    max-width: 1200px;
-    margin-bottom: 20px;
-}
-.reports-page .export-buttons {
-    display: flex;
-    gap: 10px;
-    margin: 10px 0;
-}
-.reports-page .reports-btn {
-    padding: 8px 16px;
-    background-color: #62AD41;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-weight: 500;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-.reports-page .reports-btn:hover {
-    background-color: #4e8d34;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
-.reports-page .reports-custom-btn {
-    padding: 12px 24px;
-    background-color: white;
-    color: #62AD41;
-    font-size: 18px;
-    border: 2px solid #62AD41;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-top: 20px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    transition: all 0.3s;
-    font-weight: 600;
-}
-.reports-page .reports-custom-btn:hover {
-    background-color: #62AD41;
-    color: white;
-}
-.reports-page .graph-card {
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
-    padding: 25px;
-    margin: 10px 0;
-    height: 250px;
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    background-color: #ffffff;
-}
-.reports-page .create-report-modal,
-.reports-page .results-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 9999;
-}
-.reports-page .modal-content {
-    background-color: #fff;
-    width: 90%;
-    max-width: 900px;
-    border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    padding: 25px;
-    position: relative;
-    border: 1px solid #e0e0e0;
-}
-.reports-page .modal-content h3 {
-    color: #62AD41;
-    margin-bottom: 20px;
-    font-size: 1.5em;
-    border-bottom: 2px solid #f0f0f0;
-    padding-bottom: 10px;
-}
-.reports-page .report-results {
-    max-height: 60vh;
-    overflow-y: auto;
-}
-.reports-page .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-.reports-page .close:hover {
-    color: #62AD41;
-}
-.reports-page .modal-body {
-    margin-top: 20px;
-}
-.reports-page .form-group {
-    margin-bottom: 15px;
-}
-.reports-page .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 600;
-    color: #555;
-}
-.reports-page .form-group input,
-.reports-page .form-group select,
-.reports-page .form-group textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    transition: border 0.3s;
-}
-.reports-page .form-group input:focus,
-.reports-page .form-group select:focus,
-.reports-page .form-group textarea:focus {
-    border-color: #62AD41;
-    outline: none;
-}
-.reports-page .form-group .multi-select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    background-color: #fff;
-}
-.reports-page .form-group .date-range {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-.reports-page .form-group .date-range label {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-.reports-page .form-group .date-range input[type="checkbox"] {
-    margin-right: 8px;
-    accent-color: #62AD41;
-}
-.reports-page .form-group .date-range .date-inputs {
-    display: flex;
-    gap: 10px;
-    flex: 1;
-}
-.reports-page .error-message {
-    color: #e74c3c;
-    font-size: 0.9em;
-    margin-top: 5px;
-}
-.reports-page .transactions-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    margin: 15px 0;
-}
-.reports-page .transactions-table th {
-    background-color: #62AD41;
-    color: white;
-    padding: 12px 15px;
-    text-align: left;
-    font-weight: 600;
-}
-.reports-page .transactions-table td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #e0e0e0;
-    background-color: white;
-}
-.reports-page .transactions-table tr:last-child td {
-    border-bottom: none;
-}
-.reports-page .transactions-table tr:hover td {
-    background-color: #f5f9f3;
-}
-.reports-page .total-row {
-    font-weight: bold;
-    background-color: #e8f3e2 !important;
-}
-.reports-page .total-row td {
-    padding: 12px 15px;
-    border-top: 2px solid #62AD41;
-    border-bottom: none;
-}
-.reports-page .negative {
-    color: #e74c3c;
-}
-.reports-page .positive {
-    color: #2ecc71;
-}
-.reports-page .status-badge {
-    padding: 4px 8px;
-    border-radius: 12px;
-    font-size: 0.75em;
-    font-weight: 600;
-}
-.reports-page .status-badge.negative {
-    background-color: #ffebee;
-    color: #c62828;
-}
-.reports-page .status-badge.positive {
-    background-color: #e8f5e9;
-    color: #2e7d32;
-}
-@@media (max-width: 768px) {
-    .reports-page .modal-content {
-        width: 95%;
-        padding: 15px;
-    }
-    .reports-page .transactions-table {
-        font-size: 0.9em;
-    }
-    .reports-page .transactions-table th,
-    .reports-page .transactions-table td {
-        padding: 8px 10px;
-    }
-    .reports-page .form-group .date-range {
+    .reports-page {
+        padding: 20px;
+        font-family: Arial, sans-serif;
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
-    }
-    .reports-page .form-group .date-range .date-inputs {
+        align-items: center;
         width: 100%;
     }
-}
+    .reports-page .report-container {
+        width: 100%;
+        max-width: 1200px;
+        margin-bottom: 20px;
+    }
+    .reports-page .export-buttons {
+        display: flex;
+        gap: 10px;
+        margin: 10px 0;
+    }
+    .reports-page .reports-btn {
+        padding: 8px 16px;
+        background-color: #62AD41;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 500;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .reports-page .reports-btn:hover {
+        background-color: #4e8d34;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .reports-page .reports-custom-btn {
+        padding: 12px 24px;
+        background-color: white;
+        color: #62AD41;
+        font-size: 18px;
+        border: 2px solid #62AD41;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 20px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        transition: all 0.3s;
+        font-weight: 600;
+    }
+    .reports-page .reports-custom-btn:hover {
+        background-color: #62AD41;
+        color: white;
+    }
+   
+    .reports-page .graph-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 25px;
+        margin: 10px 0;
+        height: 320px;
+        text-align: center;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background-color: #ffffff;
+    }
+   
+    .reports-page .graph-card canvas {
+        display: block;
+        margin: auto;
+        width: 100% !important;
+        height: 100% !important;
+    }
+    .reports-page .create-report-modal,
+    .reports-page .results-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 9999;
+    }
+    .reports-page .modal-content {
+        background-color: #fff;
+        width: 90%;
+        max-width: 900px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        padding: 25px;
+        position: relative;
+        border: 1px solid #e0e0e0;
+    }
+    .reports-page .modal-content h3 {
+        color: #62AD41;
+        margin-bottom: 20px;
+        font-size: 1.5em;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 10px;
+    }
+    .reports-page .modal-summary {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .reports-page .summary-item {
+        font-weight: bold;
+        font-size: 1.2em;
+        padding: 10px 20px;
+        border-radius: 8px;
+    }
+    .reports-page .summary-item.negative {
+        color: #e74c3c;
+        background-color: rgba(231, 76, 60, 0.1);
+    }
+    .reports-page .summary-item.positive {
+        color: #2ecc71;
+        background-color: rgba(46, 204, 113, 0.1);
+    }
+    .reports-page .report-results {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+    .reports-page .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+    .reports-page .close:hover {
+        color: #62AD41;
+    }
+    .reports-page .modal-body {
+        margin-top: 20px;
+    }
+    .reports-page .form-group {
+        margin-bottom: 15px;
+    }
+    .reports-page .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #555;
+    }
+    .reports-page .form-group input,
+    .reports-page .form-group textarea,
+    .reports-page .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        transition: border 0.3s;
+        color: #888;
+        background-color: #fff;
+    }
+    .reports-page .form-group ::placeholder {
+        color: #888;
+    }
+    .reports-page .form-group input:not(:placeholder-shown),
+    .reports-page .form-group textarea:not(:placeholder-shown) {
+        color: #000;
+    }
+    .reports-page .form-group .multi-select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background-color: #fff;
+        color: #000;
+    }
+    .reports-page .form-group .date-range {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .reports-page .form-group .date-range label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    .reports-page .form-group .date-range input[type="checkbox"] {
+        margin-right: 8px;
+        accent-color: #62AD41;
+    }
+    .reports-page .form-group .date-range .date-inputs {
+        display: flex;
+        gap: 10px;
+        flex: 1;
+    }
+    .reports-page .error-message {
+        color: #e74c3c;
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+    .reports-page .transactions-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin: 15px 0;
+    }
+    .reports-page .transactions-table th {
+        background-color: #62AD41;
+        color: white;
+        padding: 12px 15px;
+        text-align: left;
+        font-weight: 600;
+    }
+    .reports-page .transactions-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #e0e0e0;
+        background-color: white;
+    }
+    .reports-page .transactions-table tr:last-child td {
+        border-bottom: none;
+    }
+    .reports-page .transactions-table tr:hover td {
+        background-color: #f5f9f3;
+    }
+    .reports-page .negative {
+        color: #e74c3c;
+    }
+    .reports-page .positive {
+        color: #2ecc71;
+    }
+    .reports-page .status-badge {
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.75em;
+        font-weight: 600;
+    }
+    .reports-page .status-badge.negative {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+    .reports-page .status-badge.positive {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+    }
+    @@media (max-width: 768px) {
+        .reports-page .modal-content {
+            width: 95%;
+            padding: 15px;
+        }
+        .reports-page .transactions-table {
+            font-size: 0.9em;
+        }
+        .reports-page .transactions-table th,
+        .reports-page .transactions-table td {
+            padding: 8px 10px;
+        }
+        .reports-page .form-group .date-range {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .reports-page .form-group .date-range .date-inputs {
+            width: 100%;
+        }
+    }
 </style>
 
 <div class="reports-page">
-    <!-- EXPENSES REPORT OVERVIEW WITH CHART -->
+    @* EXPENSES REPORT CHART *@
     <div class="report-container">
         <h3>Expenses Report Overview</h3>
         <div class="graph-card">
@@ -636,7 +662,7 @@
         </div>
     </div>
 
-    <!-- SAVINGS REPORT OVERVIEW WITH CHART -->
+    @* SAVINGS REPORT CHART *@
     <div class="report-container">
         <h3>Savings Report Overview</h3>
         <div class="graph-card">
@@ -650,7 +676,7 @@
         </button>
     </div>
 
-    <!-- CREATE CUSTOM REPORT MODAL -->
+    @* CREATE CUSTOM REPORT MODAL *@
     @if (showCreateReportModal)
     {
         <div class="create-report-modal">
@@ -722,13 +748,27 @@
         </div>
     }
 
-    <!-- REPORT RESULTS MODAL (CUSTOM REPORT) -->
+    @* REPORT RESULTS MODAL FOR CUSTOM REPORTS *@
     @if (showResultsModal)
     {
         <div class="results-modal">
             <div class="modal-content">
                 <span class="close" @onclick="CloseResultsModal">&times;</span>
                 <h3>Report Results</h3>
+                <div class="modal-summary">
+                    @if (filteredTransactions.Any(t => t.TransactionType == "e"))
+                    {
+                        <div class="summary-item negative">
+                            Total Expenses: @filteredTransactions.Where(t => t.TransactionType == "e").Sum(t => t.Amount).ToString("C")
+                        </div>
+                    }
+                    @if (filteredTransactions.Any(t => t.TransactionType == "i"))
+                    {
+                        <div class="summary-item positive">
+                            Total Savings: @filteredTransactions.Where(t => t.TransactionType == "i").Sum(t => t.Amount).ToString("C")
+                        </div>
+                    }
+                </div>
                 <div style="margin-bottom: 20px; color: #555;">
                     <div><strong>Report Name:</strong> @reportName</div>
                     <div><strong>Description:</strong> @reportDescription</div>
@@ -746,8 +786,7 @@
                                 <tr>
                                     <th>Description</th>
                                     <th>Date</th>
-                                    <th>Debit</th>
-                                    <th>Credit</th>
+                                    <th>Amount</th>
                                     <th>Frequency</th>
                                     <th>Next Due</th>
                                 </tr>
@@ -758,11 +797,8 @@
                                     <tr>
                                         <td>@t.Description</td>
                                         <td>@t.Date.ToString("dd MMM yyyy")</td>
-                                        <td class="@(t.TransactionType == "e" ? "negative" : "")">
-                                            @(t.TransactionType == "e" && t.Amount != 0 ? t.Amount.ToString("C") : "-")
-                                        </td>
-                                        <td class="@(t.TransactionType == "i" ? "positive" : "")">
-                                            @(t.TransactionType == "i" && t.Amount != 0 ? t.Amount.ToString("C") : "-")
+                                        <td class="@(t.TransactionType == "e" ? "negative" : "positive")">
+                                            @t.Amount.ToString("C")
                                         </td>
                                         <td>
                                             @if (!string.IsNullOrEmpty(t.Frequency))
@@ -771,16 +807,14 @@
                                                     @t.Frequency
                                                 </span>
                                             }
+                                            else
+                                            {
+                                                <span>-</span>
+                                            }
                                         </td>
                                         <td>@(ComputeNextDueDate(t)?.ToString("dd MMM yyyy") ?? "-")</td>
                                     </tr>
                                 }
-                                <tr class="total-row">
-                                    <td colspan="2"><strong>Total</strong></td>
-                                    <td class="negative"><strong>@filteredTransactions.Where(t => t.TransactionType == "e").Sum(t => t.Amount).ToString("C")</strong></td>
-                                    <td class="positive"><strong>@filteredTransactions.Where(t => t.TransactionType == "i").Sum(t => t.Amount).ToString("C")</strong></td>
-                                    <td colspan="2"></td>
-                                </tr>
                             </tbody>
                         </table>
                         <div class="export-buttons" style="margin-top: 20px;">
@@ -796,16 +830,20 @@
         </div>
     }
 
-    <!-- CURRENT MONTH EXPENSES MODAL -->
+    @*CURRENT MONTH EXPENSES MODAL*@
     @if (showCurrentMonthExpensesModal)
     {
         <div class="results-modal">
             <div class="modal-content">
                 <span class="close" @onclick="() => showCurrentMonthExpensesModal = false">&times;</span>
                 <h3>Current Month Expenses</h3>
+                <div class="modal-summary">
+                    <div class="summary-item negative">
+                        Total Expenses: @filteredTransactions.Sum(t => t.Amount).ToString("C")
+                    </div>
+                </div>
                 <div style="margin-bottom: 20px; color: #555;">
                     <div><strong>Month:</strong> @($"{DateTime.Now:MMMM yyyy}")</div>
-                    <div><strong>Total Expenses:</strong> @filteredTransactions.Sum(t => t.Amount).ToString("C")</div>
                 </div>
                 <div class="report-results">
                     @if (filteredTransactions.Count == 0)
@@ -820,6 +858,8 @@
                                     <th>Description</th>
                                     <th>Date</th>
                                     <th>Amount</th>
+                                    <th>Frequency</th>
+                                    <th>Next Due</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -829,12 +869,21 @@
                                         <td>@t.Description</td>
                                         <td>@t.Date.ToString("dd MMM yyyy")</td>
                                         <td class="negative">@t.Amount.ToString("C")</td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(t.Frequency))
+                                            {
+                                                <span class="status-badge @(t.Frequency.ToLower() == "monthly" ? "positive" : "negative")">
+                                                    @t.Frequency
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span>-</span>
+                                            }
+                                        </td>
+                                        <td>@(ComputeNextDueDate(t)?.ToString("dd MMM yyyy") ?? "-")</td>
                                     </tr>
                                 }
-                                <tr class="total-row">
-                                    <td colspan="2"><strong>Total Expenses</strong></td>
-                                    <td class="negative"><strong>@filteredTransactions.Sum(t => t.Amount).ToString("C")</strong></td>
-                                </tr>
                             </tbody>
                         </table>
                         <div class="export-buttons" style="margin-top: 20px;">
@@ -854,16 +903,20 @@
         </div>
     }
 
-    <!-- CURRENT MONTH SAVINGS MODAL -->
+    @* CURRENT MONTH SAVINGS MODAL *@
     @if (showCurrentMonthSavingsModal)
     {
         <div class="results-modal">
             <div class="modal-content">
                 <span class="close" @onclick="() => showCurrentMonthSavingsModal = false">&times;</span>
                 <h3>Current Month Savings</h3>
+                <div class="modal-summary">
+                    <div class="summary-item positive">
+                        Total Savings: @filteredTransactions.Sum(t => t.Amount).ToString("C")
+                    </div>
+                </div>
                 <div style="margin-bottom: 20px; color: #555;">
                     <div><strong>Month:</strong> @($"{DateTime.Now:MMMM yyyy}")</div>
-                    <div><strong>Total Savings:</strong> @filteredTransactions.Sum(t => t.Amount).ToString("C")</div>
                 </div>
                 <div class="report-results">
                     @if (filteredTransactions.Count == 0)
@@ -878,6 +931,8 @@
                                     <th>Description</th>
                                     <th>Date</th>
                                     <th>Amount</th>
+                                    <th>Frequency</th>
+                                    <th>Next Due</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -887,12 +942,21 @@
                                         <td>@t.Description</td>
                                         <td>@t.Date.ToString("dd MMM yyyy")</td>
                                         <td class="positive">@t.Amount.ToString("C")</td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(t.Frequency))
+                                            {
+                                                <span class="status-badge @(t.Frequency.ToLower() == "monthly" ? "positive" : "negative")">
+                                                    @t.Frequency
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span>-</span>
+                                            }
+                                        </td>
+                                        <td>@(ComputeNextDueDate(t)?.ToString("dd MMM yyyy") ?? "-")</td>
                                     </tr>
                                 }
-                                <tr class="total-row">
-                                    <td colspan="2"><strong>Total Savings</strong></td>
-                                    <td class="positive"><strong>@filteredTransactions.Sum(t => t.Amount).ToString("C")</strong></td>
-                                </tr>
                             </tbody>
                         </table>
                         <div class="export-buttons" style="margin-top: 20px;">
