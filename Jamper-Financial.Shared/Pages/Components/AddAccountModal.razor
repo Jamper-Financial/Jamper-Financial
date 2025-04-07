@@ -1,0 +1,147 @@
+@using Jamper_Financial.Shared.Models
+@using Jamper_Financial.Shared.Services
+@inject IAccountService AccountService
+@inject NavigationManager Navigation
+@inject IUserService UserService
+@inject UserStateService UserStateService
+
+<div class="modal-overlay" @onclick="CloseAddAccountModal">
+    <div class="modal-content" @onclick:stopPropagation="true">
+        <h3 class="modal-header">@title</h3>
+        <div class="modal-body">
+            <EditForm Model="newAccount" OnValidSubmit="AddManualAccount">
+                <DataAnnotationsValidator />
+                <ValidationSummary class="validation-summary" />
+
+                <div class="form-group manual-account-input">
+                    <label for="bankName">Name/Description:</label>
+                    <InputText id="bankName" @bind-Value="newAccount.AccountName" placeholder="e.g., Checking Account" />
+                    @* <ValidationMessage For="@(() => newAccount.AccountName)" /> *@
+                </div>
+                <div class="manual-account-input form-group">
+                    <label for="accountAmount">Amount:</label>
+                    <InputNumber id="accountAmount" @bind-Value="newAccount.Balance" placeholder="e.g., 1000" />
+                </div>
+                <div class="manual-account-input form-group">
+                    <label for="accountType">Account Type:</label>
+                    <InputSelect @bind-Value="newAccount.AccountTypeID">
+                        <option value="">Select Account Type</option>
+                        @foreach (var accountType in accountTypes)
+                        {
+                            <option value="@accountType.AccountTypeId">@accountType.AccountTypeName</option>
+                        }
+                    </InputSelect>
+                    @* <ValidationMessage For="@(() => newAccount.AccountTypeID)" /> *@
+                </div>
+                <div class="manual-account-input form-group">
+                    <label for="accountNumber">Account or Card Number:</label>
+                    <InputText id="accountNumber" @bind-Value="newAccount.AccountNumber" @oninput="ValidateAccountNumber" maxlength="4" placeholder="Enter only last 4 digits (optional)" />
+                    @if (!string.IsNullOrEmpty(accountNumberError))
+                    {
+                        <div class="error-message">@accountNumberError</div>
+                    }
+                </div>
+                <div class="button-container">
+                    <button type="submit" class="save">Add Account</button>
+                    <button type="button" class="cancel" @onclick="CloseAddAccountModal">Cancel</button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(toasterMessage))
+{
+    <div class="toaster @toasterClass">
+        <span>@toasterMessage</span>
+        <button class="close-toaster" @onclick="ClearToaster">×</button>
+    </div>
+}
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback<bool> OnClose { get; set; }
+    [Parameter] public EventCallback<string> OnAccountSaved { get; set; }
+    [Parameter] public BankAccount newAccount { get; set; }
+    [Parameter] public string? title { get; set; } = "Add Bank Account";
+    private List<BankAccountType> accountTypes = new List<BankAccountType>();
+
+    private string accountNumberError = string.Empty;
+    private string toasterMessage = string.Empty;
+    private string toasterClass = string.Empty;
+    private string? errorMessage;
+
+    private EditContext editContext;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Get the logged-in user's ID and username from the UserStateService
+        int userId = UserStateService.LoggedInUser.UserID;
+
+        if (userId <= 0)
+        {
+            Navigation.NavigateTo("/login");
+        }
+        else
+        {
+            accountTypes = await AccountService.GetAccountTypes();
+            editContext = new EditContext(newAccount);
+        }
+    }
+
+    private async Task AddManualAccount()
+    {
+        try
+        {
+
+            if (!editContext.Validate())
+            {
+                // Do not return. Let the ValidationSummary and ValidationMessage components display errors.
+                return;
+            }
+
+
+            if (await AccountService.CreateAccount(newAccount))
+            {
+                toasterClass = "success";
+            }
+            else
+            {
+                toasterClass = "error";
+            }
+
+            await OnAccountSaved.InvokeAsync(toasterClass); // Notify parent component
+            await AccountService.GetBankAccounts(UserStateService.UserId);
+            await CloseAddAccountModal();
+
+        }
+        catch (Exception ex)
+        {
+            accountNumberError = $"Failed to add account: {ex.Message}";
+        }
+    }
+
+    private void ValidateAccountNumber(ChangeEventArgs e)
+    {
+        var input = e.Value?.ToString();
+        if (input != null && input.Length > 4)
+        {
+            accountNumberError = "Please enter only the last 4 digits.";
+        }
+        else
+        {
+            accountNumberError = string.Empty;
+        }
+    }
+
+    private async Task CloseAddAccountModal()
+    {
+        await OnClose.InvokeAsync(false);
+    }
+
+    private void ClearToaster()
+    {
+        toasterMessage = string.Empty;
+        toasterClass = string.Empty;
+    }
+}

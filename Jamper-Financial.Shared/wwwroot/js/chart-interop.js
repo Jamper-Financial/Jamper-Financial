@@ -84,53 +84,123 @@ window.initializePieChart = function (canvasId, chartData) {
     }
 };
 
-window.initializeBarChart = function (canvasId, chartData, indAxis = 'x', labeldisplay = false) {
-    const canvas = document.getElementById(canvasId);
-    const ctx = canvas.getContext('2d');
+//added by romer
+window.isElementReady = function (elementId) {
+    const element = document.getElementById(elementId);
+    if (!element) return false;
 
-    if (ctx) {
-        let existingChart = Chart.getChart(canvasId);
+    const style = window.getComputedStyle(element);
+    return style.display !== 'none' &&
+        element.offsetWidth > 0 &&
+        element.offsetHeight > 0;
+};
+
+window.safeDestroyChart = async function (canvasId) {
+    return new Promise(resolve => {
+        const chart = Chart.getChart(canvasId);
+        if (chart) {
+            chart.destroy();
+            setTimeout(resolve, 50);
+        } else {
+            resolve();
+        }
+    });
+};
+
+window.destroyChart = function (canvasId) {
+    const canvas = document.getElementById(canvasId);
+    if (canvas) {
+        const existingChart = Chart.getChart(canvasId);
         if (existingChart) {
             existingChart.destroy();
         }
-
-        const plugins = {
-            legend: { display: true },
-            datalabels: labeldisplay ? {
-                anchor: 'bottom',
-                align: 'top',
-                font: {
-                    size: 14,
-                    family: 'Arial',
-                    weight: 'bold'
-                },
-                formatter: (value) => {
-                    return value;
-                }
-            } : {
-                display: false
-            }
-        };
-
-        const myBarChart = new Chart(ctx, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                indexAxis: indAxis,
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: plugins
-            },
-            plugins: [ChartDataLabels]
-        });
-    } else {
-        console.error(`Canvas element with id '${canvasId}' not found for Bar Chart.`);
     }
+};
+
+
+window.initializeBarChart = function (canvasId, chartData, indAxis = 'x', labeldisplay = false) {
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) {
+        console.error(`Canvas element with id '${canvasId}' not found`);
+        return;
+    }
+
+    // Add visibility control
+    canvas.style.opacity = '0';
+    canvas.style.transition = 'opacity 0.3s ease';
+
+    // Use requestAnimationFrame for smoother initialization
+    requestAnimationFrame(() => {
+        const ctx = canvas.getContext('2d');
+        if (!ctx) return;
+
+        // Destroy existing chart with callback
+        const existingChart = Chart.getChart(canvasId);
+        if (existingChart) {
+            existingChart.destroy();
+            // Small delay to ensure complete cleanup
+            setTimeout(createNewChart, 50);
+        } else {
+            createNewChart();
+        }
+
+        function createNewChart() {
+            const plugins = {
+                legend: {
+                    display: true,
+                    position: 'top' // More stable than default
+                },
+                datalabels: labeldisplay ? {
+                    anchor: 'end', // Better for bar charts
+                    align: 'top',
+                    clamp: true, // Prevents label overflow
+                    font: {
+                        size: 12, // Slightly smaller for stability
+                        family: 'Arial',
+                        weight: 'bold'
+                    },
+                    formatter: (value) => value
+                } : { display: false }
+            };
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    indexAxis: indAxis,
+                    responsive: false, // Critical change - prevents resize jumps
+                    maintainAspectRatio: false,
+                    layout: {
+                        padding: {
+                            left: 0,
+                            right: 0,
+                            top: 10,
+                            bottom: 10
+                        }
+                    },
+                    animation: {
+                        duration: 300,
+                        onComplete: () => {
+                            canvas.style.opacity = '1';
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grace: '5%' // Adds padding to prevent clipping
+                        },
+                        x: {
+                            grid: {
+                                display: false // Cleaner appearance
+                            }
+                        }
+                    },
+                    plugins: plugins
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+    });
 };
 
 window.initializeLineChart = function (canvasId, chartData, indAxis = 'x', labeldisplay = false) {
@@ -188,50 +258,104 @@ window.initializeLineChart = function (canvasId, chartData, indAxis = 'x', label
     }
 };
 
-window.initializePolarChart = function (canvasId, chartData, indAxis = 'x') {
-    const canvas = document.getElementById(canvasId);
-    const ctx = canvas.getContext('2d');
+function initializePolarChart(canvasId, chartData) {
+    const ctx = document.getElementById(canvasId).getContext('2d');
 
-    if (ctx) {
-        let existingChart = Chart.getChart(canvasId);
-        if (existingChart) {
-            existingChart.destroy();
-        }
-
-        const myPolarChart = new Chart(ctx, {
-            type: 'polar',
-            data: chartData,
-            options: {
-                indexAxis: indAxis,
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: { display: true },
-                    datalabels: {
-                        anchor: 'bottom',
-                        align: 'top',
-                        font: {
-                            size: 14,
-                            family: 'Arial',
-                            weight: 'bold'
-                        },
-                        formatter: (value) => {
-                            return value;
-                        }
+    const myPolarChart = new Chart(ctx, {
+        type: 'polarArea',
+        responsive: true,
+        data: {
+            labels: chartData.labels,
+            datasets: [{
+                label: chartData.datasets[0].label,
+                data: Object.values(chartData.datasets[0].data),
+                backgroundColor: chartData.datasets[0].backgroundColor,
+                borderColor: chartData.datasets[0].borderColor,
+                borderWidth: chartData.datasets[0].borderWidth
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+                padding: {
+                    left: 0,
+                    right: 0,
+                    top: 0,
+                    bottom: 0
+                }
+            },
+            scales: {
+                r: {
+                    angleLines: {
+                        display: true
                     },
-                    filler: {
-                        propagate: true
+                    grid: {
+                        circular: true
+                    },
+                    pointLabels: {
+                        display: true,
+                        centerPointLabels: false,
+                        font: {
+                            size: 10
+                        },
+                        padding: 2 // Reduce padding around point labels
+                    },
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: calculateStepSize(Object.values(chartData.datasets[0].data)),
+                        min: 0
                     }
                 }
             },
-            plugins: [ChartDataLabels]
-        });
-    } else {
-        console.error(`Canvas element with id '${canvasId}' not found for Bar Chart.`);
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        font: {
+                            size: 12
+                        },
+                        boxWidth: 12,
+                        padding: 5
+                    }
+                },
+                title: {
+                    display: false,
+                    text: 'Savings Goals by Category',
+                    font: {
+                        size: 14
+                    }
+                },
+                tooltip: {
+                    bodyFontSize: 10,
+                    titleFontSize: 12
+                }
+            }
+        }
+    });
+}
+
+function calculateStepSize(data) {
+    if (!data || data.length === 0) {
+        return 1;
     }
-};
+    const maxValue = Math.max(...data);
+    if (maxValue === 0) {
+        return 1;
+    }
+    const suggestedSteps = 5; // Aim for around 5 steps
+    const rawStep = maxValue / suggestedSteps;
+    const power = Math.floor(Math.log10(rawStep));
+    const magnitude = Math.pow(10, power);
+    let normalizedStep = rawStep / magnitude;
+
+    if (normalizedStep > 5) {
+        normalizedStep = 10;
+    } else if (normalizedStep > 2) {
+        normalizedStep = 5;
+    } else {
+        normalizedStep = 2;
+    }
+
+    return normalizedStep * magnitude;
+}

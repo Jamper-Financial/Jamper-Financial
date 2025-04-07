@@ -11,5 +11,6 @@ namespace Jamper_Financial.Shared.Services
 
         Task<UserSettings> GetUserSettingsByIdAsync(int userId);
         Task<bool> UpdateUserSettingsAsync(UserSettings userSettings);
+        Task<bool> UpdateUserAvatarAsync(UserProfile userProfile, byte[] avatar);
     }
 }

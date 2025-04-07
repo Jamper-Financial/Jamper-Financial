@@ -1,0 +1,34 @@
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback<bool> OnClose { get; set; }
+    [Parameter] public EventCallback<bool> OnConfirm { get; set; }
+
+    private async Task Confirm()
+    {
+        await OnConfirm.InvokeAsync(true);
+        await OnClose.InvokeAsync(false);
+    }
+
+    private async Task Close()
+    {
+        await OnClose.InvokeAsync(false);
+    }
+}
+
+@if (IsVisible)
+{
+    <div class="modal-overlay" @onclick="Close">
+        <div class="modal-content" @onclick:stopPropagation="true">
+            <div class="modal-header">
+                <h3>Confirm Save</h3>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to save the selected transactions?</p>
+            </div>
+            <div class="button-container">
+                <button class="save" @onclick="Confirm">Save</button>
+                <button class="cancel" @onclick="Close">Cancel</button>
+            </div>
+        </div>
+    </div>
+}

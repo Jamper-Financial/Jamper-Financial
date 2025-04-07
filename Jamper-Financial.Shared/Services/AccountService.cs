@@ -7,7 +7,7 @@ namespace Jamper_Financial.Shared.Services
 {
     public class AccountService(string connectionString) : IAccountService
     {
-        public async Task CreateAccount(BankAccount bankAccount)
+        public async Task<bool> CreateAccount(BankAccount bankAccount)
         {
             Console.Write("Start insert to DB");
             Console.WriteLine(bankAccount.ToString());
@@ -30,12 +30,14 @@ namespace Jamper_Financial.Shared.Services
                         await command.ExecuteNonQueryAsync();
                     }
                 }
+
+                return true;
             }
             catch (Exception e)
             {
                 Console.Write("Error: " + e.Message);
                 // Handle any errors if needed
-                throw;
+                return false;
             }
         }
 

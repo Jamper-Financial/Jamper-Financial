@@ -1,0 +1,127 @@
+﻿@using SixLabors.ImageSharp;
+@using Jamper_Financial.Shared.Models;
+@using Microsoft.AspNetCore.Components.Forms;
+@using Microsoft.JSInterop;
+@using System.IO;
+@using System.Collections.Generic;
+@using System.Threading.Tasks;
+
+@code {
+    [Parameter] public bool IsVisible { get; set; }
+    [Parameter] public EventCallback OnClose { get; set; }
+    [Parameter] public EventCallback<ReceiptUploadEventArgs> OnCloseWithImages { get; set; }
+    [Inject] IJSRuntime JSRuntime { get; set; }
+
+    private bool isFileUploaded = false;
+    private List<byte[]> uploadedImages = new List<byte[]>();
+    private List<string> uploadedFileNames = new List<string>(); // Add this list to store filenames
+    private const long MaxFileSize = 5 * 1024 * 1024; // 5 MB
+    private string errorMessage = string.Empty;
+
+    private async Task CloseModal()
+    {
+        await OnClose.InvokeAsync();
+    }
+
+    private async Task HandleFileUpload(InputFileChangeEventArgs e)
+    {
+        Console.WriteLine("Handle File upload");
+        uploadedImages.Clear();
+        uploadedFileNames.Clear(); // Clear filenames as well
+        errorMessage = string.Empty;
+        isFileUploaded = false;
+
+        try
+        {
+            foreach (var file in e.GetMultipleFiles())
+            {
+                if (file.Size > MaxFileSize)
+                {
+                    errorMessage = $"File size {file.Size} exceeds the maximum allowed size of {MaxFileSize} bytes.";
+                    return;
+                }
+
+                if (!file.Name.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) &&
+                    !file.Name.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) &&
+                    !file.Name.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+                {
+                    errorMessage = "Invalid file type. Only .jpg, .jpeg, and .png files are allowed.";
+                    return;
+                }
+
+                using var stream = file.OpenReadStream(MaxFileSize);
+                using var memoryStream = new MemoryStream();
+                await stream.CopyToAsync(memoryStream);
+
+                uploadedImages.Add(memoryStream.ToArray());
+                uploadedFileNames.Add(file.Name); // Store the filename
+                Console.WriteLine($"Uploaded file: {file.Name}, Size: {file.Size} bytes");
+            }
+
+            isFileUploaded = true;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"An error occurred while uploading the file: {ex.Message}";
+        }
+
+        StateHasChanged();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("initializeDragAndDrop", "upload-area", "file-upload");
+        }
+    }
+
+    private async Task UploadReceipts()
+    {
+        Console.WriteLine("Click Upload Receipts");
+
+        var args = new ReceiptUploadEventArgs
+            {
+                UploadedImages = uploadedImages,
+                FileNames = uploadedFileNames // Now the filenames are included
+            };
+
+        await OnCloseWithImages.InvokeAsync(args);
+
+        if (OnClose.HasDelegate)
+        {
+            await OnClose.InvokeAsync();
+        }
+    }
+}
+
+@if (IsVisible)
+{
+    <div class="modal-overlay" @onclick="CloseModal">
+        <div class="modal-content" @onclick:stopPropagation="true">
+            <div class="modal-header">
+                <h3>Upload Receipts</h3>
+            </div>
+            <div class="modal-body">
+                <div class="upload-container">
+                    <div class="upload-icon">
+                        <img src="/images/upload-icon.png" alt="Upload Icon" />
+                    </div>
+                    <p>Upload your receipts here. Receipts shouldn't be more than 5MB</p>
+                    <div id="upload-area" class="upload-area">
+                        <label for="file-upload" class="upload-label">
+                            <img src="/images/folder-icon.png" alt="Folder Icon" />
+                            <span>Drag and Drop your receipts here to upload</span>
+                        </label>
+                        <InputFile id="file-upload" class="file-upload" OnChange="HandleFileUpload" multiple MaxAllowedSize="@(5 * 1024 * 1024)" />
+                    </div>
+                    @if (!string.IsNullOrEmpty(errorMessage))
+                    {
+                        <div class="error-message">@errorMessage</div>
+                    }
+                    <button id="btn-upload" class="upload-button" @onclick="UploadReceipts" disabled="@(!isFileUploaded)">Upload receipts</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
