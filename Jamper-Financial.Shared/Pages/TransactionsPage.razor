@@ -44,13 +44,19 @@
     @* Transactions Section *@
     <div class="transactions-section">
         <div class="transactions-header">
-            <div class="title-filter">
-                <h3 class="section-title">Recent Transactions</h3>
+            <h3 class="section-title">Recent Transactions</h3>
+            <div class="filter-hamburger">
                 <button class="filter-button" @onclick="ToggleFilterDropdown">Filter</button>
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <button class="add-transaction" @onclick="OpenAddTransactionModal">+ Add Transaction</button>
-                <button class="manage-categories-btn" @onclick="NavigateToManageCategories">Manage Categories</button>
+                <button class="hamburger-button" @onclick="ToggleMenu">☰</button>
+                @if (isMenuOpen)
+                {
+                    <div class="hamburger-menu">
+                        <button class="dropdown-item" @onclick="OpenAddTransactionModal">Add Transaction</button>
+                        <button class="dropdown-item" @onclick="NavigateToManageCategories">Import Transactions</button>
+                        <button class="dropdown-item" @onclick="NavigateToManageCategories">Manage Accounts</button>
+                        <button class="dropdown-item" @onclick="NavigateToManageCategories">Manage Categories</button>
+                    </div>
+                }
             </div>
         </div>
         <div class="transactions-table">
@@ -172,6 +178,13 @@
         SearchService.OnSearchQueryChanged += SearchTransactions;
     }
 
+    private bool isMenuOpen = false;
+
+    private void ToggleMenu()
+    {
+        isMenuOpen = !isMenuOpen;
+    }
+
     private void SearchTransactions()
     {
         if (string.IsNullOrEmpty(SearchService.SearchQuery))
@@ -259,7 +272,7 @@
             FilteredTransactions = FilterUtilities.ApplyFilters(Transactions, currentFilters);
             if (!string.IsNullOrEmpty(currentSortColumn))
             {
-                FilteredTransactions = Sort.ApplySort(FilteredTransactions, currentSortColumn, currentIsAscending, Categories, Accounts);
+                FilteredTransactions = SortUtilities.ApplySort(FilteredTransactions, currentSortColumn, currentIsAscending, Categories, Accounts);
             }
 
             // Reset pagination
@@ -311,7 +324,7 @@
         FilteredTransactions = FilterUtilities.ApplyFilters(Transactions, currentFilters);
         if (!string.IsNullOrEmpty(currentSortColumn))
         {
-            FilteredTransactions = Sort.ApplySort(FilteredTransactions, currentSortColumn, currentIsAscending, Categories, Accounts);
+            FilteredTransactions = SortUtilities.ApplySort(FilteredTransactions, currentSortColumn, currentIsAscending, Categories, Accounts);
         }
 
         // Reset pagination
@@ -362,7 +375,7 @@
         var filteredTransactions = FilterUtilities.ApplyFilters(Transactions, CurrentFilter);
         if (!string.IsNullOrEmpty(currentSortColumn))
         {
-            FilteredTransactions = Sort.ApplySort(filteredTransactions, currentSortColumn, this.isAscending, Categories, Accounts);
+            FilteredTransactions = SortUtilities.ApplySort(filteredTransactions, currentSortColumn, this.isAscending, Categories, Accounts);
         }
         else
         {
