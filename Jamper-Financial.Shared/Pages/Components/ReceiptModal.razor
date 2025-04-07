@@ -3,18 +3,25 @@
 @using Jamper_Financial.Shared.Pages.Components;
 @using Microsoft.AspNetCore.Components.Forms;
 @using Jamper_Financial.Shared.Models;
+@using Jamper_Financial.Shared.Services;
+
 @inject IJSRuntime JSRuntime
+@inject UserStateService UserStateService
+@inject IAccountService AccountService
 
 @code {
     [Parameter] public bool IsVisible { get; set; }
     [Parameter] public EventCallback<bool> OnClose { get; set; }
     [Parameter] public Transaction Transaction { get; set; }
+
     private IBrowserFile? uploadedFile;
     private string? receiptPreviewUrl;
     private string toasterMessage = string.Empty;
     private string toasterClass = string.Empty;
     private bool showDeleteConfirmation = false;
     private string? errorMessage;
+    private List<Category> categories = new();
+    private List<BankAccount> accounts = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -23,6 +30,8 @@
             Console.WriteLine("Transaction has receipt " + Transaction.HasReceipt);
             await GetReceipt();
         }
+        categories = (await DatabaseHelper.LoadUserCategoriesAsync(UserStateService.UserId)).ToList();
+        accounts = await AccountService.GetBankAccounts(UserStateService.UserId);
     }
 
     // Inject the TransactionManager service
@@ -126,37 +135,41 @@
         <div class="modal-content" @onclick:stopPropagation="true">
             <h3>Receipt Details</h3>
             <p><strong>Description:</strong> @Transaction.Description</p>
-            <p><strong>Transaction ID:</strong> @Transaction.TransactionID</p>
-            <p><strong>Category:</strong> @Transaction.CategoryID</p>
-            <p><strong>Date:</strong> @Transaction.Date.ToString("dd MMM, hh:mm tt")</p>
-            <p><strong>Amount:</strong> @((Transaction.Amount > 0 ? Transaction.Amount : Transaction.Amount).ToString("C"))</p>
-            @if (Transaction.HasReceipt == true)
+            <p>
+                <strong>Account:</strong> @accounts.FirstOrDefault(c => c.AccountId == Transaction.AccountID)?.AccountName
+            </p>
+            <p>
+                <strong>Category:</strong> @categories.FirstOrDefault(c => c.CategoryID == Transaction.CategoryID)?.Name
+            </p>
+        <p><strong>Date:</strong> @Transaction.Date.ToString("dd MMM, hh:mm tt")</p>
+        <p><strong>Amount:</strong> @((Transaction.Amount > 0 ? Transaction.Amount : Transaction.Amount).ToString("C"))</p>
+        @if (Transaction.HasReceipt == true)
+        {
+            <p>Receipt is available.</p>
+            @if (receiptPreviewUrl != null)
             {
-                <p>Receipt is available.</p>
-                @if (receiptPreviewUrl != null)
-                {
-                    <img src="@receiptPreviewUrl" alt="Receipt" style="max-width: 100%;" @onclick="OpenReceiptInNewTab" />
-                }
-                <div class="button-container">
-                    <button class="delete-button" @onclick="ShowDeleteConfirmation">Delete Receipt</button>
-                </div>
+                <img src="@receiptPreviewUrl" alt="Receipt" style="max-width: 100%;" @onclick="OpenReceiptInNewTab" />
             }
-            else
+            <div class="button-container">
+                <button class="delete-button" @onclick="ShowDeleteConfirmation">Delete Receipt</button>
+            </div>
+        }
+        else
+        {
+            <p>No receipt available.</p>
+            <InputFile OnChange="HandleFileSelected" />
+            @if (!string.IsNullOrEmpty(errorMessage))
             {
-                <p>No receipt available.</p>
-                <InputFile OnChange="HandleFileSelected" />
-                @if (!string.IsNullOrEmpty(errorMessage))
-                {
-                    <p></p>
-                    <p class="error-message">@errorMessage</p>
-                }
-                <div class="button-container">
-                    <button class="save-button" @onclick=" SaveReceipt">Save</button>
-                    <button class="delete-button" @onclick="CloseModal">Cancel</button>
-                </div>
+                <p></p>
+                <p class="error-message">@errorMessage</p>
             }
-        </div>
+            <div class="button-container">
+                <button class="save-button" @onclick=" SaveReceipt">Save</button>
+                <button class="delete-button" @onclick="CloseModal">Cancel</button>
+            </div>
+        }
     </div>
+            </div>
 }
 
 @if (showDeleteConfirmation)

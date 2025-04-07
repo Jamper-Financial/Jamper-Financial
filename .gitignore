@@ -19,3 +19,6 @@ AppDatabase.db
 /Jamper-Financial.Web/obj
 /Jamper-Financial.Shared/node_modules
 /Jamper-Financial.Shared/obj
+/Jamper-Financial.Shared/temp
+/Jamper-Financial.Web/temp
+/Jamper-Financial.Shared/wwwroot/temp-receipts

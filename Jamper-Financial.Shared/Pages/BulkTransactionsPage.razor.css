@@ -9,22 +9,17 @@
 }
 
 .transactions-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-}
-
-
-.transactions-table {
     flex: 1;
     overflow-y: auto; /* Add scroll if content overflows */
     border: 0.0625rem solid #ddd;
     border-radius: 0.625rem;
     background-color: #fff;
     box-shadow: 0 0.25rem 0.375rem rgba(0, 0, 0, 0.1);
-    height: 100%; /* Ensure the transaction details take up the full height */
+    height: 80%; /* Ensure the transaction details take up the full height */
     width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
 }
 
     .transactions-table table {
@@ -44,7 +39,7 @@
     }
 
     .transactions-table th {
-        background-color: #62ad41; /* Main green color for headers */
+        background-color: var(--primary-color); /* Main green color for headers */
         color: white;
     }
 
@@ -56,3 +51,53 @@
     max-height: 100%; /* Adjust the height as needed */
     overflow-y: auto;
 }
+
+/*Style for the buttons*/
+.button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-top: 10px;
+    width: 100%;
+    max-width: 100%;
+}
+
+    .button-container button {
+        flex: 1;
+        padding: 10px;
+        border-radius: .25rem;
+    }
+
+button.save-transactions, button.view-receipt {
+    background-color: var(--background-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 0.25rem;
+}
+
+    button.save-transactions:hover, button.view-receipt:hover {
+        background-color: var(--background-color-hover);
+        color: white;
+    }
+
+button.cancel-button {
+    background-color: var(--btn-cancel-color);
+    color: white;
+    border: none;
+}
+
+    button.cancel-button:hover {
+        background-color: var(--btn-cancel-color-hover);
+    }
+
+.checkbox {
+    display: inline-flex;
+}
+
+    .checkbox:checked {
+        background-color: var(--primary-color);
+        accent-color: var(--primary-color);
+        color: var(--primary-color);
+    }
+

@@ -7,8 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AWSSDK.Textract" Version="4.0.0-preview.12" />
         <PackageReference Include="Blazor.Bootstrap" Version="3.3.1" />
         <PackageReference Include="FirebaseAdmin" Version="3.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.3.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.3" />
         <PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
         <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.10" />
         <PackageReference Include="Tailwind.Extensions.AspNetCore" />

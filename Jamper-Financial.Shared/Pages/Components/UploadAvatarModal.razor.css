@@ -76,7 +76,13 @@
 }
 
     .upload-button:enabled {
-        background-color: #4CAF50;
+        background-color: var(--primary-color);
+        cursor: pointer;
+        color: white;
+    }
+
+    .upload-button:hover {
+        background-color: var(--secondary-color);
         cursor: pointer;
         color: white;
     }
