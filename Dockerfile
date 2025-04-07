@@ -20,7 +20,7 @@ COPY --from=build /app/web .
 COPY --from=build /source/Jamper-Financial.Shared/wwwroot /app/wwwroot
 
 # Copy the database file
-COPY --from=build /source/Jamper-Financial.Shared/AppDatabase.db /app/AppDatabase.db
+COPY --from=build /source/AppDatabase.db /AppDatabase.db
 
 # Expose the port the app runs on
 EXPOSE 8080
