@@ -37,7 +37,8 @@ builder.Services.AddRazorComponents()
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
 builder.Services.AddSingleton<AuthenticationService>();
-builder.Services.AddSingleton<TransactionParser>(); 
+builder.Services.AddSingleton<TransactionParser>();
+builder.Services.AddScoped<UpcomingTransactionService>();
 
 
 builder.Services.AddScoped<IUserService, UserService>(sp => new UserService(connectionString));

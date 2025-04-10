@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj": {}
+    "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj": {}
   },
   "projects": {
-    "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+    "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+        "projectUniqueName": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
         "projectName": "Jamper-Financial.Shared",
-        "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
-        "packagesPath": "C:\\Users\\Marian Estrada\\.nuget\\packages\\",
-        "outputPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
+        "projectPath": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+        "packagesPath": "C:\\Users\\Spoon\\.nuget\\packages\\",
+        "outputPath": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Marian Estrada\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Spoon\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -51,6 +51,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "AWSSDK.Textract": {
+              "target": "Package",
+              "version": "[4.0.0-preview.12, )"
+            },
             "Blazor.Bootstrap": {
               "target": "Package",
               "version": "[3.3.1, )"
@@ -71,17 +75,29 @@
               "target": "Package",
               "version": "[9.0.3, )"
             },
+            "Microsoft.AspNetCore.Mvc.Core": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
             "Microsoft.Data.Sqlite.Core": {
               "target": "Package",
               "version": "[9.0.2, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[9.0.3, )"
             },
             "QuestPDF": {
               "target": "Package",
               "version": "[2025.1.5, )"
             },
-            "Tailwind.Extensions.AspNetCore": {
+            "SixLabors.ImageSharp": {
               "target": "Package",
-              "version": "(, )"
+              "version": "[3.1.7, )"
+            },
+            "Tesseract": {
+              "target": "Package",
+              "version": "[5.2.0, )"
             },
             "sqlite-net-pcl": {
               "target": "Package",
@@ -108,21 +124,21 @@
         }
       }
     },
-    "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj": {
+    "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
+        "projectUniqueName": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
         "projectName": "Jamper-Financial",
-        "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
-        "packagesPath": "C:\\Users\\Marian Estrada\\.nuget\\packages\\",
-        "outputPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial\\obj\\",
+        "projectPath": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.csproj",
+        "packagesPath": "C:\\Users\\Spoon\\.nuget\\packages\\",
+        "outputPath": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Marian Estrada\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Spoon\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -141,32 +157,32 @@
           "net9.0-android35.0": {
             "targetAlias": "net9.0-android",
             "projectReferences": {
-              "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-                "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+              "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+                "projectPath": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
               }
             }
           },
           "net9.0-ios18.2": {
             "targetAlias": "net9.0-ios",
             "projectReferences": {
-              "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-                "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+              "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+                "projectPath": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
               }
             }
           },
           "net9.0-maccatalyst18.2": {
             "targetAlias": "net9.0-maccatalyst",
             "projectReferences": {
-              "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-                "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+              "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+                "projectPath": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
               }
             }
           },
           "net9.0-windows10.0.19041": {
             "targetAlias": "net9.0-windows10.0.19041.0",
             "projectReferences": {
-              "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-                "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+              "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+                "projectPath": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
               }
             }
           }
@@ -233,6 +249,30 @@
         },
         "net9.0-ios18.2": {
           "targetAlias": "net9.0-ios",
+          "dependencies": {
+            "Microsoft.AspNetCore.Components.WebView.Maui": {
+              "target": "Package",
+              "version": "[9.0.40, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.Maui.Controls": {
+              "target": "Package",
+              "version": "[9.0.40, )"
+            },
+            "Microsoft.NET.ILLink.Tasks": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.3, )",
+              "autoReferenced": true
+            },
+            "Tailwind.Extensions.AspNetCore": {
+              "target": "Package",
+              "version": "(, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -244,10 +284,42 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "frameworkReferences": {
+            "Microsoft.iOS": {
+              "privateAssets": "all"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
         },
         "net9.0-maccatalyst18.2": {
           "targetAlias": "net9.0-maccatalyst",
+          "dependencies": {
+            "Microsoft.AspNetCore.Components.WebView.Maui": {
+              "target": "Package",
+              "version": "[9.0.40, )"
+            },
+            "Microsoft.Extensions.Logging.Debug": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
+            "Microsoft.Maui.Controls": {
+              "target": "Package",
+              "version": "[9.0.40, )"
+            },
+            "Microsoft.NET.ILLink.Tasks": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.3, )",
+              "autoReferenced": true
+            },
+            "Tailwind.Extensions.AspNetCore": {
+              "target": "Package",
+              "version": "(, )"
+            }
+          },
           "imports": [
             "xamarinios10",
             "net461",
@@ -260,6 +332,14 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "frameworkReferences": {
+            "Microsoft.MacCatalyst": {
+              "privateAssets": "all"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
         },
         "net9.0-windows10.0.19041": {

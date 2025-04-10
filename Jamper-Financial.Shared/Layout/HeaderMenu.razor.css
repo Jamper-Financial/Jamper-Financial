@@ -106,7 +106,191 @@
 .icon-image {
     width: 40px;
     height: 40px;
+    position: relative; 
+    left: auto;
+    top: auto;
+}
+
+/* Notification Button Styles */
+.notification-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-badge {
     position: absolute;
-    left: 0;
+    top: -5px;
+    right: -5px;
+    background-color: #ff4d4f;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    animation: slideUp 0.3s ease-out;
+}
+
+.modal-header {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+}
+
+    .modal-header h3 {
+        margin: 0;
+        color: #333;
+    }
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #666;
+    padding: 0 0.5rem;
+}
+
+/* Transactions List Styles */
+.transactions-container {
+    padding: 0 1rem;
+}
+
+.transaction-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.transaction-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.transaction-name {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.transaction-date {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.transaction-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.transaction-amount {
+    font-weight: 500;
+}
+
+.transaction-item.paid {
+    color: #52c41a;
+    opacity: 0.7;
+}
+
+.transaction-item.unpaid {
+    color: #ff4d4f;
+}
+
+.mark-paid-btn {
+    background: #52c41a;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.empty-state {
+    padding: 2rem 0;
+    text-align: center;
+    color: #888;
+}
+
+.modal-footer {
+    padding: 1rem;
+    text-align: center;
+    border-top: 1px solid #eee;
+    margin-top: 1rem;
+}
+
+.view-all-btn {
+    color: #1890ff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

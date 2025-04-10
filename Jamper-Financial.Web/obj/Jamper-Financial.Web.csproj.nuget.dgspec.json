@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {}
+    "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {}
   },
   "projects": {
-    "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+    "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+        "projectUniqueName": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
         "projectName": "Jamper-Financial.Shared",
-        "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
-        "packagesPath": "C:\\Users\\Marian Estrada\\.nuget\\packages\\",
-        "outputPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
+        "projectPath": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj",
+        "packagesPath": "C:\\Users\\Spoon\\.nuget\\packages\\",
+        "outputPath": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Marian Estrada\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Spoon\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -51,6 +51,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "AWSSDK.Textract": {
+              "target": "Package",
+              "version": "[4.0.0-preview.12, )"
+            },
             "Blazor.Bootstrap": {
               "target": "Package",
               "version": "[3.3.1, )"
@@ -71,17 +75,29 @@
               "target": "Package",
               "version": "[9.0.3, )"
             },
+            "Microsoft.AspNetCore.Mvc.Core": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
             "Microsoft.Data.Sqlite.Core": {
               "target": "Package",
               "version": "[9.0.2, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[9.0.3, )"
             },
             "QuestPDF": {
               "target": "Package",
               "version": "[2025.1.5, )"
             },
-            "Tailwind.Extensions.AspNetCore": {
+            "SixLabors.ImageSharp": {
               "target": "Package",
-              "version": "(, )"
+              "version": "[3.1.7, )"
+            },
+            "Tesseract": {
+              "target": "Package",
+              "version": "[5.2.0, )"
             },
             "sqlite-net-pcl": {
               "target": "Package",
@@ -108,20 +124,20 @@
         }
       }
     },
-    "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {
+    "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
+        "projectUniqueName": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
         "projectName": "Jamper-Financial.Web",
-        "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
-        "packagesPath": "C:\\Users\\Marian Estrada\\.nuget\\packages\\",
-        "outputPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Web\\obj\\",
+        "projectPath": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Web\\Jamper-Financial.Web.csproj",
+        "packagesPath": "C:\\Users\\Spoon\\.nuget\\packages\\",
+        "outputPath": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Web\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Marian Estrada\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Spoon\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -137,8 +153,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
-                "projectPath": "C:\\sait\\cpsy301\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
+              "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj": {
+                "projectPath": "C:\\SAIT WINTER 2025\\Jamper-Financial\\Jamper-Financial\\Jamper-Financial.Shared\\Jamper-Financial.Shared.csproj"
               }
             }
           }
@@ -159,6 +175,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "AWSSDK.Textract": {
+              "target": "Package",
+              "version": "[4.0.0-preview.12, )"
+            },
             "Blazor.Bootstrap": {
               "target": "Package",
               "version": "[3.3.1, )"
@@ -166,6 +186,18 @@
             "FirebaseAdmin": {
               "target": "Package",
               "version": "[3.1.0, )"
+            },
+            "Microsoft.AspNetCore.Hosting": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
+            "Microsoft.AspNetCore.Mvc.Core": {
+              "target": "Package",
+              "version": "[2.3.0, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[9.0.3, )"
             },
             "SQLitePCLRaw.bundle_e_sqlite3": {
               "target": "Package",
