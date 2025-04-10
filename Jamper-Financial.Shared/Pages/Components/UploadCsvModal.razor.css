@@ -1,0 +1,113 @@
+﻿.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 400px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow to modal content */
+}
+
+.modal-header {
+    color: var(--primary-color);
+    width: 100%;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.upload-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload-icon img {
+    width: 50px;
+    height: 50px;
+}
+
+.upload-area {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    width: 100%;
+    text-align: center;
+}
+
+.upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+    .upload-label img {
+        width: 40px;
+        height: 40px;
+    }
+
+.upload-button {
+    background-color: #ccc;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: not-allowed;
+}
+
+    .upload-button:enabled {
+        background-color: #4CAF50;
+        cursor: pointer;
+        color: white;
+    }
+
+.upload-area {
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+    .upload-area.drag-over {
+        border-color: #4CAF50;
+        background-color: #f0fff0;
+    }
+
+    .upload-area label {
+        padding: 20px;
+    }
+
+.upload-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+    .upload-label img {
+        width: 40px;
+        height: 40px;
+    }

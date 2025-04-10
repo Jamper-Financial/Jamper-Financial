@@ -8,6 +8,7 @@
 @using System.IO;
 @using Microsoft.AspNetCore.Components.Forms;
 @using Microsoft.Extensions.Hosting; 
+@using System.Text
 
 @inject UserStateService UserStateService
 @inject TransactionParser TransactionParser;
@@ -20,6 +21,7 @@
     [CascadingParameter] private Action<string> SetPageTitle { get; set; } = default!;
     private bool norecords = true;
     private bool ShowUploadReceiptsModal = false;
+    private bool ShowUploadCsvModal = false;
     private bool ShowConfirmSaveModal = false;
     private bool isLoading = false;
     private bool selectAll = false;
@@ -72,11 +74,14 @@
         }
     }
 
-    public void OpenExcelModal()
+    public void OpenCsvModal()
     {
-        // Implement Excel import logic here (not covered in this example)
-        Console.WriteLine("Open Excel Modal (Not Implemented)");
-        JSRuntime.InvokeVoidAsync("alert", "Excel import functionality is not yet implemented in this example.");
+        ShowUploadCsvModal = true;
+    }
+
+    public void CloseCsvModal()
+    {
+        ShowUploadCsvModal = false;
     }
 
     public void OpenReceiptsModal()
@@ -121,6 +126,35 @@
             StateHasChanged();
         }
     }
+
+    private async Task HandleCsvUpload(CsvUploadEventArgs args)
+    {
+        isLoading = true;
+        try
+        {
+            var csvContent = Encoding.UTF8.GetString(args.CsvData);
+            var newTransactions = CsvParser.ParseCsv(
+                csvContent,
+                args.AccountId,
+                currentUserId,
+                args.BankName
+            );
+
+            transactions.AddRange(newTransactions);
+            norecords = !transactions.Any();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"CSV Error: {ex.Message}";
+            await JSRuntime.InvokeVoidAsync("alert", errorMessage);
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
 
     private string GetTemporaryFilePath(byte[] fileBytes, string originalFileName)
     {
@@ -284,7 +318,7 @@
             <h3 class="section-title">Bulk Transaction Import</h3>
             <p>Import multiple transactions at once using an Excel file or by uploading receipt images.</p>
             <div style="display: flex; gap: 10px;">
-                <button class="add-viaCsv" @onclick="OpenExcelModal">Import via Excel</button>
+                <button class="add-viaCsv" @onclick="OpenCsvModal">Import via Excel</button>
                 <button class="add-viaReceipt" @onclick="OpenReceiptsModal" disabled="@isLoading">Import via Receipts</button>
             </div>
         </div>
@@ -384,6 +418,13 @@
     <ConfirmSaveModal IsVisible="ShowConfirmSaveModal"
                       OnClose="@(async (bool isVisible) => ShowConfirmSaveModal = isVisible)"
                       OnConfirm="ConfirmSave" />
+}
+
+@if (ShowUploadCsvModal)
+{
+    <UploadCsvModal IsVisible="ShowUploadCsvModal"
+                    OnClose="CloseCsvModal"
+                    OnCloseWithData="HandleCsvUpload" />
 }
 
 @if (!string.IsNullOrEmpty(toasterMessage))
