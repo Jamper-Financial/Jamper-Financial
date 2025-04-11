@@ -2,53 +2,88 @@
 @inject NavigationManager Navigation
 @using Microsoft.AspNetCore.Components
 @using Jamper_Financial.Shared.Services;
+@using Jamper_Financial.Shared.Pages.Components;
 @inject SearchService SearchService
-
-@code {
-    [CascadingParameter] public string PageTitle { get; set; }
-    private string searchTerm { get; set; } = string.Empty;
-
-    private async Task HandleSearch()
-    {
-        if (!string.IsNullOrEmpty(searchTerm))
-        {
-            SearchService.SearchQuery = searchTerm;
-        }
-        else
-        {
-            SearchService.SearchQuery = string.Empty;
-        }
-    }
-
-    private async Task HandleKeyPress(KeyboardEventArgs args)
-    {
-        if (args.Key == "Enter")
-        {
-            await HandleSearch();
-        }
-    }
-}
+@inject UpcomingTransactionService UpcomingTransactionService
 
 <div class="header-container">
-    <div class="header-background"></div>
-    <div class="header-content">
-        <div class="overview">@PageTitle</div>
-        <div class="search">
-            <div class="search-background"></div>
-            <input type="text" @bind="searchTerm" @onkeypress="HandleKeyPress" placeholder="Search in this page" />
-            <button @onclick="HandleSearch">Search</button>
-        </div>
-        <div class="icons">
-            <div class="icon">
-                <NavLink href="profile-page">
-                    <img class="icon-image" src='../images/image.png' />
-                </NavLink>
-            </div>
-            <div class="icon">
-                <NavLink href="calendar-page">
-                    <img class="icon-image" src='../images/notification.svg' />
-                </NavLink>
-            </div>
-        </div>
-    </div>
+   <div class="header-background"></div>
+   <div class="header-content">
+       <div class="overview">@PageTitle</div>
+       <div class="search">
+           <div class="search-background"></div>
+           <input type="text" @bind="searchTerm" @onkeypress="HandleKeyPress" placeholder="Search in this page" />
+           <button @onclick="HandleSearch">Search</button>
+       </div>
+       <div class="icons">
+           <div class="icon">
+               <NavLink href="profile-page">
+                   <img class="icon-image" src="images/image.png" />
+               </NavLink>
+           </div>
+           <div class="icon">
+               <button @onclick="ToggleNotificationModal" class="notification-button">
+                   <img class="icon-image" src="images/notification.svg" />
+                   @if (UnpaidCount > 0)
+                   {
+                       <span class="notification-badge">@UnpaidCount</span>
+                   }
+               </button>
+           </div>
+       </div>
+   </div>
+
+   @if (ShowNotificationModal)
+   {
+       <div class="modal-overlay" @onclick="ToggleNotificationModal">
+           <div class="modal-content" @onclick:stopPropagation>
+               <div class="modal-header">
+                   <h3>Upcoming Transactions</h3>
+                   <button @onclick="ToggleNotificationModal" class="close-button">&times;</button>
+               </div>
+               <div class="modal-body">
+                  <UpcomingTransactionsList />
+               </div>
+           </div>
+       </div>
+   }
 </div>
+
+@code {
+   [CascadingParameter] public string PageTitle { get; set; }
+   private string searchTerm { get; set; } = string.Empty;
+   private bool ShowNotificationModal { get; set; } = false;
+   private int UnpaidCount { get; set; } = 0;
+
+   private async Task HandleSearch()
+   {
+       if (!string.IsNullOrEmpty(searchTerm))
+       {
+           SearchService.SearchQuery = searchTerm;
+       }
+       else
+       {
+           SearchService.SearchQuery = string.Empty;
+       }
+   }
+
+   private async Task HandleKeyPress(KeyboardEventArgs args)
+   {
+       if (args.Key == "Enter")
+       {
+           await HandleSearch();
+       }
+   }
+
+   private void ToggleNotificationModal()
+   {
+       ShowNotificationModal = !ShowNotificationModal;
+   }
+
+   protected override async Task OnInitializedAsync()
+   {
+       var now = DateTime.Now;
+       var endOfWeek = now.AddDays(7);
+       UnpaidCount = await UpcomingTransactionService.GetUnpaidTransactionCountAsync(now, endOfWeek);
+   }
+}

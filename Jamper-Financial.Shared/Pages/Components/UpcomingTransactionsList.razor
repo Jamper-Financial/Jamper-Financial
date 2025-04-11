@@ -1,0 +1,72 @@
+﻿@using Jamper_Financial.Shared.Utilities
+@using Jamper_Financial.Shared.Models
+@using Jamper_Financial.Shared.Services
+@inject UpcomingTransactionService UpcomingTransactionService
+
+<div class="transactions-container">
+    @if (Transactions?.Any() ?? false)
+    {
+        <div class="transactions-list">
+            @foreach (var transaction in Transactions)
+            {
+                <div class="transaction-item @(transaction.IsPaid ? "paid" : "unpaid")">
+                    <div class="transaction-info">
+                        <span class="transaction-name">@transaction.Description</span>
+                        <span class="transaction-date">@transaction.Date.ToString("MMM dd")</span>
+                    </div>
+                    <div class="transaction-actions">
+                        <span class="transaction-amount">@transaction.Amount.ToString("C")</span>
+                        @if (!transaction.IsPaid)
+                        {
+                            <button @onclick="() => MarkAsPaid(transaction)" class="mark-paid-btn">
+                                ✓
+                            </button>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-state">
+            No upcoming transactions this week
+        </div>
+    }
+
+    <div class="modal-footer">
+        <NavLink href="calendar-page" class="view-all-btn">View All Transactions</NavLink>
+    </div>
+</div>
+
+@code {
+    private List<Transaction> Transactions { get; set; } = new();
+    private bool hasInitialized = false;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !hasInitialized)
+        {
+            Console.WriteLine("🚨 OnAfterRenderAsync triggered");
+            hasInitialized = true;
+            await LoadTransactions();
+            StateHasChanged(); // Force re-render
+        }
+    }
+
+    private async Task LoadTransactions()
+    {
+        var now = DateTime.Now;
+        var endOfWeek = now.AddDays(7);
+        Transactions = await UpcomingTransactionService.GetUpcomingTransactionsAsync(now, endOfWeek);
+        Console.WriteLine($"🚨 LoadTransactions: Fetched {Transactions.Count} transactions between {now} and {endOfWeek}");
+    }
+
+    private async Task MarkAsPaid(Transaction transaction)
+    {
+        transaction.IsPaid = true;
+        await UpcomingTransactionService.UpdateTransactionAsync(transaction);
+        await LoadTransactions();
+        StateHasChanged(); // Refresh UI after marking as paid
+    }
+}
