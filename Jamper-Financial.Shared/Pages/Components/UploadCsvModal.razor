@@ -112,7 +112,7 @@
             <div id="upload-area" class="upload-area">
                 <label for="file-upload" class="upload-label">
                     <img src="/images/folder-icon.png" alt="Folder Icon" />
-                    <span>Drag and Drop your receipts here to upload</span>
+                    <span>Drag and Drop your CSV here to upload</span>
                 </label>
                 <InputFile id="file-upload" class="file-upload" OnChange="HandleFileUpload" accept=".csv"/>
             </div>
@@ -124,7 +124,7 @@
 
             <button @onclick="UploadCsv"
                     disabled="@(!isFileUploaded || selectedAccountId == 0)"
-                    class="btn-upload">
+                    class="upload-button">
                 Import Transactions
             </button>
         </div>

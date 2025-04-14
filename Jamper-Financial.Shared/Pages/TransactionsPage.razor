@@ -52,8 +52,8 @@
                 {
                     <div class="hamburger-menu">
                         <button class="dropdown-item" @onclick="OpenAddTransactionModal">Add Transaction</button>
-                        <button class="dropdown-item" @onclick="NavigateToManageCategories">Import Transactions</button>
-                        <button class="dropdown-item" @onclick="NavigateToManageCategories">Manage Accounts</button>
+                        <button class="dropdown-item" @onclick="NavigateToBulkTransactions">Import Transactions</button>
+                        <button class="dropdown-item" @onclick="ShowAddAccountModal">Add Account</button>
                         <button class="dropdown-item" @onclick="NavigateToManageCategories">Manage Categories</button>
                     </div>
                 }
@@ -125,6 +125,15 @@
                       OnConfirmDelete="ConfirmDeleteTransaction" />
 }
 
+@* Add Account Modal *@
+@if (showAddAccountModal)
+{
+    <AddAccountModal IsVisible="showAddAccountModal"
+                     OnClose="CloseAddAccountModal"
+                     OnAccountSaved="HandleAccountSaved"
+                     newAccount="newAccount" />
+}
+
 @* Receipt Modal *@
 @if (ShowReceiptModal)
 {
@@ -151,6 +160,7 @@
     private List<Category> Categories = new();
     private List<BankAccount> Accounts = new();
     public bool ShowAddTransactionModal { get; set; } = false;
+    public bool showAddAccountModal { get; set; } = false;
     public bool ShowReceiptModal { get; set; } = false;
     public bool IsEditMode { get; set; } = false;
     public bool ShowDeleteConfirmation { get; set; } = false;
@@ -160,6 +170,7 @@
     private bool isAscending = true;
     public bool ShowFilterDropdown { get; set; } = false;
     public Filter CurrentFilter { get; set; } = new Filter();
+    private BankAccount newAccount = new BankAccount();
 
     // Pagination properties
     private int currentPage = 1;
@@ -206,6 +217,11 @@
         SearchService.OnSearchQueryChanged -= SearchTransactions;
     }
 
+    private void NavigateToBulkTransactions()
+    {
+        NavigationManager.NavigateTo("/bulk-transactions");
+    }
+
     private void NavigateToManageCategories()
     {
         NavigationManager.NavigateTo("/manage-categories");
@@ -220,6 +236,37 @@
     private void CloseReceiptModal()
     {
         ShowReceiptModal = false;
+    }
+
+    private async void LoadBankAccounts()
+    {
+        Accounts = await AccountService.GetBankAccounts(UserStateService.UserId);
+    }
+
+    private void ShowAddAccountModal()
+    {
+        newAccount = new BankAccount
+            {
+                AccountTypeID = 0,
+                AccountName = string.Empty,
+                Balance = 0,
+                AccountNumber = string.Empty,
+                UserId = UserStateService.UserId
+
+            };
+        showAddAccountModal = true;
+    }
+
+    private async Task CloseAddAccountModal(bool isVisible)
+    {
+        showAddAccountModal = isVisible;
+    }
+
+    private void HandleAccountSaved(string message)
+    {
+        // Handle the account saved event if needed
+        showAddAccountModal = false;
+        LoadBankAccounts();
     }
 
     private void OpenAddTransactionModal()
