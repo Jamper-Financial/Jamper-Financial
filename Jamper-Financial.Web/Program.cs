@@ -15,6 +15,7 @@ using QuestPDF.Helpers;
 using Blazorise;
 using Microsoft.JSInterop;
 using Jamper_Financial.Shared.Utilities;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -80,68 +81,94 @@ app.UseAntiforgery();
 // --------------------------------------------------
 app.MapGet("/export/csv", async (HttpContext context) =>
 {
-    // Parse query parameters
+    var reportType = context.Request.Query["reportType"];
     var reportName = context.Request.Query["reportName"];
     var description = context.Request.Query["description"];
     var fromDateStr = context.Request.Query["fromDate"];
     var toDateStr = context.Request.Query["toDate"];
     var categoriesStr = context.Request.Query["categories"];
+    var accountsStr = context.Request.Query["accounts"];
+    var userIdStr = context.Request.Query["userId"];
 
-    // Convert string to DateTime
-    DateTime fromDate = DateTime.Now.AddMonths(-6);
-    DateTime toDate = DateTime.Now;
-    DateTime.TryParse(fromDateStr, out fromDate);
-    DateTime.TryParse(toDateStr, out toDate);
+    DateTime.TryParse(fromDateStr, out DateTime fromDate);
+    DateTime.TryParse(toDateStr, out DateTime toDate);
 
-    // Parse categories
     var catList = (categoriesStr.ToString() ?? "")
         .Split(',', StringSplitOptions.RemoveEmptyEntries)
         .Select(c => c.Trim())
         .ToList();
 
     int userId = 1;
+    if (!string.IsNullOrEmpty(userIdStr))
+        int.TryParse(userIdStr, out userId);
+
     var allTransactions = await TransactionHelper.GetTransactionsAsync(userId);
 
+    // Filter by date range
     var filtered = allTransactions
-        .Where(t => catList.Contains("All") || catList.Contains(t.CategoryID.ToString()))
         .Where(t => t.Date >= fromDate && t.Date <= toDate)
         .ToList();
 
-    // Calculate totals
-    decimal totalDebit = filtered.Where(t => t.TransactionType == "e").Sum(t => t.Amount);
-    decimal totalCredit = filtered.Where(t => t.TransactionType == "i").Sum(t => t.Amount);
+    // Filter by categories if needed
+    if (!catList.Contains("All"))
+        filtered = filtered.Where(t => catList.Contains(t.CategoryID.ToString())).ToList();
+
+    // Filter by report type
+    if (reportType == "monthlyExpenses")
+        filtered = filtered.Where(t => t.TransactionType == "e").ToList();
+    else if (reportType == "monthlySavings")
+        filtered = filtered.Where(t => t.TransactionType == "i").ToList();
+
+    // Summaries
+    var culture = CultureInfo.CreateSpecificCulture("en-US");
+    var totalDebit = filtered.Where(t => t.TransactionType == "e").Sum(t => t.Amount);
+    var totalCredit = filtered.Where(t => t.TransactionType == "i").Sum(t => t.Amount);
+    var netTotal = totalCredit - totalDebit;
 
     // Build CSV
-    //    Now 7 columns: Description,Category,Date,Debit,Credit,Frequency,EndDate
     var csv = new StringBuilder();
-    // Title & info lines
-    csv.AppendLine("Jamper Financial Report");
-    csv.AppendLine($"Report Name: {reportName}");
-    csv.AppendLine($"Report from {fromDate:yyyy-MM-dd} to {toDate:yyyy-MM-dd}");
-    csv.AppendLine($"Description: {description}");
-    csv.AppendLine();
 
-    // CSV header
-    csv.AppendLine("Description,Category,Date,Debit,Credit,Frequency,EndDate");
+    // Basic report info, each line is fully quoted if it might contain commas
+    csv.AppendLine("\"Jamper Financial Report\"");
+    csv.AppendLine($"\"Report Name: {reportName}\"");
+    csv.AppendLine($"\"Report from {fromDate:yyyy-MM-dd} to {toDate:yyyy-MM-dd}\"");
+    csv.AppendLine($"\"Description: {description}\"");
 
+    // Wrap these lines in quotes so that commas in the amounts do not break columns
+    csv.AppendLine($"\"Total Debit: {totalDebit.ToString("C", culture)}\"");
+    csv.AppendLine($"\"Total Credit: {totalCredit.ToString("C", culture)}\"");
+    csv.AppendLine($"\"Net Total: {netTotal.ToString("C", culture)}\"");
+
+    csv.AppendLine();  // blank line
+
+    // Table header
+    csv.AppendLine("Description,Date,Debit,Credit,Frequency,Next Due");
+
+    // Table body rows
     foreach (var t in filtered)
     {
-        var debitStr = (t.TransactionType == "e" && t.Amount != 0) ? t.Amount.ToString("C") : "";
-        var creditStr = (t.TransactionType == "i" && t.Amount != 0) ? t.Amount.ToString("C") : "";
-        var freq = string.IsNullOrEmpty(t.Frequency) ? "" : t.Frequency;
-        var endDate = t.EndDate.HasValue ? t.EndDate.Value.ToString("yyyy-MM-dd") : "";
+        string freq = string.IsNullOrEmpty(t.Frequency) ? "-" : t.Frequency;
+        string nextDue = t.Frequency?.ToLower() switch
+        {
+            "monthly" => t.Date.AddMonths(1).ToString("yyyy-MM-dd"),
+            "yearly" => t.Date.AddYears(1).ToString("yyyy-MM-dd"),
+            _ => "-"
+        };
 
-        csv.AppendLine($"\"{t.Description}\"," +
-                       $"\"{t.CategoryID}\"," +
-                       $"\"{t.Date:yyyy-MM-dd}\"," +
-                       $"\"{debitStr}\"," +
-                       $"\"{creditStr}\"," +
-                       $"\"{freq}\"," +
-                       $"\"{endDate}\"");
+        // Debit if expense, Credit if income
+        string debit = t.TransactionType == "e" ? t.Amount.ToString("C", culture) : "";
+        string credit = t.TransactionType == "i" ? t.Amount.ToString("C", culture) : "";
+
+        // Wrap each field in quotes in case it contains commas
+        csv.AppendLine(
+            $"\"{t.Description}\"," +
+            $"\"{t.Date:yyyy-MM-dd}\"," +
+            $"\"{debit}\"," +
+            $"\"{credit}\"," +
+            $"\"{freq}\"," +
+            $"\"{nextDue}\""
+        );
     }
-
-
-    csv.AppendLine($",,,\"{totalDebit:C}\",\"{totalCredit:C}\",,");
 
     var csvBytes = Encoding.UTF8.GetBytes(csv.ToString());
     var fileName = $"Report_{DateTime.Now:yyyyMMddHHmmss}.csv";
@@ -151,178 +178,291 @@ app.MapGet("/export/csv", async (HttpContext context) =>
 // --------------------------------------------------
 // PDF Endpoint
 // --------------------------------------------------
-app.MapGet("/export/pdf", async (HttpContext context) =>
-{
-    // 1) Parse query parameters
-    var reportName = context.Request.Query["reportName"];
-    var description = context.Request.Query["description"];
-    var fromDateStr = context.Request.Query["fromDate"];
-    var toDateStr = context.Request.Query["toDate"];
-    var categoriesStr = context.Request.Query["categories"];
-
-    // Convert string to DateTime
-    DateTime fromDate = DateTime.Now.AddMonths(-6);
-    DateTime toDate = DateTime.Now;
-    DateTime.TryParse(fromDateStr, out fromDate);
-    DateTime.TryParse(toDateStr, out toDate);
-
-    // Parse categories
-    var catList = (categoriesStr.ToString() ?? "")
-        .Split(',', StringSplitOptions.RemoveEmptyEntries)
-        .Select(c => c.Trim())
-        .ToList();
-
-    int userId = 1;
-    var allTransactions = await TransactionHelper.GetTransactionsAsync(userId);
-
-    var filtered = allTransactions
-        .Where(t => catList.Contains("All") || catList.Contains(t.CategoryID.ToString()))
-        .Where(t => t.Date >= fromDate && t.Date <= toDate)
-        .ToList();
-
-    // Totals
-    decimal totalDebit = filtered.Where(t => t.TransactionType == "e").Sum(t => t.Amount);
-    decimal totalCredit = filtered.Where(t => t.TransactionType == "i").Sum(t => t.Amount);
-
-    // Build PDF with 7 columns
-    var doc = Document.Create(document =>
-    {
-        document.Page(page =>
-        {
-            page.Size(PageSizes.A4);
-            page.Margin(2, Unit.Centimetre);
-            page.PageColor(Colors.White);
-
-            // Header
-            page.Header().Column(headerCol =>
-            {
-                headerCol.Spacing(10);
-
-                // Big green title
-                headerCol.Item().AlignCenter().Text("Jamper Financial Report")
-                    .FontSize(24)
-                    .SemiBold()
-                    .FontColor("#62AD41");
-
-                // Sub-title: "Report Name: ____"
-                headerCol.Item().AlignLeft().Text($"Report Name: {reportName}")
-                    .FontSize(16)
-                    .Bold();
-            });
-
-            // Content
-            page.Content().Column(contentCol =>
-            {
-                contentCol.Spacing(20);
-
-                // Show date range
-                contentCol.Item().Text($"Report from {fromDate:yyyy-MM-dd} to {toDate:yyyy-MM-dd}");
-
-                // Table with 7 columns
-                contentCol.Item().Table(table =>
-                {
-                    table.ColumnsDefinition(cols =>
-                    {
-                        cols.RelativeColumn(); // Description
-                        cols.RelativeColumn(); // Category
-                        cols.RelativeColumn(); // Date
-                        cols.RelativeColumn(); // Debit
-                        cols.RelativeColumn(); // Credit
-                        cols.RelativeColumn(); // Frequency
-                        cols.RelativeColumn(); // EndDate
-                    });
-
-                    // Header row
-                    table.Header(header =>
-                    {
-                        header.Cell().Element(CellStyleHeader).Text("Description");
-                        header.Cell().Element(CellStyleHeader).Text("Category");
-                        header.Cell().Element(CellStyleHeader).Text("Date");
-                        header.Cell().Element(CellStyleHeader).Text("Debit");
-                        header.Cell().Element(CellStyleHeader).Text("Credit");
-                        header.Cell().Element(CellStyleHeader).Text("Frequency");
-                        header.Cell().Element(CellStyleHeader).Text("End Date");
-                    });
-
-                    // Rows
-                    foreach (var t in filtered)
-                    {
-                        var debitStr = (t.TransactionType == "e" && t.Amount != 0) ? t.Amount.ToString("C") : "";
-                        var creditStr = (t.TransactionType == "i" && t.Amount != 0) ? t.Amount.ToString("C") : "";
-                        var freq = string.IsNullOrEmpty(t.Frequency) ? "" : t.Frequency;
-                        var endDate = t.EndDate.HasValue ? t.EndDate.Value.ToString("yyyy-MM-dd") : "";
-
-                        table.Cell().Element(CellStyleData).Text(t.Description);
-                        table.Cell().Element(CellStyleData).Text(t.CategoryID);
-                        table.Cell().Element(CellStyleData).Text($"{t.Date:yyyy-MM-dd}");
-                        table.Cell().Element(CellStyleData).Text(debitStr);
-                        table.Cell().Element(CellStyleData).Text(creditStr);
-                        table.Cell().Element(CellStyleData).Text(freq);
-                        table.Cell().Element(CellStyleData).Text(endDate);
-                    }
-
-                    // Totals row => 7 columns
-                    table.Cell().Element(CellStyleTotals).Text("");
-                    table.Cell().Element(CellStyleTotals).Text("");
-                    table.Cell().Element(CellStyleTotals).Text("Totals:");
-                    table.Cell().Element(CellStyleTotals).Text(totalDebit.ToString("C"));
-                    table.Cell().Element(CellStyleTotals).Text(totalCredit.ToString("C"));
-                    table.Cell().Element(CellStyleTotals).Text("");
-                    table.Cell().Element(CellStyleTotals).Text("");
-                });
-
-                // Show the user-provided description under the table
-                contentCol.Item().Text($"Description: {description}")
-                    .FontSize(12)
-                    .Italic();
-            });
-
-            // Footer with page numbers
-            page.Footer().AlignCenter().Text(footerTxt =>
-            {
-                footerTxt.Span("Page ").FontSize(10);
-                footerTxt.CurrentPageNumber();
-                footerTxt.Span(" of ").FontSize(10);
-                footerTxt.TotalPages();
-            });
-        });
-    });
-
-    var pdfBytes = doc.GeneratePdf();
-    var fileName = $"Report_{DateTime.Now:yyyyMMddHHmmss}.pdf";
-    return Results.File(pdfBytes, "application/pdf", fileName);
-});
 
 // Table header style
 static IContainer CellStyleHeader(IContainer container)
 {
     return container
-        .Border(1)
-        .BorderColor(Colors.Grey.Lighten2)
-        .Background(Colors.Grey.Lighten3)
-        .Padding(5)
-        .DefaultTextStyle(x => x.SemiBold());
+        .Background("#62AD41") 
+        .PaddingVertical(10)    // Slightly more padding
+        .Border(0)              
+        .DefaultTextStyle(x => x.SemiBold()
+                               .FontColor(Colors.White)
+                               .FontSize(11));
 }
 
-// Table data style
-static IContainer CellStyleData(IContainer container)
+// alternate rows
+Func<IContainer, IContainer> EvenRowStyle = container =>
+    container
+        .Background("DEF9C4")  // Very light green tint
+        .PaddingVertical(8)
+        .Border(0)             
+        .DefaultTextStyle(x => x.FontSize(10)
+                               .FontColor("#333333"));  // Darker text
+
+//  main rows
+Func<IContainer, IContainer> OddRowStyle = container =>
+    container
+        .Background(Colors.White)
+        .PaddingVertical(8)
+        .Border(0)              
+        .DefaultTextStyle(x => x.FontSize(10)
+                               .FontColor("#333333"));
+
+app.MapGet("/export/pdf", async (HttpContext context) =>
 {
-    return container
-        .Border(1)
-        .BorderColor(Colors.Grey.Lighten2)
-        .Padding(5);
-}
+    try
+    {
+        var reportType = context.Request.Query["reportType"].ToString();
+        var reportName = Uri.UnescapeDataString(context.Request.Query["reportName"]);
+        var description = Uri.UnescapeDataString(context.Request.Query["description"]);
+        var fromDateStr = context.Request.Query["fromDate"].ToString();
+        var toDateStr = context.Request.Query["toDate"].ToString();
+        var categoriesStr = context.Request.Query["categories"].ToString();
+        var accountsStr = context.Request.Query["accounts"].ToString();
+        var userIdStr = context.Request.Query["userId"].ToString();
 
-// Totals row style
-static IContainer CellStyleTotals(IContainer container)
-{
-    return container
-        .Border(1)
-        .BorderColor(Colors.Black)
-        .Padding(5)
-        .DefaultTextStyle(x => x.Bold());
-}
+        // Parse dates
+        DateTime.TryParse(fromDateStr, out DateTime fromDate);
+        DateTime.TryParse(toDateStr, out DateTime toDate);
 
+        // Parse categories/accounts
+        var catList = (categoriesStr ?? "")
+            .Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(s => s.Trim())
+            .ToList();
+
+        var acctList = (accountsStr ?? "")
+            .Split(',', StringSplitOptions.RemoveEmptyEntries)
+            .Select(s => s.Trim())
+            .ToList();
+
+        // Parse user ID
+        int userId = 1;
+        if (!string.IsNullOrEmpty(userIdStr))
+            int.TryParse(userIdStr, out userId);
+
+        // Load transactions
+        var allTransactions = await TransactionHelper.GetTransactionsAsync(userId);
+
+        // Filter by date range
+        var filtered = allTransactions
+            .Where(t => t.Date >= fromDate && t.Date <= toDate)
+            .ToList();
+
+        // Filter by categories
+        if (!catList.Contains("All"))
+            filtered = filtered.Where(t => catList.Contains(t.CategoryID.ToString())).ToList();
+
+        // Filter by accounts
+        if (acctList.Count > 0 && !acctList.Contains("All"))
+        {
+            var accountIds = acctList.Select(int.Parse).ToList();
+            filtered = filtered.Where(t => accountIds.Contains(t.AccountID)).ToList();
+        }
+
+        // monthlyExpenses => only expenses; monthlySavings => only income
+        if (reportType == "monthlyExpenses")
+            filtered = filtered.Where(t => t.TransactionType == "e").ToList();
+        else if (reportType == "monthlySavings")
+            filtered = filtered.Where(t => t.TransactionType == "i").ToList();
+
+        // Sort descending by date
+        filtered = filtered.OrderByDescending(t => t.Date).ToList();
+
+        // Summaries
+        decimal totalDebit = filtered.Where(t => t.TransactionType == "e").Sum(t => t.Amount);
+        decimal totalCredit = filtered.Where(t => t.TransactionType == "i").Sum(t => t.Amount);
+        decimal netTotal = totalCredit - totalDebit;
+
+        // Build PDF
+        var doc = Document.Create(container =>
+        {
+            container.Page(page =>
+            {
+                page.Size(PageSizes.A4);
+                page.Margin(2, Unit.Centimetre);
+                page.PageColor(Colors.White);
+
+                // HEADER
+                page.Header().Column(headerCol =>
+                {
+                    headerCol.Item().AlignCenter().Text("Jamper Financial")
+                        .FontSize(26).Bold().FontColor("#62AD41");
+                    headerCol.Item().AlignCenter().Text(reportName)
+                        .FontSize(16).SemiBold().FontColor(Colors.Black);
+                    headerCol.Item().AlignCenter().Text($"Report from {fromDate:yyyy-MM-dd} to {toDate:yyyy-MM-dd}")
+                        .FontSize(10).FontColor(Colors.Grey.Medium);
+                });
+
+                // CONTENT
+                page.Content().Column(contentCol =>
+                {
+                    contentCol.Spacing(20);
+
+                    // Summary Box
+                    contentCol.Item().Background("DEF9C4") 
+                        .Padding(12)
+                        .Row(row =>
+                        {
+                            // Left side
+                            row.RelativeItem().Column(col =>
+                            {
+                                col.Item().Text("📄 Report Summary").FontSize(12).SemiBold();
+                                col.Item().Text(description).FontSize(10).FontColor(Colors.Grey.Darken1);
+                            });
+                            // Right side
+                            row.RelativeItem().AlignRight().Column(col =>
+                            {
+                                col.Item().Text($"💸 Total Debit: {totalDebit:C}")
+                                    .FontColor("#c62828").SemiBold();
+                                col.Item().Text($"💰 Total Credit: {totalCredit:C}")
+                                    .FontColor("#2e7d32").SemiBold();
+                                col.Item().Text($"🧾 Net Total: {netTotal:C}")
+                                    .FontColor(netTotal >= 0 ? "#2e7d32" : "#c62828").SemiBold();
+                                col.Item().Text($"📊 Transactions: {filtered.Count}")
+                                    .FontSize(10);
+                            });
+                        });
+
+                    // If no data
+                    if (filtered.Count == 0)
+                    {
+                        contentCol.Item().AlignCenter().Text("No transactions found for the selected filters.")
+                            .FontSize(14).Italic().FontColor(Colors.Grey.Medium);
+                    }
+                    else
+                    {
+                        // 7 columns: No., Date, Description, Debit, Credit, Freq, Next Due
+                        contentCol.Item().Table(table =>
+                        {
+                            table.ColumnsDefinition(cols =>
+                            {
+                                cols.ConstantColumn(35);  // No.
+                                cols.ConstantColumn(90);  // Date
+                                cols.RelativeColumn(2);   // Description
+                                cols.ConstantColumn(60);  // Debit
+                                cols.ConstantColumn(60);  // Credit
+                                cols.ConstantColumn(60);  // Freq
+                                cols.ConstantColumn(80);  // Next Due
+                            });
+
+                            // HEADER ROW
+                            table.Header(header =>
+                            {
+                                header.Cell().Element(CellStyleHeader).AlignCenter().Text("No.");
+                                header.Cell().Element(CellStyleHeader).AlignCenter().Text("Date");
+                                header.Cell().Element(CellStyleHeader).Text("Description");
+                                header.Cell().Element(CellStyleHeader).AlignRight().Text("Debit");
+                                header.Cell().Element(CellStyleHeader).AlignRight().Text("Credit");
+                                header.Cell().Element(CellStyleHeader).AlignCenter().Text("Freq");
+                                header.Cell().Element(CellStyleHeader).AlignCenter().Text("Next Due");
+                            });
+
+                            // TABLE BODY
+                            for (int i = 0; i < filtered.Count; i++)
+                            {
+                                var t = filtered[i];
+                                // Alternate row styles
+                                var rowStyle = (i % 2 == 0) ? EvenRowStyle : OddRowStyle;
+
+                                // Column 1: No.
+                                table.Cell().Element(rowStyle)
+                                    .AlignCenter()
+                                    .Text((i + 1).ToString());
+
+                                // Column 2: Date
+                                table.Cell().Element(rowStyle)
+                                    .AlignCenter()
+                                    .Text(t.Date.ToString("yyyy-MM-dd"));
+
+                                // Column 3: Description
+                                table.Cell().Element(rowStyle)
+                                    .Text(t.Description);
+
+                                // Column 4: Debit
+                                // Column 5: Credit
+                                if (t.TransactionType == "e")
+                                {
+                                    // Expense => put amount in Debit (red)
+                                    table.Cell().Element(rowStyle)
+                                        .AlignRight()
+                                        .Text(t.Amount.ToString("C"))
+                                        .FontColor("#c62828");
+                                    // Credit => dash
+                                    table.Cell().Element(rowStyle)
+                                        .AlignRight()
+                                        .Text("-");
+                                }
+                                else
+                                {
+                                    // Not expense => Debit => dash
+                                    table.Cell().Element(rowStyle)
+                                        .AlignRight()
+                                        .Text("-");
+                                    // Credit => green
+                                    table.Cell().Element(rowStyle)
+                                        .AlignRight()
+                                        .Text(t.Amount.ToString("C"))
+                                        .FontColor("#2e7d32");
+                                }
+
+                                // Column 6: Freq 
+                                string freq = "-";
+                                if (!string.IsNullOrEmpty(t.Frequency))
+                                {
+                                    var freqLower = t.Frequency.ToLower();
+                                    if (freqLower == "monthly") freq = "Monthly";
+                                    else if (freqLower == "yearly") freq = "Yearly";
+                                    else freq = t.Frequency; // some other text
+                                }
+                                table.Cell().Element(rowStyle)
+                                    .AlignCenter()
+                                    .Text(freq);
+
+                                // Column 7: Next Due
+                                var nextDue = "-";
+                                if (freq == "Monthly")
+                                    nextDue = t.Date.AddMonths(1).ToString("yyyy-MM-dd");
+                                else if (freq == "Yearly")
+                                    nextDue = t.Date.AddYears(1).ToString("yyyy-MM-dd");
+
+                                table.Cell().Element(rowStyle)
+                                    .AlignCenter()
+                                    .Text(nextDue);
+                            }
+                        });
+                    }
+                });
+
+                // FOOTER
+                page.Footer().PaddingVertical(10).Column(col =>
+                {
+                    col.Item().BorderTop(1).BorderColor(Colors.Grey.Lighten1).PaddingTop(5).Row(row =>
+                    {
+                        row.RelativeItem().Text("Confidential • Jamper Financial ©")
+                            .FontSize(8).FontColor(Colors.Grey.Medium);
+                        row.RelativeItem().AlignRight().Text(text =>
+                        {
+                            text.Span("Page ").FontSize(10);
+                            text.CurrentPageNumber();
+                            text.Span(" of ").FontSize(10);
+                            text.TotalPages();
+                        });
+                    });
+                });
+            });
+        });
+
+        var pdfBytes = doc.GeneratePdf();
+        var fileName = $"{reportName.Replace(" ", "_")}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+        return Results.File(pdfBytes, "application/pdf", fileName);
+    }
+    catch (Exception ex)
+    {
+        return Results.Problem($"Error generating PDF: {ex.Message}");
+    }
+});
 // --------------------------------------------------
 
 
