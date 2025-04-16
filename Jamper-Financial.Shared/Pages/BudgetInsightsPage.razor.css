@@ -6,7 +6,7 @@
     border: 1px solid #62AD41;
     -moz-border-radius: 20px;
     -webkit-border-radius: 20px;
-    border-radius: 20px; /* Fixed the border-radius property */
+    border-radius: 10px;
     background-color: #ffffff;
     margin-bottom: 20px;
 }
@@ -34,7 +34,7 @@
 
     .table-wrapper::-webkit-scrollbar-thumb {
         background-color: #62AD41;
-        border-radius: 10px;
+        border-radius: 0.25rem;
         border: 2px solid #ffffff;
     }
 
@@ -44,15 +44,16 @@
 }
 
 .table-striped tbody tr:nth-of-type(even) {
-    background-color: #62AD41;
-    color: #ffffff;
+    background-color: rgba(98, 173, 65, 0.10);
+    color: #62AD41;
 }
 
 .table-striped thead {
-    font-weight: bold;
-    font-size: 1.2em;
-    border-bottom-style: solid;
-    border-bottom-color: #417828;
+    position: sticky;
+    margin: 0;
+    color: #ffffff;
+    font-weight: bold; /* Bold the section titles */
+    background-color: var(--primary-color);
 }
 
 .planned-column input {
@@ -74,9 +75,7 @@
 
 /* Ensure table rows have a white background */
 .table {
-    position: sticky;
     top: 0;
-    background-color: #fff; /* Adjust the background color as needed */
     z-index: 1;
 }
 
@@ -115,7 +114,6 @@
 
 .flex-container {
     display: flex;
-    -webkit-justify-content: center;
     justify-content: center;
     border-style: none;
 }
@@ -138,25 +136,25 @@
 }
 
 ::deep .chart-container {
+    width: 100%;
+    height: 100%;
     position: relative; /* Keep position: relative; if you need it */
-    /*width: 100%;*/ /* Keep width: 100%; if you need it */
-    /*height: 100%;*/ /* Keep height: 100%; if you need it, or set a fixed height if needed */
     border-radius: 20px;
     background-color: white;
     display: flex; /* **Add display: flex; to make it a flex container** */
     justify-content: center; /* **Horizontal centering** */
     align-items: center; /* **Vertical centering** */
-    padding: 20px; /* Optional padding */
 }
 
 ::deep canvas {
-    width: 80% !important;
-    height: 80% !important;
+    width: 50% !important;
+    height: 50% !important;
 }
 
 .stats-container {
     padding: 20px;
     background-color: transparent;
+    overflow: visible;
 }
 
 .stats-list {

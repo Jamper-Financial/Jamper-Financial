@@ -5,7 +5,7 @@ namespace Jamper_Financial.Shared.Models
         public string Category { get; set; }
         public decimal PlannedAmount { get; set; }
         public decimal CurrentAmount { get; set; }
-        public int TransactionType { get; set; } // Add this property
+        public string TransactionType { get; set; } // Add this property
     }
 
     public class BudgetInsight

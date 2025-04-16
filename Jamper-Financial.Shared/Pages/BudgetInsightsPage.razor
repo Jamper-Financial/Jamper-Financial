@@ -2,6 +2,8 @@
 @using Jamper_Financial.Shared.Models
 @using Jamper_Financial.Shared.Services
 @using System.Collections.ObjectModel
+@using System.Globalization
+
 @inject NavigationManager Navigation
 @inject UserStateService UserStateService
 @inject IBudgetInsightsService BudgetInsightsService
@@ -27,6 +29,7 @@
     private decimal expenses;
     private decimal totalSavings;
     private decimal totalBalance = 0;
+    private int chartVersion = 0;
 
 
     protected override async Task OnInitializedAsync()
@@ -52,7 +55,8 @@
                 }
 
                 await LoadBudgetItemsAsync();
-                UpdateChartData();
+                CalculateStats();
+                await UpdateChartData();
             }
             else
             {
@@ -71,13 +75,12 @@
         try
         {
             var items = await BudgetInsightsService.GetBudgetItemsAsync(UserStateService.UserId);
+            budgetItems.Clear(); // Important to clear the existing collection
             foreach (var item in items)
             {
                 budgetItems.Add(item);
             }
 
-            // Calculate income, expenses, and total savings
-            CalculateStats();
         }
         catch (Exception ex)
         {
@@ -90,82 +93,114 @@
     private void CalculateStats()
     {
         income = budgetItems
-            .Where(i => i.TransactionType == 0)
+            .Where(i => i.TransactionType == "i")
             .Sum(i => i.CurrentAmount);
 
         expenses = budgetItems
-            .Where(i => i.TransactionType == 1)
+            .Where(i => i.TransactionType == "e")
             .Sum(i => i.CurrentAmount);
 
         // Calculate total balance from all accounts
         totalBalance = userAccounts.Sum(a => a.Balance);
 
         Console.WriteLine($"Income: {income}, Expenses: {expenses}");
-        //totalSavings = 255010 + income - expenses; // Assuming 255010 is the balance value
-        totalSavings = totalBalance + income - expenses;  // Now using actual account balances
-		StateHasChanged(); // Forcing UI update
+        totalSavings = income + expenses;  // Now using actual account balances
 
     }
 
 
-    private string GetFormattedPlannedAmount(BudgetItem item)
+    private string GetFormattedPlannedAmountForInput(BudgetItem item)
     {
-        return item.PlannedAmount.ToString("C");
+        return item.PlannedAmount.ToString("C", CultureInfo.CreateSpecificCulture("en-US"));
     }
 
     private void OnPlannedAmountInput(BudgetItem item, ChangeEventArgs e)
     {
+        Console.WriteLine($"triggres the keypress");
         if (e.Value != null && decimal.TryParse(e.Value.ToString().Replace("$", "").Replace(",", ""), out var result))
         {
             item.PlannedAmount = result;
+            Console.WriteLine($"Updated PlannedAmount for {item.Category}: {item.PlannedAmount}");
         }
     }
 
-    private async void UpdatePlannedAmount(BudgetItem item)
+
+    private async Task HandleKeyUp(KeyboardEventArgs e, BudgetItem item)
     {
-        try
+        Console.Write("tner handle key enter");
+        if (e.Key == "Enter")
         {
-            await BudgetInsightsService.UpdatePlannedAmountAsync(UserStateService.UserId, item.Category, item.PlannedAmount);
-            UpdateChartData();
-            CalculateStats();
-        }
-        catch (Exception ex)
-        {
-            // Log the exception (if you have a logging mechanism)
-            Console.WriteLine($"Error in UpdatePlannedAmount: {ex.Message}");
+            Console.Write("Inside if:" + item.PlannedAmount);
+            await UpdatePlannedAmount(item);
         }
     }
 
-    private void UpdateChartData()
+    private async Task UpdatePlannedAmount(BudgetItem item)
     {
-        try
+        Console.WriteLine($"UpdatePlannedAmount called for category: {item.Category}, raw value: {item.PlannedAmount}");
+        if (decimal.TryParse(item.PlannedAmount.ToString().Replace("$", "").Replace(",", ""), out var parsedAmount))
         {
-            var top3Items = budgetItems
-                .OrderByDescending(i => i.PlannedAmount)
-                .Take(3)
-                .ToList();
-
-            var othersAmount = budgetItems
-                .OrderByDescending(i => i.PlannedAmount)
-                .Skip(3)
-                .Sum(i => i.PlannedAmount);
-
-            chartLabels = top3Items.Select(i => i.Category).ToList();
-            chartData = top3Items.Select(i => i.PlannedAmount).ToList();
-            chartBackgroundColors = colors.Take(chartData.Count).ToList();
-
-            if (othersAmount > 0)
+            try
             {
-                chartLabels.Add("Others");
-                chartData.Add(othersAmount);
-                chartBackgroundColors.Add("#CCCCCC"); // Add a color for "Others"
+                await BudgetInsightsService.UpdatePlannedAmountAsync(UserStateService.UserId, item.Category, parsedAmount);
+                // Optionally reload data to get formatted value from the service
+                await LoadBudgetItemsAsync();
+                await UpdateChartData();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in UpdatePlannedAmount: {ex.Message}");
             }
         }
-        catch (Exception ex)
+        else
         {
-            // Log the exception (if you have a logging mechanism)
-            Console.WriteLine($"Error in UpdateChartData: {ex.Message}");
+            Console.WriteLine($"Error: Could not parse '{item.PlannedAmount}' to decimal.");
         }
+    }
+
+    private async Task UpdateChartData()
+    {
+        Console.WriteLine("UpdateChartData() called");
+
+        var expenseItems = budgetItems
+            .Where(i => i.TransactionType == "e")
+            .ToList();
+
+        var top3Items = expenseItems
+            .OrderByDescending(i => i.PlannedAmount)
+            .Take(3)
+            .ToList();
+
+        var othersAmount = expenseItems
+            .OrderByDescending(i => i.PlannedAmount)
+            .Skip(3)
+            .Sum(i => i.PlannedAmount);
+
+        // Create NEW lists instead of modifying existing ones
+        var newLabels = top3Items.Select(i => i.Category).ToList();
+        var newData = top3Items.Select(i => i.PlannedAmount).ToList();
+        var newColors = colors.Take(newData.Count).ToList();
+
+        if (othersAmount > 0)
+        {
+            newLabels.Add("Others");
+            newData.Add(othersAmount);
+            newColors.Add("#CCCCCC");
+        }
+
+        // Replace the existing lists with new instances
+        chartLabels = newLabels;
+        chartData = newData;
+        chartBackgroundColors = newColors;
+
+        Console.WriteLine($"Chart Labels: {string.Join(", ", chartLabels)}");
+        Console.WriteLine($"Chart Data: {string.Join(", ", chartData)}");
+
+        chartVersion++;
+        Console.WriteLine($"Chart version updated to: {chartVersion}");
+
+        // Force UI update
+        StateHasChanged();
     }
 
     public void Dispose()
@@ -177,7 +212,7 @@
 <div class="budget-page">
     <div class="dashboard">
         <div class="table-container">
-            <h3 class="mb-3">Budget Overview</h3>
+            <h3>Budget Overview</h3>
             <div class="table-wrapper">
                 <table class="table table-striped">
                     <thead>
@@ -188,14 +223,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in budgetItems)
+                        @foreach (var item in budgetItems.Where(i => i.TransactionType == "e"))
                         {
                             <tr>
                                 <td>@item.Category</td>
                                 <td class="planned-column">
-                                    <input type="text" value="@GetFormattedPlannedAmount(item)" @oninput="(e) => OnPlannedAmountInput(item, e)" @onblur="(e) => UpdatePlannedAmount(item)" />
+                                    <input type="text"
+                                           @bind="item.PlannedAmount"
+                                           @onblur="() => UpdatePlannedAmount(item)"
+                                           @onkeyup="(e) => HandleKeyUp(e, item)"
+                                           class="form-control" />
                                 </td>
-                                <td class="current-column">@item.CurrentAmount.ToString("C")</td>
+                                <td class="current-column">@item.CurrentAmount.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))</td>
                             </tr>
                         }
                     </tbody>
@@ -206,37 +245,41 @@
             <h3 class="mb-3">Expense Distribution</h3>
             <div class="flex-container row-direction">
                 <div class="chart-container flex-item">
-                    <PieChart Labels="chartLabels" Data="chartData" BackgroundColors="chartBackgroundColors" />
+                    <div class="chart-container flex-item">
+                        <PieChart @key="@chartVersion"
+                                  Labels="chartLabels"
+                                  Data="chartData"
+                                  BackgroundColors="chartBackgroundColors" />
+                    </div>
                 </div>
                 <div class="stats-container">
                     <ul class="stats-list">
                         <li class="flex-container row-direction">
                             <img class="stat-icon flex-item" src="images/balance-icon.svg" />
                             <div class="flex-container column-direction">
-                                <span class="stat-label flex-item">My Balance</span>
-                                @* <span class="stat-value flex-item">$255,010</span> *@
-                                <span class="stat-value flex-item">@totalBalance.ToString("$#,##0")</span>
+                                <span class="stat-label flex-item">My Account Balance</span>
+                                <span class="stat-value flex-item">@totalBalance.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))</span>
                             </div>
                         </li>
                         <li class="flex-container row-direction">
                             <img class="stat-icon flex-item" src="images/income-icon.svg" />
                             <div class="flex-container column-direction">
                                 <span class="stat-label flex-item">Income/year</span>
-                                <span class="stat-value flex-item">@income.ToString("C")</span>
+                                <span class="stat-value flex-item">@income.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))</span>
                             </div>
                         </li>
                         <li class="flex-container row-direction">
-                            <img class="stat-icon flex-item" src="images/expense-icon.svg" />
+                            <img class="stat-icon flex-item" src="images/expense.svg" />
                             <div class="flex-container column-direction">
                                 <span class="stat-label flex-item">Expense</span>
-                                <span class="stat-value flex-item">@expenses.ToString("C")</span>
+                                <span class="stat-value flex-item">@expenses.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))</span>
                             </div>
                         </li>
                         <li class="flex-container row-direction">
                             <img class="stat-icon flex-item" src="images/total-savings-icon.svg" />
                             <div class="flex-container column-direction">
                                 <span class="stat-label flex-item">Total Savings</span>
-                                <span class="stat-value flex-item">@totalSavings.ToString("C")</span>
+                                <span class="stat-value flex-item">@totalSavings.ToString("C", CultureInfo.CreateSpecificCulture("en-US"))</span>
                             </div>
                         </li>
                     </ul>
