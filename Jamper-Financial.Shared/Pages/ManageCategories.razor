@@ -2,11 +2,12 @@
 @using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Models
 @using Jamper_Financial.Shared.Services
+@inject NavigationManager Navigation
 @inject UserStateService UserStateService
 
 <div class="manage-categories-page">
     <div class="category-header">
-        <h3 class="section-title">Manage Categories</h3>
+        <h3>Manage Categories</h3>
     </div>
 
     <!-- Add Category Section -->
@@ -81,43 +82,47 @@
     <!-- Edit Category Section -->
     @if (EditingCategoryID > 0)
     {
-        <div class="edit-container">
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
-                <div>
-                    <label>Category Name</label>
-                    <input class="category-input" @bind="EditingCategoryName" />
+        <div class="edit-modal">
+            <div class="edit-container">
+                <div class="form-group">
+                    <div>
+                        <label>Category Name</label>
+                        <input class="category-input" @bind="EditingCategoryName" />
+                    </div>
+                    <div>
+                        <label>Type</label>
+                        <select @bind="EditingCategoryTransactionType">
+                            <option value="e">Expense</option>
+                            <option value="i">Income</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Color</label>
+                        <input type="color" @bind="EditingCategoryColor" />
+                    </div>
+                    <div>
+                        <label>Parent Category</label>
+                        <select @bind="EditingCategoryParentID">
+                            <option value="">None (Top Level)</option>
+                            @foreach (var category in AvailableParentCategories.Where(c => c.CategoryID != EditingCategoryID))
+                            {
+                                <option value="@category.CategoryID">@category.Name</option>
+                            }
+                        </select>
+                    </div>
                 </div>
-                <div>
-                    <label>Type</label>
-                    <select @bind="EditingCategoryTransactionType">
-                        <option value="e">Expense</option>
-                        <option value="i">Income</option>
-                    </select>
+                <div style="display: flex; justify-content: flex-end; gap: 10px;">
+                    <button class="cancel-btn" @onclick="CancelEdit">Cancel</button>
+                    <button class="save-btn" @onclick="SaveEditedCategory">Save</button>
                 </div>
-                <div>
-                    <label>Color</label>
-                    <input type="color" @bind="EditingCategoryColor" />
-                </div>
-                <div>
-                    <label>Parent Category</label>
-                    <select @bind="EditingCategoryParentID">
-                        <option value="">None (Top Level)</option>
-                        @foreach (var category in AvailableParentCategories.Where(c => c.CategoryID != EditingCategoryID))
-                        {
-                            <option value="@category.CategoryID">@category.Name</option>
-                        }
-                    </select>
-                </div>
-            </div>
-            <div style="display: flex; justify-content: flex-end; gap: 10px;">
-                <button class="cancel-btn" @onclick="CancelEdit">Cancel</button>
-                <button class="save-btn" @onclick="SaveEditedCategory">Save</button>
             </div>
         </div>
     }
 </div>
 
 @code {
+    [CascadingParameter] private Action<string>? SetPageTitle { get; set; }
+
     private List<Category> Categories = new();
     private string NewCategoryName = "";
     private string NewCategoryTransactionType = "e";
@@ -131,7 +136,6 @@
     private int? EditingCategoryParentID = null;
     private HashSet<int> expandedCategories = new HashSet<int>();
 
-
     private List<Category> AvailableParentCategories =>
         Categories.Where(c => c.ParentCategoryID == null).ToList();
 
@@ -140,7 +144,27 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await LoadCategories();
+        try
+        {
+            SetPageTitle?.Invoke("Categories");
+
+            int userId = UserStateService.UserId;
+            string username = UserStateService.Username;
+
+            if (userId <= 0)
+            {
+                Navigation.NavigateTo("/login");
+            }
+            else
+            {
+                await LoadCategories();
+            }
+        }
+        catch (Exception ex)
+        {
+            // Log the exception (if you have a logging mechanism)
+            Console.WriteLine($"Error in OnInitializedAsync: {ex.Message}");
+        }
     }
 
     private async Task LoadCategories()

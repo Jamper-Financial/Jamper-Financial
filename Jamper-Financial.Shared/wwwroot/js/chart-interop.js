@@ -19,8 +19,19 @@ window.initializePieChart = function (canvasId, chartData) {
                 maintainAspectRatio: true,
                 animation: { duration: 0 },
                 hover: { animationDuration: 0 },
+                layout: { // Add layout padding to make space for labels
+                    padding: {
+                        top: 50,    // Adjust as needed
+                        bottom: 50, // Adjust as needed
+                        left: 50,   // Adjust as needed
+                        right: 50   // Adjust as needed
+                    }
+                },
                 plugins: {
-                    legend: { display: false }, // Hide legend if you only want labels
+                    legend: {
+                        display: false,
+                        position: 'bottom' // More stable than default
+                    },
                     datalabels: {
                         color: 'white',          // Label text color (adjust as needed)
                         anchor: 'center',         // Position labels in the center of slices
