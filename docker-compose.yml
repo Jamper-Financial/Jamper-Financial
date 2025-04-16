@@ -11,7 +11,3 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - FIREBASE_CREDENTIALS_PATH=/app/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json
-    volumes:
-      - ./Jamper-Financial.Shared/wwwroot:/app/wwwroot
-      - ./AppDatabase.db:/app/AppDatabase.db
-      - ./Jamper-Financial.Web/credentials:/app/wwwroot/credentials # Assuming credentials are in the web project

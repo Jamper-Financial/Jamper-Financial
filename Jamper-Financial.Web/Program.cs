@@ -17,6 +17,12 @@ using Microsoft.JSInterop;
 using Jamper_Financial.Shared.Utilities;
 using System.Globalization;
 
+// Set the default culture (e.g., "en-US")
+var cultureInfo = new CultureInfo("en-US");
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure QuestPDF license

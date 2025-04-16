@@ -3,23 +3,9 @@
         <TargetFramework>net9.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <RazorClassLibrary>true</RazorClassLibrary>
+    <GenerateEmbeddedFilesManifest>true</GenerateEmbeddedFilesManifest>
     </PropertyGroup>
-    <ItemGroup>
-        <None Include="wwwroot\images\budget-insights-icon.svg" />
-        <None Include="wwwroot\images\calendar-icon.svg" />
-        <None Include="wwwroot\images\dashboard-icon.svg" />
-        <None Include="wwwroot\images\debt-tracking-icon.svg" />
-        <None Include="wwwroot\images\placeholder.png" />
-        <None Include="wwwroot\images\image.png" />
-        <None Include="wwwroot\images\notification.svg" />
-        <None Include="wwwroot\images\receipt-management-icon.svg" />
-        <None Include="wwwroot\images\saving-goals-icon.svg" />
-        <None Include="wwwroot\images\search-icon.svg" />
-        <None Include="wwwroot\images\settings-icon.svg" />
-        <None Include="wwwroot\images\settings.svg" />
-        <None Include="wwwroot\images\transactions-icon.svg" />
-        <None Include="wwwroot\images\reports-icon.svg" />
-    </ItemGroup>
     <ItemGroup>
         <SupportedPlatform Include="browser" />
     </ItemGroup>
@@ -42,5 +28,6 @@
         <Folder Include="images\" />
         <Folder Include="temp\" />
         <Folder Include="wwwroot\temp-receipts\" />
+        <Folder Include="wwwroot\**" CopyToOutputDirectory="PreserveNewest" />
     </ItemGroup>
 </Project>
