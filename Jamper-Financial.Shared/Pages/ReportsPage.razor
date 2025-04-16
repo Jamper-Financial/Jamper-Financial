@@ -1,111 +1,166 @@
 @page "/reports-page"
+@using Jamper_Financial.Shared.Services
 @using Jamper_Financial.Shared.Utilities
 @using Jamper_Financial.Shared.Data
+@using Jamper_Financial.Shared.Models  
 @using System.Text
+@using Microsoft.Data.Sqlite
 @inherits LayoutComponentBase
 
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JS
+@inject UserStateService UserStateService
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
 
-    // Toggles the "Create Custom Report" modal
+    // TOGGLES FOR MODALS
     private bool showCreateReportModal = false;
-    // Toggles the "Report Results" modal
     private bool showResultsModal = false;
+    private bool showCurrentMonthExpensesModal = false;
+    private bool showCurrentMonthSavingsModal = false;
 
-    // User-selected filters
+    // USER-SELECTED FILTERS
     private List<string> selectedCategories = new List<string>();
+    private List<string> selectedAccountIds = new List<string>();
     private bool useLast6Months = true;
     private DateTime fromDate = DateTime.Now.AddMonths(-6);
     private DateTime toDate = DateTime.Now;
 
-    // Validation errors
+    // VALIDATION ERRORS
     private string categoryError = string.Empty;
     private string dateError = string.Empty;
 
-    // All DB transactions + the filtered subset
+    // TRANSACTIONS (FOR CURRENT USER)
     private List<Transaction> transactions = new List<Transaction>();
     private List<Transaction> filteredTransactions = new List<Transaction>();
 
-    // Additional report fields
+    // USER LINKED ACCOUNTS & CATEGORIES
+    private List<BankAccount> userAccounts = new List<BankAccount>();
+    private List<Category> userCategories = new List<Category>();
+
+    // REPORT FIELDS
     private string reportName = string.Empty;
     private string reportDescription = string.Empty;
 
-    // Totals for Debit/Credit
+    // CALCULATED TOTALS
     private decimal totalDebit => filteredTransactions.Where(t => t.TransactionType == "e").Sum(t => t.Amount);
     private decimal totalCredit => filteredTransactions.Where(t => t.TransactionType == "i").Sum(t => t.Amount);
 
+    private DateTime? ComputeNextDueDate(Transaction t)
+    {
+        if (string.IsNullOrEmpty(t.Frequency))
+            return null;
+        if (t.Frequency.ToLower() == "monthly")
+            return t.Date.AddMonths(1);
+        if (t.Frequency.ToLower() == "yearly")
+            return t.Date.AddYears(1);
+        return null;
+    }
 
     protected override async Task OnInitializedAsync()
     {
-        // Set the page title
+        int userId = UserStateService.UserId;
         SetPageTitle("Reports");
 
-        // Load all transactions from the database
-        int userId = 1; // Hardcoded for now.
         var allFromDb = await TransactionHelper.GetTransactionsAsync(userId);
-
         transactions = allFromDb.ToList();
-
-        // By default, show everything
         filteredTransactions = transactions;
+
+        await LoadUserAccountsAsync(userId);
+        userCategories = await DatabaseHelper.LoadUserCategoriesAsync(userId);
     }
 
-    // -------------------------
-    // Create Custom Report Modal
-    // -------------------------
+    private async Task LoadUserAccountsAsync(int userId)
+    {
+        var accounts = new List<BankAccount>();
+        using (var connection = DatabaseHelper.GetConnection())
+        {
+            await connection.OpenAsync();
+            string query = "SELECT AccountID, AccountName, AccountTypeID, Balance, AccountNumber FROM Accounts WHERE UserID = @UserID";
+            using (var command = new SqliteCommand(query, connection))
+            {
+                command.Parameters.AddWithValue("@UserID", userId);
+                using (var reader = await command.ExecuteReaderAsync())
+                {
+                    while (await reader.ReadAsync())
+                    {
+                        accounts.Add(new BankAccount
+                        {
+                            AccountId = reader.GetInt32(reader.GetOrdinal("AccountID")),
+                            AccountName = reader.GetString(reader.GetOrdinal("AccountName")),
+                            AccountTypeID = reader.GetInt32(reader.GetOrdinal("AccountTypeID")),
+                            Balance = (int)reader.GetDecimal(reader.GetOrdinal("Balance")),
+                            AccountNumber = reader.GetInt32(reader.GetOrdinal("AccountNumber")).ToString()
+                        });
+                    }
+                }
+            }
+        }
+        userAccounts = accounts;
+    }
+
     private void OpenCreateReportModal()
     {
         showCreateReportModal = true;
         categoryError = string.Empty;
         dateError = string.Empty;
+        selectedAccountIds = new List<string>();
     }
+    private void CloseCreateReportModal() => showCreateReportModal = false;
 
-    private void CloseCreateReportModal()
-    {
-        showCreateReportModal = false;
-    }
+    private void OpenResultsModal() => showResultsModal = true;
+    private void CloseResultsModal() => showResultsModal = false;
 
-    // -------------------------
-    // Report Results Modal
-    // -------------------------
-    private void OpenResultsModal()
-    {
-        showResultsModal = true;
-    }
-
-    private void CloseResultsModal()
-    {
-        showResultsModal = false;
-    }
-
-    // -------------------------
-    // View Report
-    // -------------------------
     private void ViewReport()
     {
         if (useLast6Months)
         {
             fromDate = DateTime.Now.AddMonths(-6);
-            toDate   = DateTime.Now;
+            toDate = DateTime.Now;
         }
-
-        // Validate categories + date
-        if (!ValidateCategories() | !ValidateDates())
+        if (!ValidateCategories() || !ValidateDates())
             return;
 
-        // Filter
+        var selectedAccountIdsInt = selectedAccountIds
+            .Where(id => id != "All")
+            .Select(id => int.Parse(id))
+            .ToList();
+
         filteredTransactions = transactions
-            .Where(t => selectedCategories.Contains("All") || selectedCategories.Contains(t.CategoryID.ToString()))
-            .Where(t => t.Date >= fromDate && t.Date <= toDate)
+            .Where(t =>
+                   (selectedAccountIds.Count == 0 || selectedAccountIds.Contains("All") || selectedAccountIdsInt.Contains(t.AccountID)) &&
+                   (selectedCategories.Count == 0 || selectedCategories.Contains("All") || selectedCategories.Contains(t.CategoryID.ToString())) &&
+                   (t.Date >= fromDate && t.Date <= toDate))
+            .OrderByDescending(t => t.Date)
             .ToList();
 
         CloseCreateReportModal();
         OpenResultsModal();
     }
 
-    // Must select at least one category
+    private void ViewCurrentMonthExpenses()
+    {
+        var currentMonth = DateTime.Now.Month;
+        var currentYear = DateTime.Now.Year;
+        filteredTransactions = transactions
+            .Where(t => t.Date.Month == currentMonth && t.Date.Year == currentYear && t.TransactionType == "e")
+            .OrderByDescending(t => t.Date)
+            .ToList();
+        showCurrentMonthExpensesModal = true;
+    }
+
+    private void ViewCurrentMonthSavings()
+    {
+        var currentMonth = DateTime.Now.Month;
+        var currentYear = DateTime.Now.Year;
+        filteredTransactions = transactions
+            .Where(t => t.Date.Month == currentMonth && t.Date.Year == currentYear && t.TransactionType == "i")
+            .OrderByDescending(t => t.Date)
+            .ToList();
+        showCurrentMonthSavingsModal = true;
+    }
+
     private bool ValidateCategories()
     {
         if (selectedCategories.Count == 0)
@@ -116,8 +171,6 @@
         categoryError = string.Empty;
         return true;
     }
-
-    // 'To' date >= 'From' date
     private bool ValidateDates()
     {
         if (toDate < fromDate)
@@ -128,327 +181,502 @@
         dateError = string.Empty;
         return true;
     }
-
     private void OnFromDateChange(ChangeEventArgs e)
     {
         if (DateTime.TryParse(e.Value?.ToString(), out var newDate))
             fromDate = newDate;
         ValidateDates();
     }
-
     private void OnToDateChange(ChangeEventArgs e)
     {
         if (DateTime.TryParse(e.Value?.ToString(), out var newDate))
             toDate = newDate;
         ValidateDates();
     }
-
     private void OnCategoriesChange(ChangeEventArgs e)
     {
         var selectedOptions = (e.Value as IEnumerable<string>)?.ToList() ?? new List<string>();
         selectedCategories = selectedOptions;
         ValidateCategories();
     }
-
+    private void OnAccountsChange(ChangeEventArgs e)
+    {
+        var selectedOptions = (e.Value as IEnumerable<string>)?.ToList() ?? new List<string>();
+        selectedAccountIds = selectedOptions;
+    }
     private bool CanViewReport => string.IsNullOrEmpty(categoryError) && string.IsNullOrEmpty(dateError);
 
-    // Return from "Report Results" to "Create Custom Report"
     private void GoBackToFilters()
     {
         showResultsModal = false;
         showCreateReportModal = true;
     }
 
-    // -------------------------
-    // Export CSV/PDF
-    // -------------------------
     private void ExportToCsv()
     {
         if (useLast6Months)
         {
             fromDate = DateTime.Now.AddMonths(-6);
-            toDate   = DateTime.Now;
+            toDate = DateTime.Now;
         }
-
         var catParam = string.Join(",", selectedCategories);
-        var url = $"/export/csv?reportName={Uri.EscapeDataString(reportName)}" +
+        var acctParam = string.Join(",", selectedAccountIds);
+        var url = $"/export/csv?reportType=custom" +
+                  $"&userId={UserStateService.UserId}" +
+                  $"&reportName={Uri.EscapeDataString(reportName)}" +
                   $"&description={Uri.EscapeDataString(reportDescription)}" +
                   $"&fromDate={fromDate:o}&toDate={toDate:o}" +
-                  $"&categories={Uri.EscapeDataString(catParam)}";
-
+                  $"&categories={Uri.EscapeDataString(catParam)}" +
+                  $"&accounts={Uri.EscapeDataString(acctParam)}";
         NavigationManager.NavigateTo(url, forceLoad: true);
     }
-
     private void ExportToPdf()
     {
         if (useLast6Months)
         {
             fromDate = DateTime.Now.AddMonths(-6);
-            toDate   = DateTime.Now;
+            toDate = DateTime.Now;
         }
-
         var catParam = string.Join(",", selectedCategories);
-        var url = $"/export/pdf?reportName={Uri.EscapeDataString(reportName)}" +
+        var acctParam = string.Join(",", selectedAccountIds);
+        var url = $"/export/pdf?reportType=custom" +
+                  $"&userId={UserStateService.UserId}" +
+                  $"&reportName={Uri.EscapeDataString(reportName)}" +
                   $"&description={Uri.EscapeDataString(reportDescription)}" +
                   $"&fromDate={fromDate:o}&toDate={toDate:o}" +
-                  $"&categories={Uri.EscapeDataString(catParam)}";
-
+                  $"&categories={Uri.EscapeDataString(catParam)}" +
+                  $"&accounts={Uri.EscapeDataString(acctParam)}";
         NavigationManager.NavigateTo(url, forceLoad: true);
+    }
+
+    private void ExportCurrentMonthCsv(string reportType)
+    {
+        DateTime now = DateTime.Now;
+        DateTime firstDay = new DateTime(now.Year, now.Month, 1);
+        DateTime lastDay = firstDay.AddMonths(1).AddDays(-1);
+        var catParam = "All";
+
+        string monthName = now.ToString("MMMM");
+        string dynamicReportName = reportType == "monthlyExpenses"
+            ? $"Expense Report for Month of {monthName}"
+            : $"Savings Report for Month of {monthName}";
+
+        var url = $"/export/csv?reportType={reportType}" +
+                  $"&userId={UserStateService.UserId}" +
+                  $"&reportName={Uri.EscapeDataString(dynamicReportName)}" +
+                  $"&description=Auto%20Generated%20Monthly%20Report" +
+                  $"&fromDate={firstDay:o}&toDate={lastDay:o}" +
+                  $"&categories={catParam}";
+        NavigationManager.NavigateTo(url, forceLoad: true);
+    }
+    private void ExportCurrentMonthPdf(string reportType)
+    {
+        DateTime now = DateTime.Now;
+        DateTime firstDay = new DateTime(now.Year, now.Month, 1);
+        DateTime lastDay = firstDay.AddMonths(1).AddDays(-1);
+        var catParam = "All";
+
+        string monthName = now.ToString("MMMM");
+        string dynamicReportName = reportType == "monthlyExpenses"
+            ? $"Expense Report for Month of {monthName}"
+            : $"Savings Report for Month of {monthName}";
+
+        var url = $"/export/pdf?reportType={reportType}" +
+                  $"&userId={UserStateService.UserId}" +
+                  $"&reportName={Uri.EscapeDataString(dynamicReportName)}" +
+                  $"&description=Auto%20Generated%20Monthly%20Report" +
+                  $"&fromDate={firstDay:o}&toDate={lastDay:o}" +
+                  $"&categories={catParam}";
+        NavigationManager.NavigateTo(url, forceLoad: true);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await RenderMonthlyBudgetChart();
+            await RenderMonthlySavingsChart();
+        }
+    }
+
+    // MONTHLY EXPENSES CHART
+    private async Task RenderMonthlyBudgetChart()
+    {
+        var months = new[]
+        {
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        };
+
+        var expenseData = new decimal[12];
+        foreach (var trans in transactions)
+        {
+            if (trans.Date.Year != DateTime.Now.Year || trans.Date > DateTime.Now) continue;
+            if (trans.TransactionType == "e")
+            {
+                int monthIndex = trans.Date.Month - 1;
+                expenseData[monthIndex] += trans.Amount;
+            }
+        }
+
+        var chartData = new
+        {
+            labels = months,
+            datasets = new[]
+            {
+                new
+                {
+                    label = "Monthly Expenses",
+                    data = expenseData,
+                    backgroundColor = "rgba(75, 192, 192, 0.2)",
+                    borderColor = "rgba(75, 192, 192, 1)",
+                    borderWidth = 1,
+                    borderRadius = 0
+                }
+            }
+        };
+
+        await JS.InvokeVoidAsync("initializeBarChart", "monthlyBudgetChart", chartData);
+    }
+
+    // MONTHLY SAVINGS CHART
+    private async Task RenderMonthlySavingsChart()
+    {
+        var months = new[]
+        {
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        };
+
+        var incomeData = new decimal[12];
+        foreach (var trans in transactions)
+        {
+            if (trans.Date.Year != DateTime.Now.Year || trans.Date > DateTime.Now ) continue;
+            if (trans.TransactionType == "i")
+            {
+                int monthIndex = trans.Date.Month - 1;
+                incomeData[monthIndex] += trans.Amount;
+            }
+        }
+
+        var chartData = new
+        {
+            labels = months,
+            datasets = new[]
+            {
+                new
+                {
+                    label = "Monthly Savings",
+                    data = incomeData,
+                    backgroundColor = "rgba(153, 102, 255, 0.2)",
+                    borderColor = "rgba(153, 102, 255, 1)",
+                    borderWidth = 1,
+                    borderRadius = 0
+                }
+            }
+        };
+
+        await JS.InvokeVoidAsync("initializeBarChart", "monthlySavingsChart", chartData);
     }
 }
 
 <style>
-.reports-page {
-    padding: 20px !important;
-    font-family: Arial, sans-serif !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    width: 100% !important;
-}
-
-.reports-page .report-container {
-    width: 100% !important;
-    max-width: 1200px !important;
-    margin-bottom: 20px !important;
-}
-
-.reports-page .export-buttons {
-    display: flex !important;
-    gap: 10px !important;
-    margin: 10px 0 !important;
-}
-
-.reports-page .reports-btn {
-    padding: 5px 10px !important;
-    background-color: #62AD41 !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 5px !important;
-    cursor: pointer !important;
-    transition: background-color 0.2s !important;
-}
-.reports-page .reports-btn:hover {
-    background-color: #58a93b !important; 
-}
-
-.reports-page .reports-custom-btn {
-    padding: 12px 24px !important;
-    background-color: white !important;
-    color: #62AD41 !important;
-    font-size: 18px !important;
-    border: none !important;
-    border-radius: 5px !important;
-    cursor: pointer !important;
-    margin-top: 20px !important;
-    display: block !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    transition: background-color 0.2s, color 0.2s !important;
-}
-.reports-page .reports-custom-btn:hover {
-    background-color: #62AD41 !important;
-    color: #e3f2dc !important;
-}
-
-.reports-page .graph-card {
-    border: 1px solid #e0e0e0 !important;
-    border-radius: 12px !important;
-    padding: 25px !important;
-    margin: 10px 0 !important;
-    height: 250px !important;
-    text-align: center !important;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
-    background-color: #ffffff !important;
-}
-
-.reports-page .create-report-modal,
-.reports-page .results-modal {
-    position: fixed !important;
-    top: 0 !important; 
-    left: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    display: flex !important; 
-    justify-content: center !important; 
-    align-items: center !important;
-    background-color: rgba(0,0,0,0.5) !important;
-    z-index: 9999 !important;
-}
-
-/* Widen the results modal so it fits 7 columns comfortably */
-.reports-page .modal-content {
-    background-color: #fff !important;
-    width: 90% !important;
-    max-width: 900px !important; /* increased from 500px */
-    border-radius: 10px !important;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
-    padding: 20px !important;
-    position: relative !important;
-}
-
-/* Make typed text in input/textarea black */
-.reports-page .create-report-modal .modal-content input,
-.reports-page .create-report-modal .modal-content textarea {
-    color: #000 !important;
-}
-
-/* Make only the placeholder text grey */
-.reports-page .create-report-modal .modal-content input::placeholder,
-.reports-page .create-report-modal .modal-content textarea::placeholder {
-    color: #888 !important; /* Choose your preferred grey tone */
-    opacity: 1 !important;
-}
-
-/* Keep the 'View Report' button style as before */
-.reports-page .reports-custom-btn {
-    padding: 12px 24px !important;
-    background-color: white !important;
-    color: #62AD41 !important;
-    font-size: 18px !important;
-    border: none !important;
-    border-radius: 5px !important;
-    cursor: pointer !important;
-    margin-top: 20px !important;
-    display: block !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    transition: background-color 0.2s, color 0.2s !important;
-}
-.reports-page .reports-custom-btn:hover {
-    background-color: #62AD41 !important;
-    color: #e3f2dc !important;
-}
-
-
-
-.reports-page .close {
-    color: #aaa !important;
-    float: right !important;
-    font-size: 28px !important;
-    font-weight: bold !important;
-    cursor: pointer !important;
-}
-.reports-page .close:hover {
-    color: #000 !important;
-}
-
-.reports-page .modal-body {
-    margin-top: 20px !important;
-}
-
-.reports-page .form-group {
-    margin-bottom: 15px !important;
-}
-
-.reports-page .form-group label {
-    display: block !important;
-    margin-bottom: 5px !important;
-    font-weight: bold !important;
-}
-
-.reports-page .form-group input,
-.reports-page .form-group select,
-.reports-page .form-group textarea {
-    width: 100% !important;
-    padding: 8px !important;
-    border: 1px solid #ccc !important;
-    border-radius: 4px !important;
-}
-
-.reports-page .form-group .multi-select {
-    width: 100% !important;
-    padding: 8px !important;
-    border: 1px solid #ccc !important;
-    border-radius: 4px !important;
-    background-color: #fff !important;
-}
-
-.reports-page .form-group .date-range {
-    display: flex !important;
-    align-items: center !important;
-}
-.reports-page .form-group .date-range label {
-    display: flex !important;
-    align-items: center !important;
-    margin-right: 20px !important;
-}
-.reports-page .form-group .date-range input[type="checkbox"] {
-    margin-right: 5px !important;
-    position: relative !important;
-    top: -2px !important;
-}
-.reports-page .form-group .date-range .date-inputs {
-    display: flex !important;
-    gap: 10px !important;
-}
-.reports-page .form-group .date-range .date-inputs input {
-    flex: 1 !important;
-}
-
-.reports-page .error-message {
-    color: red !important;
-    font-size: 0.9em !important;
-    margin-top: 5px !important;
-}
-
-.reports-page .report-results {
-    margin-top: 20px !important;
-    width: 100% !important;
-    max-width: 1200px !important;
-}
-
-.reports-page .transactions-table {
-    width: 100% !important;
-    border-collapse: collapse !important;
-}
-.reports-page .transactions-table th,
-.reports-page .transactions-table td {
-    padding: 10px !important;
-    border: 1px solid #ccc !important;
-    text-align: left !important;
-}
-.reports-page .transactions-table th {
-    background-color: #f5f5f5 !important;
-}
-
-.reports-page .negative {
-    color: red !important;
-}
-.reports-page .positive {
-    color: green !important;
-}
+    .reports-page {
+        padding: 20px;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+    .reports-page .report-container {
+        width: 100%;
+        max-width: 1200px;
+        margin-bottom: 20px;
+    }
+    .reports-page .export-buttons {
+        display: flex;
+        gap: 10px;
+        margin: 10px 0;
+    }
+    .reports-page .reports-btn {
+        padding: 8px 16px;
+        background-color: #62AD41;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 500;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .reports-page .reports-btn:hover {
+        background-color: #4e8d34;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .reports-page .reports-custom-btn {
+        padding: 12px 24px;
+        background-color: white;
+        color: #62AD41;
+        font-size: 18px;
+        border: 2px solid #62AD41;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 20px;
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        transition: all 0.3s;
+        font-weight: 600;
+    }
+    .reports-page .reports-custom-btn:hover {
+        background-color: #62AD41;
+        color: white;
+    }
+   
+    .reports-page .graph-card {
+        border: 1px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 25px;
+        margin: 10px 0;
+        min-height: 400px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        background-color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .reports-page .graph-card canvas {
+        display: block;
+        margin: auto;
+        width: 90%;
+        height: 300px;
+    }
+    .reports-page .create-report-modal,
+    .reports-page .results-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 9999;
+    }
+    .reports-page .modal-content {
+        background-color: #fff;
+        width: 90%;
+        max-width: 900px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        padding: 25px;
+        position: relative;
+        border: 1px solid #e0e0e0;
+    }
+    .reports-page .modal-content h3 {
+        color: #62AD41;
+        margin-bottom: 20px;
+        font-size: 1.5em;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 10px;
+    }
+    .reports-page .modal-summary {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+    .reports-page .summary-item {
+        font-weight: bold;
+        font-size: 1.2em;
+        padding: 10px 20px;
+        border-radius: 8px;
+    }
+    .reports-page .summary-item.negative {
+        color: #e74c3c;
+        background-color: rgba(231, 76, 60, 0.1);
+    }
+    .reports-page .summary-item.positive {
+        color: #2ecc71;
+        background-color: rgba(46, 204, 113, 0.1);
+    }
+    .reports-page .report-results {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+    .reports-page .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s;
+    }
+    .reports-page .close:hover {
+        color: #62AD41;
+    }
+    .reports-page .modal-body {
+        margin-top: 20px;
+    }
+    .reports-page .form-group {
+        margin-bottom: 15px;
+    }
+    .reports-page .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        color: #555;
+    }
+    .reports-page .form-group input,
+    .reports-page .form-group textarea,
+    .reports-page .form-group select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        transition: border 0.3s;
+        color: #888;
+        background-color: #fff;
+    }
+    .reports-page .form-group ::placeholder {
+        color: #888;
+    }
+    .reports-page .form-group input:not(:placeholder-shown),
+    .reports-page .form-group textarea:not(:placeholder-shown) {
+        color: #000;
+    }
+    .reports-page .form-group .multi-select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        background-color: #fff;
+        color: #000;
+    }
+    .reports-page .form-group .date-range {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    .reports-page .form-group .date-range label {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+    .reports-page .form-group .date-range input[type="checkbox"] {
+        margin-right: 8px;
+        accent-color: #62AD41;
+    }
+    .reports-page .form-group .date-range .date-inputs {
+        display: flex;
+        gap: 10px;
+        flex: 1;
+    }
+    .reports-page .error-message {
+        color: #e74c3c;
+        font-size: 0.9em;
+        margin-top: 5px;
+    }
+    .reports-page .transactions-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin: 15px 0;
+    }
+    .reports-page .transactions-table th {
+        background-color: #62AD41;
+        color: white;
+        padding: 12px 15px;
+        text-align: left;
+        font-weight: 600;
+    }
+    .reports-page .transactions-table td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #e0e0e0;
+        background-color: white;
+    }
+    .reports-page .transactions-table tr:last-child td {
+        border-bottom: none;
+    }
+    .reports-page .transactions-table tr:hover td {
+        background-color: #f5f9f3;
+    }
+    .reports-page .negative {
+        color: #e74c3c;
+    }
+    .reports-page .positive {
+        color: #2ecc71;
+    }
+    .reports-page .status-badge {
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.75em;
+        font-weight: 600;
+    }
+    .reports-page .status-badge.negative {
+        background-color: #ffebee;
+        color: #c62828;
+    }
+    .reports-page .status-badge.positive {
+        background-color: #e8f5e9;
+        color: #2e7d32;
+    }
+    @@media (max-width: 768px) {
+        .reports-page .modal-content {
+            width: 95%;
+            padding: 15px;
+        }
+        .reports-page .transactions-table {
+            font-size: 0.9em;
+        }
+        .reports-page .transactions-table th,
+        .reports-page .transactions-table td {
+            padding: 8px 10px;
+        }
+        .reports-page .form-group .date-range {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .reports-page .form-group .date-range .date-inputs {
+            width: 100%;
+        }
+    }
 </style>
 
 <div class="reports-page">
-    <!-- Some placeholder sections -->
+    <!-- EXPENSES REPORT CHART -->
     <div class="report-container">
-        <h3>Budget Report Overview</h3>
+        <h3>Expenses Report Overview</h3>
         <div class="graph-card">
-            <p>Graph will be displayed here.</p>
+            <canvas id="monthlyBudgetChart"></canvas>
         </div>
         <div class="export-buttons">
-            <button class="reports-btn">Export to CSV</button>
-            <button class="reports-btn">Export to PDF</button>
+            <button class="reports-btn" @onclick="ViewCurrentMonthExpenses">View Current Month Expenses</button>
         </div>
     </div>
 
+    <!-- SAVINGS REPORT CHART -->
     <div class="report-container">
         <h3>Savings Report Overview</h3>
         <div class="graph-card">
-            <p>Graph will be displayed here.</p>
+            <canvas id="monthlySavingsChart"></canvas>
         </div>
         <div class="export-buttons">
-            <button class="reports-btn">Export to CSV</button>
-            <button class="reports-btn">Export to PDF</button>
+            <button class="reports-btn" @onclick="ViewCurrentMonthSavings">View Current Month Savings</button>
         </div>
-
         <button class="reports-custom-btn" @onclick="OpenCreateReportModal">
             Create Custom Report
         </button>
     </div>
 
-    <!-- Create Custom Report Modal -->
+    <!-- CREATE CUSTOM REPORT MODAL -->
     @if (showCreateReportModal)
     {
         <div class="create-report-modal">
@@ -456,38 +684,34 @@
                 <span class="close" @onclick="CloseCreateReportModal">&times;</span>
                 <h3>Create Custom Report</h3>
                 <div class="modal-body">
-                    <!-- (Same form as before) -->
                     <div class="form-group">
                         <label>Enter the name of the report:</label>
                         <input type="text" @bind="reportName" placeholder="Report Name" />
                     </div>
-
                     <div class="form-group">
                         <label>Select accounts: (use ctrl to multi-select)</label>
-                        <select class="multi-select" multiple>
+                        <select class="multi-select" multiple @onchange="OnAccountsChange">
                             <option value="All">All</option>
-                            <option value="Checking">Checking</option>
-                            <option value="Savings">Savings</option>
-                            <option value="Credit Card">Credit Card</option>
+                            @foreach (var account in userAccounts)
+                            {
+                                <option value="@account.AccountId">@account.AccountName</option>
+                            }
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label>Select categories: (use ctrl to multi-select)</label>
                         <select class="multi-select" multiple @onchange="OnCategoriesChange">
                             <option value="All">All</option>
-                            <option value="Expenses">Expenses</option>
-                            <option value="Income">Income</option>
-                            <option value="Debts & Loans">Debts & Loans</option>
-                            <option value="Savings & Investments">Savings & Investments</option>
-                            <option value="Subscriptions & Memberships">Subscriptions & Memberships</option>
+                            @foreach (var category in userCategories)
+                            {
+                                <option value="@category.CategoryID">@category.Name</option>
+                            }
                         </select>
                         @if (!string.IsNullOrEmpty(categoryError))
                         {
                             <div class="error-message">@categoryError</div>
                         }
                     </div>
-
                     <div class="form-group">
                         <label>Date range:</label>
                         <div class="date-range">
@@ -510,12 +734,10 @@
                             <div class="error-message">@dateError</div>
                         }
                     </div>
-
                     <div class="form-group">
                         <label>Description:</label>
-                        <textarea @bind="reportDescription" placeholder="Enter description"></textarea>
+                        <textarea @bind="reportDescription" placeholder="Enter description" rows="3"></textarea>
                     </div>
-
                     <button class="reports-custom-btn"
                             @onclick="ViewReport"
                             disabled="@(!CanViewReport)">
@@ -526,22 +748,32 @@
         </div>
     }
 
-    <!-- Report Results Modal -->
+    <!-- REPORT RESULTS MODAL FOR CUSTOM REPORTS -->
     @if (showResultsModal)
     {
         <div class="results-modal">
             <div class="modal-content">
                 <span class="close" @onclick="CloseResultsModal">&times;</span>
                 <h3>Report Results</h3>
-
-                <!-- Show the "Report Name", "Description" and date range at the top -->
-                <div style="margin-bottom: 15px;">
-                    <strong>Report Name:</strong> @reportName <br />
-                    <strong>Description:</strong> @reportDescription <br />
-                    <strong>Date Range:</strong> @($"{fromDate:dd MMM yyyy}") - @($"{toDate:dd MMM yyyy}")
-
+                <div class="modal-summary">
+                    @if (filteredTransactions.Any(t => t.TransactionType == "e"))
+                    {
+                        <div class="summary-item negative">
+                            Total Expenses: @filteredTransactions.Where(t => t.TransactionType == "e").Sum(t => t.Amount).ToString("C")
+                        </div>
+                    }
+                    @if (filteredTransactions.Any(t => t.TransactionType == "i"))
+                    {
+                        <div class="summary-item positive">
+                            Total Savings: @filteredTransactions.Where(t => t.TransactionType == "i").Sum(t => t.Amount).ToString("C")
+                        </div>
+                    }
                 </div>
-
+                <div style="margin-bottom: 20px; color: #555;">
+                    <div><strong>Report Name:</strong> @reportName</div>
+                    <div><strong>Description:</strong> @reportDescription</div>
+                    <div><strong>Date Range:</strong> @($"{fromDate:dd MMM yyyy}") - @($"{toDate:dd MMM yyyy}")</div>
+                </div>
                 <div class="report-results">
                     @if (filteredTransactions.Count == 0)
                     {
@@ -549,17 +781,14 @@
                     }
                     else
                     {
-                        <!-- 7 columns total: Desc, Category, Date, Debit, Credit, Frequency, End Date -->
                         <table class="transactions-table">
                             <thead>
                                 <tr>
                                     <th>Description</th>
-                                    <th>Category</th>
                                     <th>Date</th>
-                                    <th>Debit</th>
-                                    <th>Credit</th>
+                                    <th>Amount</th>
                                     <th>Frequency</th>
-                                    <th>End Date</th>
+                                    <th>Next Due</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -567,37 +796,180 @@
                                 {
                                     <tr>
                                         <td>@t.Description</td>
-                                        <td>@t.CategoryID</td>
                                         <td>@t.Date.ToString("dd MMM yyyy")</td>
-                                        <td class="@(t.TransactionType == "e" ? "negative" : "")">
-                                            @(t.Amount != 0 ? t.Amount.ToString("C") : "")
+                                        <td class="@(t.TransactionType == "e" ? "negative" : "positive")">
+                                            @t.Amount.ToString("C")
                                         </td>
-                                        <td class="@(t.TransactionType == "i" ? "positive" : "")">
-                                            @(t.Amount != 0 ? t.Amount.ToString("C") : "")
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(t.Frequency))
+                                            {
+                                                <span class="status-badge @(t.Frequency.ToLower() == "monthly" ? "positive" : "negative")">
+                                                    @t.Frequency
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span>-</span>
+                                            }
                                         </td>
-                                        <td>@(string.IsNullOrEmpty(t.Frequency) ? "" : t.Frequency)</td>
-                                        <td>@(t.EndDate.HasValue ? t.EndDate.Value.ToString("dd MMM yyyy") : "")</td>
+                                        <td>@(ComputeNextDueDate(t)?.ToString("dd MMM yyyy") ?? "-")</td>
                                     </tr>
                                 }
-                                <!-- Totals row => 7 columns now -->
-                                <tr>
-                                    <td colspan="3"><strong>Totals:</strong></td>
-                                    <td><strong>@totalDebit.ToString("C")</strong></td>
-                                    <td><strong>@totalCredit.ToString("C")</strong></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
                             </tbody>
                         </table>
-
-                        <div class="export-buttons">
+                        <div class="export-buttons" style="margin-top: 20px;">
                             <button class="reports-btn" @onclick="ExportToCsv">Export to CSV</button>
                             <button class="reports-btn" @onclick="ExportToPdf">Export to PDF</button>
                         </div>
                     }
-
-                    <button class="reports-custom-btn" @onclick="GoBackToFilters">
+                    <button class="reports-custom-btn" @onclick="GoBackToFilters" style="margin-top: 20px;">
                         Back to Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- CURRENT MONTH EXPENSES MODAL -->
+    @if (showCurrentMonthExpensesModal)
+    {
+        <div class="results-modal">
+            <div class="modal-content">
+                <span class="close" @onclick="() => showCurrentMonthExpensesModal = false">&times;</span>
+                <h3>Current Month Expenses</h3>
+                <div class="modal-summary">
+                    <div class="summary-item negative">
+                        Total Expenses: @filteredTransactions.Sum(t => t.Amount).ToString("C")
+                    </div>
+                </div>
+                <div style="margin-bottom: 20px; color: #555;">
+                    <div><strong>Month:</strong> @($"{DateTime.Now:MMMM yyyy}")</div>
+                </div>
+                <div class="report-results">
+                    @if (filteredTransactions.Count == 0)
+                    {
+                        <p>No expense transactions found for the current month.</p>
+                    }
+                    else
+                    {
+                        <table class="transactions-table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Frequency</th>
+                                    <th>Next Due</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var t in filteredTransactions)
+                                {
+                                    <tr>
+                                        <td>@t.Description</td>
+                                        <td>@t.Date.ToString("dd MMM yyyy")</td>
+                                        <td class="negative">@t.Amount.ToString("C")</td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(t.Frequency))
+                                            {
+                                                <span class="status-badge @(t.Frequency.ToLower() == "monthly" ? "positive" : "negative")">
+                                                    @t.Frequency
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span>-</span>
+                                            }
+                                        </td>
+                                        <td>@(ComputeNextDueDate(t)?.ToString("dd MMM yyyy") ?? "-")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="export-buttons" style="margin-top: 20px;">
+                            <button class="reports-btn" @onclick='() => ExportCurrentMonthCsv("monthlyExpenses")'>
+                                Export to CSV
+                            </button>
+                            <button class="reports-btn" @onclick='() => ExportCurrentMonthPdf("monthlyExpenses")'>
+                                Export to PDF
+                            </button>
+                        </div>
+                    }
+                    <button class="reports-custom-btn" @onclick="() => showCurrentMonthExpensesModal = false" style="margin-top: 20px;">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <!-- CURRENT MONTH SAVINGS MODAL -->
+    @if (showCurrentMonthSavingsModal)
+    {
+        <div class="results-modal">
+            <div class="modal-content">
+                <span class="close" @onclick="() => showCurrentMonthSavingsModal = false">&times;</span>
+                <h3>Current Month Savings</h3>
+                <div class="modal-summary">
+                    <div class="summary-item positive">
+                        Total Savings: @filteredTransactions.Sum(t => t.Amount).ToString("C")
+                    </div>
+                </div>
+                <div style="margin-bottom: 20px; color: #555;">
+                    <div><strong>Month:</strong> @($"{DateTime.Now:MMMM yyyy}")</div>
+                </div>
+                <div class="report-results">
+                    @if (filteredTransactions.Count == 0)
+                    {
+                        <p>No savings transactions found for the current month.</p>
+                    }
+                    else
+                    {
+                        <table class="transactions-table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Date</th>
+                                    <th>Amount</th>
+                                    <th>Frequency</th>
+                                    <th>Next Due</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var t in filteredTransactions)
+                                {
+                                    <tr>
+                                        <td>@t.Description</td>
+                                        <td>@t.Date.ToString("dd MMM yyyy")</td>
+                                        <td class="positive">@t.Amount.ToString("C")</td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(t.Frequency))
+                                            {
+                                                <span class="status-badge @(t.Frequency.ToLower() == "monthly" ? "positive" : "negative")">
+                                                    @t.Frequency
+                                                </span>
+                                            }
+                                            else
+                                            {
+                                                <span>-</span>
+                                            }
+                                        </td>
+                                        <td>@(ComputeNextDueDate(t)?.ToString("dd MMM yyyy") ?? "-")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="export-buttons" style="margin-top: 20px;">
+                            <button class="reports-btn" @onclick='() => ExportCurrentMonthCsv("monthlySavings")'>
+                                Export to CSV
+                            </button>
+                            <button class="reports-btn" @onclick='() => ExportCurrentMonthPdf("monthlySavings")'>
+                                Export to PDF
+                            </button>
+                        </div>
+                    }
+                    <button class="reports-custom-btn" @onclick="() => showCurrentMonthSavingsModal = false" style="margin-top: 20px;">
+                        Close
                     </button>
                 </div>
             </div>
