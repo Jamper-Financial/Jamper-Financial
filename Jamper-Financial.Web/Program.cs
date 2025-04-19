@@ -308,19 +308,19 @@ app.MapGet("/export/pdf", async (HttpContext context) =>
                             // Left side
                             row.RelativeItem().Column(col =>
                             {
-                                col.Item().Text("📄 Report Summary").FontSize(12).SemiBold();
+                                col.Item().Text("Report Summary").FontSize(12).SemiBold();
                                 col.Item().Text(description).FontSize(10).FontColor(Colors.Grey.Darken1);
                             });
                             // Right side
                             row.RelativeItem().AlignRight().Column(col =>
                             {
-                                col.Item().Text($"💸 Total Debit: {totalDebit:C}")
+                                col.Item().Text($"Total Debit: {totalDebit:C}")
                                     .FontColor("#c62828").SemiBold();
-                                col.Item().Text($"💰 Total Credit: {totalCredit:C}")
+                                col.Item().Text($"Total Credit: {totalCredit:C}")
                                     .FontColor("#2e7d32").SemiBold();
-                                col.Item().Text($"🧾 Net Total: {netTotal:C}")
+                                col.Item().Text($"Net Total: {netTotal:C}")
                                     .FontColor(netTotal >= 0 ? "#2e7d32" : "#c62828").SemiBold();
-                                col.Item().Text($"📊 Transactions: {filtered.Count}")
+                                col.Item().Text($"Transactions: {filtered.Count}")
                                     .FontSize(10);
                             });
                         });
