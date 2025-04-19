@@ -1,27 +1,32 @@
 @page "/login"
-@using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Services
+@using Jamper_Financial.Shared.Data
 @using Jamper_Financial.Shared.Models
+@using System.Net.Http.Json
+@using Microsoft.JSInterop
 @inject LoginStateService LoginState
 @inject UserStateService UserStateService
-@inject AuthenticationService AuthenticationService
 @inject IJSRuntime JSRuntime
 @inject NavigationManager Navigation
+
 
 <div class="login-container">
     <div class="login-left">
         <h1>Stay in charge of your finances!</h1>
         <div class="login-form">
             <h2>JAMPER Finance</h2>
-            <form @onsubmit="HandleLoginAsync">
+            @* Use EditForm for better validation integration if needed, otherwise standard form is fine *@
+            <form @onsubmit="HandleLoginAsync" @onsubmit:preventDefault>
+                @* Prevent default form submission *@
                 <label for="email">Username or Email</label>
-                <input id="email" type="text" placeholder="Enter your email or username" @bind="Identifier" />
+                <input id="email" type="text" placeholder="Enter your email or username" @bind="Identifier" autocomplete="username" />
 
                 <label for="password">Password</label>
                 <div class="flex-row" style="position: relative;">
-                    <input class="password flex-grow" id="password" type="password" placeholder="********" @bind="Password" />
+                    <input class="password flex-grow" id="password" type="@(passwordVisible ? "text" : "password")" placeholder="********" @bind="Password" autocomplete="current-password" />
                     <button class="toggleShowPassword" type="button" id="togglePasswordButton"
                             @onclick="TogglePasswordVisibility">
+                        @* SVG Icons for eye (same as before) *@
                         @if (passwordVisible)
                         {
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
@@ -39,22 +44,34 @@
                     </button>
                 </div>
 
-                <div class="remember-me">
+                @* Remember Me functionality needs server-side implementation (e.g., longer cookie expiry) - remove if not implemented *@
+                @* <div class="remember-me">
                     <input type="checkbox" id="remember" @bind="RememberMe" />
                     <label for="remember">Remember me</label>
-                </div>
+                </div> *@
 
-                <button type="submit" class="login-button">🔒 Log in</button>
+                <button type="submit" class="login-button" disabled="@isLoading">
+                    @if (isLoading)
+                    {
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> @* Loading spinner *@ }
+                    else
+                    {
+                        <span>🔒 Log in</span>
+                    }
+                </button>
+
                 @if (!string.IsNullOrWhiteSpace(ErrorMessage))
                 {
-                    <div class="alert alert-danger" role="alert">
+                    <div class="alert alert-danger mt-2" role="alert">
+                        @* Added margin top *@
                         @ErrorMessage
                     </div>
                 }
 
                 <a href="#" class="forgot-password">Forgot your password or username?</a>
                 <div class="social-login">
-                    <button type="button" class="social-button google" @onclick="SignInWithGoogle">Continue using Google</button>
+                    @* Ensure SignInWithGoogle correctly calls the JS needed *@
+                    <button type="button" class="social-button google" @onclick="SignInWithGoogle" disabled="@isLoading">Continue using Google</button>
                 </div>
 
                 <div class="bottom-buttons">
@@ -71,172 +88,228 @@
 </div>
 
 @code {
-    private UserProfile userProfile = new UserProfile();
-    private bool IsGoogleLogin { get; set; } = false;
     private string Identifier { get; set; } = string.Empty;
     private string Password { get; set; } = string.Empty;
     private string ErrorMessage { get; set; } = string.Empty;
-    private bool RememberMe { get; set; } = false;
-    private string Email { get; set; } = string.Empty;
-    private string UserName { get; set; } = string.Empty;
+    // private bool RememberMe { get; set; } = false; // Requires server-side implementation
     private bool passwordVisible = false;
-
-    private string FilePath => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "credentials.txt");
-
     private DotNetObjectReference<LoginPage>? _objectReference;
+    private bool isLoading = false;
+    [Inject] public HttpClient Http { get; set; }
+
+
+    // --- DTOs for API calls (match API endpoint expectations) ---
+    private class LoginRequestDto
+    {
+        public string Identifier { get; set; } = "";
+        public string Password { get; set; } = "";
+    }
+    private class GoogleLoginRequestDto
+    {
+        public string Email { get; set; } = "";
+        public string DisplayName { get; set; } = "";
+    }
+
+    // --- End DTOs ---
+
 
     protected override void OnInitialized()
     {
-        if (File.Exists(FilePath))
-        {
-            var lines = File.ReadAllLines(FilePath);
-            if (lines.Length == 2)
-            {
-                Identifier = lines[0];
-                Password = lines[1];
-                RememberMe = true;
-            }
-        }
+        // Create the DotNetObjectReference for JS interop (like Google Sign In callback)
+        _objectReference = DotNetObjectReference.Create(this);
+        base.OnInitialized();
     }
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            _objectReference = DotNetObjectReference.Create(this);
-        }
-    }
+    // Removed OnAfterRenderAsync check for session storage token -
+    // Rely on SessionValidationMiddleware to handle redirects for authenticated users.
 
     private async Task TogglePasswordVisibility()
     {
         passwordVisible = !passwordVisible;
-        await JSRuntime.InvokeVoidAsync("togglePasswordVisibility", "password");
+        // StateHasChanged(); // Let Blazor handle re-render based on type change
+        // JS interop might not be needed if just changing input type
+        // await JSRuntime.InvokeVoidAsync("togglePasswordVisibility", "password"); // Keep if JS does more
     }
 
-    private void NavigateToCreateAccount()
-    {
-        Navigation.NavigateTo("/create-account");
-    }
-
-    private void NavigateToBannerPage()
-    {
-        Navigation.NavigateTo("/");
-    }
+    private void NavigateToCreateAccount() => Navigation.NavigateTo("/create-account");
+    private void NavigateToBannerPage() => Navigation.NavigateTo("/");
 
     private async Task SignInWithGoogle()
     {
+        ErrorMessage = ""; // Clear previous errors
         try
         {
+            // Ensure the JS function 'signInWithGoogle' exists and accepts the reference
             await JSRuntime.InvokeVoidAsync("signInWithGoogle", _objectReference);
-            Console.WriteLine("Google sign-in successful, should redirect");
         }
-        catch (Exception ex)
+        catch (JSException ex) // Catch JS specific errors
         {
-            ErrorMessage = $"Google sign-in failed: {ex.Message}";
+            ErrorMessage = $"Google sign-in script error: {ex.Message}";
+            Console.Error.WriteLine($"Google sign-in JS error: {ex}");
+            // Optionally disable the button or provide more feedback
+        }
+        catch (Exception ex) // Catch other errors
+        {
+            ErrorMessage = $"An error occurred initiating Google sign-in: {ex.Message}";
+            Console.Error.WriteLine($"Google sign-in initiation error: {ex}");
         }
     }
 
-    [JSInvokable]
-    public async Task OnGoogleLoginSuccess(UserInfo userInfo)
+    public async ValueTask DisposeAsync()
     {
-        Console.WriteLine("Google login successful");
-        var displayName = userInfo.DisplayName ?? string.Empty;
-        var email = userInfo.Email ?? string.Empty;
-        var photoURL = userInfo.PhotoURL ?? string.Empty;
-        var uid = userInfo.Uid ?? string.Empty;
-
-        Console.WriteLine($"Google login successful: {displayName}, {email}, {photoURL}, {uid}");
-
-        var userExists = DatabaseHelper.IsUsernameTaken(displayName) || DatabaseHelper.IsEmailTaken(email);
-
-        if (!userExists)
-        {
-            var user = new User
-                {
-                    Username = displayName,
-                    Email = email,
-                    Password = string.Empty,
-                    IsGoogleSignIn = 1
-                };
-
-            var userProfile = new UserProfile
-                {
-                    FirstName = displayName.Split(' ')[0],
-                    LastName = displayName.Split(' ').Length > 1 ? displayName.Split(' ')[1] : string.Empty,
-                    Email = email,
-                    Username = displayName
-                };
-
-            AuthenticationService.CreateUserAccount(user, userProfile);
-
-            UserStateService.SetUser(userProfile.UserId, userProfile.Username ?? string.Empty, userProfile.Email ?? string.Empty);
-        }
-        else
-        {
-            var details = DatabaseHelper.GetUserDetails(email);
-            UserStateService.SetUser(details.Userid, details.Username ?? string.Empty, details.Email ?? string.Empty);
-        }
-
-        Console.WriteLine($"User exists: {userExists}");
-        Navigation.NavigateTo("/dashboard-page");
-
-        await Task.CompletedTask;
-    }
-
-    [JSInvokable("OnGoogleLoginFailure")]
-    public async Task OnGoogleLoginFailure(string errorMessage)
-    {
-        Console.WriteLine($"Google login failed: {errorMessage}");
+        _objectReference?.Dispose();
     }
 
     private async Task HandleLoginAsync()
     {
+        Console.WriteLine("===> HandleLoginAsync START"); // Log Start
         if (string.IsNullOrWhiteSpace(Identifier) || string.IsNullOrWhiteSpace(Password))
         {
+            Console.WriteLine("===> HandleLoginAsync: Validation FAILED (empty fields)");
             ErrorMessage = "Please enter your email/username and password.";
+            return;
+        }
+        isLoading = true;
+        ErrorMessage = null;
+        // StateHasChanged(); // Maybe comment out StateHasChanged before async calls temporarily?
+        Console.WriteLine("===> HandleLoginAsync: Set isLoading=true");
+        try
+        {
+            var request = new LoginRequestDto { Identifier = Identifier, Password = Password };
+            Console.WriteLine($"===> HandleLoginAsync: DTO created for user: {Identifier}");
+
+            // Add a client-side log via JS Interop right before the call
+            try
+            {
+                await JSRuntime.InvokeVoidAsync("console.log", $"[Blazor] Attempting POST from HandleLoginAsync at {DateTime.Now}");
+                Console.WriteLine("===> HandleLoginAsync: JS console log invoked.");
+            }
+            catch (Exception jsEx)
+            {
+                Console.WriteLine($"===> HandleLoginAsync: FAILED to invoke JS console.log: {jsEx.Message}");
+            }
+
+            Console.WriteLine($"===> HandleLoginAsync: Attempting Http.PostAsJsonAsync to /api/auth/login...");
+
+            // THE ACTUAL HTTP CALL:
+            var response = await Http.PostAsJsonAsync("/api/auth/login", request);
+
+            Console.WriteLine($"===> HandleLoginAsync: Http.PostAsJsonAsync completed. Status OK: {response.IsSuccessStatusCode}");
+            if (response.IsSuccessStatusCode)
+            {
+                // Handle successful login
+                Console.WriteLine("===> HandleLoginAsync: API call successful. Reading user info...");
+
+                // Read the user info from the response body
+                var userInfo = await response.Content.ReadFromJsonAsync<User>();
+                
+                //get the id based on the email
+                var details = DatabaseHelper.GetUserDetails(userInfo.Email);
+                UserStateService.SetUser(details.Userid, details.Username ?? string.Empty, details.Email ?? string.Empty);
+
+                if (userInfo != null)
+                {
+                    Console.WriteLine($"===> HandleLoginAsync: User info received: ID={userInfo.Email}, Name={userInfo.Username}");
+                    // **** THIS IS THE NOTIFICATION STEP ****
+                    // Update the shared state service. This will trigger the
+                    // CustomAuthenticationStateProvider via its event handler.
+                    Console.WriteLine("===> HandleLoginAsync: UserStateService updated.");
+                    UserStateService.SetUser(details.Userid, details.Username, details.Email);
+
+                    Console.WriteLine("===> HandleLoginAsync: Navigating to dashboard...");
+                    Navigation.NavigateTo("/dashboard-page"); // No need for forceLoad generally
+                }
+                else
+                {
+                    Console.WriteLine($"===> HandleLoginAsync: API call successful BUT failed to deserialize user info from response.");
+                    ErrorMessage = "Login succeeded but failed to retrieve user details.";
+                }
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"===> HandleLoginAsync: API call FAILED. Status: {response.StatusCode}, Content: {errorContent}");
+                ErrorMessage = $"Login failed (Status: {response.StatusCode}).";
+                if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    ErrorMessage = "Invalid email/username or password.";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Log the full exception, including type
+            Console.WriteLine($"===> HandleLoginAsync: EXCEPTION during API call: {ex.GetType().Name} - {ex.Message}");
+            ErrorMessage = $"An error occurred during login: {ex.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+            // StateHasChanged(); // Maybe comment out StateHasChanged before async calls temporarily?
+            Console.WriteLine("===> HandleLoginAsync: FINALLY block, isLoading=false");
+        }
+        Console.WriteLine("===> HandleLoginAsync END"); // Log End
+    }
+
+    // Method called by Google JS library upon successful sign-in via DotNetObjectReference
+    [JSInvokable("OnGoogleLoginSuccess")]
+    public async Task OnGoogleLoginSuccess(UserInfo googleUserInfo)
+    {
+        Console.WriteLine($"Google login JS callback received: {googleUserInfo.DisplayName}, {googleUserInfo.Email}");
+        isLoading = true; ErrorMessage = null; StateHasChanged();
+
+        if (string.IsNullOrWhiteSpace(googleUserInfo.Email))
+        {
+            ErrorMessage = "Google sign-in did not provide an email address.";
+            isLoading = false; StateHasChanged();
             return;
         }
 
         try
         {
-            var isValid = await Task.Run(() => AuthenticationService.ValidateUserCredentials(Identifier, Password));
-            if (isValid)
+            // Call the API endpoint using HttpClient
+            var request = new GoogleLoginRequestDto { Email = googleUserInfo.Email, DisplayName = googleUserInfo.DisplayName };
+
+            var response = await Http.PostAsJsonAsync("/api/auth/google-login", request);
+
+            if (response.IsSuccessStatusCode)
             {
-                var (userid, username, email) = await Task.Run(() => DatabaseHelper.GetUserDetails(Identifier));
-                UserStateService.SetUser(userid, username ?? string.Empty, email);
+                // Handle successful login
+                Console.WriteLine("===> HandleLoginAsync: API call successful. Reading user info...");
 
-                if (username != null && email != null)
+                // Read the user info from the response body
+                var userInfo = await response.Content.ReadFromJsonAsync<User>();
+
+                if (userInfo != null)
                 {
-                    UserStateService.LoggedInUser.UserName = username;
-                    UserStateService.LoggedInUser.Email = email;
-                    UserStateService.LoggedInUser.UserID = userid;
+                    Console.WriteLine($"===> HandleLoginAsync: User info received: ID={userInfo.UserId}, Name={userInfo.Username}");
+                    // **** THIS IS THE NOTIFICATION STEP ****
+                    // Update the shared state service. This will trigger the
+                    // CustomAuthenticationStateProvider via its event handler.
+                    UserStateService.SetUser(userInfo.UserId, userInfo.Username, userInfo.Email);
+                    Console.WriteLine("===> HandleLoginAsync: UserStateService updated.");
 
-                    Console.WriteLine($"Logged in as: {username} with email: {email} and userid: {userid}");
-                }
-
-                if (RememberMe)
-                {
-                    await Task.Run(() => File.WriteAllLines(FilePath, new[] { Identifier, Password }));
+                    Console.WriteLine("===> HandleLoginAsync: Navigating to dashboard...");
+                    Navigation.NavigateTo("/dashboard-page"); // No need for forceLoad generally
                 }
                 else
                 {
-                    if (File.Exists(FilePath))
-                    {
-                        await Task.Run(() => File.Delete(FilePath));
-                    }
+                    Console.WriteLine($"===> HandleLoginAsync: API call successful BUT failed to deserialize user info from response.");
+                    ErrorMessage = "Login succeeded but failed to retrieve user details.";
                 }
-
-                Navigation.NavigateTo("/dashboard-page");
             }
-            else
-            {
-                ErrorMessage = "Invalid email/username or password.";
-            }
+        }
+        catch (HttpRequestException ex)
+        {
+            ErrorMessage = $"Network error during Google login: {ex.Message}";
+            Console.Error.WriteLine($"Google login network error: {ex}");
         }
         catch (Exception ex)
         {
-            ErrorMessage = $"An error occurred during login: {ex.Message}";
-            Console.Error.WriteLine($"Login error: {ex}"); // Log the error
+            ErrorMessage = $"An unexpected error occurred during Google login: {ex.Message}";
+            Console.Error.WriteLine($"Google login unexpected error: {ex}");
         }
+        finally { isLoading = false; StateHasChanged(); }
+        Console.WriteLine("===> HandleLoginAsync END"); // Log End
     }
 }

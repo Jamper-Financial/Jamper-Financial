@@ -22,3 +22,9 @@ AppDatabase.db
 /Jamper-Financial.Shared/temp
 /Jamper-Financial.Web/temp
 /Jamper-Financial.Shared/wwwroot/temp-receipts
+Jamper-Financial.Shared/obj/project.assets.json
+Jamper-Financial.Shared/obj/project.assets.json
+Jamper-Financial.Shared/obj/project.nuget.cache
+dpkeys/key-c0ffcb8c-6b12-4b91-b823-407a6ebdd8c8.xml
+MinimalCookieTest/_Imports.razor
+/MinimalCookieTest

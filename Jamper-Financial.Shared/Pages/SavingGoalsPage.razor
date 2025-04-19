@@ -15,7 +15,7 @@
     protected override void OnInitialized()
     {
         SetPageTitle("Saving Goals");
-        if (UserStateService.LoggedInUser.UserID <= 0)
+        if ( UserStateService.UserId <= 0)
         {
             Navigation.NavigateTo("/login");
         }

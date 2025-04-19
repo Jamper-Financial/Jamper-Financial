@@ -536,7 +536,7 @@ canvas {
 
     protected override void OnInitialized()
     {
-        userId = UserStateService.LoggedInUser.UserID;
+        userId =  UserStateService.UserId;
         if (userId <= 0)
         {
             Navigation.NavigateTo("/login");

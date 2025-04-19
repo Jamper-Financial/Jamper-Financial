@@ -1,6 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager Navigation
 @using Jamper_Financial.Shared.Services;
+@inject IJSRuntime JSRuntime
 
 @code {
     [CascadingParameter] private Action<bool>? LoadBlazoriseScripts { get; set; }
@@ -9,6 +10,8 @@
     !Navigation.Uri.Contains("/create-account") && !Navigation.Uri.Contains("/verify-email");
 
     private string pageTitle = "Overview";
+    private bool isMenuOpen = false; // Track the state of the menu
+    private int ScreenWidth { get; set; }
 
     protected override void OnInitialized()
     {
@@ -19,6 +22,36 @@
     {
         pageTitle = title;
         StateHasChanged();
+    }
+
+    private void ToggleMenu()
+    {
+        isMenuOpen = !isMenuOpen;
+    }
+
+    [JSInvokable]
+    public void SetScreenWidth(int width)
+    {
+        ScreenWidth = width;
+        StateHasChanged();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JSRuntime.InvokeVoidAsync("setScreenWidthForBlazor", DotNetObjectReference.Create(this));
+        }
+    }
+
+    private string GetSidebarStyle()
+    {
+        return (isMenuOpen || ScreenWidth >= 641) ? "display: block;" : "display: none;";
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        await JSRuntime.InvokeVoidAsync("removeResizeListener");
     }
 }
 
@@ -33,7 +66,17 @@
                 <div class="layout">
                     @if (ShouldShowMenus)
                     {
-                        <aside class="sidebar">
+                        <button class="navbar-toggler" @onclick="ToggleMenu">
+                            @if (isMenuOpen)
+                            {
+                                <span class="close-icon">X</span>
+                            }
+                            else
+                            {
+                                <span class="hamburger-icon">☰</span>
+                            }
+                        </button>
+                        <aside class="sidebar @(isMenuOpen ? "open" : "")" style="@GetSidebarStyle()">
                             <NavMenu />
                         </aside>
                     }

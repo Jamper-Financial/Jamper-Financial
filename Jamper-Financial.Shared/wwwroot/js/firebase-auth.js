@@ -37,14 +37,12 @@ window.signInWithGoogle = async function (dotNetObjectReference) {
             console.error("Error calling OnGoogleLoginSuccess:", error);
             alert("Error sending user information to the server."); // Inform user of error.
         }
-
-        // alert(`Welcome, ${user.displayName}`);
-        // window.location.href = "/dashboard-page"; // Redirect after login
     } catch (error) {
         console.error("Google sign-in error:", error);
         alert("Google sign-in failed: " + error.message);
     }
 };
+
 
 window.deleteCurrentUser = async function () {
     const auth = getAuth();

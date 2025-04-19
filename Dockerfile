@@ -22,6 +22,7 @@ COPY --from=build /source/Jamper-Financial.Shared/wwwroot /app/wwwroot
 # Copy the database file
 COPY --from=build /source/AppDatabase.db /AppDatabase.db
 
+ENV ASPNETCORE_URLS=http://+:8080
 # Expose the port the app runs on
 EXPOSE 8080
 

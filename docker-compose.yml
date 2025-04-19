@@ -1,13 +1,54 @@
-version: '3.8'
+# docker-compose.yml
+version: '3.8' # Specify docker-compose version
 
 services:
+  # Define the web application service
   web:
-    image: ghcr.io/jamper-financial/jamper-financial-web:latest
+    # Option 1: Build the image using the Dockerfile in the current directory
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile # Assumes Dockerfile is in the same directory as docker-compose.yml
+    
+    # Option 2: Use a pre-built image (uncomment and replace if you push images to a registry)
+    # image: ghcr.io/jamper-financial/jamper-financial-web:latest 
+
+    # Port mapping: Map port 8080 on the host machine to port 8080 in the container
+    # This allows you to access the app via http://localhost:8080 on your host
     ports:
       - "8080:8080"
+
+    # Environment variables passed into the container
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - FIREBASE_CREDENTIALS_PATH=/app/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json
+      # Set the ASP.NET Core environment (Development, Staging, Production)
+      - ASPNETCORE_ENVIRONMENT=Development 
+      # Tell Kestrel inside the container to listen on HTTP port 8080 on any IP address
+      # This matches the port exposed in Dockerfile and mapped in 'ports' section
+      # Also matches the HttpClient BaseAddress configured in Program.cs for Docker
+      - ASPNETCORE_URLS=http://+:8080 
+      # Provide the path to the Firebase credentials file inside the container
+      # This is read by Program.cs
+      - FIREBASE_CREDENTIALS_PATH=/app/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json 
+
+    # Volumes for data persistence
+    volumes:
+      # Map a host directory (e.g., './dpkeys') to the path used by AddDataProtection
+      # This ensures encryption keys persist across container restarts, fixing antiforgery errors.
+      # IMPORTANT: Create the 'dpkeys' folder on your host machine first!
+      - ./dpkeys:/app/DataProtection-Keys 
+
+      # Map the database file from the host to the path used inside the container
+      # This ensures database changes persist across container restarts.
+      # IMPORTANT: Ensure 'AppDatabase.db' exists next to your docker-compose.yml file on the host,
+      # or adjust the host path (e.g., './data/AppDatabase.db') and ensure it exists.
+      - ./AppDatabase.db:/AppDatabase.db 
+
+      # You generally DON'T need to mount the wwwroot folder as a volume here, 
+      # because your Dockerfile should already COPY the necessary static assets 
+      # (like the shared wwwroot content) into the image at /app/wwwroot.
+      # - ./Jamper-Financial.Shared/wwwroot:/app/wwwroot # Usually not needed if Dockerfile copies correctly
+
+# Optional: Define named volumes if you prefer them over host path mapping
+# volumes:
+#   dataprotectionkeys:
+#   database_data: # Example if you mapped ./database_data:/app/AppDatabase.db
+

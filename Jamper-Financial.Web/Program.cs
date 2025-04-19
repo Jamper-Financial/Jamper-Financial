@@ -1,115 +1,207 @@
 using Jamper_Financial.Shared.Services;
-using Jamper_Financial.Web.Components;
-using Jamper_Financial.Web.Services;
+using Jamper_Financial.Web.Components; // Assuming App component is here
+using Jamper_Financial.Web.Services; // Assuming AuthEndpoints is here
 using Microsoft.Extensions.FileProviders;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
-using Microsoft.AspNetCore.Builder.Extensions;
-using Jamper_Financial.Shared.Data;
+using Jamper_Financial.Shared.Data; // For Repositories, DatabaseHelperFactory, etc.
+using Microsoft.AspNetCore.Components.Authorization;
+
 
 // Additional usings
 using System.Text;
 using QuestPDF.Fluent;
 using QuestPDF.Infrastructure;
 using QuestPDF.Helpers;
-using Blazorise;
-using Microsoft.JSInterop;
-using Jamper_Financial.Shared.Utilities;
+using Jamper_Financial.Shared.Utilities; // For TransactionHelper, TransactionParser?
 using System.Globalization;
+using Microsoft.AspNetCore.DataProtection;
+using Microsoft.AspNetCore.Http; // For PathString
+using System.IO; // For Path, DirectoryInfo, FileNotFoundException
 
-// Set the default culture (e.g., "en-US")
 var cultureInfo = new CultureInfo("en-US");
 CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
 CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
 
-
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure Data Protection to store keys in a persistent location within the container
+// IMPORTANT: You MUST map a volume to this path in your docker-compose.yml or docker run command
+// for keys to persist across container restarts. E.g., volumes: - ./dpkeys:/app/DataProtection-Keys
+builder.Services.AddDataProtection()
+    .PersistKeysToFileSystem(new DirectoryInfo("/app/DataProtection-Keys")) // Standard container path
+    .SetApplicationName("JamperFinancialApp");
 
 // Configure QuestPDF license
 QuestPDF.Settings.License = LicenseType.Community;
 
+// --- Database Path Configuration ---
+
+// --- FOR DOCKER ---
+// The Dockerfile copies AppDatabase.db to /AppDatabase.db in the runtime image
+var dbPath = "/AppDatabase.db"; 
+// --- END FOR DOCKER ---
+
+/* --- FOR LOCAL RUN ---
 var dbPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "AppDatabase.db");
+// --- END FOR LOCAL RUN --- */
+
 var connectionString = $"Data Source={dbPath}";
+Console.WriteLine($"---> [INFO] Using database path: {dbPath}"); // Log the path being used
+
 
 // Add states
-builder.Services.AddSingleton<GoalState>();
-builder.Services.AddSingleton<UserStateService>();
-builder.Services.AddSingleton<LoginStateService>();
+builder.Services.AddScoped<GoalState>();
+builder.Services.AddScoped<UserStateService>();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStateProvider>();
+// Standard Blazor auth services are added
+builder.Services.AddAuthorizationCore();
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<LoginStateService>();
 
 // Add services
 builder.Services.AddScoped<SearchService>();
-builder.Services.AddSingleton<DatabaseHelperFactory>();
+builder.Services.AddSingleton<DatabaseHelperFactory>(); // Assuming this uses the connectionString correctly
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddBlazorBootstrap();
 builder.Services.AddSingleton<IFormFactor, FormFactor>();
-builder.Services.AddSingleton<AuthenticationService>();
 builder.Services.AddSingleton<TransactionParser>();
 builder.Services.AddScoped<UpcomingTransactionService>();
 
+// Configure HttpClient - BaseAddress might need review depending on how client calls server in Docker setup
+builder.Services.AddScoped(sp => {
+    // Get NavigationManager to determine the base URI if needed, but for self-calls in Docker, use the internal listening URL.
+    // var navigationManager = sp.GetRequiredService<NavigationManager>(); // Might not be available here depending on registration timing
 
+    // --- FOR DOCKER ---
+    // Use the internal HTTP URL Kestrel should be listening on (e.g., port 8080)
+    // Ensure ASPNETCORE_URLS=http://+:8080 is set in your Docker environment.
+    var baseAddress = "http://localhost:8080/"; 
+    Console.WriteLine($"---> [INFO] Configuring HttpClient with BaseAddress (for Docker): {baseAddress}");
+    // --- END FOR DOCKER ---
+
+    /* --- FOR LOCAL RUN ---
+    // Use the HTTPS address used during local development
+    var baseAddress = builder.Configuration["BaseAddress"] ?? "https://localhost:7062/"; 
+    Console.WriteLine($"---> [INFO] Configuring HttpClient with BaseAddress (for Local): {baseAddress}");
+    // --- END FOR LOCAL RUN --- */
+
+    return new HttpClient { 
+        BaseAddress = new Uri(baseAddress) 
+    };
+});
+
+builder.Services.AddScoped<IUserRepository, UserRepository>(); 
+builder.Services.AddScoped<ISessionRepository, SessionRepository>(); 
+builder.Services.AddScoped<IAuthenticationService, AuthenticationService>(); 
 builder.Services.AddScoped<IUserService, UserService>(sp => new UserService(connectionString));
 builder.Services.AddScoped<IAccountService, AccountService>(sp => new AccountService(connectionString));
 builder.Services.AddScoped<IBudgetInsightsService, BudgetInsightsService>(sp => new BudgetInsightsService(connectionString));
-builder.Services.AddScoped<IExpenseService, ExpenseService>(sp => new ExpenseService(connectionString)); // Register IExpenseService
+builder.Services.AddScoped<IExpenseService, ExpenseService>(sp => new ExpenseService(connectionString)); 
 
-builder.Services.AddSingleton<FirebaseService>();
-DatabaseHelper.InitializeDatabase();
+builder.Services.AddScoped<FirebaseService>();
+builder.Services.AddAntiforgery(); 
 
-// Uncomment to run locally
-//FirebaseApp.Create(new AppOptions
-//{
-//    Credential = GoogleCredential.FromFile("../Jamper-Financial.Shared/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json")
-//});
+// Initialize DB (ensure connection string is used correctly here if needed)
+DatabaseHelper.InitializeDatabase(); // Might need adjustment if it relies on static connection string
 
-// comment out to run in docker
-// Use environment variable to determine the path for the Firebase credentials file
-var firebaseCredentialsPath = Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS_PATH")
-                                ?? "/app/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json";
+
+// --- Firebase Configuration ---
+
+// --- FOR DOCKER (using Environment Variable) ---
+var firebaseCredentialsPath = Environment.GetEnvironmentVariable("FIREBASE_CREDENTIALS_PATH");
+if (string.IsNullOrEmpty(firebaseCredentialsPath))
+{
+    firebaseCredentialsPath = "/app/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json"; // Default path inside container
+    Console.WriteLine($"---> [WARN] FIREBASE_CREDENTIALS_PATH env var not set. Falling back to: {firebaseCredentialsPath}");
+} else {
+     Console.WriteLine($"---> [INFO] Using Firebase credentials from env var: {firebaseCredentialsPath}");
+}
+// --- END FOR DOCKER ---
+
+/* --- FOR LOCAL RUN ---
+var firebaseCredentialsPath = "../Jamper-Financial.Shared/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json";
+Console.WriteLine($"---> [INFO] Using Firebase credentials from local path: {firebaseCredentialsPath}");
+// --- END FOR LOCAL RUN --- */
+
 
 if (File.Exists(firebaseCredentialsPath))
 {
-    FirebaseApp.Create(new AppOptions
+    if (FirebaseApp.DefaultInstance == null) 
     {
-        Credential = GoogleCredential.FromFile(firebaseCredentialsPath)
-    });
+         FirebaseApp.Create(new AppOptions
+         {
+             Credential = GoogleCredential.FromFile(firebaseCredentialsPath)
+         });
+         Console.WriteLine("---> [INFO] FirebaseApp initialized.");
+    } else {
+         Console.WriteLine("---> [INFO] FirebaseApp already initialized.");
+    }
 }
 else
 {
-    Console.WriteLine($"Error: Firebase credentials file not found at {firebaseCredentialsPath}");
-    // Handle the error appropriately, e.g., throw an exception or log a message.
+    Console.WriteLine($"---> [ERROR] Firebase credentials file not found at {firebaseCredentialsPath}");
     throw new FileNotFoundException("Firebase credentials file not found.", firebaseCredentialsPath);
 }
 
+// --- Standard Authentication/Authorization (Currently Commented Out) ---
+// Keep commented out if relying solely on custom middleware
+// builder.Services.AddAuthentication(options => { ... });
+// builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
+// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
-    app.UseHsts();
+    app.UseHsts(); 
 }
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseHttpsRedirection(); 
 
-//uncommment this for local run
-// Make the Shared project's wwwroot available
-//app.UseStaticFiles(new StaticFileOptions
-//{
-//    FileProvider = new PhysicalFileProvider(
-//        Path.Combine(Directory.GetCurrentDirectory(), @"../Jamper-Financial.Shared/wwwroot")),
-//    RequestPath = new PathString("")
-//});
+// --- Static Files Configuration ---
 
-// uncomment this for docker run
-// Make the Shared project's wwwroot available
+// Serve files from the main web project (e.g., bundled CSS)
+app.UseStaticFiles(); 
+
+// --- FOR DOCKER ---
+// Serve files copied from the Shared project's wwwroot to /app/wwwroot
+Console.WriteLine("---> [INFO] Configuring static files from /app/wwwroot");
 app.UseStaticFiles(new StaticFileOptions
 {
-    FileProvider = new PhysicalFileProvider("/app/wwwroot"),
-    RequestPath = new PathString("")
+    FileProvider = new PhysicalFileProvider("/app/wwwroot"), // Path inside the container
+    RequestPath = new PathString("") 
 });
+// --- END FOR DOCKER ---
 
-app.UseAntiforgery();
+/* --- FOR LOCAL RUN ---
+// Serve files directly from the Shared project's wwwroot
+Console.WriteLine("---> [INFO] Configuring static files from Shared project wwwroot");
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), @"../Jamper-Financial.Shared/wwwroot")),
+    RequestPath = new PathString("") 
+});
+// --- END FOR LOCAL RUN --- */
+
+
+// --- Middleware Order ---
+app.UseRouting(); // Routing first
+
+// Standard Auth (Commented Out)
+// app.UseAuthentication(); 
+// app.UseAuthorization(); 
+
+app.UseAntiforgery(); // Keep Antiforgery
+
+// Custom Session Middleware
+app.UseMiddleware<SessionValidationMiddleware>(); 
+
+// --- Endpoint Mapping ---
+app.MapAuthApi();
 
 // --------------------------------------------------
 // CSV Endpoint
@@ -218,9 +310,9 @@ app.MapGet("/export/csv", async (HttpContext context) =>
 static IContainer CellStyleHeader(IContainer container)
 {
     return container
-        .Background("#62AD41") 
+        .Background("#62AD41")
         .PaddingVertical(10)    // Slightly more padding
-        .Border(0)              
+        .Border(0)
         .DefaultTextStyle(x => x.SemiBold()
                                .FontColor(Colors.White)
                                .FontSize(11));
@@ -231,7 +323,7 @@ Func<IContainer, IContainer> EvenRowStyle = container =>
     container
         .Background("DEF9C4")  // Very light green tint
         .PaddingVertical(8)
-        .Border(0)             
+        .Border(0)
         .DefaultTextStyle(x => x.FontSize(10)
                                .FontColor("#333333"));  // Darker text
 
@@ -240,7 +332,7 @@ Func<IContainer, IContainer> OddRowStyle = container =>
     container
         .Background(Colors.White)
         .PaddingVertical(8)
-        .Border(0)              
+        .Border(0)
         .DefaultTextStyle(x => x.FontSize(10)
                                .FontColor("#333333"));
 
@@ -336,7 +428,7 @@ app.MapGet("/export/pdf", async (HttpContext context) =>
                     contentCol.Spacing(20);
 
                     // Summary Box
-                    contentCol.Item().Background("DEF9C4") 
+                    contentCol.Item().Background("DEF9C4")
                         .Padding(12)
                         .Row(row =>
                         {

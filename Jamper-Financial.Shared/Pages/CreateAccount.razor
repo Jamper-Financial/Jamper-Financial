@@ -3,10 +3,8 @@
 @using Jamper_Financial.Shared.Services
 @using Jamper_Financial.Shared.Models
 @inject NavigationManager Navigation
-@inject AuthenticationService AuthenticationService
+@inject IAuthenticationService AuthenticationService
 @inject IJSRuntime JSRuntime
-
-@* MGE 03/13/2025 Remove Birth Date as per review*@
 
 <div class="registration-container">
     <div class="registration-left">
@@ -23,9 +21,6 @@
                 <label for="username">Username <span class="required">*</span></label>
                 <input id="username" type="text" placeholder="Enter your username" @bind="userProfile.Username" />
 
-                @* <label for="birthdate">Birth date (yyyy-mm-dd) <span class="required">*</span></label> *@
-                @* <input id="birthdate" type="date" placeholder="YYYY-MM-DD" @bind="BirthDate" /> *@
-
                 <label for="email">Email <span class="required">*</span></label>
                 <input id="email" type="email" placeholder="Enter your email" @bind="userProfile.Email" />
 
@@ -33,7 +28,7 @@
                 <div class="flex-row">
                     <input id="password" type="password" placeholder="Create your password" @bind="userProfile.Password" />
                     <button class="toggleShowPassword" type="button" id="togglePasswordButton"
-                    @onclick="() => TogglePasswordVisibility(true)">
+                            @onclick="() => TogglePasswordVisibility(true)">
                         @if (passwordVisible)
                         {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
@@ -55,7 +50,7 @@
                 <div class="flex-row">
                     <input id="confirm-password" type="password" placeholder="Confirm your password" @bind="ConfirmPassword" />
                     <button class="toggleShowPassword" type="button" id="togglePasswordButton"
-                    @onclick="() => TogglePasswordVisibility(false)">
+                            @onclick="() => TogglePasswordVisibility(false)">
                         @if (confirmPasswordVisible)
                         {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
@@ -71,7 +66,6 @@
                             </svg>
                         }
                     </button>
-
                 </div>
                 <small class="password-hint">Password must be at least 8 characters long, contain uppercase, lowercase, digit, and special character.</small>
                 <div class="bottom-buttons">
@@ -206,4 +200,3 @@
         await JSRuntime.InvokeVoidAsync("togglePasswordVisibility", field);
     }
 }
-

@@ -6,6 +6,9 @@
 @using Jamper_Financial.Shared.Models
 @using Jamper_Financial.Shared.Utilities
 @using Jamper_Financial.Shared.Pages.Components
+@using Microsoft.JSInterop
+@using Microsoft.AspNetCore.Components.Authorization
+
 
 @inject NavigationManager Navigation
 @inject IUserService UserService
@@ -15,6 +18,7 @@
 @inject IAccountService AccountService
 @inject IJSRuntime JS
 @inject DatabaseHelperFactory DataFactory
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -49,11 +53,11 @@
 
     protected override async Task OnInitializedAsync()
     {
-        SetPageTitle("Dashboard");
+        SetPageTitle("Dashboard");    
 
         // Get the logged-in user's ID and username from the UserStateService
-        int userId = UserStateService.LoggedInUser.UserID;
-        username = UserStateService.LoggedInUser.UserName;
+        int userId =  UserStateService.UserId;
+        username = UserStateService.Username;
 
         Console.WriteLine("User name: " + username + " User ID: " + userId);
 
@@ -68,9 +72,7 @@
             if (bankAccounts == null || !bankAccounts.Any())
             {
                 ShowNewAccountModal();
-            }
-            ;
-            Console.WriteLine(weeklyExpenses.Count);
+            };
         }
         else
         {
@@ -81,6 +83,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        Console.WriteLine("Calls OnAfterRenderAsync");
         if (firstRender)
         {
             await RenderWeeklyActivityChart();

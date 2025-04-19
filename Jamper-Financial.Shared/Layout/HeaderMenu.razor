@@ -1,89 +1,141 @@
 ﻿@inherits LayoutComponentBase
-@inject NavigationManager Navigation
-@using Microsoft.AspNetCore.Components
+
+@using Microsoft.AspNetCore.Components;
 @using Jamper_Financial.Shared.Services;
 @using Jamper_Financial.Shared.Pages.Components;
+@using Microsoft.AspNetCore.Components.Authorization;
+
+@inject NavigationManager Navigation
 @inject SearchService SearchService
 @inject UpcomingTransactionService UpcomingTransactionService
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <div class="header-container">
-   <div class="header-background"></div>
-   <div class="header-content">
-       <div class="overview">@PageTitle</div>
-       <div class="search">
-           <div class="search-background"></div>
-           <input type="text" @bind="searchTerm" @onkeypress="HandleKeyPress" placeholder="Search in this page" />
-           <button @onclick="HandleSearch">Search</button>
-       </div>
-       <div class="icons">
-           <div class="icon">
-               <NavLink href="profile-page">
-                   <img class="icon-image" src="images/image.png" />
-               </NavLink>
-           </div>
-           <div class="icon">
-               <button @onclick="ToggleNotificationModal" class="notification-button">
-                   <img class="icon-image" src="images/notification.svg" />
-                   @if (UnpaidCount > 0)
-                   {
-                       <span class="notification-badge">@UnpaidCount</span>
-                   }
-               </button>
-           </div>
-       </div>
-   </div>
+    <div class="header-background"></div>
+    <div class="header-content">
+        <button class="navbar-toggler header-toggle-button" @onclick="ToggleMenu" />
+        <div class="overview">@PageTitle</div>
+        <div class="search">
+            <div class="search-background"></div>
+            <input type="text" @bind="searchTerm" @onkeypress="HandleKeyPress" placeholder="Search in this page" />
+            <button @onclick="HandleSearch">Search</button>
+        </div>
+        <div class="icons">
+            <div class="icon">
+                <NavLink href="profile-page">
+                    <img class="icon-image" src="images/image.png" />
+                </NavLink>
+            </div>
+            <div class="icon">
+                <button @onclick="ToggleNotificationModal" class="notification-button">
+                    <img class="icon-image" src="images/notification.svg" />
+                    @if (UnpaidCount > 0)
+                    {
+                        <span class="notification-badge">@UnpaidCount</span>
+                    }
+                </button>
+            </div>
+        </div>
+    </div>
 
-   @if (ShowNotificationModal)
-   {
-       <div class="modal-overlay" @onclick="ToggleNotificationModal">
-           <div class="modal-content" @onclick:stopPropagation>
-               <div class="modal-header">
-                   <h3>Upcoming Transactions</h3>
-                   <button @onclick="ToggleNotificationModal" class="close-button">&times;</button>
-               </div>
-               <div class="modal-body">
-                  <UpcomingTransactionsList />
-               </div>
-           </div>
-       </div>
-   }
+    @if (ShowNotificationModal)
+    {
+        <div class="modal-overlay" @onclick="ToggleNotificationModal">
+            <div class="modal-content" @onclick:stopPropagation>
+                <div class="modal-header">
+                    <h3>Upcoming Transactions</h3>
+                    <button @onclick="ToggleNotificationModal" class="close-button">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <UpcomingTransactionsList />
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
 @code {
-   [CascadingParameter] public string PageTitle { get; set; }
-   private string searchTerm { get; set; } = string.Empty;
-   private bool ShowNotificationModal { get; set; } = false;
-   private int UnpaidCount { get; set; } = 0;
+    [CascadingParameter] public string PageTitle { get; set; }
+    [CascadingParameter]
+    public EventCallback ToggleMenu { get; set; }
 
-   private async Task HandleSearch()
-   {
-       if (!string.IsNullOrEmpty(searchTerm))
-       {
-           SearchService.SearchQuery = searchTerm;
-       }
-       else
-       {
-           SearchService.SearchQuery = string.Empty;
-       }
-   }
+    [CascadingParameter]
+    public bool isMenuOpen { get; set; }
 
-   private async Task HandleKeyPress(KeyboardEventArgs args)
-   {
-       if (args.Key == "Enter")
-       {
-           await HandleSearch();
-       }
-   }
+    private string searchTerm { get; set; } = string.Empty;
+    private bool ShowNotificationModal { get; set; } = false;
+    private int UnpaidCount { get; set; } = 0;
 
-   private void ToggleNotificationModal()
-   {
-       ShowNotificationModal = !ShowNotificationModal;
-   }
+    private int currentUserId = 0;
+    private string? currentUsername = null;
+    private bool isAuthenticated = false;
 
-   protected override async Task OnInitializedAsync()
-   {
-       var now = DateTime.Now;
-       var endOfWeek = now.AddDays(7);
-       UnpaidCount = await UpcomingTransactionService.GetUnpaidTransactionCountAsync(now, endOfWeek);
-   }
+    private async Task HandleSearch()
+    {
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            SearchService.SearchQuery = searchTerm;
+        }
+        else
+        {
+            SearchService.SearchQuery = string.Empty;
+        }
+    }
+
+    private async Task HandleKeyPress(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+        {
+            await HandleSearch();
+        }
+    }
+
+    private void ToggleNotificationModal()
+    {
+        ShowNotificationModal = !ShowNotificationModal;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = authState.User;
+            isAuthenticated = user.Identity?.IsAuthenticated ?? false;
+
+            if (isAuthenticated)
+            {
+                // Get User ID from NameIdentifier claim
+                var userIdClaim = user.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+                if (userIdClaim != null && int.TryParse(userIdClaim.Value, out currentUserId))
+                {
+                    Console.WriteLine($"Component Initialized: User Authenticated! UserID = {currentUserId}");
+                    // Get Name claim if you added it in the middleware
+                    currentUsername = user.Identity?.Name;
+                    // Now load data using currentUserId
+                    // await LoadDataForUser(currentUserId);
+                }
+                else
+                {
+                    Console.WriteLine("Component Initialized: User Authenticated but UserID claim missing/invalid.");
+                    // Handle error - maybe navigate to login?
+                    Navigation.NavigateTo("/login");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Component Initialized: User NOT Authenticated.");
+                // Handle case where user isn't authenticated (middleware should usually prevent this)
+                Navigation.NavigateTo("/login");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error getting auth state or loading data: {ex.Message}");
+        }
+
+        var now = DateTime.Now;
+        var endOfWeek = now.AddDays(7);
+        UnpaidCount = await UpcomingTransactionService.GetUnpaidTransactionCountAsync(now, endOfWeek);
+    }
 }

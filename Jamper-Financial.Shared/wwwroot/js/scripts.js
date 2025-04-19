@@ -38,10 +38,22 @@ function initializeDragAndDrop(dropAreaId, inputFileId) {
     });
 }
 
-//function openInNewTab(url) {
-//    window.open(url, '_blank');
-//}
 function openInNewTab(url) {
     var win = window.open();
     win.document.write('<iframe src="' + url + '" frameborder="0" style="border:0; top:0; left:0; bottom:0; right:0; width:100%; height:100%;" allowfullscreen></iframe>');
+}
+
+function setScreenWidthForBlazor(dotNetHelper) {
+    function updateWidth() {
+        const width = window.innerWidth;
+        dotNetHelper.invokeMethodAsync('SetScreenWidth', width);
+    }
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+}
+
+let resizeListener;
+
+function removeResizeListener() {
+    window.removeEventListener('resize', resizeListener);
 }

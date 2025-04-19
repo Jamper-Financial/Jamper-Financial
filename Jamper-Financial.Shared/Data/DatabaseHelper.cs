@@ -17,6 +17,18 @@ namespace Jamper_Financial.Shared.Data
             {
                 connection.Open();
 
+                //create session table
+                CreateTableIfNotExists(connection, "Sessions", @"
+                CREATE TABLE Sessions (
+                    Id INTEGER PRIMARY KEY,
+                    UserID INTEGER NOT NULL,
+                    Token TEXT NOT NULL,
+                    CreatedAt TEXT NOT NULL,
+                    ExpiresAt TEXT NOT NULL,
+                    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+                );
+                ");
+
                 // Create Goals table
                 CreateTableIfNotExists(connection, "Goals", @"
                CREATE TABLE IF NOT EXISTS Goals (

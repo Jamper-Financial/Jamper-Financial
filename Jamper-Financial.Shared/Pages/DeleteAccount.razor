@@ -111,8 +111,8 @@
             string enteredUsernameOrEmail = deleteAccountModel.UsernameOrEmail.Trim().ToLower();
 
             // Retrieve the logged-in user's username and email
-            string loggedInUsername = UserStateService.LoggedInUser.UserName?.Trim().ToLower();
-            string loggedInEmail = UserStateService.LoggedInUser.Email?.Trim().ToLower();
+            string loggedInUsername = UserStateService.Username?.Trim().ToLower();
+            string loggedInEmail = UserStateService.Email?.Trim().ToLower();
 
             // Check if the entered username or email matches the logged-in user's username or email
             if (enteredUsernameOrEmail != loggedInUsername && enteredUsernameOrEmail != loggedInEmail)

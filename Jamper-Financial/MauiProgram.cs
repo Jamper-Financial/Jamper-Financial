@@ -17,23 +17,20 @@ namespace Jamper_Financial
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
 
-            // Initialize the database // as this is the mobile. Initial db should be done in the web project
-            //DatabaseHelper.InitializeDatabase();
-
             // Add device-specific services used by the Jamper_Financial.Shared project
             builder.Services.AddSingleton<IFormFactor, FormFactor>();
 
+            // Add Blazor WebView for MAUI
             builder.Services.AddMauiBlazorWebView();
 
-            var builder = WebAssemblyHostBuilder.CreateDefault(args);
-            builder.Services.AddSingleton<GoalState>();
-
-            await builder.Build().RunAsync();
-
 #if DEBUG
+            // Add developer tools in debug mode
             builder.Services.AddBlazorWebViewDeveloperTools();
             builder.Logging.AddDebug();
 #endif
+
+            // Register shared services
+            builder.Services.AddSingleton<GoalState>();
 
             return builder.Build();
         }
