@@ -4,11 +4,13 @@
 @using Jamper_Financial.Shared.Services;
 @using Jamper_Financial.Shared.Pages.Components;
 @using Microsoft.AspNetCore.Components.Authorization;
+@using Jamper_Financial.Shared.Models
 
 @inject NavigationManager Navigation
 @inject SearchService SearchService
 @inject UpcomingTransactionService UpcomingTransactionService
 @inject AuthenticationStateProvider AuthenticationStateProvider
+@inject IUserService UserService
 
 <div class="header-container">
     <div class="header-background"></div>
@@ -23,7 +25,15 @@
         <div class="icons">
             <div class="icon">
                 <NavLink href="profile-page">
-                    <img class="icon-image" src="images/image.png" />
+                        @if (userProfile.ProfilePicture != null)
+                        {
+                            <img class="icon-image" src="data:image/png;base64,@Convert.ToBase64String(userProfile.ProfilePicture)" />
+                        }
+                        else
+                        {
+                            <img class="icon-image" src="images/image.png" />
+                        }
+
                 </NavLink>
             </div>
             <div class="icon">
@@ -70,6 +80,8 @@
     private string? currentUsername = null;
     private bool isAuthenticated = false;
 
+    private UserProfile userProfile = new UserProfile();
+
     private async Task HandleSearch()
     {
         if (!string.IsNullOrEmpty(searchTerm))
@@ -113,7 +125,7 @@
                     // Get Name claim if you added it in the middleware
                     currentUsername = user.Identity?.Name;
                     // Now load data using currentUserId
-                    // await LoadDataForUser(currentUserId);
+                    userProfile = await UserService.GetUserProfileByIdAsync(currentUserId);
                 }
                 else
                 {
