@@ -8,6 +8,7 @@ using System.Security.Claims;
 public class SessionValidationMiddleware
 {
     private readonly RequestDelegate _next;
+    private readonly UserStateService stateService; // Assuming you have an IUserService for user profile retrieval
     private readonly PathString[] _excludedPaths = new PathString[] {
         "/css",
         "/js",
@@ -24,7 +25,8 @@ public class SessionValidationMiddleware
         "/Jamper-Financial.Web.styles.css",
         "/Jamper-Financial.Web.bundle.scp.css",
         "/temp",
-        "/_blazor"
+        "/_blazor",
+        "/export",
     };
 
 
@@ -81,7 +83,7 @@ public class SessionValidationMiddleware
 
                 if (session == null || session.ExpiresAt < DateTime.UtcNow)
                 {
-                    Console.WriteLine($"--> SessionMiddleware: Redirecting! Reason: Invalid/Expired Token. Token='{token}', SessionFound={session != null}, ExpiresAt='{session?.ExpiresAt}', UtcNow='{DateTime.UtcNow}', IsExpired={session?.ExpiresAt < DateTime.UtcNow}");
+                    Console.WriteLine($"--> SessionMiddleware: Redirecting! Reason: Invalid/Expired Token. Token='{token}', SessionNotFound={session != null}, ExpiresAt='{session?.ExpiresAt}', UtcNow='{DateTime.UtcNow}', IsExpired={session?.ExpiresAt.ToUniversalTime() < DateTime.UtcNow}");
 
                     // Clear potentially invalid cookie from browser
                     context.Response.Cookies.Delete("authToken", new CookieOptions { Path = "/", HttpOnly = true, Secure = false, SameSite = SameSiteMode.Lax }); // Match setting options minus Secure/Expires
@@ -102,21 +104,15 @@ public class SessionValidationMiddleware
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.NameIdentifier, session.UserId.ToString()),
-                    // Optional: Add name claim if you retrieve it (might need IUserRepository)
-                    // new Claim(ClaimTypes.Name, userNameFromDb), 
-                    // Optional: Add role claims if you have roles
-                    // new Claim(ClaimTypes.Role, "Admin"),
-                    // new Claim(ClaimTypes.Role, "User"),
                 };
 
                 // Create the identity and principal
-                // Use a custom authentication type name (e.g., "CustomCookieAuth")
-                var identity = new ClaimsIdentity(claims, "CustomCookieAuth");
+                var identity = new ClaimsIdentity(claims, "authToken");
                 var principal = new ClaimsPrincipal(identity);
 
                 // Set HttpContext.User
                 context.User = principal;
-                Console.WriteLine($"--> SessionMiddleware: HttpContext.User set for UserId {session.UserId}. IsAuthenticated: {context.User.Identity?.IsAuthenticated}");
+                Console.WriteLine($"--> SessionMiddleware: HttpContext.User set for UserId {claims.ToArray()}. IsAuthenticated: {context.User.Identity?.IsAuthenticated}");
 
                 // Store UserId in Items as well (optional, might be redundant now)
                 context.Items["UserId"] = session.UserId;
