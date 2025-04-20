@@ -20,7 +20,7 @@ namespace Jamper_Financial.Shared.Data
                 //create session table
                 CreateTableIfNotExists(connection, "Sessions", @"
                 CREATE TABLE Sessions (
-                    Id INTEGER PRIMARY KEY,
+                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
                     UserID INTEGER NOT NULL,
                     Token TEXT NOT NULL,
                     CreatedAt TEXT NOT NULL,
