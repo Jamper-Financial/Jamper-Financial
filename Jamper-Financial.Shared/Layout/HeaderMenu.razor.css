@@ -105,10 +105,13 @@
 
 .icon-image {
     width: 40px;
-    height: 40px;
-    position: relative; 
+    height: auto;
+    image-resolution: from-image;
+    position: relative;
     left: auto;
     top: auto;
+    border-radius: 10%;
+    background-color: white;
 }
 
 /* Notification Button Styles */

@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Jamper_Financial.Shared.Utilities
 {
-    public class TransactionParser
+    public class TransactionParser2
     {
         public static string ExtractTextFromImage(string imagePath)
         {

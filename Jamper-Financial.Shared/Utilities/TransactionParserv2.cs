@@ -9,7 +9,7 @@ namespace Jamper_Financial.Shared.Utilities
 {
 
     //NOTE USE THIS FOR HIGHER ACCURACY, USE THE OTHER PARSER FOR FREE BUT LOWER ACCURACY
-    public class TransactionParser2
+    public class TransactionParser
     {
         private static AmazonTextractClient GetTextractClient()
         {

@@ -313,6 +313,7 @@ function initializePolarChart(canvasId, chartData) {
                         padding: 2 // Reduce padding around point labels
                     },
                     ticks: {
+                        display: false,
                         beginAtZero: true,
                         stepSize: calculateStepSize(Object.values(chartData.datasets[0].data)),
                         min: 0
