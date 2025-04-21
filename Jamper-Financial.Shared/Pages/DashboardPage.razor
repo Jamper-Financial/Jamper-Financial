@@ -57,7 +57,6 @@
 
         // Get the logged-in user's ID and username from the UserStateService
         int userId =  UserStateService.UserId;
-        username = UserStateService.Username;
 
         Console.WriteLine("User name: " + username + " User ID: " + userId);
 
@@ -73,11 +72,14 @@
             {
                 ShowNewAccountModal();
             };
+            username = userProfile.FirstName;
         }
         else
         {
             Navigation.NavigateTo("/login");
         }
+
+
     }
 
 

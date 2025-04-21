@@ -1,9 +1,10 @@
 # docker-compose.yml
-version: '3.8' # Specify docker-compose version
+version: 'latest' # Specify docker-compose version
 
 services:
   # Define the web application service
   web:
+    image: ghcr.io/jamper-financial/jamper-financial-web:latest
     # Option 1: Build the image using the Dockerfile in the current directory
     build:
       context: .

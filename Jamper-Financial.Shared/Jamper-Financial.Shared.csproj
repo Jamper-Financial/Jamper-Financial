@@ -52,7 +52,7 @@
       <Content Update="wwwroot\images\debt-tracking-icon.svg">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <Content Update="wwwroot\images\Edit.png">
+      <Content Update="wwwroot\images\edit.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <Content Update="wwwroot\images\expense-icon.svg">

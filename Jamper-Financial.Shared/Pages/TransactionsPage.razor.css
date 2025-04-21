@@ -32,21 +32,25 @@
     flex-direction: column;
     margin-bottom: 20px;
 }
-
-/*.charts-container {
-    height: 100%;
+/*
+.charts-container {
+    height: 250px;
     display: flex;
-    flex-direction: row;*/ /* Display charts in a row */
-    /*justify-content: space-between;
-    flex-wrap: wrap;*/ /* Allow wrapping if needed */
-/*}*/
-
-/*.chart {
-    flex: 1;
-    margin-right: 10px;
+    flex-direction: row; 
+    justify-content: space-between;
+    flex-wrap: wrap; 
 }
 
-    .chart:last-child {
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+.chart {
+    height: 100%;
+}*/
+
+    /*.chart:last-child {
         margin-right: 0;
     }
 
@@ -264,12 +268,12 @@
 .chart {
     flex: 1;
     min-width: 300px;
-    height: 300px;
-    margin-right: 10px;
-    margin-bottom: 20px;
+    height: 250px;
+/*    margin-right: 10px;
+    margin-bottom: 20px;*/
     background: white;
     border-radius: 10px;
-    padding: 15px;
+/*    padding: 15px;*/
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative; 
 }
