@@ -29,6 +29,10 @@ services:
       # Provide the path to the Firebase credentials file inside the container
       # This is read by Program.cs
       - FIREBASE_CREDENTIALS_PATH=/app/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json 
+      - AWS_ACCESS_KEY_ID=scraping
+      - AWS_SECRET_ACCESS_KEY=scraping
+      - AWS_REGION=ca-central-1
+
 
     # Volumes for data persistence
     volumes:

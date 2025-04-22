@@ -13,11 +13,21 @@ namespace Jamper_Financial.Shared.Utilities
     {
         private static AmazonTextractClient GetTextractClient()
         {
-            // Replace with your AWS credentials and region
-            var credentials = new BasicAWSCredentials("AKIAWAGWZ7XHNKY4W2HY", "iFkBzVgavA6x+1ToFn+AvPPcehvJU/MAs8O6MOqe");
-            var region = RegionEndpoint.CACentral1; // Example: Canada Central
+            // Retrieve AWS credentials and region from environment variables
+            var accessKey = Environment.GetEnvironmentVariable("AWS_ACCESS_KEY_ID");
+            var secretKey = Environment.GetEnvironmentVariable("AWS_SECRET_ACCESS_KEY");
+            var region = Environment.GetEnvironmentVariable("AWS_REGION");
 
-            return new AmazonTextractClient(credentials, region);
+            if (string.IsNullOrEmpty(accessKey) || string.IsNullOrEmpty(secretKey) || string.IsNullOrEmpty(region))
+            {
+                throw new InvalidOperationException("AWS credentials or region are not set in the environment variables.");
+            }
+
+            // Replace with your AWS credentials and region
+            var credentials = new BasicAWSCredentials(accessKey,secretKey);
+            var regionEndpoint = RegionEndpoint.GetBySystemName(region);
+
+            return new AmazonTextractClient(credentials, regionEndpoint);
         }
 
         public static async Task<string> ExtractTextFromImageTextractAsync(string imagePath)
