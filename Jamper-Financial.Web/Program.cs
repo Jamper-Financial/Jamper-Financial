@@ -52,7 +52,7 @@ DatabaseHelper.InitializeDatabase();
 
 FirebaseApp.Create(new AppOptions
 {
-    Credential = GoogleCredential.FromFile("../Jamper-Financial.Shared/wwwroot/credentials/jamper-finance-firebase-adminsdk-dsr42-13bb4f4464.json")
+    Credential = GoogleCredential.FromFile("../Jamper-Financial.Shared/credentials/jamper-finance-firebase-adminsdk.json")
 });
 
 var app = builder.Build();
