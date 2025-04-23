@@ -111,3 +111,16 @@
         width: 40px;
         height: 40px;
     }
+
+.side-by-side {
+/*    display: flex;*/
+    gap: 1rem; /* Space between the fields */
+    align-items: flex-start; /* Align fields at the top */
+}
+
+.or-text {
+    margin: 0.5rem 0;
+    font-weight: bold;
+    text-align: center;
+    color: #555;
+}

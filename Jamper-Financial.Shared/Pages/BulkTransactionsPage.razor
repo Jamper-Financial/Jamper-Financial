@@ -137,7 +137,9 @@
                 csvContent,
                 args.AccountId,
                 currentUserId,
-                args.BankName
+                args.ColumnMappings,
+                args.Delimiter, // Pass the delimiter
+                args.AdditionalDateFormats // Pass additional date formats
             );
 
             transactions.AddRange(newTransactions);
@@ -154,6 +156,7 @@
             StateHasChanged();
         }
     }
+
 
 
     private string GetTemporaryFilePath(byte[] fileBytes, string originalFileName)

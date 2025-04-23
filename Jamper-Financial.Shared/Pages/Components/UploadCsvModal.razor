@@ -2,9 +2,10 @@
 @using Jamper_Financial.Shared.Services;
 @using Jamper_Financial.Shared.Utilities;
 @using Microsoft.AspNetCore.Components.Forms;
+@using System.Text;
 @inject IJSRuntime JSRuntime;
 @inject IAccountService AccountService;
-@inject UserStateService UserStateService
+@inject UserStateService UserStateService;
 
 @code {
     [Parameter] public bool IsVisible { get; set; }
@@ -16,9 +17,13 @@
     private byte[]? csvFileData;
     private string? csvFileName;
     private int selectedAccountId = 0;
-    private string selectedBank = "RBC";
     private List<BankAccount> accounts = new();
-    private readonly List<string> supportedBanks = new() { "RBC", "TD", "Scotiabank", "BMO", "CIBC" };
+
+    private List<string> csvHeaders = new(); // Holds the headers from the uploaded CSV
+    private Dictionary<string, int> columnMappings = new(); // Holds the user-selected column mappings
+    private string selectedDelimiter = ","; // Default delimiter
+    private string additionalDateFormats = ""; // User-specified additional date formats
+    private bool isAmountInverted = false; // New flag for inverted amount column
 
     protected override async Task OnInitializedAsync()
     {
@@ -44,6 +49,21 @@
             await file.OpenReadStream(5 * 1024 * 1024).CopyToAsync(stream);
             csvFileData = stream.ToArray();
             csvFileName = file.Name;
+
+            // Extract headers from the CSV
+            var csvContent = Encoding.UTF8.GetString(csvFileData);
+            csvHeaders = csvContent.Split('\n').FirstOrDefault()?.Split(selectedDelimiter).Select(h => h.Trim()).ToList() ?? new List<string>();
+
+            // Initialize column mappings with default values
+            columnMappings = new Dictionary<string, int>
+            {
+                { "Date", -1 },
+                { "Description", -1 },
+                { "Amount", -1 },
+                { "Debit", -1 },
+                { "Credit", -1 }
+            };
+
             isFileUploaded = true;
         }
         catch (Exception ex)
@@ -60,6 +80,19 @@
             return;
         }
 
+        // Ensure required columns are mapped
+        if (columnMappings["Date"] == -1 || columnMappings["Description"] == -1)
+        {
+            errorMessage = "Please map the required columns: Date and Description.";
+            return;
+        }
+
+        if (columnMappings["Amount"] == -1 && (columnMappings["Debit"] == -1 || columnMappings["Credit"] == -1))
+        {
+            errorMessage = "Please map either the Amount column or both Debit and Credit columns.";
+            return;
+        }
+
         try
         {
             var args = new CsvUploadEventArgs
@@ -67,7 +100,10 @@
                     CsvData = csvFileData!,
                     FileName = csvFileName,
                     AccountId = selectedAccountId,
-                    BankName = selectedBank
+                    ColumnMappings = columnMappings,
+                    Delimiter = selectedDelimiter,
+                    AdditionalDateFormats = additionalDateFormats.Split(',', StringSplitOptions.RemoveEmptyEntries),
+                    IsAmountInverted = isAmountInverted // Pass the inverted flag
                 };
             await OnCloseWithData.InvokeAsync(args);
             await CloseModal();
@@ -78,26 +114,15 @@
         }
     }
 
-
     private async Task CloseModal() => await OnClose.InvokeAsync();
 }
 
 <div class="modal-overlay" @onclick="CloseModal">
     <div class="modal-content" @onclick:stopPropagation="true">
         <div class="modal-header">
-            <h3>Import Bank CSV</h3>
+            <h3>Import CSV</h3>
         </div>
         <div class="modal-body">
-            <div class="form-group">
-                <label>Bank</label>
-                <InputSelect @bind-Value="selectedBank" class="form-control">
-                    @foreach (var bank in supportedBanks)
-                    {
-                        <option value="@bank">@bank</option>
-                    }
-                </InputSelect>
-            </div>
-
             <div class="form-group">
                 <label>Account</label>
                 <InputSelect @bind-Value="selectedAccountId" class="form-control">
@@ -109,13 +134,88 @@
                 </InputSelect>
             </div>
 
+            <div class="form-group">
+                <label>Delimiter</label>
+                <InputSelect @bind-Value="selectedDelimiter" class="form-control">
+                    <option value=",">Comma (,)</option>
+                    <option value=";">Semicolon (;)</option>
+                    <option value="\t">Tab</option>
+                </InputSelect>
+            </div>
+
+            <div class="form-group">
+                <label>Additional Date Formats (comma-separated)</label>
+                <InputText @bind-Value="additionalDateFormats" class="form-control" placeholder="e.g., dd MMM yyyy, yyyy.MM.dd" />
+            </div>
+
+            <div class="form-group">
+                <label>Is the Amount column inverted?</label>
+                <InputSelect @bind-Value="isAmountInverted" class="form-control">
+                    <option value="false">No (Income are positive, Expenses are negative)</option>
+                    <option value="true">Yes (Income are negative, Expenses are positive)</option>
+                </InputSelect>
+            </div>
+
             <div id="upload-area" class="upload-area">
                 <label for="file-upload" class="upload-label">
                     <img src="/images/folder-icon.png" alt="Folder Icon" />
                     <span>Drag and Drop your CSV here to upload</span>
                 </label>
-                <InputFile id="file-upload" class="file-upload" OnChange="HandleFileUpload" accept=".csv"/>
+                <InputFile id="file-upload" class="file-upload" OnChange="HandleFileUpload" accept=".csv" />
             </div>
+
+            @if (isFileUploaded)
+            {
+                <div class="form-group">
+                    <h4>Map Columns</h4>
+                    @foreach (var attribute in columnMappings.Keys.ToList())
+                    {
+                        if (attribute == "Amount")
+                        {
+                            <div>
+                                <label>@(attribute)</label>
+                                <InputSelect @bind-Value="columnMappings[attribute]" class="form-control">
+                                    <option value="-1">-- Select Column --</option>
+                                    @for (int i = 0; i < csvHeaders.Count; i++)
+                                    {
+                                        <option value="@i">@csvHeaders[i]</option>
+                                    }
+                                </InputSelect>
+                            </div>
+                            <div class="or-text">OR</div>
+                        }
+                        else if (attribute == "Debit" || attribute == "Credit")
+                        {
+                            <div class="side-by-side">
+                                <div>
+                                    <label>@(attribute)</label>
+                                    <InputSelect @bind-Value="columnMappings[attribute]" class="form-control">
+                                        <option value="-1">-- Select Column --</option>
+                                        @for (int i = 0; i < csvHeaders.Count; i++)
+                                        {
+                                            <option value="@i">@csvHeaders[i]</option>
+                                        }
+                                    </InputSelect>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <label>@(attribute)</label>
+                                <InputSelect @bind-Value="columnMappings[attribute]" class="form-control">
+                                    <option value="-1">-- Select Column --</option>
+                                    @for (int i = 0; i < csvHeaders.Count; i++)
+                                    {
+                                        <option value="@i">@csvHeaders[i]</option>
+                                    }
+                                </InputSelect>
+                            </div>
+                        }
+                    }
+                </div>
+            }
+
 
             @if (!string.IsNullOrEmpty(errorMessage))
             {
@@ -130,3 +230,4 @@
         </div>
     </div>
 </div>
+

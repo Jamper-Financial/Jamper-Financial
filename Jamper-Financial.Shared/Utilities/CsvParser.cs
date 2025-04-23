@@ -1,183 +1,197 @@
 ﻿using Jamper_Financial.Shared.Models;
 using System.Globalization;
+using Microsoft.VisualBasic.FileIO;
 
 namespace Jamper_Financial.Shared.Utilities
 {
     public static class CsvParser
     {
-        public static List<Transaction> ParseCsv(string csvContent, int accountId, int userId, string bankName)
+        // Supported date formats
+        private static readonly string[] SupportedDateFormats = new[]
         {
-            bool hasHeaders = DetectHeaders(csvContent);
-            return bankName switch
-            {
-                "RBC" => ParseRbcCsv(csvContent, accountId, userId, hasHeaders),
-                "TD" => ParseTdCsv(csvContent, accountId, userId, hasHeaders),
-                "Scotiabank" => ParseScotiabankCsv(csvContent, accountId, userId, hasHeaders),
-                "BMO" => ParseBmoCsv(csvContent, accountId, userId, hasHeaders),
-                "CIBC" => ParseCibcCsv(csvContent, accountId, userId, hasHeaders),
-                _ => throw new ArgumentException("Unsupported bank")
-            };
-        }
+            "yyyy-MM-dd", "MM/dd/yyyy", "dd-MM-yyyy", "dd/MM/yyyy"
+        };
 
-        private static bool DetectHeaders(string csvContent)
-        {
-            var firstLine = csvContent.Split('\n').FirstOrDefault();
-            if (firstLine == null) return false;
-
-            var columns = firstLine.Split(',');
-            // Check if the first line contains non-numeric values which are likely headers
-            return columns.Any(column => !decimal.TryParse(column, out _));
-        }
-
-        private static List<Transaction> ParseRbcCsv(string csvContent, int accountId, int userId, bool hasHeaders)
+        public static List<Transaction> ParseCsv(
+            string csvContent,
+            int accountId,
+            int userId,
+            Dictionary<string, int> columnMappings,
+            string delimiter = ",",
+            string[]? additionalDateFormats = null)
         {
             var transactions = new List<Transaction>();
-            var lines = csvContent.Split('\n');
-            if (hasHeaders) lines = lines.Skip(1).ToArray(); // Skip header if present
 
-            foreach (var line in lines.Where(l => !string.IsNullOrWhiteSpace(l)))
+            // Merge supported and additional date formats
+            var dateFormats = SupportedDateFormats.Concat(additionalDateFormats ?? Array.Empty<string>()).ToArray();
+
+            using (var reader = new StringReader(csvContent))
+            using (var parser = new TextFieldParser(reader))
             {
-                var columns = line.Split(',');
-                transactions.Add(new Transaction
+                parser.TextFieldType = FieldType.Delimited;
+                parser.SetDelimiters(delimiter);
+
+                int lineNumber = 0;
+
+                // Read the header row if present
+                if (columnMappings.Values.All(v => v >= 0))
                 {
-                    Date = DateTime.ParseExact(columns[0], "yyyy-MM-dd", CultureInfo.InvariantCulture),
-                    Description = columns[2].Trim('"'),
-                    Amount = decimal.Parse(columns[3], CultureInfo.InvariantCulture),
-                    AccountID = accountId,
-                    UserID = userId,
-                    IsPaid = true,
-                    TransactionType = columns[3].StartsWith("-") ? "e" : "i", // Expense if negative
-                    CategoryID = 0, // Default value, update as needed
-                    HasReceipt = false,
-                    Frequency = "None",
-                    EndDate = null,
-                    TemporaryReceiptFilePath = null,
-                    addItem = true
-                });
+                    parser.ReadLine(); // Skip the header row
+                    lineNumber++;
+                }
+
+                while (!parser.EndOfData)
+                {
+                    lineNumber++;
+                    try
+                    {
+                        var columns = parser.ReadFields(); // Reads a line and splits it into fields
+                        if (columns == null || columns.All(string.IsNullOrWhiteSpace)) continue; // Skip empty rows
+
+                        // Ensure required columns are mapped
+                        if (!columnMappings.ContainsKey("Date") || columnMappings["Date"] < 0 ||
+                            !columnMappings.ContainsKey("Description") || columnMappings["Description"] < 0 ||
+                            (!columnMappings.ContainsKey("Amount") &&
+                             (!columnMappings.ContainsKey("Debit") || !columnMappings.ContainsKey("Credit"))))
+                        {
+                            throw new InvalidOperationException("Required columns (Date, Description, Amount) are not mapped.");
+                        }
+
+                        // Parse each field
+                        var amount = ParseAmount(
+                            columns.ElementAtOrDefault(columnMappings.GetValueOrDefault("Amount")),
+                            columns.ElementAtOrDefault(columnMappings.GetValueOrDefault("Debit")),
+                            columns.ElementAtOrDefault(columnMappings.GetValueOrDefault("Credit"))
+                        );
+
+                        var transaction = new Transaction
+                        {
+                            Date = ParseDate(columns.ElementAtOrDefault(columnMappings["Date"]), dateFormats),
+                            Description = ParseDescription(columns.ElementAtOrDefault(columnMappings["Description"])),
+                            Amount = amount,
+
+                            // Assign CategoryID and TransactionType based on Amount
+                            TransactionType = amount > 0 ? "i" : "e", // "i" for income, "e" for expense
+                            CategoryID = amount > 0 ? 8 : 6, // 8 for income, 6 for expense
+
+                            // Default values for other fields
+                            AccountID = accountId,
+                            UserID = userId,
+                            IsPaid = true,
+                            HasReceipt = false,
+                            Frequency = "None", // Default to "None"
+                            EndDate = null, // Default to null
+                            TemporaryReceiptFilePath = null,
+                            addItem = true
+                        };
+
+                        // Validate transaction
+                        ValidateTransaction(transaction);
+
+                        transactions.Add(transaction);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error parsing line {lineNumber}: {ex.Message}");
+                    }
+                }
             }
+
             return transactions;
         }
 
-        private static List<Transaction> ParseTdCsv(string csvContent, int accountId, int userId, bool hasHeaders)
+        // Parse Date with support for multiple formats
+        private static DateTime ParseDate(string? dateValue, string[] dateFormats)
         {
-            var transactions = new List<Transaction>();
-            var lines = csvContent.Split('\n');
-            if (hasHeaders) lines = lines.Skip(1).ToArray(); // Skip header if present
-
-            foreach (var line in lines.Where(l => !string.IsNullOrWhiteSpace(l)))
+            if (string.IsNullOrWhiteSpace(dateValue))
             {
-                var columns = line.Split(',');
-                transactions.Add(new Transaction
-                {
-                    Date = DateTime.ParseExact(columns[0], "MM/dd/yyyy", CultureInfo.InvariantCulture),
-                    Description = columns[1].Trim('"'),
-                    Amount = decimal.Parse(columns[2].Contains("(")
-                        ? $"-{columns[2].Replace("(", "").Replace(")", "")}"
-                        : columns[2],
-                        CultureInfo.InvariantCulture),
-                    AccountID = accountId,
-                    UserID = userId,
-                    IsPaid = true,
-                    TransactionType = columns[2].Contains("(") ? "e" : "i",
-                    CategoryID = 0, // Default value, update as needed
-                    HasReceipt = false,
-                    Frequency = "None",
-                    EndDate = null,
-                    TemporaryReceiptFilePath = null,
-                    addItem = true
-                });
+                throw new FormatException("Date value is required but was empty or null.");
             }
-            return transactions;
+
+            // Trim quotes and whitespace
+            dateValue = dateValue.Trim('"').Trim();
+
+            // Try parsing the date with supported formats
+            if (DateTime.TryParseExact(dateValue, dateFormats, CultureInfo.InvariantCulture, DateTimeStyles.None, out var parsedDate))
+            {
+                return parsedDate;
+            }
+
+            throw new FormatException($"Invalid date format: {dateValue}. Supported formats are: {string.Join(", ", dateFormats)}");
         }
 
-        private static List<Transaction> ParseScotiabankCsv(string csvContent, int accountId, int userId, bool hasHeaders)
+        // Parse Description
+        private static string ParseDescription(string? descriptionValue)
         {
-            var transactions = new List<Transaction>();
-            var lines = csvContent.Split('\n');
-            if (hasHeaders) lines = lines.Skip(1).ToArray(); // Skip header if present
-
-            foreach (var line in lines.Where(l => !string.IsNullOrWhiteSpace(l)))
-            {
-                var columns = line.Split(',');
-                transactions.Add(new Transaction
-                {
-                    Date = DateTime.ParseExact(columns[0], "yyyy/MM/dd", CultureInfo.InvariantCulture),
-                    Description = columns[1].Trim('"'),
-                    Amount = decimal.Parse(columns[2], CultureInfo.InvariantCulture),
-                    AccountID = accountId,
-                    UserID = userId,
-                    IsPaid = true,
-                    TransactionType = columns[2].StartsWith("-") ? "e" : "i",
-                    CategoryID = 0, // Default value, update as needed
-                    HasReceipt = false,
-                    Frequency = "None",
-                    EndDate = null,
-                    TemporaryReceiptFilePath = null,
-                    addItem = true
-                });
-            }
-            return transactions;
+            return string.IsNullOrWhiteSpace(descriptionValue) ? "No Description" : descriptionValue.Trim();
         }
 
-        private static List<Transaction> ParseBmoCsv(string csvContent, int accountId, int userId, bool hasHeaders)
+        // Parse Amount with support for different formats
+        private static decimal ParseAmount(string? amountValue, string? debitValue = null, string? creditValue = null, bool isAmountInverted = false)
         {
-            var transactions = new List<Transaction>();
-            var lines = csvContent.Split('\n');
-            if (hasHeaders) lines = lines.Skip(1).ToArray(); // Skip header if present
-
-            foreach (var line in lines.Where(l => !string.IsNullOrWhiteSpace(l)))
+            // Case 1: Single Amount Column
+            if (!string.IsNullOrWhiteSpace(amountValue))
             {
-                var columns = line.Split(',');
-                transactions.Add(new Transaction
+                amountValue = amountValue.Trim().ToUpperInvariant();
+
+                // Handle DR suffix (debit)
+                if (amountValue.EndsWith("DR"))
                 {
-                    Date = DateTime.ParseExact(columns[0], "MM/dd/yyyy", CultureInfo.InvariantCulture),
-                    Description = columns[1].Trim('"'),
-                    Amount = decimal.Parse(columns[2], CultureInfo.InvariantCulture),
-                    AccountID = accountId,
-                    UserID = userId,
-                    IsPaid = true,
-                    TransactionType = columns[2].StartsWith("-") ? "e" : "i",
-                    CategoryID = 0, // Default value, update as needed
-                    HasReceipt = false,
-                    Frequency = "None",
-                    EndDate = null,
-                    TemporaryReceiptFilePath = null,
-                    addItem = true
-                });
+                    amountValue = amountValue.Replace("DR", "").Trim();
+                    if (decimal.TryParse(amountValue, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedDebitAmount))
+                    {
+                        return isAmountInverted ? parsedDebitAmount : -parsedDebitAmount; // Invert if needed
+                    }
+                }
+                // Handle CR suffix (credit)
+                else if (amountValue.EndsWith("CR"))
+                {
+                    amountValue = amountValue.Replace("CR", "").Trim();
+                    if (decimal.TryParse(amountValue, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedCreditAmount))
+                    {
+                        return isAmountInverted ? -parsedCreditAmount : parsedCreditAmount; // Invert if needed
+                    }
+                }
+                // Handle regular amount
+                else if (decimal.TryParse(amountValue, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedAmount))
+                {
+                    return isAmountInverted ? -parsedAmount : parsedAmount; // Invert if needed
+                }
+
+                throw new FormatException($"Invalid amount format: {amountValue}");
             }
-            return transactions;
+
+            // Case 2: Separate Debit and Credit Columns
+            if (!string.IsNullOrWhiteSpace(debitValue) &&
+                decimal.TryParse(debitValue, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedDebit))
+            {
+                return isAmountInverted ? parsedDebit : -parsedDebit; // Debit is negative, invert if needed
+            }
+
+            if (!string.IsNullOrWhiteSpace(creditValue) &&
+                decimal.TryParse(creditValue, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedCredit))
+            {
+                return isAmountInverted ? -parsedCredit : parsedCredit; // Credit is positive, invert if needed
+            }
+
+            // Default to 0 if no valid amount is found
+            return 0;
         }
 
-        private static List<Transaction> ParseCibcCsv(string csvContent, int accountId, int userId, bool hasHeaders)
-        {
-            var transactions = new List<Transaction>();
-            var lines = csvContent.Split('\n');
-            if (hasHeaders) lines = lines.Skip(1).ToArray(); // Skip header if present
 
-            foreach (var line in lines.Where(l => !string.IsNullOrWhiteSpace(l)))
+        // Validate Transaction
+        private static void ValidateTransaction(Transaction transaction)
+        {
+            if (transaction.Amount == 0)
             {
-                var columns = line.Split(',');
-                transactions.Add(new Transaction
-                {
-                    Date = DateTime.ParseExact(columns[0], "MM/dd/yyyy", CultureInfo.InvariantCulture),
-                    Description = columns[1].Trim('"'),
-                    Amount = decimal.Parse(columns[2].Contains("DR")
-                        ? $"-{columns[2].Replace("DR", "")}"
-                        : columns[2].Replace("CR", ""),
-                        CultureInfo.InvariantCulture),
-                    AccountID = accountId,
-                    UserID = userId,
-                    IsPaid = true,
-                    TransactionType = columns[2].Contains("DR") ? "e" : "i",
-                    CategoryID = 0, // Default value, update as needed
-                    HasReceipt = false,
-                    Frequency = "None",
-                    EndDate = null,
-                    TemporaryReceiptFilePath = null,
-                    addItem = true
-                });
+                throw new InvalidOperationException("Transaction amount cannot be zero.");
             }
-            return transactions;
+
+            if (transaction.Date == default)
+            {
+                throw new InvalidOperationException("Transaction date is invalid.");
+            }
         }
     }
 }
+
