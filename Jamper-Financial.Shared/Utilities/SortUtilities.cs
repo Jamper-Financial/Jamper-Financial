@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Jamper_Financial.Shared.Utilities
 {
-    public static class Sort
+    public static class SortUtilities
     {
         public static List<Transaction> ApplySort(List<Transaction> transactions, string sortBy, bool ascending, List<Category> categories, List<BankAccount> accounts)
         {

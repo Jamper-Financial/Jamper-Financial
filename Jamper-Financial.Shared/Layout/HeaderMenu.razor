@@ -1,4 +1,4 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
 @inject NavigationManager Navigation
 @using Microsoft.AspNetCore.Components
 @using Jamper_Financial.Shared.Services;
@@ -87,3 +87,30 @@
        UnpaidCount = await UpcomingTransactionService.GetUnpaidTransactionCountAsync(now, endOfWeek);
    }
 }
+
+<div class="header-container">
+    <div class="header-background"></div>
+    <div class="header-content">
+        <div class="overview">@PageTitle</div>
+        @if (PageTitle == "Transactions" || PageTitle == "Calendar")
+        {
+            <div class="search">
+                <div class="search-background"></div>
+                <input type="text" @bind="searchTerm" @onkeypress="HandleKeyPress" placeholder="Search in this page" />
+                <button @onclick="HandleSearch">Search</button>
+            </div>
+        }
+        <div class="icons">
+            <div class="icon">
+                <NavLink href="profile-page">
+                    <img class="icon-image" src='../images/image.png' />
+                </NavLink>
+            </div>
+            <div class="icon">
+                <NavLink href="calendar-page">
+                    <img class="icon-image" src='../images/notification.svg' />
+                </NavLink>
+            </div>
+        </div>
+    </div>
+</div>

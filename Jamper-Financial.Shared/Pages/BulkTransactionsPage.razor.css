@@ -56,7 +56,7 @@
 .button-container {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: center;
     margin-top: 10px;
     width: 100%;
     max-width: 100%;
@@ -100,4 +100,55 @@ button.cancel-button {
         accent-color: var(--primary-color);
         color: var(--primary-color);
     }
+
+.table-controls {
+    margin: 10px 0;
+    display: flex;
+    gap: 10px;
+}
+
+.select-all-header {
+    cursor: pointer; /* Make the header cell clickable */
+    color: white; /* White text */
+    text-align: center; /* Center the text */
+    padding: 10px; /* Add padding for better clickability */
+    border-radius: 5px; /* Optional: Add rounded corners */
+    user-select: none; /* Prevent text selection on click */
+}
+
+    .select-all-header:hover {
+        background-color: var(--background-color-hover); /* Darker green on hover */
+    }
+
+.pagination-controls {
+    display: flex;
+    justify-content: flex-end; /* Align pagination to the right */
+    align-items: center;
+    margin-top: 20px;
+}
+
+    .pagination-controls button {
+        background-color: #62ad41; /* Green color */
+        color: white;
+        border: none;
+        padding: 0.625rem 1.1rem;
+        border-radius: 0.625rem;
+        cursor: pointer;
+        font-size: 0.875rem;
+        margin: 0 5px;
+    }
+
+        .pagination-controls button:disabled {
+            background-color: #ccc; /* Gray color for disabled state */
+            cursor: not-allowed;
+        }
+
+        .pagination-controls button:hover:not(:disabled) {
+            background-color: #519a37; /* Darker green on hover */
+        }
+
+.empty-row {
+    background-color: #f9f9f9; /* Light gray background for empty rows */
+    height: 59px; /* Adjust height as needed */
+}
 

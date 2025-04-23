@@ -1,4 +1,4 @@
-﻿@page "/bulk-transactions"
+@page "/bulk-transactions"
 
 @using Jamper_Financial.Shared.Pages.Components;
 @using Jamper_Financial.Shared.Utilities
@@ -6,6 +6,7 @@
 @using Jamper_Financial.Shared.Models;
 @using Jamper_Financial.Shared.Data;
 @using Microsoft.AspNetCore.Components.Forms;
+@using System.Text
 @using System.IO;
 @using Microsoft.Extensions.Hosting;
 @using System.Threading.Tasks; 
@@ -21,9 +22,9 @@
     [CascadingParameter] private Action<string> SetPageTitle { get; set; } = default!;
     private bool norecords = true;
     private bool ShowUploadReceiptsModal = false;
+    private bool ShowUploadCsvModal = false;
     private bool ShowConfirmSaveModal = false;
     private bool isLoading = false;
-    private bool selectAll = false;
     private int currentUserId;
 
     private string _tempUploadDirectory = string.Empty;
@@ -38,6 +39,14 @@
     private List<BankAccount> accounts = new();
     private List<Transaction> transactions = new List<Transaction>();
 
+    // Pagination
+    private int currentPage = 1; // Current page number
+    private int pageSize = 10; // Number of transactions per page
+    private int totalPages => (int)Math.Ceiling((double)transactions.Count / pageSize);
+
+    private IEnumerable<Transaction> PaginatedTransactions =>
+        transactions.Skip((currentPage - 1) * pageSize).Take(pageSize);
+
     protected override async Task OnInitializedAsync()
     {
         currentUserId = UserStateService.UserId;
@@ -48,6 +57,12 @@
         }
 
         SetPageTitle("Bulk Transactions");
+
+        var webRootPath = Environment.ContentRootPath;
+        var sharedProjectRoot = Path.GetFullPath(Path.Combine(webRootPath, "..", "Jamper-Financial.Shared"));
+        tempDirectory = Path.Combine(sharedProjectRoot, "wwwroot", TempReceiptsFolderName);
+
+        Directory.CreateDirectory(tempDirectory);
 
         // Create isolated temp directory outside wwwroot for uploads
         _tempUploadDirectory = Path.Combine(
@@ -75,11 +90,14 @@
         }
     }
 
-    public void OpenExcelModal()
+    public void OpenCsvModal()
     {
-        // Implement Excel import logic here (not covered in this example)
-        Console.WriteLine("Open Excel Modal (Not Implemented)");
-        JSRuntime.InvokeVoidAsync("alert", "Excel import functionality is not yet implemented in this example.");
+        ShowUploadCsvModal = true;
+    }
+
+    public void CloseCsvModal()
+    {
+        ShowUploadCsvModal = false;
     }
 
     public void OpenReceiptsModal()
@@ -97,7 +115,6 @@
         List<byte[]> uploadedImages = args.UploadedImages;
         List<string> fileNames = args.FileNames;
 
-        Console.WriteLine("Handle Receipts Upload");
         isLoading = true;
         errorMessage = string.Empty;
         try
@@ -107,7 +124,6 @@
                 var imageBytes = uploadedImages[i];
                 var fileName = fileNames[i];
                 var tempFilePath = GetTemporaryFilePath(imageBytes, fileName);
-                Console.WriteLine($"Processing receipt image: {fileName} on {tempFilePath}");
                 await ProcessReceiptImage(tempFilePath);
             }
             norecords = !transactions.Any();
@@ -125,11 +141,42 @@
         }
     }
 
+    private async Task HandleCsvUpload(CsvUploadEventArgs args)
+    {
+        isLoading = true;
+        try
+        {
+            var csvContent = Encoding.UTF8.GetString(args.CsvData);
+            var newTransactions = CsvParser.ParseCsv(
+                csvContent,
+                args.AccountId,
+                currentUserId,
+                args.ColumnMappings,
+                args.Delimiter,
+                args.AdditionalDateFormats
+            );
+
+            transactions.AddRange(newTransactions);
+            norecords = !transactions.Any();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"CSV Error: {ex.Message}";
+            await JSRuntime.InvokeVoidAsync("alert", errorMessage);
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
     private string GetTemporaryFilePath(byte[] fileBytes, string originalFileName)
     {
         var extension = Path.GetExtension(originalFileName);
         var tempFileName = $"{Guid.NewGuid():N}{extension}";
-        var tempFilePath = Path.Combine(_tempUploadDirectory, tempFileName);
+        var tempFilePath = Path.Combine(tempDirectory, tempFileName);
+        File.WriteAllBytes(tempFilePath, fileBytes);
 
         // Use FileStream with proper FileMode and FileAccess
         using (var fs = new FileStream(tempFilePath, FileMode.CreateNew, FileAccess.Write))
@@ -154,13 +201,12 @@
             parsedTransaction.Frequency = "None";
             if (parsedTransaction.Date == DateTime.MinValue)
             {
-                parsedTransaction.Date = DateTime.Now; // Default to today if not parsed
+                parsedTransaction.Date = DateTime.Now;
             }
             transactions.Add(parsedTransaction);
         }
         else
         {
-            Console.WriteLine($"Failed to parse transaction from: {imagePath}");
             await JSRuntime.InvokeVoidAsync("alert", $"Could not reliably parse transaction from one of the receipts.");
         }
     }
@@ -197,6 +243,7 @@
 
                 if (!string.IsNullOrEmpty(transaction.TemporaryReceiptFilePath) && File.Exists(transaction.TemporaryReceiptFilePath))
                 {
+
                     await AddReceipt(transaction);
                     filesToDelete.Add(transaction.TemporaryReceiptFilePath);
                 }
@@ -269,9 +316,9 @@
 
     private async void ViewReceipts(Transaction transaction)
     {
-        Console.WriteLine("View Receipts: " + transaction.TemporaryReceiptFilePath);
         if (!string.IsNullOrEmpty(transaction.TemporaryReceiptFilePath) && File.Exists(transaction.TemporaryReceiptFilePath))
         {
+                                                                          
             try
             {
                 var imageBytes = await File.ReadAllBytesAsync(transaction.TemporaryReceiptFilePath);
@@ -376,6 +423,31 @@
         // Cleanup temporary files for the current user
         CleanupTemporaryFiles();
     }
+
+    private void GoToPage(int page)
+    {
+        if (page >= 1 && page <= totalPages)
+        {
+            currentPage = page;
+        }
+    }
+
+    private bool selectAll
+    {
+        get => transactions.All(t => t.addItem); // Check if all transactions are selected
+        set
+        {
+            foreach (var transaction in transactions)
+            {
+                transaction.addItem = value; // Update all transactions
+            }
+        }
+    }
+
+    private void ToggleSelectAll()
+    {
+        selectAll = !selectAll; // Toggle the selectAll state
+    }
 }
 
 <div class="bulktransaction-container">
@@ -384,7 +456,7 @@
             <h3 class="section-title">Bulk Transaction Import</h3>
             <p>Import multiple transactions at once using an Excel file or by uploading receipt images.</p>
             <div style="display: flex; gap: 10px;">
-                <button class="add-viaCsv" @onclick="OpenExcelModal">Import via Excel</button>
+                <button class="add-viaCsv" @onclick="OpenCsvModal">Import via Excel</button>
                 <button class="add-viaReceipt" @onclick="OpenReceiptsModal" disabled="@isLoading">Import via Receipts</button>
             </div>
         </div>
@@ -403,7 +475,9 @@
         <table>
             <thead>
                 <tr>
-                    <th>Select Items</th>
+                    <th @onclick="ToggleSelectAll" class="select-all-header">
+                        @(selectAll ? "Deselect All" : "Select All")
+                    </th>
                     <th>Description</th>
                     <th>Account</th>
                     <th>Category</th>
@@ -421,10 +495,10 @@
                 }
                 else
                 {
-                    @foreach (var transaction in transactions)
+                    @foreach (var transaction in PaginatedTransactions)
                     {
                         <tr>
-                            <td class="align-content-center align-items-center align-text-">
+                            <td>
                                 <InputCheckbox @bind-Value="transaction.addItem" class="checkbox"></InputCheckbox>
                             </td>
                             <td><InputText @bind-Value="transaction.Description" class="form-control" /></td>
@@ -454,19 +528,33 @@
                             </td>
                         </tr>
                     }
+
+                    @* Add empty rows to ensure the table always has 10 rows *@
+                    @for (int i = PaginatedTransactions.Count(); i < pageSize; i++)
+                    {
+                        <tr>
+                            <td colspan="7" class="empty-row"></td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
     </div>
 
+    <div class="pagination-controls">
+        <button @onclick="() => GoToPage(currentPage - 1)" disabled="@(currentPage == 1)">Previous</button>
+        <span>Page @currentPage of @totalPages</span>
+        <button @onclick="() => GoToPage(currentPage + 1)" disabled="@(currentPage == totalPages)">Next</button>
+    </div>
+
     @if (!norecords && !isLoading)
     {
         <div class="button-container">
-            <div class="save-button-container">
-                <button class="save-transactions" @onclick="SaveTransactions">Save Selected Transactions</button>
-            </div>
             <div class="cancel-button-container">
                 <button class="cancel-button" @onclick="CancelImport">Cancel Import</button>
+            </div>
+            <div class="save-button-container">
+                <button class="save-transactions" @onclick="SaveTransactions">Save Selected Transactions</button>
             </div>
         </div>
     }
@@ -484,6 +572,13 @@
     <ConfirmSaveModal IsVisible="ShowConfirmSaveModal"
                       OnClose="@(async (bool isVisible) => ShowConfirmSaveModal = isVisible)"
                       OnConfirm="ConfirmSave" />
+}
+
+@if (ShowUploadCsvModal)
+{
+    <UploadCsvModal IsVisible="ShowUploadCsvModal"
+                    OnClose="CloseCsvModal"
+                    OnCloseWithData="HandleCsvUpload" />
 }
 
 @if (!string.IsNullOrEmpty(toasterMessage))

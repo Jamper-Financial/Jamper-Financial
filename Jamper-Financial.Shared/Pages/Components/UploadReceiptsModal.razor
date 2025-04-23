@@ -97,8 +97,8 @@
 
 @if (IsVisible)
 {
-    <div class="modal-overlay" @onclick="CloseModal">
-        <div class="modal-content" @onclick:stopPropagation="true">
+    <div class="modal-overlay">
+        <div class="modal-content">
             <div class="modal-header">
                 <h3>Upload Receipts</h3>
             </div>
@@ -119,7 +119,10 @@
                     {
                         <div class="error-message">@errorMessage</div>
                     }
-                    <button id="btn-upload" class="upload-button" @onclick="UploadReceipts" disabled="@(!isFileUploaded)">Upload receipts</button>
+                    <div class="button-container">
+                        <button class="cancel-button" @onclick="CloseModal">Cancel</button>
+                        <button id="btn-upload" class="upload-button" @onclick="UploadReceipts" disabled="@(!isFileUploaded)">Upload Receipts</button>
+                    </div>
                 </div>
             </div>
         </div>

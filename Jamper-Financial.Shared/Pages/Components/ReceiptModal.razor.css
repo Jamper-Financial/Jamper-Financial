@@ -145,13 +145,13 @@
     align-items:center;
     gap: 10px; /* Adjust the gap as needed */
     margin-top: 20px;
-    padding-right: 20px;
     align-self: center;
     width: fit-content;
 }
 
 .save-button,
-.delete-button {
+.delete-button,
+.cancel-button {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -177,10 +177,12 @@
         background-color: #b32121;
     }
 
-.save-button,
-.delete-button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+.cancel-button {
+    background-color: #ccc;
+    color: white;
 }
+
+    .cancel-button:hover {
+        background-color: #aaa;
+    }
+

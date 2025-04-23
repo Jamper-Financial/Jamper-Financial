@@ -45,13 +45,19 @@
     @* Transactions Section *@
     <div class="transactions-section">
         <div class="transactions-header">
-            <div class="title-filter">
-                <h3 class="section-title">Recent Transactions</h3>
+            <h3 class="section-title">Recent Transactions</h3>
+            <div class="filter-hamburger">
                 <button class="filter-button" @onclick="ToggleFilterDropdown">Filter</button>
-            </div>
-            <div style="display: flex; gap: 10px;">
-                <button class="add-transaction" @onclick="OpenAddTransactionModal">+ Add Transaction</button>
-                <button class="manage-categories-btn" @onclick="NavigateToManageCategories">Manage Categories</button>
+                <button class="hamburger-button" @onclick="ToggleMenu">☰</button>
+                @if (isMenuOpen)
+                {
+                    <div class="hamburger-menu">
+                        <button class="dropdown-item" @onclick="OpenAddTransactionModal">Add Transaction</button>
+                        <button class="dropdown-item" @onclick="NavigateToBulkTransactions">Import Transactions</button>
+                        <button class="dropdown-item" @onclick="ShowAddAccountModal">Add Account</button>
+                        <button class="dropdown-item" @onclick="NavigateToManageCategories">Manage Categories</button>
+                    </div>
+                }
             </div>
         </div>
         <div class="transactions-table">
@@ -120,6 +126,15 @@
     OnConfirmDelete="ConfirmDeleteTransaction" />
 }
 
+@* Add Account Modal *@
+@if (showAddAccountModal)
+{
+    <AddAccountModal IsVisible="showAddAccountModal"
+                     OnClose="CloseAddAccountModal"
+                     OnAccountSaved="HandleAccountSaved"
+                     newAccount="newAccount" />
+}
+
 @* Receipt Modal *@
 @if (ShowReceiptModal)
 {
@@ -146,6 +161,7 @@
     private List<Category> Categories = new();
     private List<BankAccount> Accounts = new();
     public bool ShowAddTransactionModal { get; set; } = false;
+    public bool showAddAccountModal { get; set; } = false;
     public bool ShowReceiptModal { get; set; } = false;
     public bool IsEditMode { get; set; } = false;
     public bool ShowDeleteConfirmation { get; set; } = false;
@@ -155,6 +171,7 @@
     private bool isAscending = true;
     public bool ShowFilterDropdown { get; set; } = false;
     public Filter CurrentFilter { get; set; } = new Filter();
+    private BankAccount newAccount = new BankAccount();
 
     // Chart data
     private List<Transaction> monthlyTransactions = new List<Transaction>();
@@ -178,6 +195,13 @@
         SearchService.OnSearchQueryChanged += SearchTransactions;
     }
 
+    private bool isMenuOpen = false;
+
+    private void ToggleMenu()
+    {
+        isMenuOpen = !isMenuOpen;
+    }
+
     private void SearchTransactions()
     {
         if (string.IsNullOrEmpty(SearchService.SearchQuery))
@@ -199,6 +223,11 @@
         SearchService.OnSearchQueryChanged -= SearchTransactions;
     }
 
+    private void NavigateToBulkTransactions()
+    {
+        NavigationManager.NavigateTo("/bulk-transactions");
+    }
+
     private void NavigateToManageCategories()
     {
         NavigationManager.NavigateTo("/manage-categories");
@@ -213,6 +242,37 @@
     private void CloseReceiptModal()
     {
         ShowReceiptModal = false;
+    }
+
+    private async void LoadBankAccounts()
+    {
+        Accounts = await AccountService.GetBankAccounts(UserStateService.UserId);
+    }
+
+    private void ShowAddAccountModal()
+    {
+        newAccount = new BankAccount
+            {
+                AccountTypeID = 0,
+                AccountName = string.Empty,
+                Balance = 0,
+                AccountNumber = string.Empty,
+                UserId = UserStateService.UserId
+
+            };
+        showAddAccountModal = true;
+    }
+
+    private async Task CloseAddAccountModal(bool isVisible)
+    {
+        showAddAccountModal = isVisible;
+    }
+
+    private void HandleAccountSaved(string message)
+    {
+        // Handle the account saved event if needed
+        showAddAccountModal = false;
+        LoadBankAccounts();
     }
 
     private void OpenAddTransactionModal()
@@ -265,7 +325,7 @@
             FilteredTransactions = FilterUtilities.ApplyFilters(Transactions, currentFilters);
             if (!string.IsNullOrEmpty(currentSortColumn))
             {
-                FilteredTransactions = Sort.ApplySort(FilteredTransactions, currentSortColumn, currentIsAscending, Categories, Accounts);
+                FilteredTransactions = SortUtilities.ApplySort(FilteredTransactions, currentSortColumn, currentIsAscending, Categories, Accounts);
             }
 
             // Reset pagination
@@ -318,7 +378,7 @@
         FilteredTransactions = FilterUtilities.ApplyFilters(Transactions, currentFilters);
         if (!string.IsNullOrEmpty(currentSortColumn))
         {
-            FilteredTransactions = Sort.ApplySort(FilteredTransactions, currentSortColumn, currentIsAscending, Categories, Accounts);
+            FilteredTransactions = SortUtilities.ApplySort(FilteredTransactions, currentSortColumn, currentIsAscending, Categories, Accounts);
         }
 
         // Reset pagination
@@ -370,7 +430,7 @@
         var filteredTransactions = FilterUtilities.ApplyFilters(Transactions, CurrentFilter);
         if (!string.IsNullOrEmpty(currentSortColumn))
         {
-            FilteredTransactions = Sort.ApplySort(filteredTransactions, currentSortColumn, this.isAscending, Categories, Accounts);
+            FilteredTransactions = SortUtilities.ApplySort(filteredTransactions, currentSortColumn, this.isAscending, Categories, Accounts);
         }
         else
         {

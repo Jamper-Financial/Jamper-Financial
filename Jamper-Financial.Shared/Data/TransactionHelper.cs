@@ -59,7 +59,7 @@ namespace Jamper_Financial.Shared.Data
                                 CategoryID = reader.GetInt32(categoryIdOrdinal),
                                 TransactionType = reader.GetString(transactionTypeOrdinal),
                                 HasReceipt = reader.GetInt32(hasReceiptOrdinal) == 1,
-                                Frequency = reader.GetString(frequencyOrdinal),
+                                Frequency = reader.IsDBNull(frequencyOrdinal) ? "None" : reader.GetString(frequencyOrdinal),
                                 EndDate = reader.IsDBNull(endDateOrdinal) ? (DateTime?)null : DateTime.Parse(reader.GetString(endDateOrdinal)),
                                 AccountID = reader.GetInt32(accountIdOrdinal),
                                 IsPaid = reader.GetInt32(isPaid) == 1,

@@ -322,7 +322,15 @@
 
     private void SortTransactions(string sortBy, bool ascending)
     {
-        FilteredTransactions = Sort.ApplySort(FilteredTransactions, sortBy, ascending, Categories, Accounts);
+        // Apply the existing sort criteria
+        var sortedTransactions = SortUtilities.ApplySort(FilteredTransactions, sortBy, ascending, Categories, Accounts);
+
+        // Prioritize unpaid transactions
+        FilteredTransactions = sortedTransactions
+            .OrderBy(t => t.IsPaid)
+            .ThenBy(t => t.Date) // Adjust this line to match the current sort criteria
+            .ToList();
+
         StateHasChanged();
     }
 

@@ -5,8 +5,8 @@
 @inject IUserService UserService
 @inject UserStateService UserStateService
 
-<div class="modal-overlay" @onclick="CloseAddAccountModal">
-    <div class="modal-content" @onclick:stopPropagation="true">
+<div class="modal-overlay">
+    <div class="modal-content">
         <h3 class="modal-header">@title</h3>
         <div class="modal-body">
             <EditForm Model="newAccount" OnValidSubmit="AddManualAccount">
@@ -42,8 +42,8 @@
                     }
                 </div>
                 <div class="button-container">
-                    <button type="submit" class="save">Add Account</button>
                     <button type="button" class="cancel" @onclick="CloseAddAccountModal">Cancel</button>
+                    <button type="submit" class="save">Add Account</button>
                 </div>
             </EditForm>
         </div>

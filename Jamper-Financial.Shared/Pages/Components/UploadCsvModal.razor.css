@@ -1,4 +1,4 @@
-.modal-overlay {
+﻿.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -99,6 +99,7 @@
     .upload-area label {
         padding: 20px;
     }
+
 .upload-label {
     display: flex;
     flex-direction: column;
@@ -111,15 +112,26 @@
         height: 40px;
     }
 
+.side-by-side {
+/*    display: flex;*/
+    gap: 1rem; /* Space between the fields */
+    align-items: flex-start; /* Align fields at the top */
+}
+
+.or-text {
+    margin: 0.5rem 0;
+    font-weight: bold;
+    text-align: center;
+    color: #555;
+}
+
 .button-container {
     display: flex;
     flex-direction: row;
-    justify-content: right;
+    justify-content: center;
     align-items: center;
     gap: 10px; /* Adjust the gap as needed */
     margin-top: 20px;
-    align-self: center;
-    width: fit-content;
 }
 
 .save-button,
