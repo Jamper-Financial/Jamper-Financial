@@ -117,8 +117,8 @@
     private async Task CloseModal() => await OnClose.InvokeAsync();
 }
 
-<div class="modal-overlay" @onclick="CloseModal">
-    <div class="modal-content" @onclick:stopPropagation="true">
+<div class="modal-overlay">
+    <div class="modal-content">
         <div class="modal-header">
             <h3>Import CSV</h3>
         </div>
@@ -222,11 +222,14 @@
                 <div class="error-message">@errorMessage</div>
             }
 
-            <button @onclick="UploadCsv"
-                    disabled="@(!isFileUploaded || selectedAccountId == 0)"
-                    class="upload-button">
-                Import Transactions
-            </button>
+            <div class="button-container">
+                <button class="cancel-button" @onclick="CloseModal">Cancel</button>
+                <button @onclick="UploadCsv"
+                        disabled="@(!isFileUploaded || selectedAccountId == 0)"
+                        class="upload-button">
+                    Import Transactions
+                </button>
+            </div>
         </div>
     </div>
 </div>

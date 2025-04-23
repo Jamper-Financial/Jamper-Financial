@@ -113,3 +113,51 @@
         width: 40px;
         height: 40px;
     }
+
+.button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+    gap: 10px; /* Adjust the gap as needed */
+    margin-top: 20px;
+    align-self: center;
+    width: fit-content;
+}
+
+.save-button,
+.delete-button,
+.cancel-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.save-button {
+    background-color: #62AD41;
+    color: white;
+}
+
+    .save-button:hover {
+        background-color: #417828;
+    }
+
+.delete-button {
+    background-color: #AD4143;
+    color: white;
+}
+
+    .delete-button:hover {
+        background-color: #b32121;
+    }
+
+.cancel-button {
+    background-color: #ccc;
+    color: white;
+}
+
+    .cancel-button:hover {
+        background-color: #aaa;
+    }

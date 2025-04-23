@@ -121,7 +121,10 @@
                         </label>
                         <InputFile id="file-upload" OnChange="HandleFileSelected" />
                     </div>
-                    <button id="btn-upload" class="upload-button" @onclick="SaveAvatar">Save Avatar</button>
+                    <div class="button-container">
+                        <button class="cancel-button" @onclick="CloseModal">Cancel</button>
+                        <button id="btn-upload" class="save-button" @onclick="SaveAvatar">Save Avatar</button>
+                    </div>
                 </div>
             </div>
         </div>

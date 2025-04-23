@@ -433,11 +433,11 @@
     @if (!norecords && !isLoading)
     {
         <div class="button-container">
-            <div class="save-button-container">
-                <button class="save-transactions" @onclick="SaveTransactions">Save Selected Transactions</button>
-            </div>
             <div class="cancel-button-container">
                 <button class="cancel-button" @onclick="CancelImport">Cancel Import</button>
+            </div>
+            <div class="save-button-container">
+                <button class="save-transactions" @onclick="SaveTransactions">Save Selected Transactions</button>
             </div>
         </div>
     }

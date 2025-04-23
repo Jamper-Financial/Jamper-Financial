@@ -131,8 +131,8 @@
 
 @if (IsVisible)
 {
-    <div class="modal" @onclick="CloseModal">
-        <div class="modal-content" @onclick:stopPropagation="true">
+    <div class="modal">
+        <div class="modal-content">
             <h3>Receipt Details</h3>
             <p><strong>Description:</strong> @Transaction.Description</p>
             <p>
@@ -151,7 +151,8 @@
                 <img src="@receiptPreviewUrl" alt="Receipt" style="max-width: 100%;" @onclick="OpenReceiptInNewTab" />
             }
             <div class="button-container">
-                <button class="delete-button" @onclick="ShowDeleteConfirmation">Delete Receipt</button>
+                <button class="cancel-button" @onclick="CloseModal">Cancel</button>
+                 <button class="delete-button" @onclick="ShowDeleteConfirmation">Delete</button>
             </div>
         }
         else
@@ -164,8 +165,8 @@
                 <p class="error-message">@errorMessage</p>
             }
             <div class="button-container">
+                <button class="cancel-button" @onclick="CloseModal">Cancel</button>
                 <button class="save-button" @onclick=" SaveReceipt">Save</button>
-                <button class="delete-button" @onclick="CloseModal">Cancel</button>
             </div>
         }
     </div>
@@ -179,8 +180,8 @@
             <h3>Confirm Delete</h3>
             <p>Are you sure you want to delete this receipt?</p>
             <div class="button-container">
+                <button class="cancel-button" @onclick="HideDeleteConfirmation">Cancel</button>
                 <button class="save-button" @onclick="DeleteReceipt">Yes</button>
-                <button class="delete-button" @onclick="HideDeleteConfirmation">No</button>
             </div>
         </div>
     </div>
