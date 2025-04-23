@@ -62,7 +62,7 @@ namespace Jamper_Financial.Shared.Services
                         Category = reader.GetString(0),
                         CurrentAmount = reader.GetDecimal(1),
                         PlannedAmount = reader.GetDecimal(2),
-                        TransactionType = reader.GetInt32(3)
+                        TransactionType = reader.GetString(3)
                     });
                 }
             }

@@ -172,19 +172,28 @@
     cursor: pointer;
     }
 
-    .chart-container {
-        background-color: #f9f9f9;
-        padding: 20px;
-        border: 1px solid #ddd;
-        border-radius: 20px;
-        padding-top: 20px;
-        width: 50%; 
-        height: 400px; 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin: 20px auto; 
-    }
+.chart-container {
+    background-color: #f9f9f9;
+    padding: 20px; /* Add padding inside the container */
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    width: calc(100% - 40px); /* Ensure the container fits within the page, accounting for padding */
+    max-width: 800px; /* Limit the maximum width for larger screens */
+    height: auto; /* Allow height to adjust dynamically */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto; /* Center the container horizontally */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+    overflow: hidden; /* Prevent content from overflowing */
+}
+
+canvas {
+    max-width: 100%; /* Ensure the canvas scales with the container */
+    height: auto; /* Maintain aspect ratio */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
 
 </style>
 

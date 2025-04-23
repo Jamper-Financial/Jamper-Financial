@@ -12,6 +12,8 @@
     display: flex;
     padding: 20px;
     width: 100%; /* Ensure the container takes up the full width */
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
+    box-sizing: border-box; /* Include padding and border in width calculation */
 }
 
 .saving-goals-page, .quick-add-goal {
@@ -23,7 +25,7 @@
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 100%; /* Ensure the container takes up the full width */
-    
+    box-sizing: border-box; /* Prevent overflow caused by padding or borders */
 }
 
 .button-container {
@@ -31,14 +33,15 @@
     flex-direction: column;
     gap: 10px;
     width: 100%; /* Ensure the container takes up the full width */
+    box-sizing: border-box; /* Prevent overflow caused by padding or borders */
 }
 
 .goal-button, .view-goal-button {
     display: flex;
     align-items: center;
     justify-content: space-between; /* Space between text and icon */
-    padding: 40px 30px;
-    font-size: 16px;
+    padding: 40px 30px; /* Keep original padding */
+    font-size: 16px; /* Keep original font size */
     font-weight: bold;
     color: #ffffff;
     background-color: #62ad41;
@@ -46,21 +49,25 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: 157.5%; /* Make buttons take up the full width */
+    width: 157.5%; /* Keep original width */
+    box-sizing: border-box; /* Prevent overflow caused by padding or borders */
 }
 
 .add-goal {
     display: flex;
-    align-items: center;
-    justify-content: space-between; /* Space between text and icon */
-    padding: 15px 20px;
-    font-size: 16px;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    padding: 15px 20px; /* Keep original padding */
+    font-size: 16px; /* Keep original font size */
     color: #ffffff;
     background-color: #62ad41;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    width: 100%; /* Ensure button takes up full width of its container */
+    box-sizing: border-box; /* Prevent overflow caused by padding or borders */
+    text-align: center; /* Ensure text alignment */
 }
 
     .goal-button:hover, .view-goal-button:hover, .add-goal:hover {
@@ -106,4 +113,16 @@
 .error {
     font-size: 12px;
     color: #dc3545;
+}
+
+/* Responsive styles for iPad and smaller screens */
+@media (max-width: 1024px) {
+    .saving-goals-page, .quick-add-goal {
+        width: 100%; /* Stack containers vertically on smaller screens */
+        margin: 10px 0; /* Adjust margin for vertical stacking */
+    }
+
+    .goal-button, .view-goal-button {
+        width: 100%; /* Ensure buttons fit inside the white background */
+    }
 }

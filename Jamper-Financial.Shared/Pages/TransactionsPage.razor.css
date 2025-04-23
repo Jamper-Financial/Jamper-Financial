@@ -1,4 +1,4 @@
-﻿﻿html, body {
+html, body {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -33,15 +33,15 @@
     margin-bottom: 20px;
 }
 
-.charts-container {
+/*.charts-container {
     height: 100%;
     display: flex;
-    flex-direction: row; /* Display charts in a row */
-    justify-content: space-between;
-    flex-wrap: wrap; /* Allow wrapping if needed */
-}
+    flex-direction: row;*/ /* Display charts in a row */
+    /*justify-content: space-between;
+    flex-wrap: wrap;*/ /* Allow wrapping if needed */
+/*}*/
 
-.chart {
+/*.chart {
     flex: 1;
     margin-right: 10px;
 }
@@ -60,7 +60,7 @@
     justify-content: center;
     border-radius: 10px;
     margin-bottom: 20px;
-}
+}*/
 
 .section-title {
     margin: 0;
@@ -89,7 +89,7 @@
 
     .transactions-header h3 {
         margin: 0;
-        color: #417828;
+        color: var(--secondary-color);
         font-weight: bold; /* Bold the section titles */
     }
 
@@ -272,3 +272,29 @@
         background-color: #f1f1f1;
     }
 
+.chart {
+    flex: 1;
+    min-width: 300px;
+    height: 300px;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative; 
+}
+
+    .chart canvas {
+        width: 100% !important;
+        height: 100% !important;
+        display: block; 
+    }
+
+.charts-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}

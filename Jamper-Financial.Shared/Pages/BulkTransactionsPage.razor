@@ -1,14 +1,15 @@
-﻿@page "/bulk-transactions"
+@page "/bulk-transactions"
 
 @using Jamper_Financial.Shared.Pages.Components;
 @using Jamper_Financial.Shared.Utilities
 @using Jamper_Financial.Shared.Services
 @using Jamper_Financial.Shared.Models;
 @using Jamper_Financial.Shared.Data;
-@using System.IO;
 @using Microsoft.AspNetCore.Components.Forms;
-@using Microsoft.Extensions.Hosting;
 @using System.Text
+@using System.IO;
+@using Microsoft.Extensions.Hosting;
+@using System.Threading.Tasks; 
 
 @inject UserStateService UserStateService
 @inject TransactionParser TransactionParser;
@@ -26,7 +27,7 @@
     private bool isLoading = false;
     private int currentUserId;
 
-    private string tempDirectory = string.Empty;
+    private string _tempUploadDirectory = string.Empty;
     private const string TempReceiptsFolderName = "temp-receipts";
 
     private string errorMessage = string.Empty;
@@ -62,6 +63,15 @@
         tempDirectory = Path.Combine(sharedProjectRoot, "wwwroot", TempReceiptsFolderName);
 
         Directory.CreateDirectory(tempDirectory);
+
+        // Create isolated temp directory outside wwwroot for uploads
+        _tempUploadDirectory = Path.Combine(
+            Environment.ContentRootPath,
+            "temp",
+            "JamperFinancial_BulkUploads",
+            currentUserId.ToString() // Isolate by user
+        );
+        Directory.CreateDirectory(_tempUploadDirectory);
 
         isLoading = true;
         try
@@ -167,6 +177,14 @@
         var tempFileName = $"{Guid.NewGuid():N}{extension}";
         var tempFilePath = Path.Combine(tempDirectory, tempFileName);
         File.WriteAllBytes(tempFilePath, fileBytes);
+
+        // Use FileStream with proper FileMode and FileAccess
+        using (var fs = new FileStream(tempFilePath, FileMode.CreateNew, FileAccess.Write))
+        {
+            fs.Write(fileBytes, 0, fileBytes.Length);
+        }
+
+        Console.WriteLine($"Temporary file created: {tempFilePath}");
         return tempFilePath;
     }
 
@@ -207,6 +225,8 @@
         try
         {
             var transactionsToSave = transactions.Where(t => t.addItem).ToList();
+            var filesToDelete = new List<string>();
+
             foreach (var transaction in transactionsToSave)
             {
                 if (transaction.AccountID == 0 || transaction.CategoryID == 0)
@@ -218,12 +238,23 @@
                     return;
                 }
 
+                Console.WriteLine($"Saving transaction: {transaction.Description} ");
                 await TransactionManager.AddOrUpdateTransactionAsync(transaction, false);
+
                 if (!string.IsNullOrEmpty(transaction.TemporaryReceiptFilePath) && File.Exists(transaction.TemporaryReceiptFilePath))
                 {
-                    File.Delete(transaction.TemporaryReceiptFilePath);
+
+                    await AddReceipt(transaction);
+                    filesToDelete.Add(transaction.TemporaryReceiptFilePath);
                 }
             }
+
+            // Attempt to delete temporary files after saving
+            foreach (var filePath in filesToDelete)
+            {
+                await DeleteTemporaryFileAsync(filePath);
+            }
+
             transactions.RemoveAll(t => t.addItem);
             norecords = !transactions.Any();
             toasterMessage = "Selected transactions saved successfully!";
@@ -243,6 +274,35 @@
         }
     }
 
+    private async Task AddReceipt(Transaction transaction)
+    {
+        try
+        {
+            // Get the last inserted transaction
+            var latestTransaction = await TransactionHelper.GetTransactionsAsync(transaction.UserID);
+            var insertedTransaction = latestTransaction
+                .OrderByDescending(t => t.TransactionID)
+                .FirstOrDefault(t => t.Description == transaction.Description && t.Amount == transaction.Amount && t.Date == transaction.Date); // More specific match
+
+            if (insertedTransaction == null)
+            {
+                Console.WriteLine("No matching transaction found to attach the receipt.");
+                return;
+            }
+
+            Console.WriteLine($"Adding receipt for transaction: {insertedTransaction.TransactionID}");
+
+            // Create a MockBrowserFile from the temporary file path
+            var browserFile = new MockBrowserFile(transaction.TemporaryReceiptFilePath);
+
+            await TransactionManager.UpdateReceiptAsync(insertedTransaction, browserFile);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding receipt: {ex.Message}");
+        }
+    }
+
     private async Task SaveTransactions()
     {
         ShowConfirmSaveModal = true;
@@ -258,53 +318,110 @@
     {
         if (!string.IsNullOrEmpty(transaction.TemporaryReceiptFilePath) && File.Exists(transaction.TemporaryReceiptFilePath))
         {
-            var fileName = Path.GetFileName(transaction.TemporaryReceiptFilePath);
-            var imageUrl = $"/{TempReceiptsFolderName}/{fileName}";
-            await JSRuntime.InvokeVoidAsync("openInNewTab", imageUrl);
+                                                                          
+            try
+            {
+                var imageBytes = await File.ReadAllBytesAsync(transaction.TemporaryReceiptFilePath);
+                var base64Image = Convert.ToBase64String(imageBytes);
+                var fileExtension = Path.GetExtension(transaction.TemporaryReceiptFilePath).ToLowerInvariant();
+                string mimeType = "application/octet-stream"; // Default
+
+                switch (fileExtension)
+                {
+                    case ".jpg":
+                    case ".jpeg":
+                        mimeType = "image/jpeg";
+                        break;
+                    case ".png":
+                        mimeType = "image/png";
+                        break;
+                    case ".gif":
+                        mimeType = "image/gif";
+                        break;
+                        // Add other image types if you support them
+                }
+
+                var imageUrl = $"data:{mimeType};base64,{base64Image}";
+                await JSRuntime.InvokeVoidAsync("openInNewTab", imageUrl);
+            }
+            catch (IOException ex)
+            {
+                await JSRuntime.InvokeVoidAsync("alert", $"Error reading receipt file: {ex.Message}");
+                Console.WriteLine($"Error reading receipt file: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                await JSRuntime.InvokeVoidAsync("alert", $"Error displaying receipt: {ex.Message}");
+                Console.WriteLine($"Error displaying receipt: {ex.Message}");
+            }
         }
         else
         {
             await JSRuntime.InvokeVoidAsync("alert", "Receipt file not found.");
         }
     }
-
     private void CancelImport()
     {
         transactions.Clear();
         norecords = true;
         ShowUploadReceiptsModal = false;
-        CleanupTemporaryFiles();
         StateHasChanged();
+    }
+
+    private async Task DeleteTemporaryFileAsync(string filePath)
+    {
+        if (File.Exists(filePath))
+        {
+            try
+            {
+                File.Delete(filePath);
+                Console.WriteLine($"Deleted temporary file: {filePath}");
+            }
+            catch (IOException ex) when (ex.Message.Contains("being used by another process"))
+            {
+                Console.WriteLine($"Error deleting file {filePath} (still in use): {ex.Message}");
+                // Optionally, you could implement a retry mechanism with a delay
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error deleting temporary file {filePath}: {ex.Message}");
+            }
+        }
     }
 
     private void CleanupTemporaryFiles()
     {
-        try
+        if (Directory.Exists(_tempUploadDirectory))
         {
-            if (Directory.Exists(tempDirectory))
+            var files = Directory.GetFiles(_tempUploadDirectory);
+            foreach (var file in files)
             {
-                var files = Directory.GetFiles(tempDirectory);
-                foreach (var file in files)
+                // Use Task.Run to avoid blocking the UI thread during potentially long file operations
+                _ = DeleteTemporaryFileAsync(file);
+            }
+
+            // Optionally, consider deleting the directory if it's empty after cleanup
+            if (!Directory.EnumerateFileSystemEntries(_tempUploadDirectory).Any())
+            {
+                try
                 {
-                    try
-                    {
-                        File.Delete(file);
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error deleting temporary file {file}: {ex.Message}");
-                    }
+                    Directory.Delete(_tempUploadDirectory, true);
+                    Console.WriteLine($"Deleted temporary directory: {_tempUploadDirectory}");
                 }
-                if (!Directory.GetFileSystemEntries(tempDirectory).Any())
+                catch (Exception ex)
                 {
-                    Directory.Delete(tempDirectory, true);
+                    Console.WriteLine($"Error deleting temporary directory {_tempUploadDirectory}: {ex.Message}");
                 }
             }
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error cleaning up temporary files/directory: {ex.Message}");
-        }
+    }
+
+    @implements IDisposable
+
+    public void Dispose()
+    {
+        // Cleanup temporary files for the current user
+        CleanupTemporaryFiles();
     }
 
     private void GoToPage(int page)

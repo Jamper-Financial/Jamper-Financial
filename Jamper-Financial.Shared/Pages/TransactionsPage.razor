@@ -11,6 +11,7 @@
 @inject SearchService SearchService
 @inject UserStateService UserStateService
 @inject IAccountService AccountService
+@inject IJSRuntime JS
 
 @code {
     [CascadingParameter] private Action<string> SetPageTitle { get; set; }
@@ -30,13 +31,13 @@
         </div>
         <div class="charts-container">
             <div class="chart">
-                <div class="chart-placeholder">[Bar Chart]</div>
+                <canvas id="monthlyIncomeExpenseChart"></canvas>
             </div>
             <div class="chart">
-                <div class="chart-placeholder">[Line Chart]</div>
+                <canvas id="thirtyDayMovementChart"></canvas>
             </div>
             <div class="chart">
-                <div class="chart-placeholder">[Pie Chart]</div>
+                <canvas id="categorySpendingChart"></canvas>
             </div>
         </div>
     </div>
@@ -115,14 +116,14 @@
 @if (ShowAddTransactionModal)
 {
     <TransactionModal IsVisible="ShowAddTransactionModal"
-                      IsEditMode="IsEditMode"
-                      NewTransaction="NewTransaction"
-                      Categories="Categories"
-                      Accounts="Accounts"
-                      OnClose="CloseAddTransactionModal"
-                      OnSave="HandleAddOrEditTransaction"
-                      OnDelete="ShowDeleteConfirmationForm"
-                      OnConfirmDelete="ConfirmDeleteTransaction" />
+    IsEditMode="IsEditMode"
+    NewTransaction="NewTransaction"
+    Categories="Categories"
+    Accounts="Accounts"
+    OnClose="CloseAddTransactionModal"
+    OnSave="HandleAddOrEditTransaction"
+    OnDelete="ShowDeleteConfirmationForm"
+    OnConfirmDelete="ConfirmDeleteTransaction" />
 }
 
 @* Add Account Modal *@
@@ -138,20 +139,20 @@
 @if (ShowReceiptModal)
 {
     <ReceiptModal IsVisible="ShowReceiptModal"
-                  Transaction="SelectedTransaction"
-                  OnClose="CloseReceiptModal" />
+    Transaction="SelectedTransaction"
+    OnClose="CloseReceiptModal" />
 }
 
 @* Filter Modal *@
 @if (ShowFilterDropdown)
 {
     <FilterModal ShowFilterDropdown="ShowFilterDropdown"
-                 Categories="Categories"
-                 Accounts="Accounts"
-                 Transactions="Transactions"
-                 CurrentFilter="CurrentFilter"
-                 OnFilteredTransactionsChanged="HandleFilteredTransactionsChanged"
-                 OnCloseFilterDropdown="CloseFilterDropdown" />
+    Categories="Categories"
+    Accounts="Accounts"
+    Transactions="Transactions"
+    CurrentFilter="CurrentFilter"
+    OnFilteredTransactionsChanged="HandleFilteredTransactionsChanged"
+    OnCloseFilterDropdown="CloseFilterDropdown" />
 }
 
 @code {
@@ -171,6 +172,11 @@
     public bool ShowFilterDropdown { get; set; } = false;
     public Filter CurrentFilter { get; set; } = new Filter();
     private BankAccount newAccount = new BankAccount();
+
+    // Chart data
+    private List<Transaction> monthlyTransactions = new List<Transaction>();
+    private List<Transaction> thirtyDayTransactions = new List<Transaction>();
+    private Dictionary<string, decimal> categoryTotals = new Dictionary<string, decimal>();
 
     // Pagination properties
     private int currentPage = 1;
@@ -324,6 +330,7 @@
 
             // Reset pagination
             currentPage = 1;
+            await RefreshCharts();
         }
         catch
         {
@@ -376,6 +383,7 @@
 
         // Reset pagination
         currentPage = 1;
+        await RefreshCharts();
         CloseAddTransactionModal();
     }
 
@@ -462,6 +470,7 @@
     {
         this.FilteredTransactions = FilteredTransactions;
         currentPage = 1;
+        InvokeAsync(async () => await RefreshCharts());
         StateHasChanged();
     }
 
@@ -474,4 +483,218 @@
     {
         ShowFilterDropdown = !ShowFilterDropdown;
     }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await InitializeCharts();
+        }
+    }
+
+    private async Task InitializeCharts()
+    {
+        // Filter transactions for the charts
+        var now = DateTime.Now;
+        monthlyTransactions = Transactions
+            .Where(t => t.Date >= now.AddMonths(-4) && t.Date <= now)
+            .ToList();
+
+        thirtyDayTransactions = Transactions
+            .Where(t => t.Date >= now.AddDays(-30) && t.Date <= now)
+            .ToList();
+
+        // Calculate category totals
+        CalculateCategoryTotals();
+
+        // Initialize the charts
+        await RenderMonthlyIncomeExpenseChart();
+        await RenderThirtyDayMovementChart();
+        await RenderCategorySpendingChart();
+    }
+
+    private void CalculateCategoryTotals()
+    {
+        categoryTotals.Clear();
+
+        foreach (var transaction in Transactions.Where(t => t.TransactionType == "e"))
+        {
+            var categoryName = GetCategoryName(transaction.CategoryID);
+            if (categoryTotals.ContainsKey(categoryName))
+            {
+                categoryTotals[categoryName] += transaction.Amount;
+            }
+            else
+            {
+                categoryTotals[categoryName] = transaction.Amount;
+            }
+        }
+    }
+
+    private async Task RenderMonthlyIncomeExpenseChart()
+    {
+        var months = Enumerable.Range(0, 4)
+            .Select(i => DateTime.Now.AddMonths(-i))
+            .Select(d => d.ToString("MMM yyyy"))
+            .Reverse()
+            .ToArray();
+
+        var incomeData = new decimal[4];
+        var expenseData = new decimal[4];
+
+        foreach (var transaction in monthlyTransactions)
+        {
+            var monthIndex = 3 - (DateTime.Now.Month - transaction.Date.Month);
+            if (monthIndex >= 0 && monthIndex < 4)
+            {
+                if (transaction.TransactionType == "i")
+                {
+                    incomeData[monthIndex] += transaction.Amount;
+                }
+                else
+                {
+                    expenseData[monthIndex] += transaction.Amount;
+                }
+            }
+        }
+
+        var chartData = new
+        {
+            labels = months,
+            datasets = new[]
+            {
+            new
+            {
+                label = "Income",
+                data = incomeData,
+                backgroundColor = "rgba(40, 167, 69, 0.8)", // Green
+                borderColor = "rgba(40, 167, 69, 1)",
+                borderWidth = 1
+            },
+            new
+            {
+                label = "Expenses",
+                data = expenseData,
+                backgroundColor = "rgba(220, 53, 69, 0.8)", // Red
+                borderColor = "rgba(220, 53, 69, 1)",
+                borderWidth = 1
+            }
+        }
+        };
+
+        await JS.InvokeVoidAsync("initializeBarChart", "monthlyIncomeExpenseChart", chartData, "x", true); 
+    }
+
+    private async Task RenderThirtyDayMovementChart()
+    {
+        var days = Enumerable.Range(0, 30)
+            .Select(i => DateTime.Now.AddDays(-i).ToString("MMM dd"))
+            .Reverse()
+            .ToArray();
+
+        var netMovement = new decimal[30];
+
+        foreach (var transaction in thirtyDayTransactions)
+        {
+            var dayIndex = 29 - (int)(DateTime.Now - transaction.Date).TotalDays;
+            if (dayIndex >= 0 && dayIndex < 30)
+            {
+                netMovement[dayIndex] += transaction.TransactionType == "i"
+                    ? transaction.Amount
+                    : -transaction.Amount;
+            }
+        }
+
+        var chartData = new
+        {
+            labels = days,
+            datasets = new[]
+            {
+            new
+            {
+                label = "Net Movement",
+                data = netMovement,
+                backgroundColor = "rgba(23, 162, 184, 0.2)", // Teal
+                borderColor = "rgba(23, 162, 184, 1)",
+                borderWidth = 2,
+                tension = 0.4, 
+                fill = true
+            }
+        }
+    };
+        
+
+    await JS.InvokeVoidAsync("initializeLineChart", "thirtyDayMovementChart", chartData, "x", false);
+
+    }
+
+
+    private async Task RenderCategorySpendingChart()
+    {
+        var totalExpenses = categoryTotals.Values.Sum(v => Math.Abs(v));
+        var labels = categoryTotals.Keys.ToArray();
+        var data = categoryTotals.Values
+            .Select(v => Math.Abs(v))
+            .Select(v => Math.Round((v / totalExpenses) * 100, 2))
+            .ToArray();
+
+        var backgroundColors = GenerateColors(labels.Length);
+
+        var chartData = new
+        {
+            labels = labels,
+            datasets = new[]
+            {
+            new
+            {
+                label = "Spending by Category",
+                data = data,
+                backgroundColor = backgroundColors,
+                borderColor = backgroundColors.Select(c => c.Replace("0.8", "1")),
+                borderWidth = 1
+            }
+        }
+        };
+
+        await JS.InvokeVoidAsync("initializePieChart", "categorySpendingChart", chartData, false);
+    }
+
+    private string[] GenerateColors(int count)
+    {
+        var colors = new[]
+        {
+        "rgba(255, 99, 132, 0.8)",   // Red
+        "rgba(54, 162, 235, 0.8)",   // Blue
+        "rgba(255, 206, 86, 0.8)",   // Yellow
+        "rgba(75, 192, 192, 0.8)",   // Teal
+        "rgba(153, 102, 255, 0.8)",  // Purple
+        "rgba(255, 159, 64, 0.8)",   // Orange
+        "rgba(199, 199, 199, 0.8)",  // Gray
+        "rgba(83, 102, 255, 0.8)",   // Indigo
+        "rgba(40, 167, 69, 0.8)",    // Green
+        "rgba(108, 117, 125, 0.8)"   // Gray
+    };
+
+        return colors.Take(count).ToArray();
+    }
+
+    private async Task RefreshCharts()
+    {
+        var now = DateTime.Now;
+        monthlyTransactions = Transactions
+            .Where(t => t.Date >= now.AddMonths(-4))
+            .ToList();
+
+        thirtyDayTransactions = Transactions
+            .Where(t => t.Date >= now.AddDays(-30))
+            .ToList();
+
+        CalculateCategoryTotals();
+
+        await RenderMonthlyIncomeExpenseChart();
+        await RenderThirtyDayMovementChart();
+        await RenderCategorySpendingChart();
+    }
+
 }
