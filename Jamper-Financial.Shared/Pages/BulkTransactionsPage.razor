@@ -7,7 +7,7 @@
 @using Jamper_Financial.Shared.Data;
 @using System.IO;
 @using Microsoft.AspNetCore.Components.Forms;
-@using Microsoft.Extensions.Hosting; 
+@using Microsoft.Extensions.Hosting;
 @using System.Text
 
 @inject UserStateService UserStateService
@@ -24,7 +24,6 @@
     private bool ShowUploadCsvModal = false;
     private bool ShowConfirmSaveModal = false;
     private bool isLoading = false;
-    private bool selectAll = false;
     private int currentUserId;
 
     private string tempDirectory = string.Empty;
@@ -39,6 +38,14 @@
     private List<BankAccount> accounts = new();
     private List<Transaction> transactions = new List<Transaction>();
 
+    // Pagination
+    private int currentPage = 1; // Current page number
+    private int pageSize = 10; // Number of transactions per page
+    private int totalPages => (int)Math.Ceiling((double)transactions.Count / pageSize);
+
+    private IEnumerable<Transaction> PaginatedTransactions =>
+        transactions.Skip((currentPage - 1) * pageSize).Take(pageSize);
+
     protected override async Task OnInitializedAsync()
     {
         currentUserId = UserStateService.UserId;
@@ -50,9 +57,8 @@
 
         SetPageTitle("Bulk Transactions");
 
-        // Assuming your Shared project is in the same parent directory as your Web project
         var webRootPath = Environment.ContentRootPath;
-        var sharedProjectRoot = Path.GetFullPath(Path.Combine(webRootPath, "..", "Jamper-Financial.Shared")); // Adjust "Jamper-Financial.Shared" if your Shared project has a different name
+        var sharedProjectRoot = Path.GetFullPath(Path.Combine(webRootPath, "..", "Jamper-Financial.Shared"));
         tempDirectory = Path.Combine(sharedProjectRoot, "wwwroot", TempReceiptsFolderName);
 
         Directory.CreateDirectory(tempDirectory);
@@ -99,7 +105,6 @@
         List<byte[]> uploadedImages = args.UploadedImages;
         List<string> fileNames = args.FileNames;
 
-        Console.WriteLine("Handle Receipts Upload");
         isLoading = true;
         errorMessage = string.Empty;
         try
@@ -109,7 +114,6 @@
                 var imageBytes = uploadedImages[i];
                 var fileName = fileNames[i];
                 var tempFilePath = GetTemporaryFilePath(imageBytes, fileName);
-                Console.WriteLine($"Processing receipt image: {fileName} on {tempFilePath}");
                 await ProcessReceiptImage(tempFilePath);
             }
             norecords = !transactions.Any();
@@ -138,8 +142,8 @@
                 args.AccountId,
                 currentUserId,
                 args.ColumnMappings,
-                args.Delimiter, // Pass the delimiter
-                args.AdditionalDateFormats // Pass additional date formats
+                args.Delimiter,
+                args.AdditionalDateFormats
             );
 
             transactions.AddRange(newTransactions);
@@ -157,15 +161,12 @@
         }
     }
 
-
-
     private string GetTemporaryFilePath(byte[] fileBytes, string originalFileName)
     {
         var extension = Path.GetExtension(originalFileName);
         var tempFileName = $"{Guid.NewGuid():N}{extension}";
         var tempFilePath = Path.Combine(tempDirectory, tempFileName);
         File.WriteAllBytes(tempFilePath, fileBytes);
-        Console.WriteLine($"Temporary file created: {tempFilePath}");
         return tempFilePath;
     }
 
@@ -182,13 +183,12 @@
             parsedTransaction.Frequency = "None";
             if (parsedTransaction.Date == DateTime.MinValue)
             {
-                parsedTransaction.Date = DateTime.Now; // Default to today if not parsed
+                parsedTransaction.Date = DateTime.Now;
             }
             transactions.Add(parsedTransaction);
         }
         else
         {
-            Console.WriteLine($"Failed to parse transaction from: {imagePath}");
             await JSRuntime.InvokeVoidAsync("alert", $"Could not reliably parse transaction from one of the receipts.");
         }
     }
@@ -222,7 +222,6 @@
                 if (!string.IsNullOrEmpty(transaction.TemporaryReceiptFilePath) && File.Exists(transaction.TemporaryReceiptFilePath))
                 {
                     File.Delete(transaction.TemporaryReceiptFilePath);
-                    Console.WriteLine($"Deleted temporary file after save: {transaction.TemporaryReceiptFilePath}");
                 }
             }
             transactions.RemoveAll(t => t.addItem);
@@ -244,8 +243,6 @@
         }
     }
 
-
-
     private async Task SaveTransactions()
     {
         ShowConfirmSaveModal = true;
@@ -259,11 +256,10 @@
 
     private async void ViewReceipts(Transaction transaction)
     {
-        Console.WriteLine("View Receipts: " + transaction.TemporaryReceiptFilePath);
         if (!string.IsNullOrEmpty(transaction.TemporaryReceiptFilePath) && File.Exists(transaction.TemporaryReceiptFilePath))
         {
             var fileName = Path.GetFileName(transaction.TemporaryReceiptFilePath);
-            var imageUrl = $"/{TempReceiptsFolderName}/{fileName}"; // URL relative to wwwroot
+            var imageUrl = $"/{TempReceiptsFolderName}/{fileName}";
             await JSRuntime.InvokeVoidAsync("openInNewTab", imageUrl);
         }
         else
@@ -293,18 +289,15 @@
                     try
                     {
                         File.Delete(file);
-                        Console.WriteLine($"Deleted temporary file: {file}");
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine($"Error deleting temporary file {file}: {ex.Message}");
                     }
                 }
-                // Optionally, you can delete the directory itself if it's only used for this purpose and is now empty
                 if (!Directory.GetFileSystemEntries(tempDirectory).Any())
                 {
                     Directory.Delete(tempDirectory, true);
-                    Console.WriteLine($"Deleted temporary directory: {tempDirectory}");
                 }
             }
         }
@@ -312,6 +305,31 @@
         {
             Console.WriteLine($"Error cleaning up temporary files/directory: {ex.Message}");
         }
+    }
+
+    private void GoToPage(int page)
+    {
+        if (page >= 1 && page <= totalPages)
+        {
+            currentPage = page;
+        }
+    }
+
+    private bool selectAll
+    {
+        get => transactions.All(t => t.addItem); // Check if all transactions are selected
+        set
+        {
+            foreach (var transaction in transactions)
+            {
+                transaction.addItem = value; // Update all transactions
+            }
+        }
+    }
+
+    private void ToggleSelectAll()
+    {
+        selectAll = !selectAll; // Toggle the selectAll state
     }
 }
 
@@ -340,7 +358,9 @@
         <table>
             <thead>
                 <tr>
-                    <th>Select Items</th>
+                    <th @onclick="ToggleSelectAll" class="select-all-header">
+                        @(selectAll ? "Deselect All" : "Select All")
+                    </th>
                     <th>Description</th>
                     <th>Account</th>
                     <th>Category</th>
@@ -353,15 +373,15 @@
                 @if (norecords && !isLoading)
                 {
                     <tr>
-                        <td colspan="9">No transactions have been imported yet. Use the buttons above to import transactions.</td>
+                        <td colspan="7">No transactions have been imported yet. Use the buttons above to import transactions.</td>
                     </tr>
                 }
                 else
                 {
-                    @foreach (var transaction in transactions)
+                    @foreach (var transaction in PaginatedTransactions)
                     {
                         <tr>
-                            <td class="align-content-center align-items-center align-text-">
+                            <td>
                                 <InputCheckbox @bind-Value="transaction.addItem" class="checkbox"></InputCheckbox>
                             </td>
                             <td><InputText @bind-Value="transaction.Description" class="form-control" /></td>
@@ -391,9 +411,23 @@
                             </td>
                         </tr>
                     }
+
+                    @* Add empty rows to ensure the table always has 10 rows *@
+                    @for (int i = PaginatedTransactions.Count(); i < pageSize; i++)
+                    {
+                        <tr>
+                            <td colspan="7" class="empty-row"></td>
+                        </tr>
+                    }
                 }
             </tbody>
         </table>
+    </div>
+
+    <div class="pagination-controls">
+        <button @onclick="() => GoToPage(currentPage - 1)" disabled="@(currentPage == 1)">Previous</button>
+        <span>Page @currentPage of @totalPages</span>
+        <button @onclick="() => GoToPage(currentPage + 1)" disabled="@(currentPage == totalPages)">Next</button>
     </div>
 
     @if (!norecords && !isLoading)
