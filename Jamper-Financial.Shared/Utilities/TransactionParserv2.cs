@@ -14,7 +14,7 @@ namespace Jamper_Financial.Shared.Utilities
         private static AmazonTextractClient GetTextractClient()
         {
             // Replace with your AWS credentials and region
-            var credentials = new BasicAWSCredentials("AKIAWAGWZ7XHNKY4W2HY", "iFkBzVgavA6x+1ToFn+AvPPcehvJU/MAs8O6MOqe");
+            var credentials = new BasicAWSCredentials("", "");
             var region = RegionEndpoint.CACentral1; // Example: Canada Central
 
             return new AmazonTextractClient(credentials, region);
